@@ -70,7 +70,7 @@ class Debug {
      */
     public function dBug() {
         $debug = new Debug();
-        $debug->debugLibs = true;
+        $debug->debugLibs = false;
         return $debug;
     }
 }
