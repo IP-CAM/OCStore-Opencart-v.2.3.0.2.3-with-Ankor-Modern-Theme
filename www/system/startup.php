@@ -1,5 +1,7 @@
 <?php
 // Error Reporting
+use App\core\App;
+
 error_reporting(E_ALL);
 
 // Check Version
@@ -101,6 +103,11 @@ require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_SYSTEM . 'helper/json.php');
 
+//define
+define('DIR', $_SERVER['DOCUMENT_ROOT']);
+define('DIR_APP', DIR . '/system/library/app');
+
 function start($application_config) {
+    App::Init();
 	require_once(DIR_SYSTEM . 'framework.php');	
 }
