@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>aridius_popupsize</name>
+  <code>aridius_popupsize</code>
+  <version>v_1</version>
+  <author>mrz</author>
+  <file path="catalog/controller/product/product.php">
+		<operation>
+			<search><![CDATA[
+			$this->load->model('tool/image');
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			$data['language_id'] = $this->config->get('config_language_id');
+			$data['aridius_popupsize_top_links'] = $this->config->get('aridius_popupsize_top_links');
+			$data['aridius_popupsize_status'] = $this->config->get('aridius_popupsize_status');
+			$data['aridius_popupsize_name'] = $this->config->get('aridius_popupsize_name');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$data['model'] = $product_info['model'];
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			$data['popupsize'] = $product_info['popupsize'];
+			]]></add>
+		</operation>		
+  </file>
+  <file path="catalog/model/catalog/product.php">
+		<operation>
+			<search><![CDATA[
+			'product_id'       => $query->row['product_id'],
+			]]></search>
+			<add position="after">
+			<![CDATA[
+			'popupsize'       => $query->row['isbn'],
+			]]></add>
+		</operation>		
+  </file>
+<!-- admin -->
+<file path="admin/view/template/catalog/product_form.tpl">
+<operation>
+      <search><![CDATA[
+					<div class="col-sm-2">
+      ]]></search>
+      <add position="before"><![CDATA[
+				  <div class="form-group">
+					  <label class="col-sm-2 control-label" ><?php echo $entry_popupsize; ?></label>
+					  <div class="col-sm-10">
+						<label class="radio-inline">
+						  <?php if ($popupsize) { ?>
+						  <input type="radio" name="popupsize" value="1" checked="checked" />
+						  <?php echo $text_yes; ?>
+						  <?php } else { ?>
+						  <input type="radio" name="popupsize" value="1" />
+						  <?php echo $text_yes; ?>
+						  <?php } ?>
+						</label>
+						<label class="radio-inline">
+						  <?php if (!$popupsize) { ?>
+						  <input type="radio" name="popupsize" value="0" checked="checked" />
+						  <?php echo $text_no; ?>
+						  <?php } else { ?>
+						  <input type="radio" name="popupsize" value="0" />
+						  <?php echo $text_no; ?>
+						  <?php } ?>
+						</label>
+					  </div>
+				  </div>
+      ]]></add>
+</operation>
+</file>
+<file path="admin/controller/catalog/product.php">
+<operation>
+      <search><![CDATA[
+					$this->load->model('design/layout');
+      ]]></search>
+      <add position="before"><![CDATA[
+					if (isset($this->request->post['isbn'])) {
+						$data['popupsize'] = $this->request->post['isbn'];
+					} elseif (!empty($product_info)) {
+						$data['popupsize'] = $product_info['isbn'];
+					} else {
+						$data['popupsize'] = 0;
+					}
+      ]]></add>
+</operation>
+
+<operation>
+      <search><![CDATA[
+					$this->load->language('catalog/product');
+      ]]></search>
+      <add position="after"><![CDATA[
+		            $this->load->language('extension/module/modern');
+      ]]></add>
+</operation>
+
+<operation>
+      <search><![CDATA[
+					$data['entry_subtract'] = $this->language->get('entry_subtract');
+      ]]></search>
+      <add position="after"><![CDATA[
+		            $data['entry_popupsize'] = $this->language->get('entry_popupsize');
+      ]]></add>
+</operation>
+</file>
+</modification>

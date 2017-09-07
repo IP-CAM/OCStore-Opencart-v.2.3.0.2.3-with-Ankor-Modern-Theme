@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>sitemap</name>
+  <code>sitemap</code>
+  <version>v_1</version>
+  <author>mrz(aridius)</author>
+<file path="catalog/controller/information/sitemap.php">
+<operation>
+      <search><![CDATA[
+					$this->load->language('information/sitemap');
+      ]]></search>
+      <add position="before"><![CDATA[
+				    $this->load->language('extension/module/modern');
+      ]]></add>
+</operation>
+<operation>
+      <search><![CDATA[
+					$data['text_information'] = $this->language->get('text_information');
+      ]]></search>
+      <add position="before"><![CDATA[
+				    $data['text_news'] = $this->language->get('text_news');
+					$data['text_news2'] = $this->language->get('text_news2');
+      ]]></add>
+</operation>
+
+<operation>
+      <search><![CDATA[
+					$data['column_left'] = $this->load->controller('common/column_left');
+      ]]></search>
+      <add position="before"><![CDATA[
+				    $this->load->model('catalog/aridiusnews');
+					$data['aridius_news_data'] = array();
+		            $aridius_news_data = $this->model_catalog_aridiusnews->getaridius_news($data);
+						foreach ($aridius_news_data as $result) {
+					    $data['aridius_news_data'][] = array(
+						'title'				=> $result['title'],
+						'href'				=> $this->url->link('information/aridius_news', 'aridius_news_id=' . $result['aridius_news_id'])
+					      );
+				        }
+					$this->load->model('catalog/aridiusnews2');
+					$data['aridius_news_data2'] = array();
+		            $aridius_news_data2 = $this->model_catalog_aridiusnews2->getaridius_news($data);
+						foreach ($aridius_news_data2 as $result) {
+					    $data['aridius_news_data2'][] = array(
+						'title'				=> $result['title'],
+						'href'				=> $this->url->link('information/aridius_news2', 'aridius_news_id2=' . $result['aridius_news_id2'])
+					      );
+				        }
+      ]]></add>
+</operation>
+</file> 
+<file path="catalog/view/theme/modern/template/information/sitemap.tpl">
+<operation>
+      <search><![CDATA[
+					 <li><?php echo $text_information; ?>
+      ]]></search>
+      <add position="before"><![CDATA[
+	  <?php if ($aridius_news_data) { ?>
+			<li><?php echo $text_news; ?>
+              <ul>
+                <?php foreach ($aridius_news_data as $aridius_news_datas) { ?>
+                <li><a href="<?php echo $aridius_news_datas['href']; ?>"><?php echo $aridius_news_datas['title']; ?></a></li>
+                <?php } ?>
+              </ul>
+            </li>
+	  <?php } ?>
+	  <?php if ($aridius_news_data2) { ?>
+			<li><?php echo $text_news2; ?>
+              <ul>
+                <?php foreach ($aridius_news_data2 as $aridius_news_data2s) { ?>
+                <li><a href="<?php echo $aridius_news_data2s['href']; ?>"><?php echo $aridius_news_data2s['title']; ?></a></li>
+                <?php } ?>
+              </ul>
+            </li>
+	  <?php } ?>
+      ]]></add>
+</operation>
+</file> 
+</modification>

@@ -1,0 +1,94 @@
+.head_letter {
+font-size: 27px;
+text-transform: uppercase;
+font-weight: 500;
+margin-right: 50px;
+margin-left: 20px;
+top: 5px;
+position: relative;
+}
+.button_email {
+position: absolute;
+right: 0px;
+z-index: 11;
+height: 50px;
+border-radius: 50px;
+border: 2px solid #fff;
+font-size: 14px !important;
+font-weight: 500;
+color:#fff;
+}
+.textdanger{
+color: red;
+}
+.textsuccess{
+color: #28E17F;
+}
+.mailletters .btn-lg {
+font-size: 12px;
+line-height: 12px;
+padding: 9px;
+}
+.mailletters .input-lg {
+height: 32px;
+line-height: 20px;
+padding: 0 10px;
+}
+#mail_letters {
+border-radius: 60px;
+height: 50px;
+font-size: 14px;
+}
+.inline_email {
+display: inline;
+}
+.all_mailblock {
+margin-top: 25px;
+}
+.message_email {
+margin-left: 47%;
+}
+.message_compare {
+margin-left: 47%;
+}
+.message_success {
+margin-left: 47%;
+}
+@media (min-width: 1200px) and (max-width: 1599px) {
+.head_letter {
+font-size: 23px;
+margin-right: 20px;
+top: 3px;
+}
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+.head_letter {
+font-size: 18px;
+margin-right: 20px;
+top: 3px;
+}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+.head_letter {
+font-size: 18px;
+margin-right: 20px;
+top: 3px;
+}
+.all_mailblock {
+text-align: center;
+}
+}
+@media (max-width: 767px) {
+.head_letter {
+display:none;
+}
+.all_mailblock {
+text-align: center;
+}
+.inline_email {
+margin-right: 10px;
+}
+.mailletters {
+width: 100%;
+}
+}

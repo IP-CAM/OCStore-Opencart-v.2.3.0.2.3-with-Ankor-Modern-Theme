@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>search_in_description_def</name>
+  <code>search_in_description_def</code>
+  <version>v_1</version>
+  <author>mrz</author>
+<file path="catalog/controller/product/search.php">
+<operation>
+      <search><![CDATA[
+					'filter_description'  => $description,
+      ]]></search>
+      <add position="replace"><![CDATA[
+                    'filter_description'  => true,
+      ]]></add>
+</operation>
+</file>
+</modification>

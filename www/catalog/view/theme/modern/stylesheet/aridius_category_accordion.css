@@ -1,0 +1,91 @@
+.box-category {
+margin-top: -5px;
+padding-left: 14px;
+padding-right: 14px;
+}
+.box-category ul {
+list-style: none;
+margin: 0;
+padding: 0;
+}
+.box-category > ul > li {
+padding: 8px 22px 8px 0;
+}
+.box-category > ul > li ul {
+display: none;
+}
+.box-category > ul > li a.active {
+font-weight: 500;
+}
+.box-category > ul > li a {
+color: #727272;
+font-size: 18px;
+text-transform: uppercase;
+line-height: 25px;
+}
+.box-category > ul > li a.active + ul {
+display: block;
+}
+.box-category > ul > li ul > li {
+padding: 6px 6px 0 15px;
+}
+.box-category > ul > li ul > li > a {
+color: #727272;
+display: block;
+font-size: 14px;
+}
+.box-category > ul > li ul > li > a.active {
+font-weight: 500;
+}
+.box-category .accordion li.dcjq-parent-li {position: relative;}
+.box-category .accordion li.dcjq-parent-li .dcjq-icon {float: right; width: 8px; position: absolute; top: 8px; right: -12px; background: url(../image/plus.png) no-repeat 0 center; cursor:pointer}
+.box-category .accordion li.dcjq-parent-li .dcjq-icon:hover {background: url(../image/plus.png) no-repeat 0 center;}
+.box-category .accordion li.dcjq-parent-li > a + .dcjq-icon {display: block; width: 8px; background: url(../image/plus.png) no-repeat 0 center;}
+.box-category .accordion li.dcjq-parent-li > a.active + .dcjq-icon {display: block; width: 8px; background: url(../image/minus.png) no-repeat 0 center;}
+.box-category .accordion li > a + .dcjq-icon {display: none;}
+.box-category .accordion li > a.active + .dcjq-icon {display: none;}
+@media (min-width: 768px) and (max-width: 992px) {
+.box-category {
+padding-left:0px!important;
+}
+.box-category > ul > li a {
+font-size:13px!important;
+}
+}
+.carcat {
+background: #555;
+padding: 0 5px 0 5px;
+}
+.carcat2 {
+background: #555;
+padding: 0 7px 0 7px;
+}
+.carcat-arrow{
+color: #fff;
+}
+.carcat-arrow2{
+color: #fff;
+position: relative;
+left: 1px;
+}
+@media (min-width: 1200px) and (max-width: 1599px) {
+.box-category > ul > li a {
+font-size: 14px;
+}
+.box-category > ul > li ul > li > a {
+font-size: 12px;
+}
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+.box-category > ul > li a {
+font-size: 12px;
+}
+.box-category > ul > li ul > li > a {
+font-size: 11px;
+}
+.box-category > ul > li {
+padding: 8px 5px 8px 0;
+}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+}

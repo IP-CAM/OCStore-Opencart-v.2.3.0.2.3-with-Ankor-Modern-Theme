@@ -1,0 +1,19 @@
+﻿#reviewst .fa-stack {
+width: 1em;
+}
+.review-parent{
+width: 95%; 
+float: right;	
+}
+.module-aridius_store_review .block-contacts{
+width: 282px;
+}
+.rating_avr{
+margin-top: 24px;
+margin-bottom: 7px;
+}
+@media(max-width:400px) {
+.rating_avrsm{
+display: block;	
+}	
+}	
