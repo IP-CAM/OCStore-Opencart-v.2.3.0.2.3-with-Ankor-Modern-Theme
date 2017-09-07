@@ -14,6 +14,7 @@ www/system/storage/
 
 # vQmod log files
 www/vqmod/logs/*
+
 # vQmod cache files
 www/vqmod/vqcache/*
 www/vqmod/checked.cache
@@ -24,7 +25,8 @@ www/vqmod/mods.cache
 !/www/system/download/index.html
 
 # Image File
-!/www/image/no_image.jpg
+www/image/data/*
+www/image/catalog/data/*
 
 # Image Cache Files
 /www/image/cache/*
@@ -33,3 +35,4 @@ www/vqmod/mods.cache
 # dir, that can be used for backups and vqmod (if user will enable it).
 www/backup
 /www/vqgen/
+
