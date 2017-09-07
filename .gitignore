@@ -34,6 +34,6 @@ www/image/catalog/data/*
 !/www/image/cache/index.html
 
 # dir, that can be used for backups and vqmod (if user will enable it).
-www/backup
+www/backup/*
 /www/vqgen/
 
