@@ -31,121 +31,103 @@
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab-general">
-								<ul class="nav nav-tabs" id="language">
-									<?php foreach ($languages as $language) { ?>
-									<li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
-									<?php } ?>
-								</ul>
-								<div class="tab-content">
-									<?php foreach ($languages as $language) { ?>
-									<div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-										<div class="form-group required">
-											<label class="col-sm-2 control-label" for="input-title<?php echo $language['language_id']; ?>"><?php echo $entry_title; ?></label>
-											<div class="col-sm-10">
-												<input type="text" name="news_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($news_description[$language['language_id']]) ? $news_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title<?php echo $language['language_id']; ?>" class="form-control" />
-												<?php if (isset($error_title[$language['language_id']])) { ?>
-												<div class="text-danger"><?php echo $error_title[$language['language_id']]; ?></div>
-												<?php } ?>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label" for="input-meta-title<?php echo $language['language_id']; ?>"><?php echo $entry_meta_title; ?></label>
-											<div class="col-sm-10">
-												<input type="text" name="news_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($news_description[$language['language_id']]) ? $news_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
-												<?php if (isset($error_meta_title[$language['language_id']])) { ?>
-												<div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
-												<?php } ?>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label" for="input-meta-h1<?php echo $language['language_id']; ?>"><?php echo $entry_meta_h1; ?></label>
-											<div class="col-sm-10">
-												<input type="text" name="news_description[<?php echo $language['language_id']; ?>][meta_h1]" value="<?php echo isset($news_description[$language['language_id']]) ? $news_description[$language['language_id']]['meta_h1'] : ''; ?>" placeholder="<?php echo $entry_meta_h1; ?>" id="input-meta-h1<?php echo $language['language_id']; ?>" class="form-control" />
-												<?php if (isset($error_meta_title[$language['language_id']])) { ?>
-												<div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
-												<?php } ?>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
-											<div class="col-sm-10">
-												<textarea name="news_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($news_description[$language['language_id']]) ? $news_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keyword; ?></label>
-											<div class="col-sm-10">
-												<textarea name="news_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($news_description[$language['language_id']]) ? $news_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
-											</div>
-										</div>
-										<div class="form-group required">
-											<label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-											<div class="col-sm-10">
-												<textarea name="news_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control summernote"><?php echo isset($news_description[$language['language_id']]) ? $news_description[$language['language_id']]['description'] : ''; ?></textarea>
-												<?php if (isset($error_description[$language['language_id']])) { ?>
-												<div class="text-danger"><?php echo $error_description[$language['language_id']]; ?></div>
-												<?php } ?>
-											</div>
-										</div>
+<!--								title-->
+								<div class="form-group required">
+									<label class="col-sm-2 control-label" for="input-title">
+										<span data-toggle="tooltip" title="">
+											Заголовок
+										</span>
+									</label>
+									<div class="col-sm-10">
+										<input type="text"
+											   name="title"
+											   value="<?php echo $title; ?>"
+											   placeholder="Заголовок"
+											   id="input-title" class="form-control"
+										/>
+										<?php if ($error_title) { ?>
+											<div class="text-danger"><?php echo $error_title; ?></div>
+										<?php } ?>
 									</div>
-									<?php } ?>
 								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-sort">
+										<span>
+											Сортировка
+										</span>
+									</label>
+									<div class="col-sm-4">
+										<input type="text"
+											   name="sort"
+											   value="<?php echo $sort; ?>"
+											   placeholder="0"
+											   id="input-sort" class="form-control"
+										/>
+									</div>
+								</div>
+
+
+								<div class="form-group required">
+									<label class="col-sm-2 control-label" for="input-description">
+										<?php echo $entry_description; ?>
+									</label>
+									<div class="col-sm-10">
+										<textarea name="description"
+												  placeholder="<?php echo $entry_description; ?>"
+												  id="input-description"
+												  class="form-control summernote">
+											<?php echo isset($description) ? $description : ''; ?>
+										</textarea>
+										<?php if (isset($error_description)) { ?>
+											<div class="text-danger"><?php echo $error_description; ?></div>
+										<?php } ?>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-meta-title">
+										<span>
+											Заголовок H1
+										</span>
+									</label>
+									<div class="col-sm-10">
+										<input type="text"
+											   name="meta_title"
+											   value="<?php echo $meta_title; ?>"
+											   placeholder=""
+											   id="input-meta-title" class="form-control"
+										/>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-meta-title">
+										<span>
+											Мета описание
+										</span>
+									</label>
+									<div class="col-sm-10">
+										<input type="text"
+											   name="meta_description"
+											   value="<?php echo $meta_description; ?>"
+											   placeholder=""
+											   id="input-meta-title" class="form-control"
+										/>
+									</div>
+								</div>
+
 							</div>
 							<div class="tab-pane" id="tab-data">
 								<div class="form-group">
-									<label class="col-sm-2 control-label"><?php echo $entry_store; ?></label>
-									<div class="col-sm-10">
-										<div class="well well-sm" style="height: 150px; overflow: auto;">
-											<div class="checkbox">
-												<label>
-													<?php if (in_array(0, $news_store)) { ?>
-													<input type="checkbox" name="news_store[]" value="0" checked="checked" />
-													<?php echo $text_default; ?>
-													<?php } else { ?>
-													<input type="checkbox" name="news_store[]" value="0" />
-													<?php echo $text_default; ?>
-													<?php } ?>
-												</label>
-											</div>
-											<?php foreach ($stores as $store) { ?>
-											<div class="checkbox">
-												<label>
-													<?php if (in_array($store['store_id'], $news_store)) { ?>
-													<input type="checkbox" name="news_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-													<?php echo $store['name']; ?>
-													<?php } else { ?>
-													<input type="checkbox" name="news_store[]" value="<?php echo $store['store_id']; ?>" />
-													<?php echo $store['name']; ?>
-													<?php } ?>
-												</label>
-											</div>
-											<?php } ?>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
 									<label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
-									<div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-									<input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
-								<div class="col-sm-6">
-									<div class="input-group date">
-										<input type="text" name="date_added" value="<?php echo $date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-available" class="form-control" />
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-										</span></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><?php echo $entry_keyword; ?></span></label>
 									<div class="col-sm-10">
-										<input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
-										<?php if ($error_keyword) { ?>
-										<div class="text-danger"><?php echo $error_keyword; ?></div>
-										<?php } ?>
+										<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">
+											<img src="<?php echo $thumb; ?>" alt="" title=""
+												 data-placeholder="<?php echo $placeholder; ?>"
+											/>
+										</a>
+									<input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -170,7 +152,7 @@
 		</div>
   <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>  
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
 		<script type="text/javascript"><!--
 		$('.date').datetimepicker({
 			pickTime: false

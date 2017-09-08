@@ -38,24 +38,18 @@ class ControllerCatalogPrides extends Controller {
 		$this->load->model('catalog/prides');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_prides->addPrides($this->request->post);
-
+			$this->model_catalog_prides->add($this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
-
 			$url = '';
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-
 			$this->response->redirect($this->url->link('catalog/prides', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
@@ -64,13 +58,11 @@ class ControllerCatalogPrides extends Controller {
 
 	public function edit() {
 		$this->load->language('catalog/prides');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		$this->load->model('catalog/prides');
+        $this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_prides->editPrides($this->request->get['id'], $this->request->post);
+			$this->model_catalog_prides->edit($this->request->get['id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -95,34 +87,32 @@ class ControllerCatalogPrides extends Controller {
 	}
 	
 	public function delete() {
-		$this->load->language('catalog/news');
-
+		$this->load->language('catalog/prides');
+        $this->load->model('catalog/prides');
 		$this->document->setTitle($this->language->get('heading_title'));
+        $selected = [];
+        if (isset($this->request->post['selected'])) {
+            $selected = $this->request->post['selected'];
+        } elseif ($this->request->get['id']) {
+            $selected[] = $this->request->get['id'];
+        }
 
-		$this->load->model('catalog/news');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $news_id) {
-				$this->model_catalog_news->deleteNews($news_id);
+		if (!empty($selected) && $this->validateDelete()) {
+			foreach ($selected as $id) {
+				$this->model_catalog_prides->delete($id);
 			}
-
 			$this->session->data['success'] = $this->language->get('text_success');
-
 			$url = '';
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-
-			$this->response->redirect($this->url->link('catalog/news', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/prides', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -221,8 +211,8 @@ class ControllerCatalogPrides extends Controller {
 				'image'      	=> $image,
 				'status'     	=> ($pride['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'selected'    	=> isset($this->request->post['selected']) && in_array($pride['id'], $this->request->post['selected']),
-				'edit'      	=> $this->url->link('catalog/news/edit', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true),
-				'delete'      	=> $this->url->link('catalog/news/delete', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true)
+				'edit'      	=> $this->url->link('catalog/prides/edit', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true),
+				'delete'      	=> $this->url->link('catalog/prides/delete', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true)
 			);
 		}
 
@@ -296,49 +286,65 @@ class ControllerCatalogPrides extends Controller {
 
 	}
 
+	private function setLanguage(&$data,$method = 'getForm') {
+        $data['heading_title'] = $this->language->get('heading_title');
+        $data['token'] = $this->session->data['token'];
+        $methodRun = 'setLang' . lcfirst($method);
+        $this->$methodRun($data);
+    }
+
+    private function setLangGetForm(&$data){
+        $data['text_form'] = !isset($this->request->get['id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_default'] = $this->language->get('text_default');
+        $data['text_enabled'] = $this->language->get('text_enabled');
+        $data['text_disabled'] = $this->language->get('text_disabled');
+        $data['text_image_manager'] = $this->language->get('text_image_manager');
+        $data['text_browse'] = $this->language->get('text_browse');
+        $data['text_clear'] = $this->language->get('text_clear');
+
+        $data['text_select_all'] = $this->language->get('text_select_all');
+        $data['text_unselect_all'] = $this->language->get('text_unselect_all');
+        $data['column_date_added'] = $this->language->get('column_date_added');
+
+        $data['entry_title'] = $this->language->get('entry_title');
+        $data['entry_meta_title'] = $this->language->get('entry_meta_title');
+        $data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
+        $data['entry_meta_description'] = $this->language->get('entry_meta_description');
+        $data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
+        $data['entry_description'] = $this->language->get('entry_description');
+        $data['entry_date_added'] = $this->language->get('entry_date_added');
+        $data['entry_store'] = $this->language->get('entry_store');
+        $data['entry_keyword'] = $this->language->get('entry_keyword');
+        $data['entry_image'] = $this->language->get('entry_image');
+        $data['entry_status'] = $this->language->get('entry_status');
+
+        $data['button_save'] = $this->language->get('button_save');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+
+        $data['tab_general'] = $this->language->get('tab_general');
+        $data['tab_data'] = $this->language->get('tab_data');
+
+        $data['help_keyword'] = $this->language->get('help_keyword');
+    }
+
 	private function getForm() { 
 
-		$this->load->language('catalog/news');
-	
-		$this->load->model('catalog/news');
+		$this->load->language('catalog/prides');
+		$this->load->model('catalog/prides');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-		
-		$data['heading_title'] = $this->language->get('heading_title');
-	
-		$data['text_form'] = !isset($this->request->get['news_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_default'] = $this->language->get('text_default');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-    	$data['text_image_manager'] = $this->language->get('text_image_manager');
-		$data['text_browse'] = $this->language->get('text_browse');
-		$data['text_clear'] = $this->language->get('text_clear');
-	
-		$data['text_select_all'] = $this->language->get('text_select_all');
-		$data['text_unselect_all'] = $this->language->get('text_unselect_all');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-	
-		$data['entry_title'] = $this->language->get('entry_title');
-		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
-		$data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
-		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
-		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
-		$data['entry_description'] = $this->language->get('entry_description');
-		$data['entry_date_added'] = $this->language->get('entry_date_added');
-		$data['entry_store'] = $this->language->get('entry_store');
-		$data['entry_keyword'] = $this->language->get('entry_keyword');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_status'] = $this->language->get('entry_status');
-	
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-	
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_data'] = $this->language->get('tab_data');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $data = [];
+        $fields = $this->model_catalog_prides->getColumns();
+        foreach ($fields as $field) {
+            $data[$field] = null;
+        }
+        $findItem = false;
+        if ((isset($this->request->get['id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+            $findItem = $this->model_catalog_prides->findOne($this->request->get['id']);
+        }
+        $data = array_merge($data,$findItem);
 
-		$data['help_keyword'] = $this->language->get('help_keyword');		
-	
-		$data['token'] = $this->session->data['token'];
+        $this->setLanguage($data,'getForm');
 	
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -355,7 +361,7 @@ class ControllerCatalogPrides extends Controller {
 		if (isset($this->error['description'])) {
 			$data['error_description'] = $this->error['description'];
 		} else {
-			$data['error_description'] = array();
+			$data['error_description'] = '';
 		}
 
 		if (isset($this->error['meta_title'])) {
@@ -370,92 +376,22 @@ class ControllerCatalogPrides extends Controller {
 			$data['error_keyword'] = '';
 		}
 	
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = $this->getBreadcrumbs();
 	
-		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
-			'text'      => $this->language->get('text_home'),
-			'separator' => false
-		);
-	
-		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('catalog/news', 'token=' . $this->session->data['token'], true),
-			'text'      => $this->language->get('heading_title'),
-			'separator' => ' :: '
-		);
-	
-		if (!isset($this->request->get['news_id'])) {
-			$data['action'] = $this->url->link('catalog/news/add', 'token=' . $this->session->data['token'], true);
+		if (!isset($this->request->get['id'])) {
+			$data['action'] = $this->url->link('catalog/prides/add', 'token=' . $this->session->data['token'], true);
 		} else {
-			$data['action'] = $this->url->link('catalog/news/edit', 'token=' . $this->session->data['token'] . '&news_id=' . $this->request->get['news_id'], true);
+			$data['action'] = $this->url->link('catalog/prides/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
 		}
 	
-		$data['cancel'] = $this->url->link('catalog/news', 'token=' . $this->session->data['token'], true);
-	
-		if ((isset($this->request->get['news_id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$news_info = $this->model_catalog_news->getNewsStory($this->request->get['news_id']);
-		}
+		$data['cancel'] = $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true);
 
 		$this->load->model('localisation/language');
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-	
-		if (isset($this->request->post['news_description'])) {
-			$data['news_description'] = $this->request->post['news_description'];
-		} elseif (isset($this->request->get['news_id'])) {
-			$data['news_description'] = $this->model_catalog_news->getNewsDescriptions($this->request->get['news_id']);
-		} else {
-			$data['news_description'] = array();
-		}
-		
-		if (isset($this->request->post['meta_keyword'])) {
-			$data['meta_keyword'] = $this->request->post['meta_keyword'];
-		} elseif (isset($this->request->get['news_id'])) {
-			$data['meta_keyword'] = $this->model_catalog_news->getNewsDescriptions($this->request->get['news_id']);
-		} else {
-			$data['meta_keyword'] = array();
-		}
-
-		if (isset($this->request->post['date_added'])) {
-       		$data['date_added'] = $this->request->post['date_added'];
-		} elseif (isset($news_info['date_added'])) {
-			$data['date_added'] = $news_info['date_added'];
-		} else {
-			$data['date_added'] = date('Y-m-d');
-		}
-	
-		$this->load->model('setting/store');
-	
-		$data['stores'] = $this->model_setting_store->getStores();
-	
-		if (isset($this->request->post['news_store'])) {
-			$data['news_store'] = $this->request->post['news_store'];
-		} elseif (isset($news_info)) {
-			$data['news_store'] = $this->model_catalog_news->getNewsStores($this->request->get['news_id']);
-		} else {
-			$data['news_store'] = array(0);
-		}
-	
-		if (isset($this->request->post['keyword'])) {
-			$data['keyword'] = $this->request->post['keyword'];
-		} elseif (isset($news_info)) {
-			$data['keyword'] = $news_info['keyword'];
-		} else {
-			$data['keyword'] = '';
-		}
-	
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (isset($news_info)) {
-			$data['status'] = $news_info['status'];
-		} else {
-			$data['status'] = '';
-		}
-	
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($news_info)) {
-			$data['image'] = $news_info['image'];
+		} elseif (!empty($findItem)) {
+			$data['image'] = $findItem['image'];
 		} else {
 			$data['image'] = '';
 		}
@@ -464,8 +400,8 @@ class ControllerCatalogPrides extends Controller {
 
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($news_info) && is_file(DIR_IMAGE . $news_info['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($news_info['image'], 100, 100);
+		} elseif (!empty($findItem) && is_file(DIR_IMAGE . $findItem['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($findItem['image'], 100, 100);
 		} else {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
@@ -477,20 +413,20 @@ class ControllerCatalogPrides extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view('catalog/news_form', $data));
+		$this->response->setOutput($this->load->view('catalog/prides_form', $data));
 
 	}
 
 	public function setting() {
-		$this->load->language('catalog/news');
+		$this->load->language('catalog/prides');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('catalog/news');
+		$this->load->model('catalog/prides');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateSetting()) {
-			$this->model_setting_setting->editSetting('news_setting', $this->request->post);
+			$this->model_setting_setting->editSetting('prides_setting', $this->request->post);
 				if (isset($this->request->post['news_url'])) {
 					$this->model_catalog_news->setNewsListUrl($this->request->post['news_url']);
 				}	
@@ -624,25 +560,14 @@ class ControllerCatalogPrides extends Controller {
 	}
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'catalog/news')) {
+		if (!$this->user->hasPermission('modify', 'catalog/prides')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-	
-		foreach ($this->request->post['news_description'] as $language_id => $value) {
-			if ((strlen($value['title']) < 3) || (strlen($value['title']) > 255)) {
-				$this->error['title'][$language_id] = $this->language->get('error_title');
-			}
-		
-			if (strlen($value['description']) < 3) {
-				$this->error['description'][$language_id] = $this->language->get('error_description');
-			}
-		}
-	
 		return !$this->error;
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/news')) {
+		if (!$this->user->hasPermission('modify', 'catalog/prides')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 	
@@ -650,7 +575,7 @@ class ControllerCatalogPrides extends Controller {
 	}
 
 	protected function validateSetting() {
-		if (!$this->user->hasPermission('modify', 'catalog/news')) {
+		if (!$this->user->hasPermission('modify', 'catalog/prides')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
