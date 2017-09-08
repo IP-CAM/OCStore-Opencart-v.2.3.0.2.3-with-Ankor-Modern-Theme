@@ -103,11 +103,11 @@ require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_SYSTEM . 'helper/json.php');
 
-//define
+//defines
 define('DIR', $_SERVER['DOCUMENT_ROOT']);
 define('DIR_APP', DIR . '/system/library/app');
+define('DEBUG',1);
 
 function start($application_config) {
-    App::Init();
 	require_once(DIR_SYSTEM . 'framework.php');	
 }

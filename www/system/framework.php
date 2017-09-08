@@ -1,4 +1,9 @@
 <?php
+use App\core\App;
+
+//Main class
+App::Init();
+
 // Registry
 $registry = new Registry();
 
@@ -34,6 +39,16 @@ $registry->set('response', $response);
 // Database
 if ($config->get('db_autostart')) {
 	$registry->set('db', new DB($config->get('db_type'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+    //redbean
+    require_once (DIR . '/system/library/app/libs/rb.php');
+    R::setup( 'mysql:host=' . $config->get('db_hostname') . ';dbname=' . $config->get('db_database'),
+        $config->get('db_username'),
+        $config->get('db_password')
+    );
+    if (!DEBUG) {
+        R::freeze(false);
+    }
+
 }
 
 // Session
