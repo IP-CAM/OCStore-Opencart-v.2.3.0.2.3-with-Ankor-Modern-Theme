@@ -114,7 +114,6 @@ class ControllerCatalogPrides extends Controller {
 			}
 			$this->response->redirect($this->url->link('catalog/prides', 'token=' . $this->session->data['token'] . $url, true));
 		}
-
 		$this->getList();
 	}
 
