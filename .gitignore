@@ -1,5 +1,6 @@
 /.idea
 www/robots.txt
+www/newdb.php
 
 www/.htaccess
 www/config.php

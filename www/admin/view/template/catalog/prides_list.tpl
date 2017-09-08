@@ -38,47 +38,53 @@
 								<tr>
 									<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
 									<td class="center"><?php echo $column_image; ?></td>
-									<td class="center"><?php if ($sort == 'nd.title') { ?>
-										<a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
-										<?php } else { ?>
-										<a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
-									<?php } ?></td>
-									<td class="center"><?php if ($sort == 'n.date_added') { ?>
-										<a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
-										<?php } else { ?>
-										<a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
-									<?php } ?></td>
-									<td class="left"><?php echo $column_viewed; ?></td>
+									<td class="center"><?php echo $column_title; ?></td>
 									<td class="left"><?php echo $column_status; ?></td>
-									<td class="right"><?php echo $column_action; ?></td>
+									<td class="left"><?php echo $column_action; ?></td>
 								</tr>
 							</thead>
 							<tbody>
-								<?php if ($news) { ?>
-								<?php $class = 'odd'; ?>
-								<?php foreach ($news as $news_story) { ?>
-								<?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-								<tr class="<?php echo $class; ?>">
-									<td align="center">
-										<?php if ($news_story['selected']) { ?>
-										<input type="checkbox" name="selected[]" value="<?php echo $news_story['news_id']; ?>" checked="checked" />
-										<?php } else { ?>
-										<input type="checkbox" name="selected[]" value="<?php echo $news_story['news_id']; ?>" />
-										<?php } ?>
-									</td>
-									<td class="center"><img src="<?php echo $news_story['image']; ?>" alt="<?php echo $news_story['title']; ?>" style="padding: 1px; border: 1px solid #DDD;" /></td>
-									<td class="left"><?php echo $news_story['title']; ?></td>
-									<td class="left"><?php echo $news_story['date_added']; ?></td>
-									<td class="left"><?php echo $news_story['viewed']; ?></td>
-									<td class="left"><?php echo $news_story['status']; ?></td>
-				                	<td class="text-right"><a href="<?php echo $news_story['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>	
-								</tr>
-								<?php } ?>
-								<?php } else { ?>
-								<tr class="even">
-									<td class="center" colspan="7"><?php echo $text_no_results; ?></td>
-								</tr>
-								<?php } ?>
+								<?if ($items):?>
+									<?php $class = 'odd'; ?>
+									<?foreach ($items as $item):?>
+										<tr class="<?php echo $class; ?>">
+<!--											//select-->
+											<td align="center">
+												<?php if ($item['selected']) { ?>
+													<input type="checkbox" name="selected[]" value="<?php echo $item['id']; ?>" checked="checked" />
+												<?php } else { ?>
+													<input type="checkbox" name="selected[]" value="<?php echo $item['id']; ?>" />
+												<?php } ?>
+											</td>
+											<?//image?>
+											<td class="center">
+												<img src="<?php echo $item['image']; ?>"
+													 alt="<?php echo $item['title']; ?>"
+													 style="padding: 1px; border: 1px solid #DDD;"
+												/>
+											</td>
+<!--											title-->
+											<td class="left"><?php echo $item['title']; ?></td>
+<!--											//status-->
+											<td class="left"><?php echo $item['status']; ?></td>
+<!--											//edit-->
+											<td class="text-right">
+												<a href="<?php echo $item['edit']; ?>"
+												   data-toggle="tooltip" title="<?php echo $button_edit; ?>"
+												   class="btn btn-primary"
+												>
+													<i class="fa fa-pencil"></i>
+												</a>
+												<a href="<?php echo $item['delete']; ?>"
+												   data-toggle="tooltip" title="Удалить"
+												   class="btn btn-danger"
+												>
+													<i class="fa fa-remove"></i>
+												</a>
+											</td>
+										</tr>
+									<?endforeach;?>
+								<?endif;?>
 							</tbody>
 						</table>
 					</div>

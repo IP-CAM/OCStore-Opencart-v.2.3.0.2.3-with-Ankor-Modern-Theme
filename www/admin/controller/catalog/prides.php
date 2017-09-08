@@ -129,7 +129,7 @@ class ControllerCatalogPrides extends Controller {
 	}
 
 	private function getList() {
-
+        $prides = $this->model_catalog_prides->find();
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -186,56 +186,43 @@ class ControllerCatalogPrides extends Controller {
 			$data['success'] = '';
 		}
 	
-		$data['breadcrumbs'] = array();
-	
-		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
-			'text'      => $this->language->get('text_home'),
-			'separator' => false
-		);
-	
-		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true),
-			'text'      => $this->language->get('heading_title'),
-			'separator' => ' :: '
-		);
+		$data['breadcrumbs'] = $this->getBreadcrumbs();
 	
 		$data['add'] = $this->url->link('catalog/prides/add', 'token=' . $this->session->data['token'], true);
 		$data['delete'] = $this->url->link('catalog/news/delete', 'token=' . $this->session->data['token'], true);
 		$data['setting'] = $this->url->link('catalog/news/setting', 'token=' . $this->session->data['token'], true);
 	
-		$news_total = $this->model_catalog_news->getTotalNews();
+		$news_total = $this->model_catalog_prides->totalCount();
 	
 		$this->load->model('tool/image');
 	
 		$data['news'] = array();
 	
-			$filter_data = array(
+        $filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$results = $this->model_catalog_prides->getNewsList($filter_data);
+		$results = [];
 	
-    	foreach ($results as $result) {
-		
-			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
-				$image = $this->model_tool_image->resize($result['image'], 40, 40);
+    	foreach ($prides as $pride) {
+
+			if ($pride['image'] && file_exists(DIR_IMAGE . $pride['image'])) {
+				$image = $this->model_tool_image->resize($pride['image'], 40, 40);
 			} else {
 				$image = $this->model_tool_image->resize('placeholder.png', 40, 40);
 			}
 		
-			$data['news'][] = array(
-				'news_id'     	=> $result['news_id'],
-				'title'       	=> $result['title'],
+			$data['items'][] = array(
+				'id'     	=> $pride['id'],
+				'title'       	=> $pride['title'],
 				'image'      	=> $image,
-				'date_added'  	=> date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'viewed'		=> $result['viewed'],
-				'status'     	=> ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'selected'    	=> isset($this->request->post['selected']) && in_array($result['news_id'], $this->request->post['selected']),
-				'edit'      	=> $this->url->link('catalog/news/edit', 'token=' . $this->session->data['token'] . '&news_id=' . $result['news_id'], true)
+				'status'     	=> ($pride['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'selected'    	=> isset($this->request->post['selected']) && in_array($pride['id'], $this->request->post['selected']),
+				'edit'      	=> $this->url->link('catalog/news/edit', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true),
+				'delete'      	=> $this->url->link('catalog/news/delete', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true)
 			);
 		}
 
@@ -257,8 +244,7 @@ class ControllerCatalogPrides extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_title'] = $this->url->link('catalog/news', 'token=' . $this->session->data['token'] . '&sort=nd.title' . $url, true);
-		$data['sort_date_added'] = $this->url->link('catalog/news', 'token=' . $this->session->data['token'] . '&sort=n.date_added' . $url, true);
+		$data['sort_title'] = $this->url->link('catalog/pride', 'token=' . $this->session->data['token'] . '&sort=nd.title' . $url, true);
 
 		$url = '';
 
@@ -274,7 +260,7 @@ class ControllerCatalogPrides extends Controller {
 		$pagination->total = $news_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/news', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('catalog/pride', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -287,7 +273,26 @@ class ControllerCatalogPrides extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view('catalog/news_list', $data));
+		$this->response->setOutput($this->load->view('catalog/prides_list', $data));
+
+	}
+
+    private function getBreadcrumbs(){
+
+        $breadcrumbs = array();
+
+        $breadcrumbs[] = array(
+            'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+            'text'      => $this->language->get('text_home'),
+            'separator' => false
+        );
+
+        $breadcrumbs[] = array(
+            'href'      => $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true),
+            'text'      => $this->language->get('heading_title'),
+            'separator' => ' :: '
+        );
+        return $breadcrumbs;
 
 	}
 
@@ -475,6 +480,7 @@ class ControllerCatalogPrides extends Controller {
 		$this->response->setOutput($this->load->view('catalog/news_form', $data));
 
 	}
+
 	public function setting() {
 		$this->load->language('catalog/news');
 
