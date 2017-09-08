@@ -118,6 +118,7 @@
 								</div>
 
 							</div>
+
 							<div class="tab-pane" id="tab-data">
 								<div class="form-group">
 									<label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
@@ -130,6 +131,24 @@
 									<input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
 									</div>
 								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label">
+										Дополнительные изображения
+									</label>
+									<div class="col-sm-10">
+										<div class="more_image">
+											<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">
+												<img src="№" alt="" title=""
+													 data-placeholder="<?php echo $placeholder; ?>"
+												/>
+											</a>
+										</div>
+
+										<input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
 									<div class="col-sm-10">

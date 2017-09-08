@@ -285,7 +285,7 @@ class ControllerCatalogPrides extends Controller {
 
 	}
 
-	private function setLanguage(&$data,$method = 'getForm') {
+	private function setLanguage(&$data, $method = 'getForm') {
         $data['heading_title'] = $this->language->get('heading_title');
         $data['token'] = $this->session->data['token'];
         $methodRun = 'setLang' . lcfirst($method);
@@ -382,18 +382,7 @@ class ControllerCatalogPrides extends Controller {
 		} else {
 			$data['action'] = $this->url->link('catalog/prides/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
 		}
-	
 		$data['cancel'] = $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true);
-
-		$this->load->model('localisation/language');
-
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($findItem)) {
-			$data['image'] = $findItem['image'];
-		} else {
-			$data['image'] = '';
-		}
 
 		$this->load->model('tool/image');
 
