@@ -31,7 +31,7 @@ class ModelCatalogPrides extends Model {
                 }
                 $image = R::dispense('pridemoreimage');
                 $image->src = $imgSrc;
-                $pride->ownPridemoreimageList[] = $image;
+                $pride->xownPridemoreimageList[] = $image;
             }
         }
         return $pride;
@@ -40,7 +40,7 @@ class ModelCatalogPrides extends Model {
 	public function findOne($id) {
         $pride = R::findOne($this->tableName,'id = ?',[$id]);
         $result =  $pride->export();
-        foreach ($pride->ownPridemoreimageList as $item) {
+        foreach ($pride->xownPridemoreimageList as $item) {
             $result['more_images'][] = $item->export();
         }
         return $result;
