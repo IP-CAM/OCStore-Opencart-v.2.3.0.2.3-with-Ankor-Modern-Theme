@@ -28,7 +28,8 @@
 <script src="catalog/view/theme/modern/js/jquery/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
 <script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" rel="stylesheet">
-<link href="catalog/view/theme/modern/stylesheet/animate.min.css" rel="stylesheet" type="text/css" />
+	<link href="catalog/view/theme/modern/stylesheet/animate.min.css" rel="stylesheet" type="text/css" />
+
 <meta property="og:site_name" content="<?php echo $name; ?>" />
 <?php foreach ($styles as $style) { ?>
 	<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
@@ -131,6 +132,7 @@ color: #<?php echo $modern_color_text_news ?>;
 color: #<?php echo $modern_color_tittle_news ?>;
 }
 </style>
+	<link href="catalog/view/theme/modern/stylesheet/dist/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="<?php echo $class; ?>">
 <?php if ($modern_arrowup !=1) { ?>

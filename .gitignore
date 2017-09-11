@@ -38,3 +38,7 @@ www/image/catalog/data/*
 www/backup/*
 /www/vqgen/
 
+# Style
+www/catalog/view/theme/modern/stylesheet/dist/main.css
+www/catalog/view/theme/modern/stylesheet/dist/main.css.map
+
