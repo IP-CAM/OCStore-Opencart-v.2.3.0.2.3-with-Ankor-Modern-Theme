@@ -337,10 +337,12 @@ class ControllerCatalogPrides extends Controller {
         foreach ($fields as $field) {
             $data[$field] = null;
         }
-        $findItem = false;
+        $data['sort'] = 100;
+        $findItem = [];
         if ((isset($this->request->get['id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
             $findItem = $this->model_catalog_prides->findOne($this->request->get['id']);
         }
+
         $data = array_merge($data,$findItem);
 
         $this->setLanguage($data,'getForm');
