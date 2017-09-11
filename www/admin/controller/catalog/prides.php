@@ -385,7 +385,7 @@ class ControllerCatalogPrides extends Controller {
 		$data['cancel'] = $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true);
 
 		$this->load->model('tool/image');
-
+        $data['noImage'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
 		} elseif (!empty($findItem) && is_file(DIR_IMAGE . $findItem['image'])) {
@@ -394,6 +394,11 @@ class ControllerCatalogPrides extends Controller {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
+        if (isset($data['more_images'])) {
+            foreach ($data['more_images'] as &$more_image) {
+                $more_image['thumb'] = $this->model_tool_image->resize($more_image['src'], 100, 100);
+            }
+        }
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 	

@@ -137,15 +137,25 @@
 										Дополнительные изображения
 									</label>
 									<div class="col-sm-10">
-										<div class="more_image">
-											<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">
-												<img src="№" alt="" title=""
-													 data-placeholder="<?php echo $placeholder; ?>"
-												/>
-											</a>
+										<div class="row">
+											<? $counterMorePhoto = 0;?>
+											<? if (isset($more_images)):?>
+												<? foreach ($more_images as $more_img):?>
+												<div class="col-sm-2">
+													<div class="more_image">
+														<a href="" id="thumb-image_<?=$counterMorePhoto?>" data-toggle="image" class="img-thumbnail">
+															<img src="<?=$more_img['thumb']?>" alt="" title=""
+																 data-placeholder="<?php echo $placeholder; ?>"
+															/>
+														</a>
+														<input type="hidden" name="moreImage[<?=$counterMorePhoto?>]" value="<?php echo $more_img['src']; ?>" id="input-image_<?=$counterMorePhoto?>" />
+													</div>
+												</div>
+												<? $counterMorePhoto += 1;?>
+											<?endforeach;?>
+											<?endif;?>
+											<a href="javascript:void(0)" class="btn btn-default" id="addMorePhoto">Добавить</a>
 										</div>
-
-										<input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
 									</div>
 								</div>
 
@@ -177,5 +187,22 @@
 			pickTime: false
 		});
 		$('#language a:first').tab('show');
-	//--></script></div>
+	//-->
+			var morePhotoCounter = <?=$counterMorePhoto?>;
+			var noImage = "<?=$noImage?>";
+			var $elAddMorePhoto = $('#addMorePhoto');
+			$elAddMorePhoto.on('click',function (e) {
+				morePhotoCounter += 1;
+				var html = '<div class="col-sm-2"><div class="more_image">' +
+					'<a href="javascript:void(0)" id="thumb-image_' + morePhotoCounter + '" data-toggle="image" class="img-thumbnail">' +
+					'<img src="' + noImage + '" alt="" title="" data-placeholder=""/>' +
+					'</a>' +
+					'<input type="hidden" name="moreImage['  + morePhotoCounter + ']" value="" id="input-image_' + morePhotoCounter + '" />' +
+					'</div></div>';
+				$elAddMorePhoto.before(html);
+			});
+		</script>
+
+
+</div>
 	<?php echo $footer; ?>

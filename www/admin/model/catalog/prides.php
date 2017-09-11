@@ -23,13 +23,27 @@ class ModelCatalogPrides extends Model {
                 $pride->$key = $value;
             }
         }
+        $pride->ownPridemoreimageList = array();
+        if (isset($data['moreImage'])) {
+            foreach ($data['moreImage'] as $imgSrc) {
+                if (empty($imgSrc)) {
+                    continue;
+                }
+                $image = R::dispense('pridemoreimage');
+                $image->src = $imgSrc;
+                $pride->ownPridemoreimageList[] = $image;
+            }
+        }
         return $pride;
 	}
 
 	public function findOne($id) {
-        $pride[] = R::findOne($this->tableName,'id = ?',[$id]);
-        $result =  R::beansToArray($pride);
-        return $result[0];
+        $pride = R::findOne($this->tableName,'id = ?',[$id]);
+        $result =  $pride->export();
+        foreach ($pride->ownPridemoreimageList as $item) {
+            $result['more_images'][] = $item->export();
+        }
+        return $result;
     }
 
 	public function delete($id) {
@@ -56,11 +70,6 @@ class ModelCatalogPrides extends Model {
             ]
         );
         $results = R::beansToArray($prides);
-        foreach ($results as &$result) {
-            $result['more_image'] = [
-                'src' => 'catalog/category/ Monitors, TVs/sony_kd55xd8005br2_1.jpg'
-            ];
-        }
 		return $results;
 	}
 
@@ -70,15 +79,6 @@ class ModelCatalogPrides extends Model {
 
     public function getColumns() {
         return array_keys(R::getColumns($this->tableName));
-	}
-
-    public function saveMoreImages($pride, $moreImages){
-        foreach ($moreImages as $moreImage) {
-            $image = R::dispense($this->tableName . 'images');
-            $image->src = $moreImage;
-            $pride->ownMoreImages[] = $image;
-        }
-        return $pride;
 	}
 
 }
