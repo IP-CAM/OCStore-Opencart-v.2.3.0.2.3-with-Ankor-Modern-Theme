@@ -29,6 +29,7 @@ www/vqmod/mods.cache
 # Image File
 www/image/data/*
 www/image/catalog/data/*
+www/image/catalog/*
 
 # Image Cache Files
 /www/image/cache/*
