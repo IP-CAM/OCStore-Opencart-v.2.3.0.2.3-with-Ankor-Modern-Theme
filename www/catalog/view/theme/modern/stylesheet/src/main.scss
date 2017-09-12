@@ -14,3 +14,28 @@
     }
  }
 }
+.prides_main{
+  margin: 10px 0;
+  .list_block {
+    min-height: 60px;
+  }
+  .product-layoutcat {
+    margin-bottom: 0;
+  }
+  .caption p {
+    color: #2f2f2f;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .blockTitle {
+    padding: 15px 5px 0;
+  }
+  @media screen and (max-width: 560px) {
+    .list_block {
+      min-height: 80px;
+    }
+  }
+  //a.linkPride :hover {
+  //  color: #2f2f2f;
+  //}
+}

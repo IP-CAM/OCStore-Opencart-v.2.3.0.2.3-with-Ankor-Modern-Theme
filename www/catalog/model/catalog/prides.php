@@ -46,6 +46,18 @@ class ModelCatalogPrides extends Model {
 		return $result;
 	}
 
+	public function getListForMain($count = 5){
+		$prides  = R::find($this->tableName,
+			'status = :status and show_on_main = :show ORDER BY sort Desc LIMIT :count',
+			[
+				':count' => $count,
+				':status' => 1,
+				':show' => 1,
+			]
+		);
+		$results = R::beansToArray($prides);
+		return $results;
+	}
 
 }
 ?>
