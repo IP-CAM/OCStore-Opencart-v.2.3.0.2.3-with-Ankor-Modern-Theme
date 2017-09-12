@@ -73,9 +73,9 @@
 	</div>
 	</div>
 	<?php } ?>
-<footer>
+<footer class="footer_1">
 <div class="container">
-<div class="row line_foot">
+<!--<div class="row line_foot">
 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
 <h5><?php echo $text_information; ?></h5>
 <ul class="list-unstyled">
@@ -134,7 +134,10 @@
 <?php echo html_entity_decode($modern_counter); ?>
 </span>
 <div class="clearfix"></div>
-</div>
+</div>-->
+	<div class="footer_copyright">© 2017, АНКОР КРЫМ</div>
+	<div class="footer_copyright_2">Все права защищены </div>
+	<div class="footer_desinger">Сайт разработан и поддерживается WEDO</div>
 </div>
 </footer>
 <!--
