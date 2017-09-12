@@ -37,6 +37,15 @@ class ModelCatalogPrides extends Model {
 		return $results;
 	}
 
+	public function findOne($id) {
+		$pride = R::findOne($this->tableName,'id = ?',[$id]);
+		$result =  $pride->export();
+		foreach ($pride->xownPridemoreimageList as $item) {
+			$result['more_images'][] = $item->export();
+		}
+		return $result;
+	}
+
 
 }
 ?>

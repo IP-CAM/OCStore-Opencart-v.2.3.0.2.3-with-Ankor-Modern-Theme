@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <div class="container">
 <div class="row">
-<div id="cont" class="col-sm-12">
+<div id="prides" class="col-sm-12">
 <?php echo $column_left; ?>
 <?php if ($column_left && $column_right) { ?>
 	<?php $class = 'col-sm-6'; ?>
@@ -57,8 +57,8 @@
 	</div>
 	<div class="clearfix"></div>
 	<div class="row">
-	<div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-	<div class="col-sm-6 text-right"><?php echo $results; ?></div>
+		<div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+		<div class="col-sm-6 text-right"><?php echo $results; ?></div>
 	</div>
 	<?php } ?>
 <?php echo $content_bottom; ?>  </div>

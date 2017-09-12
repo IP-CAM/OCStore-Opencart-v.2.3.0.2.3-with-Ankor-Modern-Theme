@@ -138,9 +138,8 @@ class ControllerInformationPrides extends \App\core\Controller {
     }
 
 	public function info(){
-		$this->language->load('information/news');
-
-		$this->load->model('catalog/news');
+		$this->language->load('information/prides');
+		$this->load->model('catalog/prides');
 
 		$data['breadcrumbs'] = array();
 
@@ -154,55 +153,43 @@ class ControllerInformationPrides extends \App\core\Controller {
 			'text' => $this->language->get('heading_title')
 		);
 
-		if (isset($this->request->get['news_id'])) {
-			$news_id = $this->request->get['news_id'];
+		if (isset($this->request->get['id'])) {
+			$id = $this->request->get['id'];
 		} else {
-			$news_id = 0;
+			$id = 0;
 		}
 
-		$news_info = $this->model_catalog_news->getNewsStory($this->request->get['news_id']);
+		$item = $this->model_catalog_prides->findOne($id);
 
-		if ($news_info) {
-
+		if ($item) {
+            $data['item'] = $item;
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
-			if ($news_info['meta_title']) {
-				$this->document->setTitle($news_info['meta_title']);
+			if ($item['meta_title']) {
+				$this->document->setTitle($item['meta_title']);
 			} else {
-				$this->document->setTitle($news_info['title']);
+				$this->document->setTitle($item['title']);
 			}
 
-			$this->document->setDescription($news_info['meta_description']);
-			$this->document->setKeywords($news_info['meta_keyword']);
+			$this->document->setDescription($item['meta_description']);
+			$this->document->setKeywords($item['meta_keyword']);
 
-			if ($news_info['meta_h1']) {
-				$data['heading_title'] = $news_info['meta_h1'];
+			if (isset($item['meta_h1']) && $item['meta_h1']) {
+				$data['heading_title'] = $item['meta_h1'];
 			} else {
-				$data['heading_title'] = $news_info['title'];
+				$data['heading_title'] = $item['title'];
 			}
 
 			$data['breadcrumbs'][] = array(
-				'text' => $news_info['title'],
-				'href' => $this->url->link('information/news/info', 'news_id=' . $news_id)
+				'text' => $item['title'],
+				'href' => $this->url->link('information/prides/info', 'id=' . $id)
 			);
 
-			$this->document->addLink($this->url->link('information/news', 'news_id=' . $this->request->get['news_id']),
+			$this->document->addLink($this->url->link('information/prides', 'id=' . $this->request->get['id']),
 				'canonical');
 
-			$data['description'] = html_entity_decode($news_info['description']);
-
-			$data['viewed'] = sprintf($this->language->get('text_viewed'), $news_info['viewed']);
-			$data['posted'] = date($this->language->get('date_format_short'), strtotime($news_info['date_added']));
-
-			if ($this->config->get('news_setting')) {
-				$news_setting = $this->config->get('news_setting');
-			}else{
-				$news_setting['news_thumb_width']  = '220';
-				$news_setting['news_thumb_height'] = '220';
-				$news_setting['news_popup_width']  = '560';
-				$news_setting['news_popup_height'] = '560';
-			}
+			$data['description'] = html_entity_decode($item['description']);
 
 			if(isset($news_setting['news_share'])){
 				$data['news_share'] = $news_setting['news_share'];
@@ -211,38 +198,14 @@ class ControllerInformationPrides extends \App\core\Controller {
 			}
 			$this->load->model('tool/image');
 
-			if ($news_info['image']) {
-				$data['image'] = true;
-			} else {
-				$data['image'] = false;
-			}
-			if($news_info['image']){
-				$data['thumb'] = $this->model_tool_image->resize($news_info['image'], $news_setting['news_thumb_width'],
-				$news_setting['news_thumb_height']);
-				$data['popup'] = $this->model_tool_image->resize($news_info['image'], $news_setting['news_popup_width'],
-				$news_setting['news_popup_height']);
-			}else{
-				$data['thumb'] = false;
-				$data['popup'] = false;
-			}
-
-			$data['button_news'] = $this->language->get('button_news');
-			$data['button_continue'] = $this->language->get('button_continue');
-
-			$data['news_list'] = $this->url->link('information/news');
+			$data['images'] = $this->getDataImage($item);
+			$data['prides'] = $this->url->link('information/prides');
 			$data['continue'] = $this->url->link('common/home');
-
 			if (isset($_SERVER['HTTP_REFERER'])) {
 				$data['referred'] = $_SERVER['HTTP_REFERER'];
 			}
 
-			$data['refreshed'] = 'http://' . $_SERVER['HTTP_HOST'] . '' . $_SERVER['REQUEST_URI'];
-
-			if (isset($data['referred'])) {
-				$this->model_catalog_news->updateViewed($this->request->get['news_id']);
-			}
-
-			$data['description'] = html_entity_decode($news_info['description'], ENT_QUOTES, 'UTF-8');
+			$data['description'] = html_entity_decode($item['description'], ENT_QUOTES, 'UTF-8');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -251,13 +214,13 @@ class ControllerInformationPrides extends \App\core\Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('information/news', $data));
+			$this->response->setOutput($this->load->view('information/prides_item', $data));
 
 		} else {
 			$url = '';
 
-			if (isset($this->request->get['news_id'])) {
-				$url .= '&news_id=' . $this->request->get['news_id'];
+			if (isset($this->request->get['id'])) {
+				$url .= 'id=' . $this->request->get['id'];
 			}
 
 			if (isset($this->request->get['sort'])) {
@@ -303,4 +266,35 @@ class ControllerInformationPrides extends \App\core\Controller {
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
+
+    protected function getDataImage($item){
+        $images = [];
+        if (isset($item['image'])) {
+            $images[] = $this->getResizeImage($item['image']);
+        }
+        if (isset($item['more_images'])) {
+            foreach ($item['more_images'] as $more_image) {
+                $images[] = $this->getResizeImage($more_image['src']);
+            }
+        }
+        return $images;
+	}
+
+    protected function getResizeImage($image){
+        $setting['news_thumb_width']  = '300';
+        $setting['news_thumb_height'] = '300';
+        $setting['news_popup_width']  = '800';
+        $setting['news_popup_height'] = '800';
+
+        if(!empty($image)){
+            $thumb = $this->model_tool_image->resize($image, $setting['news_thumb_width'],
+                $setting['news_thumb_height']);
+            $popup = $this->model_tool_image->resize($image, $setting['news_popup_width'],
+                $setting['news_popup_height']);
+        }else{
+            $thumb = false;
+            $popup = false;
+        }
+        return compact('thumb','popup');
+    }
 }
