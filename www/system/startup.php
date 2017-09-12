@@ -81,7 +81,12 @@ function library($class) {
 
 		return true;
 	} else {
-		return false;
+        $file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', $class) . '.php';
+        if (is_file($file)){
+            return true;
+        } else {
+            return false;
+        }
 	}
 }
 
