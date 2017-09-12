@@ -3,6 +3,7 @@ class ControllerExtensionModulePridesMain extends Controller {
 
 	public function index($setting = []) {
         $this->load->model('catalog/prides');
+        $this->load->model('tool/image');
         $items = $this->model_catalog_prides->getListForMain(7);
         $imgList = 'list_main_prides.jpg';
         $data['imgList'] = $this->model_tool_image->resize($imgList, 500, 500);
