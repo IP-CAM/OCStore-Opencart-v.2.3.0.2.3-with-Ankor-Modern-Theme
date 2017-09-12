@@ -1,7 +1,9 @@
 <?php
-use app\core\App;
+
 
 //Main class
+use app\core\App;
+
 App::Init();
 
 // Registry
