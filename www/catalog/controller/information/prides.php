@@ -1,6 +1,6 @@
 <?php
 
-class ControllerInformationPrides extends \App\core\Controller {
+class ControllerInformationPrides extends \app\core\Controller {
 
 	public function index(){
 		$this->load->language('information/prides');

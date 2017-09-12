@@ -1,5 +1,5 @@
 <?php
-use App\core\App;
+use app\core\App;
 
 //Main class
 App::Init();

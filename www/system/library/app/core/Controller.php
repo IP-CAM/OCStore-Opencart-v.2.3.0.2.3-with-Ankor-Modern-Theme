@@ -6,7 +6,7 @@
  * Time: 14:09
  */
 
-namespace App\core;
+namespace app\core;
 
 
 class Controller extends \Controller {

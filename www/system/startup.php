@@ -1,6 +1,6 @@
 <?php
 // Error Reporting
-use App\core\App;
+use app\core\App;
 
 error_reporting(E_ALL);
 
