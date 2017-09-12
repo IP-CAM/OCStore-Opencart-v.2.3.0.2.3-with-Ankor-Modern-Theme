@@ -83,6 +83,7 @@ function library($class) {
 	} else {
         $file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', $class) . '.php';
         if (is_file($file)){
+            include_once(modification($file));
             return true;
         } else {
             return false;
