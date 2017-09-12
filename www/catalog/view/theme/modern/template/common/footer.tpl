@@ -221,7 +221,7 @@ $('*').removeClass('filter_map');
 $('*').remove('.img_map');
 $('*').remove('.block-contacts2');
 var height= $("body").height();
-$("html,body").animate({"scrollTop":height},speed);
+$("html,body").animate({"scrollTop"}:height},speed);
 });
 $('.footer_contacts').click(function(){
 $('#map123').stop().animate({height:hoverHeight},speed);
@@ -229,7 +229,7 @@ $('*').removeClass('filter_map');
 $('*').remove('.img_map');
 $('*').remove('.block-contacts2');
 var height= $("body").height();
-$("html,body").animate({"scrollTop":height},speed);
+$("html,body").animate({"scrollTop"}:height},speed);
 });
 }
 }
