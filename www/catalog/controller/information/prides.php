@@ -149,7 +149,7 @@ class ControllerInformationPrides extends \App\core\Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('information/news'),
+			'href' => $this->url->link('information/prides'),
 			'text' => $this->language->get('heading_title')
 		);
 

@@ -39,6 +39,7 @@
 									<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
 									<td class="center"><?php echo $column_image; ?></td>
 									<td class="center"><?php echo $column_title; ?></td>
+									<td class="left">Показывать на главной</td>
 									<td class="left"><?php echo $column_status; ?></td>
 									<td class="left"><?php echo $column_action; ?></td>
 								</tr>
@@ -65,8 +66,10 @@
 											</td>
 <!--											title-->
 											<td class="left"><?php echo $item['title']; ?></td>
+											<td class="left"><?php echo $item['show_on_main']; ?></td>
 <!--											//status-->
 											<td class="left"><?php echo $item['status']; ?></td>
+
 <!--											//edit-->
 											<td class="text-right">
 												<a href="<?php echo $item['edit']; ?>"

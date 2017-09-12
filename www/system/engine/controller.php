@@ -98,6 +98,7 @@
      * @property Request $request
      * @property Language $language
      * @property Registry $registry
+     * @property Response $response
 	**/
 abstract class Controller {
 	protected $registry;

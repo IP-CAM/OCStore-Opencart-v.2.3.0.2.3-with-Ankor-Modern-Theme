@@ -208,6 +208,7 @@ class ControllerCatalogPrides extends Controller {
 				'id'     	=> $pride['id'],
 				'title'       	=> $pride['title'],
 				'image'      	=> $image,
+				'show_on_main'      	=> ($pride['show_on_main'] ? 'Да' : 'Нет'),
 				'status'     	=> ($pride['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'selected'    	=> isset($this->request->post['selected']) && in_array($pride['id'], $this->request->post['selected']),
 				'edit'      	=> $this->url->link('catalog/prides/edit', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true),
