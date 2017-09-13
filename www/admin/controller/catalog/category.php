@@ -432,6 +432,19 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($category_info)) {
 			unset($data['categories'][$category_info['category_id']]);
 		}
+        $data['type_products'] = 0;
+        if (isset($category_info)){
+            $data['type_products'] = $category_info['type_products'];
+        }
+        if (isset($this->request->post['type_products'])) {
+            $data['type_products'] = $this->request->post['type_products'];
+        }
+        $data['type_utp'] = $category_info['type_utp'];
+        if (isset($this->request->post['type_utp'])) {
+            $data['type_utp'] = $this->request->post['type_utp'];
+        }
+        $utp = $this->getDataUtp($data['type_utp']);
+        $data = array_merge($data,$utp);
 
 		if (isset($this->request->post['parent_id'])) {
 			$data['parent_id'] = $this->request->post['parent_id'];
@@ -543,7 +556,6 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_layout'] = array();
 		}
-
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -755,4 +767,43 @@ class ControllerCatalogCategory extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    protected function getDataUtp($curType){
+
+        $path = '/utp/';
+        $fileList = $this->getTplList($path);
+        $data['curUtp'] = '-';
+        if (!empty($curType)) {
+            $data['curUtp'] = $curType;
+        }
+        $data['allUtp'][''] = '-';
+        foreach ($fileList as $file) {
+            $key = $path . $file;
+            $data['allUtp'][$key] = $file;
+        }
+        return $data;
+	}
+
+    protected function getNameUtp($path){
+        if (empty($path)) {
+            return '-';
+        }
+        return array_pop(explode('/',$path));
+	}
+
+    protected function getTplList($path){
+        $path = DIR_ADD_TPL. '/' . $path;
+        $fileList = [];
+        $scandir = scandir($path);
+        if (empty($scandir))
+            return $fileList;
+        foreach (scandir($path) as $nameFile ) {
+            if (substr($nameFile,-4) <> '.tpl') {
+                continue;
+            }
+            $fileList[] = substr($nameFile, 0, -4);
+        }
+        return $fileList;
+    }
+
 }
