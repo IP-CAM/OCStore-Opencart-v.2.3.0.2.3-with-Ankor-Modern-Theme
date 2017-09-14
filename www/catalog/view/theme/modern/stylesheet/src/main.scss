@@ -97,20 +97,26 @@
   }
 }
 
+.head_search{
+  top: 18px;
+}
 .menu-top{
   font-family: Roboto;
   color: #000000;
   background-color: #8f8f8f;
   margin: auto;
+
 }
 
 .top-header{
   border-bottom: none;
+  padding-top: 0;
 }
 
 #logo{
   img{
     width: auto;
+    top: -15px;
   }
 }
 
@@ -129,3 +135,11 @@
   }
 }
 //media 15px 15px
+
+.navcentr{
+  height: 125px;
+}
+
+.fn_header{
+  font-size: 24px;
+}
