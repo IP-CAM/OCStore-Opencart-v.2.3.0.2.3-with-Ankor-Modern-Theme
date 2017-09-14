@@ -12,7 +12,8 @@ www/download/
 www/system/cache/
 www/system/logs/
 
-www/system/storage/
+www/system/storage/*
+!www/system/storage/modification
 
 # vQmod log files
 www/vqmod/logs/*
