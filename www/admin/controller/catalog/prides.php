@@ -1,5 +1,5 @@
 <?php
-use App\core\App;
+use app\core\App;
 
 /**
  * Class ControllerCatalogPrides
@@ -208,6 +208,7 @@ class ControllerCatalogPrides extends Controller {
 				'id'     	=> $pride['id'],
 				'title'       	=> $pride['title'],
 				'image'      	=> $image,
+				'show_on_main'      	=> ($pride['show_on_main'] ? 'Да' : 'Нет'),
 				'status'     	=> ($pride['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'selected'    	=> isset($this->request->post['selected']) && in_array($pride['id'], $this->request->post['selected']),
 				'edit'      	=> $this->url->link('catalog/prides/edit', 'token=' . $this->session->data['token'] . '&id=' . $pride['id'], true),
@@ -337,10 +338,12 @@ class ControllerCatalogPrides extends Controller {
         foreach ($fields as $field) {
             $data[$field] = null;
         }
-        $findItem = false;
+        $data['sort'] = 100;
+        $findItem = [];
         if ((isset($this->request->get['id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
             $findItem = $this->model_catalog_prides->findOne($this->request->get['id']);
         }
+
         $data = array_merge($data,$findItem);
 
         $this->setLanguage($data,'getForm');

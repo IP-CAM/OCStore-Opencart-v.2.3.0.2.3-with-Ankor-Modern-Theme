@@ -142,6 +142,14 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);					
 			}
+
+            if ($this->user->hasPermission('access', 'catalog/prides')) {
+                $catalog[] = array(
+                    'name'	   => 'Наша гордость',
+                    'href'     => $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true),
+                    'children' => array()
+                );
+            }
 			
 			if ($catalog) {
 				$data['menus'][] = array(

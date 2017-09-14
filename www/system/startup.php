@@ -1,6 +1,6 @@
 <?php
 // Error Reporting
-use App\core\App;
+use app\core\App;
 
 error_reporting(E_ALL);
 
@@ -81,7 +81,13 @@ function library($class) {
 
 		return true;
 	} else {
-		return false;
+        $file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', $class) . '.php';
+        if (is_file($file)){
+            include_once(modification($file));
+            return true;
+        } else {
+            return false;
+        }
 	}
 }
 
@@ -106,7 +112,10 @@ require_once(DIR_SYSTEM . 'helper/json.php');
 //defines
 define('DIR', $_SERVER['DOCUMENT_ROOT']);
 define('DIR_APP', DIR . '/system/library/app');
+define('DIR_ADD_TPL', DIR . '/admin/view/add_tpl');
+
 define('DEBUG',1);
+
 
 function start($application_config) {
 	require_once(DIR_SYSTEM . 'framework.php');	

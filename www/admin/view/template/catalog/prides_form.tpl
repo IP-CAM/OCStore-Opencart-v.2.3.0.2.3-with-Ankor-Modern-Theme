@@ -1,4 +1,8 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+<?php use app\libs\Form;
+
+echo $header; ?><?php echo $column_left;
+$collectTumbler = ['0' => 'Отключено','1' => 'Включено'];
+?>
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
@@ -48,6 +52,16 @@
 										<?php if ($error_title) { ?>
 											<div class="text-danger"><?php echo $error_title; ?></div>
 										<?php } ?>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<?=Form::label('Показывать на главной','show_on_main',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-4">
+										<?=Form::select('show_on_main',
+											$collectTumbler, $show_on_main,
+											['class' => 'form-control']
+										)?>
 									</div>
 								</div>
 

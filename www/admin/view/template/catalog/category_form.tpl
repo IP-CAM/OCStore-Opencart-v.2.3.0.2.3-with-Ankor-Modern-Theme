@@ -1,4 +1,6 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+<?php use app\libs\Form;
+
+echo $header; ?><?php echo $column_left; ?>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -198,6 +200,35 @@
                   </select>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-sm-2 text-right">
+                  <h3>
+                    <span class="label label-primary">Дополнительно</span>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <?=Form::label('Тип товаров','type_products',['class'=>'col-sm-2 control-label']);?>
+                <div class="col-sm-4">
+                  <?=Form::select('type_products',
+                      ['0' => 'Товары', '1' => 'Услуги'], $type_products,
+                      ['class' => 'form-control']
+                  )?>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <?=Form::label('Тип УТП','type_utp',['class'=>'col-sm-2 control-label']);?>
+                <div class="col-sm-4">
+                  <?=Form::select('type_utp',
+                      $allUtp, $curUtp,
+                      ['class' => 'form-control']
+                  )?>
+                </div>
+              </div>
+
             </div>
             <div class="tab-pane" id="tab-design">
               <div class="table-responsive">

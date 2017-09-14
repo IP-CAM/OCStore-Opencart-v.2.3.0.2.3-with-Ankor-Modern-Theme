@@ -201,11 +201,28 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 			</p>
 			<?php } ?>
 		<div class="cart">
-		<?php if ($product['quantity'] <= 0 && $aridiusinstock_status ) { ?>
-			<button type="button" class="btn-instock" onclick="instock.add('<?php echo $product['product_id']; ?>');" data-product-id="<? echo $product['product_id']; ?>"><?php echo $button_instock; ?></button>
-			<?php } else { ?>
-			<button type="button" class="btn-cartpr" onclick="cart.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
-			<?php } ?>
+			<?php //если это товар
+			if ($type_products == 0):?>
+				<?php if ($product['quantity'] <= 0 && $aridiusinstock_status ) { ?>
+					<button type="button" class="btn-instock btnProd"
+							onclick="instock.add('<?php echo $product['product_id']; ?>');"
+							data-product-id="<? echo $product['product_id']; ?>">
+						<?php echo $button_instock; ?>
+					</button>
+					<?php } else { ?>
+					<button type="button" class="btn-cartpr btnProd"
+							onclick="cart.add('<?php echo $product['product_id']; ?>');">
+						<i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?>
+					</button>
+				<?php } ?>
+			<? //если это услуга
+			elseif ($type_products == 1):?>
+				<button type="button" class="btn-instock btnProd"
+						onclick="instock.add('<?php echo $product['product_id']; ?>');"
+						data-product-id="<? echo $product['product_id']; ?>">
+					Заказать рассчет
+				</button>
+			<?endif;?>
 		</div>
 		<div class="effect-hover">
 		<?php if ($modern_wishlist_cat !=1) { ?>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\core;
+namespace app\core;
 class Debug {
     protected $debugLibs = true;
     protected $pathFile = '/bitrix/art_debug.html';

@@ -174,6 +174,9 @@ class ControllerProductCategory extends Controller {
 			$data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['compare'] = $this->url->link('product/compare');
 
+            $data['type_products'] = $category_info['type_products'];
+            $data['type_utp'] = $category_info['type_utp'];
+
 			$url = '';
 
 			if (isset($this->request->get['filter'])) {
@@ -448,7 +451,6 @@ class ControllerProductCategory extends Controller {
 			$data['sort'] = $sort;
 			$data['order'] = $order;
 			$data['limit'] = $limit;
-
 			$data['continue'] = $this->url->link('common/home');
 
 			$data['column_left'] = $this->load->controller('common/column_left');

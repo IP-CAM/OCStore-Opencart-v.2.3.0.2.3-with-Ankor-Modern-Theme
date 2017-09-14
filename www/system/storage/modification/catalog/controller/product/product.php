@@ -16,6 +16,9 @@ class ControllerProductProduct extends Controller {
 		);
 
 		$this->load->model('catalog/category');
+        $data['type_utp'] = '';
+        $data['type_products'] = 0;
+        $data['file_utp'] = '';
 
 		if (isset($this->request->get['path'])) {
 			$path = '';
@@ -46,6 +49,19 @@ class ControllerProductProduct extends Controller {
 
 			if ($category_info) {
 				$url = '';
+                $data['type_utp'] =  $category_info['type_utp'];
+                $data['type_products'] =  $category_info['type_products'];
+                if (!empty($data['type_utp'])) {
+                    $file = DIR_ADD_TPL . $data['type_utp'] . '.tpl';
+                    if (file_exists($file)) {
+                        $data['file_utp'] = $file;
+                    }
+                } else {
+                    $file = DIR_ADD_TPL . '/utp/product.tpl';
+                    if (file_exists($file)) {
+                        $data['file_utp'] = $file;
+                    }
+                }
 
 				if (isset($this->request->get['sort'])) {
 					$url .= '&sort=' . $this->request->get['sort'];
@@ -762,7 +778,7 @@ class ControllerProductProduct extends Controller {
 						$data['ard_quckview'] = '';
 					}
 					
-      
+
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
