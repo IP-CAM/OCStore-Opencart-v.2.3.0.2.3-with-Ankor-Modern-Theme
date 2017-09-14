@@ -778,7 +778,7 @@ class ControllerProductProduct extends Controller {
 						$data['ard_quckview'] = '';
 					}
 					
-      
+
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
