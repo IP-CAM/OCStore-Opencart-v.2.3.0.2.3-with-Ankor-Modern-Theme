@@ -2,6 +2,7 @@
 
 
 namespace app\models;
+use app\core\App;
 
 
 /**
@@ -78,6 +79,23 @@ class Callback {
     }
 
     /**
+     * @return array
+     */
+    public static function getLabelsStatus(){
+        $res = [
+            self::STATUS_BEGIN => 'Не начат',
+            self::STATUS_WORK => 'В работе',
+            self::STATUS_END => 'Завершен'
+        ];
+        return $res;
+    }
+
+    public function getLabelStatus(){
+        $statuses  = self::getLabelsStatus();
+        return $statuses[$this->status];
+    }
+
+    /**
      * @param $sql
      * @param $params
      * @return self[]
@@ -88,10 +106,48 @@ class Callback {
         foreach ($beans as $bean) {
             $item = new self();
             foreach ($item->attributes as $key => $value) {
-                $item->attributes[$key] = $bean->key;
+                $item->attributes[$key] = $bean->$key;
             }
+            $item->id = $bean->id;
             $result[] = $item;
         }
         return $result;
+    }
+
+    public function __get($name)
+    {
+        return $this->attributes[$name];
+    }
+
+    public function __set($name, $value)
+    {
+        if (isset($this->attributes[$name])) {
+            $this->attributes[$name] = $value;
+        }
+    }
+
+    public static function totalCount(){
+        return \R::count(self::$tableName);
+    }
+
+    public static function delete($id) {
+        $bean = \R::findOne(self::$tableName,'id = ?',[$id]);
+        \R::trash($bean);
+    }
+
+    /**
+     * @param $sql
+     * @param $params
+     * @return self
+     */
+    public static function findOneById($id) {
+        $result = [];
+        $bean  = \R::findOne(self::$tableName, 'id = :id', [':id' => $id]);
+        $item = new self();
+        foreach ($item->attributes as $key => $value) {
+            $item->attributes[$key] = $bean->$key;
+        }
+        $item->id = $bean->id;
+        return $item;
     }
 }

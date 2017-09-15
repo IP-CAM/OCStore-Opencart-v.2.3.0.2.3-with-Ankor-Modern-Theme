@@ -1,11 +1,12 @@
 <?php
 use app\core\App;
+use app\models\Callback;
 
 /**
  * Class ControllerCatalogPrides
  * @property ModelCatalogPrides model_catalog_prides
  */
-class ControllerCatalogPrides extends Controller {
+class ControllerCatalogCallback extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -31,10 +32,13 @@ class ControllerCatalogPrides extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/prides');
+
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_prides->add($this->request->post);
+
+            $call = new Callback();
+            $call->load($this->request->post);
+            $call->save();
 			$this->session->data['success'] = $this->language->get('text_success');
 			$url = '';
 			if (isset($this->request->get['sort'])) {
@@ -46,7 +50,7 @@ class ControllerCatalogPrides extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			$this->response->redirect($this->url->link('catalog/prides', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/callback', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -54,29 +58,25 @@ class ControllerCatalogPrides extends Controller {
 
 	public function edit() {
 		$this->load->language('catalog/prides');
-		$this->load->model('catalog/prides');
+
         $this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_prides->edit($this->request->get['id'], $this->request->post);
-
+            $call = Callback::findOneById($this->request->get['id']);
+            $call->load($this->request->post);
+            $call->save();
 			$this->session->data['success'] = $this->language->get('text_success');
-
 			$url = '';
-
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-
-			$this->response->redirect($this->url->link('catalog/prides', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/callback', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -84,7 +84,6 @@ class ControllerCatalogPrides extends Controller {
 	
 	public function delete() {
 		$this->load->language('catalog/prides');
-        $this->load->model('catalog/prides');
 		$this->document->setTitle($this->language->get('heading_title'));
         $selected = [];
         if (isset($this->request->post['selected'])) {
@@ -95,7 +94,7 @@ class ControllerCatalogPrides extends Controller {
 
 		if (!empty($selected) && $this->validateDelete()) {
 			foreach ($selected as $id) {
-				$this->model_catalog_prides->delete($id);
+				\app\models\Callback::delete($id);
 			}
 			$this->session->data['success'] = $this->language->get('text_success');
 			$url = '';
@@ -108,57 +107,71 @@ class ControllerCatalogPrides extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			$this->response->redirect($this->url->link('catalog/prides', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/callback', 'token=' . $this->session->data['token'] . $url, true));
 		}
 		$this->getList();
 	}
 
 	private function getList() {
-        $prides = $this->model_catalog_prides->find();
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'nd.title';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		$this->load->language('catalog/prides');
-
-		$this->load->model('catalog/prides');
         $data = $this->language->all();
+        $data = $this->getAlerts($data);
+        $data['controller'] = $this;
+        $data['breadcrumbs'] = $this->getBreadcrumbs();
+        $data['callList'] = \app\models\Callback::getListAdmin($data);
 
-		$data['heading_title'] = $this->language->get('heading_title');
-	
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-	
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-		
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-	
-		$data['breadcrumbs'] = $this->getBreadcrumbs();
+        $data['add'] = $this->url->link('catalog/callback/add', 'token=' . $this->session->data['token'], true);
+        $data['delete'] = $this->url->link('catalog/callback/delete', 'token=' . $this->session->data['token'], true);
+        $data['setting'] = $this->url->link('catalog/callback/setting', 'token=' . $this->session->data['token'], true);
+
+        $data['pagination'] = $this->getPagination(\app\models\Callback::totalCount());
+
+        //MAIN DATA
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+        $this->response->setOutput($this->load->view('catalog/callback/list', $data));
 
 	}
+
+	private function getDataSort() {
+        if (isset($this->request->get['sort'])) {
+            $sort = $this->request->get['sort'];
+        } else {
+            $sort = 'nd.title';
+        }
+        return $sort;
+    }
+
+	private function getPagination($total) {
+	    if (isset($this->request->get['page'])) {
+            $page = $this->request->get['page'];
+        } else {
+            $page = 1;
+        }
+        $pagination = new Pagination();
+        $pagination->total = $total;
+        $pagination->page = $page;
+        $pagination->limit = $this->config->get('config_limit_admin');
+        $pagination->url = $this->url->link('catalog/pride', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
+
+        return $pagination->render();
+    }
+
+	private function getAlerts($data) {
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
+        return $data;
+    }
 
     private function getBreadcrumbs(){
 
@@ -171,7 +184,7 @@ class ControllerCatalogPrides extends Controller {
         );
 
         $breadcrumbs[] = array(
-            'href'      => $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true),
+            'href'      => $this->url->link('catalog/callback', 'token=' . $this->session->data['token'], true),
             'text'      => $this->language->get('heading_title'),
             'separator' => ' :: '
         );
@@ -186,123 +199,56 @@ class ControllerCatalogPrides extends Controller {
         $this->$methodRun($data);
     }
 
-    private function setLangGetForm(&$data){
-        $data['text_form'] = !isset($this->request->get['id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-        $data['text_default'] = $this->language->get('text_default');
-        $data['text_enabled'] = $this->language->get('text_enabled');
-        $data['text_disabled'] = $this->language->get('text_disabled');
-        $data['text_image_manager'] = $this->language->get('text_image_manager');
-        $data['text_browse'] = $this->language->get('text_browse');
-        $data['text_clear'] = $this->language->get('text_clear');
-
-        $data['text_select_all'] = $this->language->get('text_select_all');
-        $data['text_unselect_all'] = $this->language->get('text_unselect_all');
-        $data['column_date_added'] = $this->language->get('column_date_added');
-
-        $data['entry_title'] = $this->language->get('entry_title');
-        $data['entry_meta_title'] = $this->language->get('entry_meta_title');
-        $data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
-        $data['entry_meta_description'] = $this->language->get('entry_meta_description');
-        $data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
-        $data['entry_description'] = $this->language->get('entry_description');
-        $data['entry_date_added'] = $this->language->get('entry_date_added');
-        $data['entry_store'] = $this->language->get('entry_store');
-        $data['entry_keyword'] = $this->language->get('entry_keyword');
-        $data['entry_image'] = $this->language->get('entry_image');
-        $data['entry_status'] = $this->language->get('entry_status');
-
-        $data['button_save'] = $this->language->get('button_save');
-        $data['button_cancel'] = $this->language->get('button_cancel');
-
-        $data['tab_general'] = $this->language->get('tab_general');
-        $data['tab_data'] = $this->language->get('tab_data');
-
-        $data['help_keyword'] = $this->language->get('help_keyword');
-    }
-
 	private function getForm() { 
 
 		$this->load->language('catalog/prides');
-		$this->load->model('catalog/prides');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $data = [];
-        $fields = $this->model_catalog_prides->getColumns();
-        foreach ($fields as $field) {
-            $data[$field] = null;
+        if ((isset($this->request->get['id'])) ) {
+            $callback = Callback::findOneById($this->request->get['id']);
+        } else {
+            $callback = new Callback();
         }
-        $data['sort'] = 100;
-        $findItem = [];
-        if ((isset($this->request->get['id'])) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-            $findItem = $this->model_catalog_prides->findOne($this->request->get['id']);
+        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+            $callback->load($this->request->post);
         }
 
-        $data = array_merge($data,$findItem);
-
-        $this->setLanguage($data,'getForm');
-	
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['title'])) {
-			$data['error_title'] = $this->error['title'];
-		} else {
-			$data['error_title'] = array();
-		}
-
-		if (isset($this->error['description'])) {
-			$data['error_description'] = $this->error['description'];
-		} else {
-			$data['error_description'] = '';
-		}
-
-		if (isset($this->error['meta_title'])) {
-			$data['error_meta_title'] = $this->error['meta_title'];
-		} else {
-			$data['error_meta_title'] = array();
-		}
-
-		if (isset($this->error['keyword'])) {
-			$data['error_keyword'] = $this->error['keyword'];
-		} else {
-			$data['error_keyword'] = '';
-		}
-	
-		$data['breadcrumbs'] = $this->getBreadcrumbs();
-	
-		if (!isset($this->request->get['id'])) {
-			$data['action'] = $this->url->link('catalog/prides/add', 'token=' . $this->session->data['token'], true);
-		} else {
-			$data['action'] = $this->url->link('catalog/prides/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
-		}
-		$data['cancel'] = $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true);
-
-		$this->load->model('tool/image');
-        $data['noImage'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($findItem) && is_file(DIR_IMAGE . $findItem['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($findItem['image'], 100, 100);
-		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-		}
-
-        if (isset($data['more_images'])) {
-            foreach ($data['more_images'] as &$more_image) {
-                $more_image['thumb'] = $this->model_tool_image->resize($more_image['src'], 100, 100);
-            }
+        if (!isset($this->request->get['id'])) {
+            $data['action'] = $this->url->link('catalog/callback/add', 'token=' . $this->session->data['token'], true);
+        } else {
+            $data['action'] = $this->url->link('catalog/callback/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
         }
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
-	
+        $data['heading_title'] = $this->language->get('heading_title');
+
+        $data['text_list'] = $this->language->get('text_list');
+        $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_no_results'] = $this->language->get('text_no_results');
+
+        $data['column_image'] = $this->language->get('column_image');
+        $data['column_title'] = $this->language->get('column_title');
+        $data['column_date_added'] = $this->language->get('column_date_added');
+        $data['column_viewed'] = $this->language->get('column_viewed');
+        $data['column_status'] = $this->language->get('column_status');
+        $data['column_action'] = $this->language->get('column_action');
+
+        $data['button_add'] = $this->language->get('button_add');
+        $data['button_edit'] = $this->language->get('button_edit');
+        $data['button_delete'] = $this->language->get('button_delete');
+        $data['button_setting'] = $this->language->get('button_setting');
+
+        $data = $this->getAlerts($data);
+
+        $data['breadcrumbs'] = $this->getBreadcrumbs();
+
+        $data['call'] = $callback;
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view('catalog/prides_form', $data));
+		$this->response->setOutput($this->load->view('catalog/callback/form', $data));
 
 	}
 
