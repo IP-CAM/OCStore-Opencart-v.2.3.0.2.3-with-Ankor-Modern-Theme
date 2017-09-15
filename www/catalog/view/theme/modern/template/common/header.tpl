@@ -35,6 +35,7 @@
 	<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 	<?php } ?>
 <script src="catalog/view/theme/modern/js/common.js" type="text/javascript"></script>
+<script src="catalog/view/theme/modern/js/main.js" type="text/javascript"></script>
 <script src="catalog/view/theme/modern/js/aridius/aridiusquickview.js" type="text/javascript"></script>
 <?php foreach ($links as $link) { ?>
 	<link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />

@@ -12,6 +12,9 @@ www/download/
 www/system/cache/
 www/system/logs/
 
+www/system/library/app/config
+
+
 www/system/storage/*
 !www/system/storage/modification
 
