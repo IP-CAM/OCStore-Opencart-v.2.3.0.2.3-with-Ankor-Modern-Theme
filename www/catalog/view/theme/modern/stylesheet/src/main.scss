@@ -100,12 +100,12 @@
 .head_search{
   top: 18px;
 }
+
 .menu-top{
   font-family: Roboto;
   color: #000000;
   background-color: #8f8f8f;
   margin: auto;
-
 }
 
 .top-header{
@@ -125,6 +125,7 @@
 }
 .navcentr{
   margin: auto;
+  height: 125px;
 }
 
 .list-inline{
@@ -136,10 +137,46 @@
 }
 //media 15px 15px
 
-.navcentr{
-  height: 125px;
-}
 
 .fn_header{
   font-size: 24px;
 }
+
+
+#menu{
+  .nav > li > a{
+    color: #000000;
+    line-height: 16px;
+    text-align: center;
+    max-width: 140px;
+    font-weight: 400;
+    height: 55px;
+    margin-top: -1px;
+    display: flex;
+    align-items: center;
+  }
+  .nav > li > a:hover{
+    color: #ffffff;
+  }
+}
+
+
+.flex{
+  display: flex;
+}
+
+/*.menu_adapt{
+  height: 55px;
+  .top-menu{
+    height: inherit;
+    #top-menu{
+      height: inherit;
+      .nobackground {
+        height: inherit;
+        .navbar{
+          height: inherit;
+        }
+      }
+    }
+  }
+} */

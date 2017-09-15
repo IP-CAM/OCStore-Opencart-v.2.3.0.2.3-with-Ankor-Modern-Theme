@@ -867,8 +867,10 @@ color: #<?php echo $modern_color_tittle_news ?>;
 	<?php foreach ($categories as $category) { ?>
 		<?php if ($category['children']) { ?>
 			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown"><a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
-			<div class="dropdown-menu">
+		<div class="flex">
+		<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown"><a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
+		</div>
+		<div class="dropdown-menu">
 			<div class="dropdown-inner children-category">
 			<?php if ($category['image_main'] && $modern_main_photos_menu !=1) { ?>
 				<a href="<?php echo $category['href']; ?>"><img class="image_main img-responsive" alt="<?php echo $category['name']; ?>" title="<?php echo $category['name']; ?>" src="<?php echo $category['image_main']; ?>"></a>
