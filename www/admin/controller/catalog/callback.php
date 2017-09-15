@@ -11,16 +11,16 @@ class ControllerCatalogCallback extends Controller {
 
 	public function index() {
 
-		$this->load->language('catalog/prides');
+		$this->load->language('catalog/callback');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
-			$this->model_setting_setting->editSetting(prides, $this->request->post);
+			$this->model_setting_setting->editSetting(callback, $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('catalog/callback', 'token=' . $this->session->data['token'], true));
 	
 		}
 
@@ -28,7 +28,7 @@ class ControllerCatalogCallback extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/prides');
+		$this->load->language('catalog/callback');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -57,7 +57,7 @@ class ControllerCatalogCallback extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/prides');
+		$this->load->language('catalog/callback');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
@@ -83,7 +83,7 @@ class ControllerCatalogCallback extends Controller {
 	}
 	
 	public function delete() {
-		$this->load->language('catalog/prides');
+		$this->load->language('catalog/callback');
 		$this->document->setTitle($this->language->get('heading_title'));
         $selected = [];
         if (isset($this->request->post['selected'])) {
@@ -201,7 +201,7 @@ class ControllerCatalogCallback extends Controller {
 
 	private function getForm() { 
 
-		$this->load->language('catalog/prides');
+		$this->load->language('catalog/callback');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $data = [];
@@ -253,15 +253,15 @@ class ControllerCatalogCallback extends Controller {
 	}
 
 	public function setting() {
-		$this->load->language('catalog/prides');
+		$this->load->language('catalog/callback');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('catalog/prides');
+		$this->load->model('catalog/callback');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateSetting()) {
-			$this->model_setting_setting->editSetting('prides_setting', $this->request->post);
+			$this->model_setting_setting->editSetting('callback_setting', $this->request->post);
 				if (isset($this->request->post['news_url'])) {
 					$this->model_catalog_news->setNewsListUrl($this->request->post['news_url']);
 				}	
@@ -395,14 +395,14 @@ class ControllerCatalogCallback extends Controller {
 	}
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'catalog/prides')) {
+		if (!$this->user->hasPermission('modify', 'catalog/callback')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		return !$this->error;
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/prides')) {
+		if (!$this->user->hasPermission('modify', 'catalog/callback')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 	
@@ -410,7 +410,7 @@ class ControllerCatalogCallback extends Controller {
 	}
 
 	protected function validateSetting() {
-		if (!$this->user->hasPermission('modify', 'catalog/prides')) {
+		if (!$this->user->hasPermission('modify', 'catalog/callback')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
