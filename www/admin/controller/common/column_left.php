@@ -150,6 +150,14 @@ class ControllerCommonColumnLeft extends Controller {
                     'children' => array()
                 );
             }
+
+            if ($this->user->hasPermission('access', 'catalog/callback')) {
+                $catalog[] = array(
+                    'name'	   => 'Обратная связь',
+                    'href'     => $this->url->link('catalog/callback', 'token=' . $this->session->data['token'], true),
+                    'children' => array()
+                );
+            }
 			
 			if ($catalog) {
 				$data['menus'][] = array(

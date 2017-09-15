@@ -178,7 +178,7 @@ class ControllerCatalogPrides extends Controller {
 		$data['breadcrumbs'] = $this->getBreadcrumbs();
 	
 		$data['add'] = $this->url->link('catalog/prides/add', 'token=' . $this->session->data['token'], true);
-		$data['delete'] = $this->url->link('catalog/news/delete', 'token=' . $this->session->data['token'], true);
+		$data['delete'] = $this->url->link('catalog/prides/delete', 'token=' . $this->session->data['token'], true);
 		$data['setting'] = $this->url->link('catalog/news/setting', 'token=' . $this->session->data['token'], true);
 	
 		$news_total = $this->model_catalog_prides->totalCount();

@@ -22,7 +22,11 @@ class ControllerCatalogCategory extends Controller {
 		$this->load->model('catalog/category');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_category->addCategory($this->request->post);
+		    $data = $this->request->post;
+            if (!isset($data['type_utp'])) {
+                $data['type_utp'] = '';
+            }
+			$this->model_catalog_category->addCategory($data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -436,15 +440,19 @@ class ControllerCatalogCategory extends Controller {
         if (isset($category_info)){
             $data['type_products'] = $category_info['type_products'];
         }
+        if (isset($category_info)){
+            $data['type_utp'] = $category_info['type_utp'];
+        }
         if (isset($this->request->post['type_products'])) {
             $data['type_products'] = $this->request->post['type_products'];
         }
-        $data['type_utp'] = $category_info['type_utp'];
+
         if (isset($this->request->post['type_utp'])) {
             $data['type_utp'] = $this->request->post['type_utp'];
+            $utp = $this->getDataUtp($data['type_utp']);
+            $data = array_merge($data,$utp);
         }
-        $utp = $this->getDataUtp($data['type_utp']);
-        $data = array_merge($data,$utp);
+
 
 		if (isset($this->request->post['parent_id'])) {
 			$data['parent_id'] = $this->request->post['parent_id'];

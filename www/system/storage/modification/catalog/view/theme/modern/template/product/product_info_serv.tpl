@@ -3,7 +3,7 @@
         <span>Цену уточняйте</span>
     </div>
     <div class="callback">
-        <a id="undersell-order">Связаться с менеджером</a>
+        <a href="javascript:void(0)" data-callback="on">Связаться с менеджером</a>
     </div>
     <div class="blockBtn">
         <button class="btn-cart btnProd">

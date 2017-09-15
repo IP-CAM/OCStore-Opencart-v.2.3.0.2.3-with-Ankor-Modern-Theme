@@ -1,9 +1,11 @@
 <?php
 class ModelCatalogCategory extends Model {
 	public function addCategory($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . ", type_products='" . (int)$data['type_products'] .
-            ", type_utp='" . $data['type_utp'] .
-            "', date_modified = NOW(), date_added = NOW()");
+	    $sql = "INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', type_products='" . (int)$data['type_products'] .
+        "', type_utp='" . $data['type_utp'] .
+        "', date_modified = NOW(), date_added = NOW()";
+//        \app\core\App::$debug->dDie($sql);
+		$this->db->query($sql);
 
 		$category_id = $this->db->getLastId();
 
