@@ -14,7 +14,7 @@ use app\core\App;
  * @property string url
  * @property int status
  */
-class Callback {
+class Callback extends AppModel {
     const STATUS_BEGIN = 0;
     const STATUS_WORK = 1;
     const STATUS_END = 2;
@@ -30,14 +30,6 @@ class Callback {
         'status' => self::STATUS_BEGIN,
         'url' => '',
     ];
-
-    public function load($data){
-        foreach ($this->attributes as $key => $value) {
-            if (isset($data[$key])) {
-                $this->attributes[$key] = $data[$key];
-            }
-        }
-    }
 
     public function validate($data){
         if ((utf8_strlen($data['firstName']) < 1) || (utf8_strlen($data['firstName']) > 250) ) {
@@ -70,7 +62,7 @@ class Callback {
         if (isset($data['limit']) && $data['limit'] > 1) {
             $limit = $data['limit'];
         }
-        $sql = 'ORDER BY id DESC LIMIT :start,:count';
+        $sql = 'ORDER BY status ASC,id DESC LIMIT :start,:count';
         $params = [
             ':start' => $start,
             ':count' => $limit,
@@ -95,59 +87,4 @@ class Callback {
         return $statuses[$this->status];
     }
 
-    /**
-     * @param $sql
-     * @param $params
-     * @return self[]
-     */
-    public static function find($sql, $params) {
-        $result = [];
-        $beans  = \R::find(self::$tableName, $sql, $params);
-        foreach ($beans as $bean) {
-            $item = new self();
-            foreach ($item->attributes as $key => $value) {
-                $item->attributes[$key] = $bean->$key;
-            }
-            $item->id = $bean->id;
-            $result[] = $item;
-        }
-        return $result;
-    }
-
-    public function __get($name)
-    {
-        return $this->attributes[$name];
-    }
-
-    public function __set($name, $value)
-    {
-        if (isset($this->attributes[$name])) {
-            $this->attributes[$name] = $value;
-        }
-    }
-
-    public static function totalCount(){
-        return \R::count(self::$tableName);
-    }
-
-    public static function delete($id) {
-        $bean = \R::findOne(self::$tableName,'id = ?',[$id]);
-        \R::trash($bean);
-    }
-
-    /**
-     * @param $sql
-     * @param $params
-     * @return self
-     */
-    public static function findOneById($id) {
-        $result = [];
-        $bean  = \R::findOne(self::$tableName, 'id = :id', [':id' => $id]);
-        $item = new self();
-        foreach ($item->attributes as $key => $value) {
-            $item->attributes[$key] = $bean->$key;
-        }
-        $item->id = $bean->id;
-        return $item;
-    }
 }

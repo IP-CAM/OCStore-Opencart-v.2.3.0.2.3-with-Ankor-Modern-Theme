@@ -233,6 +233,10 @@ class ControllerCatalogCallback extends Controller {
         $data['column_status'] = $this->language->get('column_status');
         $data['column_action'] = $this->language->get('column_action');
 
+        $data['button_save'] = $this->language->get('button_save');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['cancel'] = $this->url->link('catalog/callback', 'token=' . $this->session->data['token'], true);
+
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
         $data['button_delete'] = $this->language->get('button_delete');

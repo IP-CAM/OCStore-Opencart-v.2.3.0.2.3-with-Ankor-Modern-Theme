@@ -70,9 +70,9 @@ echo $header; ?><?php echo $column_left;
 
 
 								<div class="form-group">
-									<?=Form::label('Статус','type_products',['class'=>'col-sm-2 control-label']);?>
+									<?=Form::label('Статус','status',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-4">
-										<?=Form::select('type_products',
+										<?=Form::select('status',
 											\app\models\Callback::getLabelsStatus(), $call->status,
 											['class' => 'form-control']
 										)?>
