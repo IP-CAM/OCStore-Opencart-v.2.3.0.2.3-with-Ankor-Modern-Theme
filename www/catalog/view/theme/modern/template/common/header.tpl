@@ -517,6 +517,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 	</div>
 	<div class="collapse navbar-collapse navbar-ex1-collapse menu_adapt_coll">
 	<ul class="nav navbar-nav">
+
 	<?php if ($modern_ico_home !=1) { ?>
 		<li><a href="<?php echo $base; ?>"><i class="fa fa-home fa_homemenu"></i></a></li>
 		<?php } ?>
@@ -574,7 +575,8 @@ color: #<?php echo $modern_color_tittle_news ?>;
 	<?php foreach ($categories as $category) { ?>
 		<?php if ($category['children']) { ?>
 			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown"><a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
+			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
+            <li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown"> <a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
 			<div class="dropdown-menu">
 			<div class="dropdown-inner children-category">
 			<?php if ($category['image_main'] && $modern_main_photos_menu !=1) { ?>
@@ -613,7 +615,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 		<?php } ?>
 	</ul>
 	</div>
-	<ul class="nav navbar-nav">
+        <ul class="nav navbar-nav">
 
 	<?php if ($modern_top_links8 ) { ?>
 		<?php foreach ($modern_top_links8 as $modern_top_link8) { ?>
@@ -868,9 +870,8 @@ color: #<?php echo $modern_color_tittle_news ?>;
 	<?php foreach ($categories as $category) { ?>
 		<?php if ($category['children']) { ?>
 			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-		<div class="flex">
-		<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown"><a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
-		</div>
+		<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown">
+				<a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
 		<div class="dropdown-menu">
 			<div class="dropdown-inner children-category">
 			<?php if ($category['image_main'] && $modern_main_photos_menu !=1) { ?>
