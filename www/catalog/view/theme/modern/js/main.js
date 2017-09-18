@@ -4,6 +4,7 @@ $(document).ready(function() {
         e.preventDefault();
         $.magnificPopup.close();
     });
+    var calculationOrder = new CalculationOrder();
 });
 var Callback = function () {
     var self = this;
@@ -70,6 +71,77 @@ var Callback = function () {
             type: 'ajax'
         });
     };
+
+    this.constructor();
+};
+
+var CalculationOrder = function () {
+    var self = this;
+    this.block = $('#artCalculationOrder');
+    this.constructor = function () {
+        $('[data-callculationOrder=on]').on('click', self.open);
+        $(document).on("click touchstart", "[data-callculationOrderSend=on]",self.order);
+    };
+    this.open = function () {
+        $.magnificPopup.open({
+            items: {
+                src: 'index.php?route=extension/module/calculation_order/index'
+            },
+            type: 'ajax'
+        });
+    };
+    this.order = function () {
+        self.block = $('#artCalculationOrder');
+        $('.mfp-content').append('<div class="loader"><div class="bag_quickview"></div></div>');
+        $.ajax({
+            url: 'index.php?route=extension/module/calculation_order/save',
+            type: 'post',
+            data: {
+                'firstName': self.block.find('[name=firstName]').val(),
+                'phone':  self.block.find('[name=phone]').val(),
+                'typeConstruction':  self.block.find('[name=typeConstruction]').val(),
+                'sizeConstruction':  self.block.find('[name=sizeConstruction]').val(),
+                'comment':  self.block.find('[name=comment]').val(),
+                'url':  self.block.find('[name=productLink]').val()
+            },
+            dataType: 'json',
+            success: function(data) {
+
+                $("div.loader").remove();
+                if (data['errors']) {
+                    self.showErrors(data['errors'])
+                }
+                if (data['success']) {
+                    self.success();
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    };
+
+    this.showErrors = function (errors) {
+        var blockErrors = self.block.find('.errors');
+        var str = '';
+        for (key in errors) {
+            str += errors[key] + '<br>';
+        }
+        blockErrors.removeClass('hidden');
+        blockErrors.html(str);
+    };
+    this.success = function () {
+        setTimeout(function() {
+            $.magnificPopup.close();
+        }, 6000);
+        $.magnificPopup.open({
+            items: {
+                src: 'index.php?route=extension/module/callback/success'
+            },
+            type: 'ajax'
+        });
+    };
+
 
     this.constructor();
 };
