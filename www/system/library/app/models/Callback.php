@@ -19,7 +19,6 @@ class Callback extends AppModel {
     const STATUS_WORK = 1;
     const STATUS_END = 2;
 
-    public $id = 0;
     public $errors = [];
 
     protected static $tableName = 'callback';
@@ -39,17 +38,6 @@ class Callback extends AppModel {
             $this->errors['phone'] = 'Введите номер телефона';
         }
         return (count($this->errors) == 0);
-    }
-
-    public function save(){
-        $bean = \R::dispense(self::$tableName);
-        $bean->import($this->attributes);
-        $res = \R::store($bean);
-        if (!$res) {
-            return false;
-        }
-        $this->id = $res;
-        return true;
     }
 
     public static function getListAdmin($data){

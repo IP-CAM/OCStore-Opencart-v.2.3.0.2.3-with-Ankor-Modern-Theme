@@ -9,6 +9,7 @@ abstract class AppModel{
 
     protected static $tableName = '';
     protected $attributes = [];
+    public $id = 0;
 
     public function load($data){
         foreach ($this->attributes as $key => $value) {
@@ -16,6 +17,17 @@ abstract class AppModel{
                 $this->attributes[$key] = $data[$key];
             }
         }
+    }
+
+    public function save(){
+        $bean = \R::dispense(self::$tableName);
+        $bean->import($this->attributes);
+        $res = \R::store($bean);
+        if (!$res) {
+            return false;
+        }
+        $this->id = $res;
+        return true;
     }
 
     /**
