@@ -20,8 +20,11 @@ abstract class AppModel{
     }
 
     public function save(){
-        $bean = \R::dispense(self::$tableName);
+        $bean = \R::dispense(static::$tableName);
         $bean->import($this->attributes);
+        if ($this->id) {
+            $bean->id = $this->id;
+        }
         $res = \R::store($bean);
         if (!$res) {
             return false;
