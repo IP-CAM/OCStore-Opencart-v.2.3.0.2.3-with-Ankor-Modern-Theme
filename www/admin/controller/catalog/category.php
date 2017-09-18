@@ -440,8 +440,10 @@ class ControllerCatalogCategory extends Controller {
         if (isset($category_info)){
             $data['type_products'] = $category_info['type_products'];
         }
+        $type_utp = '';
         if (isset($category_info)){
             $data['type_utp'] = $category_info['type_utp'];
+            $type_utp = $data['type_utp'];
         }
         if (isset($this->request->post['type_products'])) {
             $data['type_products'] = $this->request->post['type_products'];
@@ -449,9 +451,10 @@ class ControllerCatalogCategory extends Controller {
 
         if (isset($this->request->post['type_utp'])) {
             $data['type_utp'] = $this->request->post['type_utp'];
-            $utp = $this->getDataUtp($data['type_utp']);
-            $data = array_merge($data,$utp);
+
         }
+        $utp = $this->getDataUtp($type_utp);
+        $data = array_merge($data,$utp);
 
 
 		if (isset($this->request->post['parent_id'])) {
