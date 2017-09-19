@@ -39,7 +39,7 @@ class CalculatingOrder extends Callback  {
 
     protected function getTextAlert() {
         $href = $this->url;
-        $res = "\xF0\x9F\x93\x9E Новый заказ расчета \n";
+        $res = "\xF0\x9F\x94\x96 Новый заказ расчета \n";
         $res .= "<b>Имя:</b>   " . $this->firstName . "\n";
         $res .= "<b>Телефон:</b> " . $this->phone. "\n";
         $res .= "<b>Тип конструкции:</b> " . $this->phone. "\n";
