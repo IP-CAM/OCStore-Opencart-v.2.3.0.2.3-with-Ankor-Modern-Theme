@@ -207,6 +207,7 @@ class ControllerCatalogPrides extends Controller {
 			$data['items'][] = array(
 				'id'     	=> $pride['id'],
 				'title'       	=> $pride['title'],
+				'sort'       	=> $pride['sort'],
 				'image'      	=> $image,
 				'show_on_main'      	=> ($pride['show_on_main'] ? 'Да' : 'Нет'),
 				'status'     	=> ($pride['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),

@@ -220,7 +220,7 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 				<button type="button" class="btn-instock btnProd"
 						data-callculationOrder="on"
 						data-productid="<? echo $product['product_id']; ?>">
-					Заказать рассчет
+					Заказать расчет
 				</button>
 			<?endif;?>
 		</div>

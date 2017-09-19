@@ -40,6 +40,7 @@
 									<td class="center"><?php echo $column_image; ?></td>
 									<td class="center"><?php echo $column_title; ?></td>
 									<td class="left">Показывать на главной</td>
+									<td class="left">Сортировка</td>
 									<td class="left"><?php echo $column_status; ?></td>
 									<td class="left"><?php echo $column_action; ?></td>
 								</tr>
@@ -67,6 +68,7 @@
 <!--											title-->
 											<td class="left"><?php echo $item['title']; ?></td>
 											<td class="left"><?php echo $item['show_on_main']; ?></td>
+											<td class="left"><?php echo $item['sort']; ?></td>
 <!--											//status-->
 											<td class="left"><?php echo $item['status']; ?></td>
 

@@ -2,6 +2,7 @@
 
 class ModelCatalogPrides extends Model {
 	protected $tableName = 'artprides';
+	protected $limitTitle = 125;
 
 	public function totalCount(){
 		return R::count($this->tableName);
@@ -10,21 +11,15 @@ class ModelCatalogPrides extends Model {
 	public function find($data = []) {
 		$start = 0;
 		$limit = 20;
-		$sort =  'id';
-		$order = 'ASC';
+
 		if (isset($data['start']) && $data['start']>0) {
 			$start = (int)$data['start'];
 		}
 		if (isset($data['limit']) && $data['limit'] > 1) {
 			$limit = (int)$data['limit'];
 		}
-		if (isset($data['order'])) {
-			$order = $data['order'];
-		}
-		if (isset($data['sort'])) {
-			$sort = $data['sort'];
-		}
-		$order = $sort . ' ' . $order;
+
+		$order = 'sort desc, id desc';
 		$prides  = R::find($this->tableName,
 			'status = :status ORDER BY ' . $order . ' LIMIT :start,:count',
 			[
@@ -34,6 +29,9 @@ class ModelCatalogPrides extends Model {
 			]
 		);
 		$results = R::beansToArray($prides);
+		foreach ($results as &$result) {
+			$result['title'] = $this->getDescWithLimit($result['title']);
+		}
 		return $results;
 	}
 
@@ -43,12 +41,13 @@ class ModelCatalogPrides extends Model {
 		foreach ($pride->xownPridemoreimageList as $item) {
 			$result['more_images'][] = $item->export();
 		}
+
 		return $result;
 	}
 
 	public function getListForMain($count = 5){
 		$prides  = R::find($this->tableName,
-			'status = :status and show_on_main = :show ORDER BY sort Desc LIMIT :count',
+			'status = :status and show_on_main = :show ORDER BY sort Desc,id DESC LIMIT :count',
 			[
 				':count' => $count,
 				':status' => 1,
@@ -56,8 +55,18 @@ class ModelCatalogPrides extends Model {
 			]
 		);
 		$results = R::beansToArray($prides);
+		foreach ($results as &$result) {
+			$result['title'] = $this->getDescWithLimit($result['title']);
+		}
 		return $results;
 	}
 
+	protected function getDescWithLimit($str) {
+		if (strlen($str) > $this->limitTitle) {
+			$str = substr($str,0,$this->limitTitle);
+			$str .= '...';
+		}
+		return $str;
+	}
 }
 ?>

@@ -102,7 +102,7 @@ $collectTumbler = ['0' => 'Отключено','1' => 'Включено'];
 								<div class="form-group">
 									<label class="col-sm-2 control-label" for="input-meta-title">
 										<span>
-											Заголовок H1
+											Заголовок страницы
 										</span>
 									</label>
 									<div class="col-sm-10">
