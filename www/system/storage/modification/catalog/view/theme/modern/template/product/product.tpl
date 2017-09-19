@@ -4,6 +4,7 @@
  */
 ?>
 <?php echo $header; ?>
+
 <div class="container">
 <div class="row">
 <div id="cont" class="col-sm-12 product" itemscope itemtype="http://schema.org/Product">

@@ -78,14 +78,18 @@ var Callback = function () {
 var CalculationOrder = function () {
     var self = this;
     this.block = $('#artCalculationOrder');
+    this.btnMain = $('[data-callculationOrder=on]');
+
     this.constructor = function () {
-        $('[data-callculationOrder=on]').on('click', self.open);
+        self.btnMain.on('click', self.open);
         $(document).on("click touchstart", "[data-callculationOrderSend=on]",self.order);
     };
     this.open = function () {
+        var productId = self.btnMain.data('productid');
+
         $.magnificPopup.open({
             items: {
-                src: 'index.php?route=extension/module/calculation_order/index'
+                src: 'index.php?route=extension/module/calculation_order/index&productId=' + productId
             },
             type: 'ajax'
         });
@@ -93,17 +97,18 @@ var CalculationOrder = function () {
     this.order = function () {
         self.block = $('#artCalculationOrder');
         $('.mfp-content').append('<div class="loader"><div class="bag_quickview"></div></div>');
+        var data = {
+            'firstName': self.block.find('[name=firstName]').val(),
+            'phone':  self.block.find('[name=phone]').val(),
+            'typeConstruction':  self.block.find('[name=typeConstruction]').val(),
+            'sizeConstruction':  self.block.find('[name=sizeConstruction]').val(),
+            'comment':  self.block.find('[name=comment]').val(),
+            'productId':  self.block.find('[name=productId]').val()
+        };
         $.ajax({
             url: 'index.php?route=extension/module/calculation_order/save',
             type: 'post',
-            data: {
-                'firstName': self.block.find('[name=firstName]').val(),
-                'phone':  self.block.find('[name=phone]').val(),
-                'typeConstruction':  self.block.find('[name=typeConstruction]').val(),
-                'sizeConstruction':  self.block.find('[name=sizeConstruction]').val(),
-                'comment':  self.block.find('[name=comment]').val(),
-                'url':  self.block.find('[name=productLink]').val()
-            },
+            data: data,
             dataType: 'json',
             success: function(data) {
 
@@ -136,7 +141,7 @@ var CalculationOrder = function () {
         }, 6000);
         $.magnificPopup.open({
             items: {
-                src: 'index.php?route=extension/module/callback/success'
+                src: 'index.php?route=extension/module/calculation_order/success'
             },
             type: 'ajax'
         });

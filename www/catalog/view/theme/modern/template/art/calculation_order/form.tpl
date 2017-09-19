@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label class="control-label" for="typeConstruction">Тип конструкции:</label>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-cog" aria-hidden="true"></i></span>
                     <input id="typeConstruction" name="typeConstruction" placeholder="козырек, навес, теплица и т.д." class="form-control" type="text">
                 </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label class="control-label" for="sizeConstruction">Размер конструкции,мм:</label>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-arrows-alt"></i></span>
                     <input id="sizeConstruction" name="sizeConstruction" placeholder="например, 2000*3000 мм" class="form-control" type="text">
                 </div>
             </div>
@@ -62,10 +62,22 @@
         <br>
         <div class="row">
             <div class="col-xs-12">
+                <div class="contacts">
+                    <div class="title">
+                        Телефон отдела конструкций
+                    </div>
+                    <div class="phone">
+                        +7 (978) 204-76-25
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
                 <span style="font-size: 11px;">Нажимая на кнопку «Отправить», я даю cогласие на <a href="person_danie" target="_blank">обработку персональных данных.</a></span></div>
         </div>
         <br>
-        <input type="hidden" name="productLink" value="<?=$productLink?>">
+        <input type="hidden" name="productId" value="<?=$productId?>">
         <button type="button" data-callculationOrderSend="on" data-loading-text="Загрузка..." class="btn-cart fixcenter">Отправить</button>
     </div>
 </div>

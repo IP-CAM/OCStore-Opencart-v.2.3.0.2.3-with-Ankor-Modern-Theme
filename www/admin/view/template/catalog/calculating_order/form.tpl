@@ -57,7 +57,7 @@ echo $header; ?><?php echo $column_left;
 										<?=Form::text('url',$item->url,['class'=>'form-control'])?>
 									</div>
 									<div class="col-sm-2">
-										<a href="<?=$item->url?>">Перейти</a>
+										<a href="<?=$item->url?>" target="_blank">Перейти</a>
 									</div>
 								</div>
 
