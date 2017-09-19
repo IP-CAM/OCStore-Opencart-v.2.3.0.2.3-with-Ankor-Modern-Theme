@@ -218,8 +218,8 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 			<? //если это услуга
 			elseif ($type_products == 1):?>
 				<button type="button" class="btn-instock btnProd"
-						onclick="instock.add('<?php echo $product['product_id']; ?>');"
-						data-product-id="<? echo $product['product_id']; ?>">
+						data-callculationOrder="on"
+						data-productid="<? echo $product['product_id']; ?>">
 					Заказать рассчет
 				</button>
 			<?endif;?>

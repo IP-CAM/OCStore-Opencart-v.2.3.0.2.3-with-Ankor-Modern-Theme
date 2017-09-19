@@ -10,6 +10,7 @@
     border-bottom: 1px solid #2F2F2F;
   }
   .blockTitleModal {
+    font-size: 12px;
     .title {
       text-transform: uppercase;
       font-weight:bold;
@@ -20,9 +21,15 @@
     }
   }
   .contacts {
-    padding:15px 0;
+    padding:10px 0;
+    font-size: 12px;
     .title {
       text-transform: uppercase;
+    }
+  }
+  &#artCalculationOrder {
+    .blockTitleModal p {
+      font-size: 11px;
     }
   }
 }
