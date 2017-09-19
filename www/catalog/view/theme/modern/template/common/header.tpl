@@ -314,7 +314,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 		<?php } ?>
 	</div>
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 head_search">
-			<button class="button_title input-group">&nbsp;Заказать обратный звонок</button>
+			<button class="button_title input-group" data-callback="on">&nbsp;Заказать обратный звонок</button>
 		</div>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 head_search">
 	<?php echo $search; ?>
