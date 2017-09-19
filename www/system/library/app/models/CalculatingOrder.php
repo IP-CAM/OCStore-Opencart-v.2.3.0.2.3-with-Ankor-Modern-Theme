@@ -2,6 +2,8 @@
 
 
 namespace app\models;
+use app\core\App;
+use app\core\Telegram;
 
 /**
  * Class CalculatingOrder
@@ -26,4 +28,24 @@ class CalculatingOrder extends Callback  {
         'status' => self::STATUS_BEGIN,
     ];
 
+    public function sendAlert(){
+        if (empty(App::$config->telegram['chatCalculationOrder'])) {
+            return;
+        }
+        $telegram = new Telegram(App::$config->telegram['chatCalculationOrder']);
+        $telegram->sendMessage($this->getTextAlert());
+
+    }
+
+    protected function getTextAlert() {
+        $href = $this->url;
+        $res = "\xF0\x9F\x93\x9E Новый заказ расчета \n";
+        $res .= "<b>Имя:</b>   " . $this->firstName . "\n";
+        $res .= "<b>Телефон:</b> " . $this->phone. "\n";
+        $res .= "<b>Тип конструкции:</b> " . $this->phone. "\n";
+        $res .= "<b>Размер конструкции:</b> " . $this->phone. "\n";
+        $res .= "<b>Комментарий:</b> " . $this->comment. "\n";
+        $res .= '<a href="' . $href . '">Ссылка</a>' ;
+        return $res;
+    }
 }

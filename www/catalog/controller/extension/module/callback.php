@@ -18,6 +18,7 @@ class ControllerExtensionModuleCallback extends Controller {
             $callback->load($this->request->post);
             if ($callback->save()) {
                 $data['success'] = true;
+                $callback->sendAlert();
             }
         }else {
             $data['errors'] = $callback->errors;

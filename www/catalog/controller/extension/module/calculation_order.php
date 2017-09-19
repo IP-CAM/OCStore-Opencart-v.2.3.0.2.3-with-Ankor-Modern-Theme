@@ -28,6 +28,7 @@ class ControllerExtensionModuleCalculationOrder extends Controller {
             $order->load($data);
             if ($order->save()) {
                 $data['success'] = true;
+                $order->sendAlert();
             }
         }else {
             $data['errors'] = $order->errors;
