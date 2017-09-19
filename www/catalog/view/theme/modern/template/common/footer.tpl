@@ -73,7 +73,7 @@
 	</div>
 	</div>
 	<?php } ?>
-<footer class="footer_1">
+<footer class="footer">
 <div class="container">
 <!--<div class="row line_foot">
 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
@@ -135,9 +135,11 @@
 </span>
 <div class="clearfix"></div>
 </div>-->
-	<div class="footer_copyright">© 2017, АНКОР КРЫМ</div>
-	<div class="footer_copyright_2">Все права защищены </div>
-	<div class="footer_desinger">Сайт разработан и поддерживается WEDO</div>
+    <div class="footer_copyright"> <br><br>
+        <div class="footer_copyright_1">© 2017, АНКОР КРЫМ</div>
+	    <div class="footer_copyright_2">Все права защищены </div>
+    </div>  <br>
+	<div class="footer_desinger">Сайт разработан и поддерживается "Место для лого WEDO"</div> <br>
 </div>
 </footer>
 <!--
