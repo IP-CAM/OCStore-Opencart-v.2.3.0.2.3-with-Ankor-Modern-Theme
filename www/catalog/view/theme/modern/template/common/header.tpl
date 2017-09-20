@@ -187,61 +187,76 @@ color: #<?php echo $modern_color_tittle_news ?>;
 </div>
 </div>
 </div>
+
 <?php if (!$modern_header_var) { ?>
 	<nav id="top">
 	<?php } else { ?>
 	<nav id="top" class="bottom_menu">
 	<?php } ?>
+
 <div class="container nobackground">
-<?php echo $currency; ?>
-<?php echo $language; ?>
-<div id="top-links2" class="nav pull-left">
-<ul class="list-inline top">
-<?php if ($modern_wishlist_top !=1) { ?><li class="marg_link"><a href="<?php echo $wishlist; ?>" id="wishlist-total" title="<?php echo $text_wishlist; ?>"><i class="fa fa-heart hidden-lg hidden-md"></i> <span class="hidden-xs hidden-sm "><?php echo $text_wishlist; ?></span></a></li><?php } ?>
-<?php if ($modern_compare_top !=1) { ?><li class="marg_link"><a href="<?php echo $compare; ?>" id="compare-total" title="<?php echo $text_compare; ?>"><i class="fa fa-exchange hidden-lg hidden-md"></i> <span class="hidden-xs hidden-sm "><?php echo $text_compare; ?></span></a></li><?php } ?>
-<?php if ($modern_top_links6 ) { ?>
-	<?php foreach ($modern_top_links6 as $modern_top_link6) { ?>
-		<li>
-		<a <?php if ($modern_top_link6['link_top'][$language_id]) { ?> href="<?php echo $modern_top_link6['link_top'][$language_id]; ?>"<?php } ?> title="<?php echo $modern_top_link6['title'][$language_id]; ?>"><?php if ($modern_top_link6['faicons_top']) { ?> <i class="<?php echo $modern_top_link6['faicons_top']; ?> hidden-lg hidden-md"></i><?php } ?><?php if ($modern_top_link6['title']) { ?><span class="hidden-xs hidden-sm "> <?php echo $modern_top_link6['title'][$language_id]; ?></span><?php } ?></a>
-		</li>
-		<?php } ?>
-	<?php } ?>
-</ul>
-</div>
-<div id="top-links" class="nav pull-right">
-<ul class="list-inline top">
-<?php if ($modern_account_top !=1) { ?>
-	<?php if ($logged) { ?>
-		<div id="top-links" class="nav pull-right">
-		<ul class="list-inline">
-		<li class="dropdown"><a href="<?php echo $account; ?>" title="<?php echo $text_account; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span> <span class="caret"></span></a>
-		<ul class="dropdown-menu dropdown-menu-right">
-		<?php if ($logged) { ?>
-			<li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
-			<?php if ($modern_order_top !=1) { ?><li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li><?php } ?>
-			<?php if ($modern_transaction_top !=1) { ?> <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li><?php } ?>
-			<?php if ($modern_download_top !=1) { ?><li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li><?php } ?>
-			<li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-			<?php } else { ?>
-			<li><a href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
-			<li><a href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
-			<?php } ?>
-		</ul>
-		</li>
-		</ul>
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+
+        <button type="button" class=" btn btn-navbar navbar-toggler navbar-toggler-left hidden-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#navbarNav"><i class="fa fa-bars"></i></button>
+
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="nav navbar-nav">
+				<div id="top-links2" class="nav pull-left">
+					<ul class="list-inline top">
+						<?php if ($modern_top_links6 ) { ?>
+						<?php foreach ($modern_top_links6 as $modern_top_link6) { ?>
+						<li>
+                            <a <?php if ($modern_top_link6['link_top'][$language_id]) { ?> href="<?php echo $modern_top_link6['link_top'][$language_id]; ?>"<?php } ?> title="<?php echo $modern_top_link6['title'][$language_id]; ?>"><?php if ($modern_top_link6['faicons_top']) { ?> <i class="<?php echo $modern_top_link6['faicons_top']; ?> hidden-lg hidden-md"></i><?php } ?><?php if ($modern_top_link6['title']) { ?><span class=""> <?php echo $modern_top_link6['title'][$language_id]; ?></span><?php } ?></a>
+                        </li>
+						<?php } ?>
+						<?php } ?>
+					</ul>
+				</div>
+			</ul>
+
+            <ul class="nav navbar-nav navbar-right">
+            <div id="top-links" class="nav pull-right">
+                <ul class="list-inline top">
+                    <?php if ($modern_account_top !=1) { ?>
+                        <?php if ($logged) { ?>
+                            <div id="top-links" class="nav pull-right">
+                                <ul class="list-inline">
+                                    <li class="dropdown"><a href="<?php echo $account; ?>" title="<?php echo $text_account; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span> <span class="caret"></span></a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <?php if ($logged) { ?>
+                                                <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+                                                <?php if ($modern_order_top !=1) { ?><li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li><?php } ?>
+                                                <?php if ($modern_transaction_top !=1) { ?> <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li><?php } ?>
+                                                <?php if ($modern_download_top !=1) { ?><li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li><?php } ?>
+                                                <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+                                            <?php } else { ?>
+                                                <li><a href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
+                                                <li><a href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
+                                            <?php } ?>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        <?php } else { ?>
+                            <li><img src="catalog/view/theme/modern/image/shablon/key_header.png" alt="key"></li>
+                            <li class="log"><a href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
+                            <li class="reg"><a href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
+                        <?php } ?>
+                    <?php } ?>
+                    <?php if ($modern_cart_top !=1) { ?><li><a href="<?php echo $shopping_cart; ?>" title="<?php echo $text_shopping_cart; ?>"><i class="fa fa-shopping-cart hidden-lg hidden-md"></i> <span class="hidden-xs hidden-sm "><?php echo $text_shopping_cart; ?></span></a></li><?php } ?>
+                    <?php if ($modern_checkout_top !=1) { ?> <li><a href="<?php echo $checkout; ?>" title="<?php echo $text_checkout; ?>"><i class="fa fa-share hidden-lg hidden-md"></i> <span class="hidden-xs hidden-sm "><?php echo $text_checkout; ?></span></a></li><?php } ?>
+                </ul>
+            </div>
+            </ul>
 		</div>
-		<?php } else { ?>
-		<li><img src="catalog/view/theme/modern/image/shablon/key_header.png" alt="key"></li>
-		<li class="log"><a href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
-		<li class="reg"><a href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
-		<?php } ?>
-	<?php } ?>
-<?php if ($modern_cart_top !=1) { ?><li><a href="<?php echo $shopping_cart; ?>" title="<?php echo $text_shopping_cart; ?>"><i class="fa fa-shopping-cart hidden-lg hidden-md"></i> <span class="hidden-xs hidden-sm "><?php echo $text_shopping_cart; ?></span></a></li><?php } ?>
-<?php if ($modern_checkout_top !=1) { ?> <li><a href="<?php echo $checkout; ?>" title="<?php echo $text_checkout; ?>"><i class="fa fa-share hidden-lg hidden-md"></i> <span class="hidden-xs hidden-sm "><?php echo $text_checkout; ?></span></a></li><?php } ?>
-</ul>
+
+	</nav>
 </div>
-</div>
+
+
+
 </nav>
+
 <?php if (!$modern_header_var) { ?>
 	<div class="top-header"  >
 	<div class="container">

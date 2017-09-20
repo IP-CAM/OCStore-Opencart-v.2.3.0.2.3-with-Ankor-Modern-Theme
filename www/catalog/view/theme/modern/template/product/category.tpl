@@ -224,7 +224,7 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 				</button>
 			<?endif;?>
 		</div>
-		<div class="effect-hover">
+		 <div class="effect-hover">
 		<?php if ($modern_wishlist_cat !=1) { ?>
 			<a class="wishlist" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-fw fa-heart"></i></a>
 			<?php } ?>

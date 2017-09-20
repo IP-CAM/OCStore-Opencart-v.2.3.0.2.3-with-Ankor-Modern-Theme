@@ -3,6 +3,35 @@
 @import "media";
 @import "modal";
 
+
+/*top menu*/
+
+#top {
+  height: inherit;
+  .btn-navbar {
+    color: #fff;
+    padding: 5px 18px!important;
+    margin-top: 2px;
+    font-size: 14px;
+  }
+  li {
+    padding-top: 8px;
+  }
+  .navbar {
+    min-height: 38px;
+  }
+  #top-links2 {
+    padding-top: 0;
+  }
+  .list-inline {
+    top: 0;
+  }
+}
+
+
+
+
+
 .footer_1{
   background-color:  #353d44;
 }
@@ -22,6 +51,7 @@
     }
  }
 }
+
 .prides_main{
   margin: 10px 0;
   .list_block {

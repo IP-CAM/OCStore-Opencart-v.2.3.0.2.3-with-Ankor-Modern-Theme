@@ -1,0 +1,16 @@
+/*top menu*/
+@media (max-width: 991px) {
+  #top-links2 {
+    ul {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+.navbar-right {
+  display: flex;
+  justify-content: center;
+}
+  .reg a {
+    color: #ffffff!important;
+  }
+}
