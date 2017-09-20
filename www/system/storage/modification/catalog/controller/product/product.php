@@ -733,6 +733,12 @@ class ControllerProductProduct extends Controller {
 
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
+            if ($data['type_products'] == 1) {
+                $data['review_status'] = false;
+                $data['products'] = false;
+                $data['modern_top_links7'] = false;
+            }
+
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
 			$data['column_left'] = $this->load->controller('common/column_left');

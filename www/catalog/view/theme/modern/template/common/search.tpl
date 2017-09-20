@@ -1,6 +1,6 @@
 
 <div id="search" class="input-group">
-<div class="categories">
+<!--<div class="categories">
   <div class="select-wrapper">
     <div class="select-arrow-3"></div>
 <select name="category_id" class="form-control">
@@ -13,7 +13,7 @@
 <?php } ?>
 </select>
 </div>
-</div>
+</div>-->
    <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_search; ?>" class="form-control input-lg" />
   <span class="input-group-btn">
     <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>

@@ -18,6 +18,7 @@ class ControllerExtensionModuleCallback extends Controller {
             $callback->load($this->request->post);
             if ($callback->save()) {
                 $data['success'] = true;
+                $callback->sendAlert();
             }
         }else {
             $data['errors'] = $callback->errors;
@@ -28,7 +29,8 @@ class ControllerExtensionModuleCallback extends Controller {
 
     public function success(){
         $data["message"] = 'Заказ успешно отправлен';
-        $this->response->setOutput($this->load->view('art/callback/callback_succes', $data));
+        $data["title"] = 'Заказ обратного звонка';
+        $this->response->setOutput($this->load->view('art/modal_succes', $data));
     }
 
 }

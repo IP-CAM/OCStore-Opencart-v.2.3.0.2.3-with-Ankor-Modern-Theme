@@ -11,7 +11,6 @@ class ControllerCatalogCalculatingOrder extends Controller {
 	private $error = array();
 
 	public function index() {
-        App::$debug->dDie('test');
 		$this->load->language('catalog/calculating_order');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
@@ -119,7 +118,6 @@ class ControllerCatalogCalculatingOrder extends Controller {
         $data['controller'] = $this;
         $data['breadcrumbs'] = $this->getBreadcrumbs();
         $data['items'] = CalculatingOrder::getListAdmin($data);
-
         $data['add'] = $this->url->link('catalog/calculating_order/add', 'token=' . $this->session->data['token'], true);
         $data['delete'] = $this->url->link('catalog/calculating_order/delete', 'token=' . $this->session->data['token'], true);
         $data['setting'] = $this->url->link('catalog/calculating_order/setting', 'token=' . $this->session->data['token'], true);

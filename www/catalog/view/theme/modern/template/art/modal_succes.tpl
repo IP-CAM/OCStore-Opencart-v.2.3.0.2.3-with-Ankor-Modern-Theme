@@ -1,7 +1,7 @@
 <div id="artCallback" class="callback">
     <div class="callbackbor">
         <button title="close" type="button" class="mfp-close">×</button>
-        <div class="name-popup">Заказ обратного звонка</div>
+        <div class="name-popup"><?=$title?></div>
     </div>
     <div class="callback2">
         <div class="form-horizontal formcallback">

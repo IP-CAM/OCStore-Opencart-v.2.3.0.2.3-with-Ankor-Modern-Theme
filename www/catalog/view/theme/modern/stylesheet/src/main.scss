@@ -2,6 +2,7 @@
 @import "product";
 @import "media";
 @import "modal";
+@import "header";
 
 
 /*top menu*/
@@ -28,13 +29,29 @@
   }
 }
 
-
-
-
-
-.footer_1{
+.footer{
   background-color:  #353d44;
+  max-height: 280px;
+  font-size: 14px;
+  line-height: 24px;
+  .footer_copyright {
+    text-align: center;
+    .footer_copyright_1 {
+      color: #ffffff;
+    }
+    .footer_copyright_2{
+      color:  #8c8f91;
+    }
+  }
+  .footer_desinger{
+    color:  #8c8f91;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: right;
+
+  }
 }
+
 .information-prides-info {
   .mfp-content {
     top: 1%;
@@ -66,11 +83,12 @@
     font-weight: 400;
   }
   .blockTitle {
-    padding: 15px 5px 0;
+    padding: 20px 5px 0;
   }
   @media screen and (max-width: 560px) {
     .list_block {
-      min-height: 80px;
+      height: 77px;
+      min-height: 77px;
     }
   }
   //a.linkPride :hover {
@@ -82,29 +100,27 @@
   background-color:  #ff9504;
 }
 
-.footer_copyright{
-  font-family: Roboto;
-  color:  #ffffff;
-  font-size: 14px;/* Приближение из-за подстановки шрифтов */
-  font-weight: 400;
-  line-height: 24px;/* Приближение из-за подстановки шрифтов */
-  text-align: center;
+.list-inline{
+  li{
+    a{
+      padding: 15px 8px!important;
+    }
+  }
 }
+//media 15px 15px
 
-.footer_copyright_2{
-  font-family: Roboto;
-  color:  #8c8f91;
-  font-size: 14px;/* Приближение из-за подстановки шрифтов */
-  font-weight: 400;
-  line-height: 24px;/* Приближение из-за подстановки шрифтов */
-  text-align: center;
-}
-
-.footer_desinger{
-  font-family: Roboto;
-  color:  #8c8f91;
-  font-size: 14px;/* Приближение из-за подстановки шрифтов */
-  font-weight: 400;
-  line-height: 16px;/* Приближение из-за подстановки шрифтов */
-  text-align: right;
-}
+/*.menu_adapt{
+  height: 55px;
+  .top-menu{
+    height: inherit;
+    #top-menu{
+      height: inherit;
+      .nobackground {
+        height: inherit;
+        .navbar{
+          height: inherit;
+        }
+      }
+    }
+  }
+} */

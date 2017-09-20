@@ -2,7 +2,7 @@
 
 echo $header; ?><?php echo $column_left;
 /**
- * @var \app\models\Callback $call
+ * @var \app\models\CalculatingOrder $item
  */
 ?>
 <div id="content">
@@ -40,40 +40,53 @@ echo $header; ?><?php echo $column_left;
 								<div class="form-group">
 									<?=Form::label('Имя','firstName',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
-										<?=Form::text('firstName',$call->firstName,['class'=>'form-control'])?>
+										<?=Form::text('firstName',$item->firstName,['class'=>'form-control'])?>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<?=Form::label('Телефон','phone',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
-										<?=Form::text('phone',$call->phone,['class'=>'form-control'])?>
+										<?=Form::text('phone',$item->phone,['class'=>'form-control'])?>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<?=Form::label('Ссылка','url',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-8">
-										<?=Form::text('url',$call->url,['class'=>'form-control'])?>
+										<?=Form::text('url',$item->url,['class'=>'form-control'])?>
 									</div>
 									<div class="col-sm-2">
-										<a href="<?=$call->url?>" target="_blank">Перейти</a>
+										<a href="<?=$item->url?>" target="_blank">Перейти</a>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<?=Form::label('Комментарий','comment',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
-										<?=Form::textArea('comment',$call->comment,['class'=>'form-control'])?>
+										<?=Form::textArea('comment',$item->comment,['class'=>'form-control'])?>
 									</div>
 								</div>
 
+								<div class="form-group">
+									<?=Form::label('Тип конструкции','typeConstruction',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-10">
+										<?=Form::text('typeConstruction',$item->typeConstruction,['class'=>'form-control'])?>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<?=Form::label('Размер конструкции','sizeConstruction',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-10">
+										<?=Form::text('sizeConstruction',$item->sizeConstruction,['class'=>'form-control'])?>
+									</div>
+								</div>
 
 								<div class="form-group">
 									<?=Form::label('Статус','status',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-4">
 										<?=Form::select('status',
-											\app\models\Callback::getLabelsStatus(), $call->status,
+											\app\models\Callback::getLabelsStatus(), $item->status,
 											['class' => 'form-control']
 										)?>
 									</div>

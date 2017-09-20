@@ -4,6 +4,7 @@
  */
 ?>
 <?php echo $header; ?>
+
 <div class="container">
 <div class="row">
 <div id="cont" class="col-sm-12 product" itemscope itemtype="http://schema.org/Product">
@@ -40,7 +41,9 @@
 <?php } ?>
 <?php } ?>	
 <!-- custom_tabs -->
-<?php if ($modern_top_links7 ) { ?>
+<?php 
+
+if ($modern_top_links7 ) { ?>
 <?php foreach ($modern_top_links7 as $key => $modern_top_link7) { ?>
 <?php if ($modern_top_link7['title'][$language_id]) { ?> <li class="col-xs-12 tab_padding"><a href="#other_tab-<?php echo $key ?>" data-toggle="tab"><?php echo $modern_top_link7['title'][$language_id]; ?> <i class="fa fa-caret-down hidden"></i></a></li><?php } ?>
 <?php } ?>

@@ -3,6 +3,7 @@
 
 namespace app\models;
 use app\core\App;
+use app\core\Telegram;
 
 
 /**
@@ -75,4 +76,21 @@ class Callback extends AppModel {
         return $statuses[$this->status];
     }
 
+    public function sendAlert(){
+        if (empty(App::$config->telegram['chatCallBack'])) {
+            return;
+        }
+        $telegram = new Telegram(App::$config->telegram['chatCallBack']);
+        $telegram->sendMessage($this->getTextAlert());
+
+    }
+
+    protected function getTextAlert() {
+        $res = "\xF0\x9F\x93\x9E Новый заказ обратного звонка \n";
+        $res .= "<b>Имя:</b>   " . $this->firstName . "\n";
+        $res .= "<b>Телефон:</b> " . $this->phone. "\n";
+        $res .= "<b>Комментарий:</b> " . $this->comment. "\n";
+        $res .= '<a href="' . $this->url . '">Ссылка</a>' ;
+        return $res;
+    }
 }

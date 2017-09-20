@@ -54,7 +54,7 @@ class ModelCatalogPrides extends Model {
 	public function find($data = []) {
 
 	    $start = 0;
-        $limit = 20;
+        $limit = 100;
         if (isset($data['start']) && $data['start']>0) {
             $start = $data['start'];
         }
@@ -63,7 +63,7 @@ class ModelCatalogPrides extends Model {
         }
 
         $prides  = R::find($this->tableName,
-            'ORDER BY id DESC LIMIT :start,:count',
+            'ORDER BY sort DESC,id DESC LIMIT :start,:count',
             [
                 ':start' => $start,
                 ':count' => $limit,

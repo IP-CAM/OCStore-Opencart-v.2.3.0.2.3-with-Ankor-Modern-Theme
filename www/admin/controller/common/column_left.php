@@ -158,6 +158,14 @@ class ControllerCommonColumnLeft extends Controller {
                     'children' => array()
                 );
             }
+
+            if ($this->user->hasPermission('access', 'catalog/calculating_order')) {
+                $catalog[] = array(
+                    'name'	   => 'Заказы расчета',
+                    'href'     => $this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'], true),
+                    'children' => array()
+                );
+            }
 			
 			if ($catalog) {
 				$data['menus'][] = array(
