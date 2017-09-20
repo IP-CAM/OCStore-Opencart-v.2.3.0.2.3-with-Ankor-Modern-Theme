@@ -23,7 +23,7 @@ $_['text_applynews']	       	    	= 'Применить';
 $_['text_savenews']	       	    		= 'Сохранить';
 $_['text_delnews']	       	    		= 'Удалить новость';
 $_['text_addnews']	       	    		= 'Добавить новость';
-$_['text_listnews']	       	    		= 'Список новостей';
+$_['text_listnews']	       	    		= 'Публикации';
 
 // Column
 $_['column_image']         		    	= 'Изображение';
