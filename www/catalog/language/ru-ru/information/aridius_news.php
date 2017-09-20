@@ -1,6 +1,6 @@
 <?php
 // Heading 
-$_['heading_title']   		        = 'Список новостей';
+$_['heading_title']   		        = 'Публикации';
 
 // Text
 $_['text_error']      		        = 'Нет новостей';

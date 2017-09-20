@@ -2,6 +2,7 @@
 @import "product";
 @import "media";
 @import "modal";
+@import "header";
 
 .footer{
   background-color:  #353d44;
@@ -73,59 +74,6 @@
   background-color:  #ff9504;
 }
 
-.button_title{
-  font-family: Roboto;
-  font-size: 12px;
-  background-color:  #1bbc9b;
-  border: none;
-  border-radius: 20px;
-  color: #FFFFFF;
-  text-align: center;
-  width: 135px;
-  height: 35px;
-  line-height: 1;
-  margin: auto;
-}
-
-#search {
-  .form-control{
-  float: right;
-  border-radius: 20px;
-  width: 90%;
-  }
-}
-
-.head_search{
-  top: 18px;
-}
-
-.menu-top{
-  font-family: Roboto;
-  color: #000000;
-  background-color: #8f8f8f;
-  margin: auto;
-}
-
-.top-header{
-  border-bottom: none;
-  padding-top: 0;
-}
-
-#logo{
-  img{
-    width: auto;
-    top: -15px;
-  }
-}
-
-.fn_header{
-  font-size: 21px;
-}
-.navcentr{
-  margin: auto;
-  height: 125px;
-}
-
 .list-inline{
   li{
     a{
@@ -134,33 +82,6 @@
   }
 }
 //media 15px 15px
-
-
-.fn_header{
-  font-size: 24px;
-}
-
-
-#menu{
-  .nav > li > a{
-    color: #000000;
-    line-height: 16px;
-    text-align: center;
-    max-width: 145px;
-    font-weight: 400;
-    height: 55px;
-    margin-top: -1px;
-    display: flex;
-    align-items: center;
-
-
-  }
-  .nav > li > a:hover{
-    color: #ffffff;
-  }
-}
-
-
 
 /*.menu_adapt{
   height: 55px;

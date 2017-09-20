@@ -1,5 +1,5 @@
 <?php
-$_['heading_title']          = 'faq';
+$_['heading_title']          = 'Доставка и Оплата';
 
 
 

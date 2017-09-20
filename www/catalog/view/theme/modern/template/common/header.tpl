@@ -305,7 +305,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 			</div>
 			<?php } else { ?>
 			<div class="phone">
-			<div class="listunstyled btn-lg"><span class="tell_nav"><?php echo $modern_telephone_mainheader[$language_id]; ?></span></div>
+			<div class="listunstyled"><span class="tell_nav"><?php echo $modern_telephone_mainheader[$language_id]; ?></span></div>
 			</div>
 			<?php } ?></td>
 		</tr>
@@ -791,7 +791,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 			</div>
 			<?php } else { ?>
 			<div class="phone">
-			<div class="listunstyled btn-lg"><span class="tell_nav"><?php echo $modern_telephone_mainheader[$language_id]; ?></span></div>
+			<div class="listunstyled"><span class="tell_nav"><?php echo $modern_telephone_mainheader[$language_id]; ?></span></div>
 			</div>
 			<?php } ?></td>
 		</tr>
