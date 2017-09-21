@@ -100,8 +100,8 @@
                                             <?php foreach ($categories as $category) { ?>
                                                 <?php if ($category['children']) { ?>
                                                     <li class="plus">
-                                                        <i class="fa fa-plus"></i>
-                                                        <i class="fa fa-minus"></i>
+                                                        <i class="fa fa-angle-right"></i>
+                                                        <i class="fa fa-angle-down" style="display: none;"></i>
                                                     </li>
                                                     <li class="item <?php if ($category['category_id'] == $category_id) {
                                                         echo 'activetopmenu';
