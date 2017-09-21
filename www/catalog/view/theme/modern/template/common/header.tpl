@@ -29,6 +29,7 @@
 <script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" rel="stylesheet">
 	<link href="catalog/view/theme/modern/stylesheet/animate.min.css" rel="stylesheet" type="text/css" />
+	<link href="catalog/view/theme/modern/stylesheet/aridiuscallback.css" rel="stylesheet" type="text/css" />
 
 <meta property="og:site_name" content="<?php echo $name; ?>" />
 <?php foreach ($styles as $style) { ?>
