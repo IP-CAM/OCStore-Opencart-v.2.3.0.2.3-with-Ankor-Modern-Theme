@@ -874,9 +874,7 @@ $('#menu .menu_mob_plus li').bind().click(function(e) {
 	$(this).toggleClass("open").find('>ul').stop(true, true).slideToggle(3000)
 	.end().siblings().find('>ul').slideUp().parent().removeClass("open");
 	e.stopPropagation();
-	// Замена + на - во время открытия меню
-	$(this).prev().find('.fa-angle-right').toggle();
-	$(this).prev().find('.fa-angle-down').toggle();
+
 });
 $('#menu li a').click(function(e) {
 	e.stopPropagation();
@@ -886,10 +884,8 @@ $('.children-category > ul > li').each(function(i, elem){
 	if( $(elem).hasClass('children_lv3') ) {
 		var ulElements = $(elem).parent().find('li');
 		if( $(ulElements[0]).find('a.plus-link').length == 0 ) {
-			$(ulElements[0]).append('<a href="#" class="plus-link"><i class="fa fa-angle-right" style="display: inline; "></i><i class="fa fa-angle-down" style="display: none;"></i></a>');
+			$(ulElements[0]).append('<a href="#" class="plus-link"><i class="fa fa-angle-down" style="display: inline; "></i><i class="fa fa-angle-down" style="display: none;"></i></a>');
 			$(ulElements[0]).find('a.plus-link').click(function(e){
-				$(ulElements[0]).find('a.plus-link > .fa-angle-right').toggle();
-				$(ulElements[0]).find('a.plus-link > .fa-angle-down').toggle();
 				$(ulElements[0]).parent().find('.children_lv3').toggle();
 				return false;
 			});
