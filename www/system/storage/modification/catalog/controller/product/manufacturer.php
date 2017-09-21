@@ -56,26 +56,22 @@ class ControllerProductManufacturer extends Controller {
 
 		$data['categories'] = array();
 
+        /*brands*/
+
 		$results = $this->model_catalog_manufacturer->getManufacturers();
 
 		foreach ($results as $result) {
-			$name = $result['name'];
-
-			if (is_numeric(utf8_substr($name, 0, 1))) {
-				$key = '0 - 9';
-			} else {
-				$key = utf8_substr(utf8_strtoupper($name), 0, 1);
-			}
-
-			if (!isset($data['categories'][$key])) {
-				$data['categories'][$key]['name'] = $key;
-			}
-
-			$data['categories'][$key]['manufacturer'][] = array(
-				'name' => $name,
-				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $result['manufacturer_id'])
-			);
+            $image = $this->model_tool_image->resize($result['image'],150,150);
+            $descr = html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8');
+            $data['manufacturers'][] = array(
+                'name' => $result['name'],
+                'image' => $image,
+                'description' => $descr,
+                'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $result['manufacturer_id'])
+            );
+            $this->document->setOgImage($image);
 		}
+        /*end brands*/
 
 		$data['continue'] = $this->url->link('common/home');
 

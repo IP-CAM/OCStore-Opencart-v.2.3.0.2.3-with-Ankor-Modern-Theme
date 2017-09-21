@@ -33,7 +33,7 @@
 <?php foreach ($custom_tabs as $key => $custom_tab) { ?>
 <?php if ($custom_tab['title']) { ?><li class="col-xs-12 tab_padding"><a href="#custom_tabs-<?php echo $key?>" data-toggle="tab"><?php echo $custom_tab['title']; ?></a></li><?php } ?>
 <?php } ?>
-<?php } ?>	
+<?php } ?>
 <!-- custom_tabs -->
 <?php if ($modern_top_links7 ) { ?>
 <?php foreach ($modern_top_links7 as $key => $modern_top_link7) { ?>
@@ -664,20 +664,20 @@ $days = ceil(($endDate2 / 86400)) - ceil(($startDate1 / 86400));
 	<?php } ?>
 </div>
 <!-- Аccessories end -->
-<!-- custom_tabs -->	
+<!-- custom_tabs -->
 <?php if ($custom_tabs) { ?>
     <?php foreach ($custom_tabs as $key => $custom_tab) { ?>
     <?php if ($custom_tab['title']) { ?><div class="tab-pane" id="custom_tabs-<?php echo $key?>"><?php echo $custom_tab['description']; ?></div> <?php } ?>
-    <?php } ?>	
-<?php } ?>	
-<!-- custom_tabs -->	
-<!-- custom_tabs -->	
+    <?php } ?>
+<?php } ?>
+<!-- custom_tabs -->
+<!-- custom_tabs -->
 <?php if ($modern_top_links7 ) { ?>
 	<?php foreach ($modern_top_links7 as $key => $modern_top_link7) { ?>
 		<?php if ($modern_top_link7['title'][$language_id]) { ?><div class="tab-pane" id="other_tab-<?php echo $key ?>"><?php echo html_entity_decode($modern_top_link7['description'][$language_id]); ?></div> <?php } ?>
 		<?php } ?>
 <?php } ?>
-<!-- custom_tabs -->	
+<!-- custom_tabs -->
 </div>
 </div>
 </div>
