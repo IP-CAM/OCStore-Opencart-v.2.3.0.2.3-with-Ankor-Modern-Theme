@@ -13,3 +13,45 @@
     }
   }
 }
+
+.prmain {
+  height: 425px;
+  .thumbnails{
+    height: inherit;
+    >li{
+      height: inherit;
+      a{
+        height: 390px;
+        img{
+          height: inherit;
+        }
+      }
+    }
+  }
+}
+
+#product{
+  hr{
+    margin-bottom: -10px;
+  }
+  .form-group{
+    margin-bottom: 0;
+  }
+  .plus_minus{
+    margin-top: 25px;
+  }
+  .im_option{
+    color: #51473c;
+  }
+  .radio input:checked+.im_option{
+    background-color: #1bbc9b;
+  }
+}
+
+.brand_img{
+  margin-top: -12px;
+}
+
+.attribute_groups{
+    display: none !important;
+}

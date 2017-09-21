@@ -47,7 +47,7 @@ if ($config->get('db_autostart')) {
         $config->get('db_username'),
         $config->get('db_password')
     );
-    if (!DEBUG) {
+    if (!App::$config->debug) {
         R::freeze(false);
     }
 

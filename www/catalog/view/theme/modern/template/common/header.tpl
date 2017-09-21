@@ -335,374 +335,15 @@ color: #<?php echo $modern_color_tittle_news ?>;
 	<?php echo $search; ?>
 	</div>
 	</div>
-	<!--<div class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 menu_adapt">
-	<div class="top-menu">
-	<div id="top-menu" >
-	<div class="nobackground">
-	<nav id="menu" class="navbar">
-	<div class="navbar-header"><span id="category" class="visible-xs"><?php echo $text_category; ?></span>
-	<button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-	</div>
-	<div class="collapse navbar-collapse navbar-ex1-collapse menu_adapt_coll">
-	<ul class="nav navbar-nav">
-	<?php if ($modern_ico_home !=1) { ?>
-		<li><a href="<?php echo $base; ?>"><i class="fa fa-home fa_homemenu"></i></a></li>
-		<?php } ?>
-	<?php if ($modern_ico_home_text !=1) { ?>
-		<li><a href="<?php echo $base; ?>"><?php echo $text_homel; ?></i></a></li>
-		<?php } ?>
-	<?php if ($modern_seevmenu_menu !=1) { ?>
-		<li class="dropdown hidev"><a class="with-child dropdown-toggle" <?php if (!empty($modern_link_menucatalog)) { ?> href="<?php echo $modern_link_menucatalog; ?>" <?php } ?> data-hover="dropdown" data-delay="1" data-close-others="false">
-		<?php if ($modern_seevmenuico !=1) { ?>
-			<i class="fa fa-bars"></i>&nbsp;&nbsp;
-			<?php } ?>
-		<?php echo $modern_vmenu_menu[$language_id]; ?><span class="fa fa-angle-down menu"></span></a>
-		<ul class="dropdown-menu multi-level" role="menu">
-		<?php foreach ($categories as $category) { ?>
-			<?php if ($category['children']) { ?>
-				<li class="dropdown-submenu" >
-				<a class="dr_menu" tabindex="-1" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?><span class="arrowvertmenu"></span></a>
-				<ul class="dropdown-menu2">
-				<?php if ($category['image_main'] && $modern_main_photos_menu !=1) { ?>
-					<li><a href="<?php echo $category['href']; ?>"><img class="image_main img-responsive" alt="<?php echo $category['name']; ?>" title="<?php echo $category['name']; ?>" src="<?php echo $category['image_main']; ?>"></a>	</li>
-					<?php } ?>
-				<?php foreach ($category['children'] as $child) { ?>
-					<li class="col-sm-4 mcol">
-					<span class = "hidden-xs"><?php if ($modern_photos_menu !=1 && (!empty($child['image2']))) { ?><a href="<?php echo $child['href']; ?>"><img class="vopmen img-responsive" src="<?php echo $child['image2']; ?>" alt="<?php echo $child['name']; ?>" title="<?php echo $child['name']; ?>" ></a><?php } ?></span>
-					<div class="clearfix"></div>
-					<a class="submenu_main" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
-					<?php if (isset($child['children_lv3']) && $child['children_lv3']) { ?>
-						<?php $v = 0; ?>
-						<?php foreach ($child['children_lv3'] as $child_lv3) { ?>
-							<?php $v++; ?>
-							<?php if($v >$modern_countvmenulv) break; ?>
-							<a class = "menuv_3lv " href="<?php echo $child_lv3['href']; ?>">&nbsp;&nbsp;- <?php echo $child_lv3['name']; ?></a>
-							<?php if ($v >($modern_countvmenulv -1)) { ?>
-								<a class="menuv-allv" href="<?php echo $child['href']; ?>"><?php echo $modern_seeall_menu[$language_id]; ?></a>
-								<?php } ?>
-							<?php } ?>
-						<?php } ?>
-					</li>
-
-					<?php } ?>
-				</ul>
-				</li>
-				<?php } else { ?>
-				<li class="v3hover"><a class="dr_menu" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
-				</li>
-				<?php } ?>
-			<?php } ?>
-		</ul>
-		</li>
-		<?php } ?>
-	</ul>
-	<div class="menu_mob_plus">
-	<div class="hidem">
-	<ul class="nav navbar-nav">
-	<?php foreach ($categories as $category) { ?>
-		<?php if ($category['children']) { ?>
-			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown"><a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
-			<div class="dropdown-menu">
-			<div class="dropdown-inner children-category">
-			<?php if ($category['image_main'] && $modern_main_photos_menu !=1) { ?>
-				<a href="<?php echo $category['href']; ?>"><img class="image_main img-responsive" alt="<?php echo $category['name']; ?>" title="<?php echo $category['name']; ?>" src="<?php echo $category['image_main']; ?>"></a>
-				<?php } ?>
-			<?php foreach ($category['children'] as $child) { ?>
-				<ul class="list-unstyled" >
-				<?php if (isset($child['children_lv3']) && $child['children_lv3']) { ?>
-					<li class="with-child" >
-					<span class = "hidden-xs hidden-sm"><?php if ($modern_photos_menu !=1 && (!empty($child['image2']))) { ?><a href="<?php echo $child['href']; ?>"><img class="opacityhv img-responsive" src="<?php echo $child['image2']; ?>" alt="<?php echo $child['name']; ?>" title="<?php echo $child['name']; ?>" ></a><?php } ?></span>
-					<a href="<?php echo $child['href']; ?>"><span class="style2lv"><?php echo $child['name']; ?></span></a></li>
-					<?php if ($modern_3lv_menu !=1) { ?>
-						<?php $m = 0; ?>
-						<?php foreach ($child['children_lv3'] as $child_lv3) { ?>
-							<?php $m++; ?>
-							<?php if($m >$modern_countvmenulv) break; ?>
-							<li class="children_lv3"><a href="<?php echo $child_lv3['href']; ?>">&nbsp;&nbsp;- <?php echo $child_lv3['name']; ?></a>
-							<?php if ($m >($modern_countvmenulv -1)) { ?>
-								<a class="menuv-all" href="<?php echo $child['href']; ?>"><?php echo $modern_seeall_menu[$language_id]; ?></a>
-								<?php } ?>
-							</li>
-							<?php } ?>
-						<?php } ?>
-					<?php } else { ?>
-					<li><?php if ($modern_photos_menu !=1 && (!empty($child['image2']))) { ?><span class = "hidden-xs hidden-sm"><a href="<?php echo $child['href']; ?>"><img class="opacityhv img-responsive" src="<?php echo $child['image2']; ?>" alt="<?php echo $child['name']; ?>" title="<?php echo $child['name']; ?>" ></a></span><?php } ?><a href="<?php echo $child['href']; ?>"><span class="style2lv"><?php echo $child['name']; ?></span></a></li>
-					<?php } ?>
-				</ul>
-				<?php } ?>
-			</div>
-			</div>
-			<div class="clearfix"></div>
-			</li>
-			<?php } else { ?>
-			<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?>"><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
-			<?php } ?>
-		<?php } ?>
-	</ul>
-	</div>
-	<ul class="nav navbar-nav">
-
-	<?php if ($modern_top_links8 ) { ?>
-		<?php foreach ($modern_top_links8 as $modern_top_link8) { ?>
-			<li>
-			<a <?php if ($modern_top_link8['link_top'][$language_id]) { ?> href="<?php echo $modern_top_link8['link_top'][$language_id]; ?>"<?php } ?>><?php if ($modern_top_link8['faicons_top']) { ?> <i class="<?php echo $modern_top_link8['faicons_top']; ?>"></i> <?php } ?><?php if ($modern_top_link8['title']) { ?><?php echo $modern_top_link8['title'][$language_id]; ?><?php } ?></a>
-			</li>
-			<?php } ?>
-		<?php } ?>
-
-
-	<?php if ($modern_main_link_menu[$language_id]) { ?>
-		<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-		<li class="dropdown"><a class="with-child dropdown-toggle" href="<?php echo $modern_main_link_href_menu[$language_id]; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $modern_main_link_menu[$language_id]; ?><span class="fa fa-angle-down menu"></span></a>
-		<div class="dropdown-menu">
-		<div class="dropdown-inner1 children-category">
-		<ul class="list-unstyled">
-		<?php if ($modern_top_links4 ) { ?>
-			<?php foreach ($modern_top_links4 as $modern_top_link4) { ?>
-				<li>
-				<a <?php if ($modern_top_link4['link_top'][$language_id]) { ?> href="<?php echo $modern_top_link4['link_top'][$language_id]; ?>"<?php } ?> title="<?php echo $modern_top_link4['title'][$language_id]; ?>"><?php if ($modern_top_link4['faicons_top']) { ?> <i class="<?php echo $modern_top_link4['faicons_top']; ?>"></i><?php } ?><?php if ($modern_top_link4['title']) { ?> <?php echo $modern_top_link4['title'][$language_id]; ?><?php } ?></a>
-				</li>
-				<?php } ?>
-			<?php } ?>
-		</ul>
-		</div>
-		</div>
-		</li>
-		<?php } ?>
-
-	<?php if ($modern_info_menu !=1) { ?>
-		<?php if ($informations) { ?>
-			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="dropdown"><a class="with-child dropdown-toggle" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $text_information; ?><span class="fa fa-angle-down menu"></span></a>
-			<div class="dropdown-menu">
-			<div class="dropdown-inner1 children-category">
-			<ul class="list-unstyled">
-			<?php foreach ($informations as $information) { ?>
-				<li><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
-				<?php } ?>
-			</ul>
-			</div>
-			</div>
-			</li>
-			<?php } ?>
-		<?php } ?>
-
-	<?php if ($modern_man_menu !=1) { ?>
-		<?php if ($manufacturers) { ?>
-			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="dropdown"><a class="with-child dropdown-toggle" href="<?php echo $href_manufacturer; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $text_manufacturer; ?><span class="fa fa-angle-down menu"></span></a>
-			<div class="mancss dropdown-menu">
-			<div class="dropdown-inner children-category">
-			<?php foreach ($manufacturers as $manufacturer) { ?>
-				<ul class="list-unstyled" style="width: <?php echo (100/$modern_menuman_column)-1; ?>%">
-				<li><span class ="hidden-xs hidden-sm "><?php if ($modern_photos_menu_manuf !=1) { ?><a class = "manufac-menu" href="<?php echo $manufacturer['href']; ?>"><img class="opacityhv manimgmen" src="<?php echo $manufacturer['manufacturer_image']; ?>" alt="<?php echo $manufacturer['name']; ?>" title="<?php echo $manufacturer['name']; ?>" ></a></span><?php } ?><a class = "manufac-menu" href="<?php echo $manufacturer['href']; ?>"><?php echo $manufacturer['name']; ?></a></li>
-				</ul>
-				<?php } ?>
-			</div>
-			</div>
-			</li>
-			<?php } ?>
-		<?php } ?>
-
-	</ul>
-	</div>
-	</div>
-	</nav>
-	</div>
-	</div></div>
-	</div></div> -->
 	</div>
 	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 cart">
 	<?php echo $cart; ?>
 	</div>
 	</div>
 	</div>
-	<div class="menu-top">
-	<div class="container">
-		<div class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 menu_adapt">
-	<div class="top-menu">
-	<div id="top-menu" >
-	<div class="nobackground">
-	<nav id="menu" class="navbar">
-	<div class="navbar-header"><span id="category" class="visible-xs"><?php echo $text_category; ?></span>
-	<button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
 	</div>
-	<div class="collapse navbar-collapse navbar-ex1-collapse menu_adapt_coll">
-	<ul class="nav navbar-nav">
-
-	<?php if ($modern_ico_home !=1) { ?>
-		<li><a href="<?php echo $base; ?>"><i class="fa fa-home fa_homemenu"></i></a></li>
-		<?php } ?>
-	<?php if ($modern_ico_home_text !=1) { ?>
-		<li><a href="<?php echo $base; ?>"><?php echo $text_homel; ?></i></a></li>
-		<?php } ?>
-	<?php if ($modern_seevmenu_menu !=1) { ?>
-		<li class="dropdown hidev"><a class="with-child dropdown-toggle" <?php if (!empty($modern_link_menucatalog)) { ?> href="<?php echo $modern_link_menucatalog; ?>" <?php } ?> data-hover="dropdown" data-delay="1" data-close-others="false">
-		<?php if ($modern_seevmenuico !=1) { ?>
-			<i class="fa fa-bars"></i>&nbsp;&nbsp;
-			<?php } ?>
-		<?php echo $modern_vmenu_menu[$language_id]; ?><span class="fa fa-angle-down menu"></span></a>
-		<ul class="dropdown-menu multi-level" role="menu">
-		<?php foreach ($categories as $category) { ?>
-			<?php if ($category['children']) { ?>
-				<li class="dropdown-submenu" >
-				<a class="dr_menu" tabindex="-1" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?><span class="arrowvertmenu"></span></a>
-				<ul class="dropdown-menu2">
-				<?php if ($category['image_main'] && $modern_main_photos_menu !=1) { ?>
-					<li><a href="<?php echo $category['href']; ?>"><img class="image_main img-responsive" alt="<?php echo $category['name']; ?>" title="<?php echo $category['name']; ?>" src="<?php echo $category['image_main']; ?>"></a>	</li>
-					<?php } ?>
-				<?php foreach ($category['children'] as $child) { ?>
-					<li class="col-sm-4 mcol">
-					<span class = "hidden-xs"><?php if ($modern_photos_menu !=1 && (!empty($child['image2']))) { ?><a href="<?php echo $child['href']; ?>"><img class="vopmen img-responsive" src="<?php echo $child['image2']; ?>" alt="<?php echo $child['name']; ?>" title="<?php echo $child['name']; ?>" ></a><?php } ?></span>
-					<div class="clearfix"></div>
-					<a class="submenu_main" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
-					<?php if (isset($child['children_lv3']) && $child['children_lv3']) { ?>
-						<?php $v = 0; ?>
-						<?php foreach ($child['children_lv3'] as $child_lv3) { ?>
-							<?php $v++; ?>
-							<?php if($v >$modern_countvmenulv) break; ?>
-							<a class = "menuv_3lv " href="<?php echo $child_lv3['href']; ?>">&nbsp;&nbsp;- <?php echo $child_lv3['name']; ?></a>
-							<?php if ($v >($modern_countvmenulv -1)) { ?>
-								<a class="menuv-allv" href="<?php echo $child['href']; ?>"><?php echo $modern_seeall_menu[$language_id]; ?></a>
-								<?php } ?>
-							<?php } ?>
-						<?php } ?>
-					</li>
-
-					<?php } ?>
-				</ul>
-				</li>
-				<?php } else { ?>
-				<li class="v3hover"><a class="dr_menu" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
-				</li>
-				<?php } ?>
-			<?php } ?>
-		</ul>
-		</li>
-		<?php } ?>
-	</ul>
-	<div class="menu_mob_plus">
-	<div class="hidem">
-	<ul class="nav navbar-nav">
-	<?php foreach ($categories as $category) { ?>
-		<?php if ($category['children']) { ?>
-			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-            <li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?> dropdown"> <a class="with-child dropdown-toggle" href="<?php echo $category['href']; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $category['name']; ?><span class="fa fa-angle-down menu"></span></a>
-			<div class="dropdown-menu">
-			<div class="dropdown-inner children-category">
-			<?php if ($category['image_main'] && $modern_main_photos_menu !=1) { ?>
-				<a href="<?php echo $category['href']; ?>"><img class="image_main img-responsive" alt="<?php echo $category['name']; ?>" title="<?php echo $category['name']; ?>" src="<?php echo $category['image_main']; ?>"></a>
-				<?php } ?>
-			<?php foreach ($category['children'] as $child) { ?>
-				<ul class="list-unstyled" >
-				<?php if (isset($child['children_lv3']) && $child['children_lv3']) { ?>
-					<li class="with-child" >
-					<span class = "hidden-xs hidden-sm"><?php if ($modern_photos_menu !=1 && (!empty($child['image2']))) { ?><a href="<?php echo $child['href']; ?>"><img class="opacityhv img-responsive" src="<?php echo $child['image2']; ?>" alt="<?php echo $child['name']; ?>" title="<?php echo $child['name']; ?>" ></a><?php } ?></span>
-					<a href="<?php echo $child['href']; ?>"><span class="style2lv"><?php echo $child['name']; ?></span></a></li>
-					<?php if ($modern_3lv_menu !=1) { ?>
-						<?php $m = 0; ?>
-						<?php foreach ($child['children_lv3'] as $child_lv3) { ?>
-							<?php $m++; ?>
-							<?php if($m >$modern_countvmenulv) break; ?>
-							<li class="children_lv3"><a href="<?php echo $child_lv3['href']; ?>">&nbsp;&nbsp;- <?php echo $child_lv3['name']; ?></a>
-							<?php if ($m >($modern_countvmenulv -1)) { ?>
-								<a class="menuv-all" href="<?php echo $child['href']; ?>"><?php echo $modern_seeall_menu[$language_id]; ?></a>
-								<?php } ?>
-							</li>
-							<?php } ?>
-						<?php } ?>
-					<?php } else { ?>
-					<li><?php if ($modern_photos_menu !=1 && (!empty($child['image2']))) { ?><span class = "hidden-xs hidden-sm"><a href="<?php echo $child['href']; ?>"><img class="opacityhv img-responsive" src="<?php echo $child['image2']; ?>" alt="<?php echo $child['name']; ?>" title="<?php echo $child['name']; ?>" ></a></span><?php } ?><a href="<?php echo $child['href']; ?>"><span class="style2lv"><?php echo $child['name']; ?></span></a></li>
-					<?php } ?>
-				</ul>
-				<?php } ?>
-			</div>
-			</div>
-			<div class="clearfix"></div>
-			</li>
-			<?php } else { ?>
-			<li class="<?php if($category['category_id']==$category_id) {echo 'activetopmenu';}?>"><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
-			<?php } ?>
-		<?php } ?>
-	</ul>
-	</div>
-        <ul class="nav navbar-nav">
-
-	<?php if ($modern_top_links8 ) { ?>
-		<?php foreach ($modern_top_links8 as $modern_top_link8) { ?>
-			<li>
-			<a <?php if ($modern_top_link8['link_top'][$language_id]) { ?> href="<?php echo $modern_top_link8['link_top'][$language_id]; ?>"<?php } ?>><?php if ($modern_top_link8['faicons_top']) { ?> <i class="<?php echo $modern_top_link8['faicons_top']; ?>"></i> <?php } ?><?php if ($modern_top_link8['title']) { ?><?php echo $modern_top_link8['title'][$language_id]; ?><?php } ?></a>
-			</li>
-			<?php } ?>
-		<?php } ?>
-
-
-	<?php if ($modern_main_link_menu[$language_id]) { ?>
-		<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-		<li class="dropdown"><a class="with-child dropdown-toggle" href="<?php echo $modern_main_link_href_menu[$language_id]; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $modern_main_link_menu[$language_id]; ?><span class="fa fa-angle-down menu"></span></a>
-		<div class="dropdown-menu">
-		<div class="dropdown-inner1 children-category">
-		<ul class="list-unstyled">
-		<?php if ($modern_top_links4 ) { ?>
-			<?php foreach ($modern_top_links4 as $modern_top_link4) { ?>
-				<li>
-				<a <?php if ($modern_top_link4['link_top'][$language_id]) { ?> href="<?php echo $modern_top_link4['link_top'][$language_id]; ?>"<?php } ?> title="<?php echo $modern_top_link4['title'][$language_id]; ?>"><?php if ($modern_top_link4['faicons_top']) { ?> <i class="<?php echo $modern_top_link4['faicons_top']; ?>"></i><?php } ?><?php if ($modern_top_link4['title']) { ?> <?php echo $modern_top_link4['title'][$language_id]; ?><?php } ?></a>
-				</li>
-				<?php } ?>
-			<?php } ?>
-		</ul>
-		</div>
-		</div>
-		</li>
-		<?php } ?>
-
-	<?php if ($modern_info_menu !=1) { ?>
-		<?php if ($informations) { ?>
-			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="dropdown"><a class="with-child dropdown-toggle" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $text_information; ?><span class="fa fa-angle-down menu"></span></a>
-			<div class="dropdown-menu">
-			<div class="dropdown-inner1 children-category">
-			<ul class="list-unstyled">
-			<?php foreach ($informations as $information) { ?>
-				<li><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
-				<?php } ?>
-			</ul>
-			</div>
-			</div>
-			</li>
-			<?php } ?>
-		<?php } ?>
-
-	<?php if ($modern_man_menu !=1) { ?>
-		<?php if ($manufacturers) { ?>
-			<li class="plus"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></li>
-			<li class="dropdown"><a class="with-child dropdown-toggle" href="<?php echo $href_manufacturer; ?>" data-hover="dropdown" data-delay="1" data-close-others="false"><?php echo $text_manufacturer; ?><span class="fa fa-angle-down menu"></span></a>
-			<div class="mancss dropdown-menu">
-			<div class="dropdown-inner children-category">
-			<?php foreach ($manufacturers as $manufacturer) { ?>
-				<ul class="list-unstyled" style="width: <?php echo (100/$modern_menuman_column)-1; ?>%">
-				<li><span class ="hidden-xs hidden-sm "><?php if ($modern_photos_menu_manuf !=1) { ?><a class = "manufac-menu" href="<?php echo $manufacturer['href']; ?>"><img class="opacityhv manimgmen" src="<?php echo $manufacturer['manufacturer_image']; ?>" alt="<?php echo $manufacturer['name']; ?>" title="<?php echo $manufacturer['name']; ?>" ></a></span><?php } ?><a class = "manufac-menu" href="<?php echo $manufacturer['href']; ?>"><?php echo $manufacturer['name']; ?></a></li>
-				</ul>
-				<?php } ?>
-			</div>
-			</div>
-			</li>
-			<?php } ?>
-		<?php } ?>
-
-	</ul>
-	</div>
-	</div>
-	</nav>
-	</div>
-	</div></div>
-	</div></div>
-	</div>
-	</div>
+	<div class="category_menu">
+		<?=$categoryMenu;?>
 	</div>
 	<script>
 	$(window).scroll(function(){
@@ -712,11 +353,10 @@ color: #<?php echo $modern_color_tittle_news ?>;
 				if (i == 0) {
 					var htnl_header = '<div class="top-header2"><div class="container"><div class="row"><div id="logo" class="col-lg-1 col-md-1 col-sm-1 col-xs-1">';
 					htnl_header += $('div#logo').html();
-					htnl_header += '</div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="top-menu">';
+					htnl_header += '</div><div class="col-lg-11 col-md-11 col-sm-11 col-xs-11"><div class="top-menu">';
 					htnl_header += $('div.top-menu').html();
-					htnl_header += '</div></div><div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 cart">';
-					htnl_header += $('div.cart').html();
-					htnl_header += '</div></div></div></div>';
+					htnl_header += '</div></div>';
+					htnl_header += '</div></div>';
 					i = 1;
 				}
 				if ($('*').is('.top-header2')) {
@@ -1056,9 +696,7 @@ $('#menu .menu_mob_plus li').bind().click(function(e) {
 	$(this).toggleClass("open").find('>ul').stop(true, true).slideToggle(3000)
 	.end().siblings().find('>ul').slideUp().parent().removeClass("open");
 	e.stopPropagation();
-	// Замена + на - во время открытия меню
-	$(this).prev().find('.fa-plus').toggle();
-	$(this).prev().find('.fa-minus').toggle();
+
 });
 $('#menu li a').click(function(e) {
 	e.stopPropagation();
@@ -1068,10 +706,8 @@ $('.children-category > ul > li').each(function(i, elem){
 	if( $(elem).hasClass('children_lv3') ) {
 		var ulElements = $(elem).parent().find('li');
 		if( $(ulElements[0]).find('a.plus-link').length == 0 ) {
-			$(ulElements[0]).append('<a href="#" class="plus-link"><i class="fa fa-plus" style="display: inline; "></i><i class="fa fa-minus" style="display: none;"></i></a>');
+			$(ulElements[0]).append('<a href="#" class="plus-link"><i class="fa fa-angle-down" style="display: inline; "></i><i class="fa fa-angle-down" style="display: none;"></i></a>');
 			$(ulElements[0]).find('a.plus-link').click(function(e){
-				$(ulElements[0]).find('a.plus-link > .fa-plus').toggle();
-				$(ulElements[0]).find('a.plus-link > .fa-minus').toggle();
 				$(ulElements[0]).parent().find('.children_lv3').toggle();
 				return false;
 			});

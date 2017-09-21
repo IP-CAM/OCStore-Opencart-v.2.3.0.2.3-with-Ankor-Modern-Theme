@@ -1467,8 +1467,13 @@ class ControllerCatalogProduct extends Controller {
 					} else {
 						$data['popupsize'] = 0;
 					}
-      
+
 		$this->load->model('design/layout');
+
+        $data['idProduct'] = 0;
+        if (isset($product_info['product_id'])) {
+            $data['idProduct'] = $product_info['product_id'];
+        }
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
