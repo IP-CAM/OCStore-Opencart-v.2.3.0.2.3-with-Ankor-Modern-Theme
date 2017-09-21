@@ -1,4 +1,6 @@
 <?php
+use app\core\App;
+
 class ControllerCommonHeader extends Controller {
 	public function index() {
 		// Analytics
@@ -346,8 +348,22 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$data['class'] = 'common-home';
 		}
-
+        $data = $this->addServiceToMenu($data);
         $data['categoryMenu'] = $this->load->view('common/menu/main_category',$data);
 		return $this->load->view('common/header', $data);
 	}
+
+	protected function addServiceToMenu($data) {
+	    if (App::$config->idProductServiceOnMainMenu) {
+            $this->load->model('catalog/product');
+            $product_info = $this->model_catalog_product->getProduct(App::$config->idProductServiceOnMainMenu);
+            $data['categories'][] = array(
+                'name'     => $product_info['name'],
+                'children' => [],
+                'column'   => 1,
+                'href'     => $this->url->link('product/product', ['product_id' => App::$config->idProductServiceOnMainMenu]),
+            );
+        }
+        return $data;
+    }
 }

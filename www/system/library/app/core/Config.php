@@ -14,6 +14,7 @@ namespace app\core;
  * @property array telegram;
  * @property bool debug;
  * @property int idProductServiceOnMainMenu;
+ * @property string idProductServiceOnMainMenuTypeUtp;
  */
 class Config {
     protected $data = [];
@@ -27,6 +28,9 @@ class Config {
         }
     }
     public  function __get($name){
-        return $this->data[$name];
+        if (isset($this->data[$name])) {
+            return $this->data[$name];
+        }
+        return null;
     }
 }

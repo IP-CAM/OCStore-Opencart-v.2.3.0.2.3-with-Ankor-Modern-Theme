@@ -1,9 +1,9 @@
-/* header */
 @media screen and (max-width: 487px) {
   #search input.form-control {
     width: 100%;
   }
 }
+
 /* header */
 
 /*top menu*/
@@ -32,6 +32,17 @@
   }
 }
 /*end tom menu*/
+
+/*brands*/
+@media (max-width: 991px) {
+  .img_brands {
+    display: flex;
+    justify-content: center;
+  }
+}
+/*END brands*/
+
+
 
 /* product */
 @media (max-width: 1599px) and (min-width: 1200px) {

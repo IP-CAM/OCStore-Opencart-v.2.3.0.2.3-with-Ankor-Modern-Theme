@@ -460,6 +460,8 @@ class ControllerProductCategory extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
+            $data['linkBrands'] = $this->url->link('product/manufacturer');
+
 			$this->response->setOutput($this->load->view('product/category', $data));
 		} else {
 			$url = '';

@@ -1,4 +1,6 @@
 <?php
+use app\core\App;
+
 class ControllerProductProduct extends Controller {
 	private $error = array();
 
@@ -176,9 +178,9 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-
+        
 		if ($product_info) {
-
+            
             $data['aridiusinstock'] = $this->load->controller('module/aridiusinstock');
 			
 
@@ -741,6 +743,8 @@ class ControllerProductProduct extends Controller {
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
+            $data = $this->getDataTypesFromConfig($data, $product_info);
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -1022,4 +1026,25 @@ class ControllerProductProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    protected function getDataTypesFromConfig($data,$productInfo){
+        if (!App::$config->idProductServiceOnMainMenu == $productInfo['product_id']) {
+            return $data;
+        }
+        $data['type_products'] =  1;
+        $data['type_utp'] =  App::$config->idProductServiceOnMainMenuTypeUtp;
+        if (!empty($data['type_utp'])) {
+            $file = DIR_ADD_TPL . $data['type_utp'] . '.tpl';
+            if (file_exists($file)) {
+                $data['file_utp'] = $file;
+            }
+        } else {
+            $file = DIR_ADD_TPL . '/utp/product.tpl';
+            if (file_exists($file)) {
+                $data['file_utp'] = $file;
+            }
+        }
+        return $data;
+	}
+
 }
