@@ -106,6 +106,12 @@
             </div>
             <div class="tab-pane" id="tab-data">
 
+              <div class="form-group">
+                <label class="col-sm-2 control-label" >ID</label>
+                <div class="col-sm-10">
+                  <? echo $idProduct;?>
+                </div>
+              </div>
                     <div class="form-group">
 						    <label class="col-sm-2 control-label" >Stickers</label>
 						    <div class="col-sm-10">

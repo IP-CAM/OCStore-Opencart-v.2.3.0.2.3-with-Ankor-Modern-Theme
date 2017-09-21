@@ -3,3 +3,29 @@
     width: 100%;
   }
 }
+/*top menu*/
+@media (max-width: 991px) {
+  #top-links2 {
+    ul {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+.navbar-right {
+  display: flex;
+  justify-content: center;
+}
+  .reg a {
+    color: #ffffff!important;
+  }
+}
+@media (min-width: 991px) and (max-width: 1200px) {
+  #top-links a {
+    font-size: 12px;
+  }
+  #top-links2 a {
+    font-size: 12px;
+  }
+}
+/*end tom menu*/

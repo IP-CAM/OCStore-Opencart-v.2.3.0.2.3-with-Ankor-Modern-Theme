@@ -13,6 +13,7 @@ namespace app\core;
  * Class Config
  * @property array telegram;
  * @property bool debug;
+ * @property int idProductServiceOnMainMenu;
  */
 class Config {
     protected $data = [];
