@@ -3,6 +3,9 @@
     width: 100%;
   }
 }
+
+/* header */
+
 /*top menu*/
 @media (max-width: 991px) {
   #top-links2 {
@@ -29,6 +32,7 @@
   }
 }
 /*end tom menu*/
+
 /*brands*/
 @media (max-width: 991px) {
   .img_brands {
@@ -39,3 +43,11 @@
 /*END brands*/
 
 
+
+/* product */
+@media (max-width: 1599px) and (min-width: 1200px) {
+  .cart {
+    padding-left: 5px !important;
+  }
+}
+/* product */
