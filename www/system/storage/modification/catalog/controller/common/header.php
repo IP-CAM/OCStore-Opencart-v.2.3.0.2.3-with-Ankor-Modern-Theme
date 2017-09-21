@@ -3,11 +3,12 @@ use app\core\App;
 
 class ControllerCommonHeader extends Controller {
 	public function index() {
-		// Analytics
+
+        $this->document->addStyle('catalog/view/theme/modern/stylesheet/aridiuscallback.css');
+        // Analytics
 		$this->load->model('extension/extension');
 
-            $data['aridiusfastorder'] = $this->load->controller('module/aridiuscallback');
-			
+        $data['aridiusfastorder'] = $this->load->controller('module/aridiuscallback');
 
 		$data['analytics'] = array();
 
@@ -348,8 +349,10 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$data['class'] = 'common-home';
 		}
+
         $data = $this->addServiceToMenu($data);
         $data['categoryMenu'] = $this->load->view('common/menu/main_category',$data);
+
 		return $this->load->view('common/header', $data);
 	}
 
