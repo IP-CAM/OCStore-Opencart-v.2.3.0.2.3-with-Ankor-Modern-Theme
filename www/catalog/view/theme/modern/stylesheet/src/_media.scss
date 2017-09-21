@@ -1,8 +1,11 @@
+/* header */
 @media screen and (max-width: 487px) {
   #search input.form-control {
     width: 100%;
   }
 }
+/* header */
+
 /*top menu*/
 @media (max-width: 991px) {
   #top-links2 {
@@ -29,3 +32,11 @@
   }
 }
 /*end tom menu*/
+
+/* product */
+@media (max-width: 1599px) and (min-width: 1200px) {
+  .cart {
+    padding-left: 5px !important;
+  }
+}
+/* product */

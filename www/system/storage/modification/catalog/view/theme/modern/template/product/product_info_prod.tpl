@@ -26,7 +26,7 @@
         <ul class="list-unstyled">
             <?php if ($manufacturer) { ?>
                 <?php if ($modern_product_man_img !=1) { ?>
-                    <li><a href="<?php echo $manufacturers; ?>">
+                    <li>
                             <?php if( isset($manufacturer_img) ) { ?>
                                 <img  class="pull-right brand_img" src="<?php echo $manufacturer_img ; ?>" alt="<?php echo $manufacturer; ?>" title="<?php echo $manufacturer; ?>">
                             <?php } ?>

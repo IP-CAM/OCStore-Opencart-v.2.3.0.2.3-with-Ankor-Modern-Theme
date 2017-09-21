@@ -14,22 +14,6 @@
   }
 }
 
-.prmain {
-  height: 425px;
-  .thumbnails{
-    height: inherit;
-    >li{
-      height: inherit;
-      a{
-        height: 390px;
-        img{
-          height: inherit;
-        }
-      }
-    }
-  }
-}
-
 #product{
   hr{
     margin-bottom: -10px;
@@ -54,4 +38,24 @@
 
 .attribute_groups{
     display: none !important;
+}
+.line-product {
+  padding: 10px 0 5px 0;
+  .priceproduct-new {
+    vertical-align: -webkit-baseline-middle;
+  }
+}
+
+.cart {
+  padding-left: 5px;
+  >button:hover{
+      background: #51585e;
+    }
+  >button{
+    background: #353d44;
+  }
+}
+
+.tab-content{
+  min-height: 600px;
 }
