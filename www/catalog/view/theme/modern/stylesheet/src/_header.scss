@@ -57,28 +57,3 @@
 .fn_header{
   font-size: 24px;
 }
-
-#menu{
-  .nav > li > a{
-    color: #000000;
-    line-height: 16px;
-    text-align: center;
-    max-width: 145px;
-    font-weight: 400;
-    height: 55px;
-    margin-top: -1px;
-    display: flex;
-    align-items: center;
-  }
-  .nav > li > a:hover{
-    color: #ffffff;
-  }
-}
-
-.list-inline{
-  li{
-    a{
-      padding: 15px 8px!important;
-    }
-  }
-}

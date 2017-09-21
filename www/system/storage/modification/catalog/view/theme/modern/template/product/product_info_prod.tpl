@@ -2,7 +2,7 @@
 
     <div class="linetoppr">
         <?php if ($review_status) { ?>
-            <!--<div class="rating">
+            <div class="rating">
                 <p>
                     <?php for ($i = 1; $i <= 5; $i++) { ?>
                         <?php if ($rating < $i) { ?>
@@ -21,7 +21,7 @@
 		</span>
                     <?php } ?>
                 </p>
-            </div>-->
+            </div>
         <?php } ?>
         <ul class="list-unstyled">
             <?php if ($manufacturer) { ?>
