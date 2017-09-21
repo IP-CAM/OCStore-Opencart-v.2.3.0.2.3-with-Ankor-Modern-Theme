@@ -16,7 +16,10 @@
 	<li><?php if($i+1<count($breadcrumbs)) { ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a><?php } else { ?><?php echo $breadcrumb['text']; ?><?php } ?></li>
 	<?php } ?>
 </ul>
-<h1 class="title_style col-sm-12"><?php echo $heading_title; ?></h1>
+    <div class="row">
+        <h1 class="title_style col-xs-7 col-sm-10 col-md-10"><?php echo $heading_title; ?></h1>
+        <span class="col-xs-5 col-sm-2 col-md-2 link_brands"><a href="<?php echo $linkBrands; ?>">О брендах <i class="fa fa-question-circle"></i></a></span>
+    </div>
 <?php if ($modern_description_top_or_bot !=1) { ?>
 <?php if ($thumb || $description) { ?>
 <div class="row desc-cat_top">
@@ -24,14 +27,14 @@
 <div class="col-sm-2"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" class="img-thumbnail" /></div>
 <?php } ?>
 <?php if ($description) { ?>
-<?php if ($modern_description_length !=1 && strlen($description) > 2200 ) { 
+<?php if ($modern_description_length !=1 && strlen($description) > 2200 ) {
 if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><?php } ?>
 <div class="block_desc">
 <?php echo $description; ?>
 </div>
 <a class="button_sh"><?php echo $text_show_desc; ?></a>
 </div>
-<?php } else { 
+<?php } else {
 if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><?php } ?><?php echo $description; ?></div>
 <?php } ?>
 <?php } ?>
@@ -288,14 +291,14 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 <div class="col-sm-2"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" class="img-thumbnail" /></div>
 <?php } ?>
 <?php if ($description) { ?>
-<?php if ($modern_description_length !=1 && strlen($description) > 2200 ) { 
+<?php if ($modern_description_length !=1 && strlen($description) > 2200 ) {
 if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><?php } ?>
 <div class="block_desc">
 <?php echo $description; ?>
 </div>
 <a class="button_sh"><?php echo $text_show_desc; ?></a>
 </div>
-<?php } else { 
+<?php } else {
 if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><?php } ?><?php echo $description; ?></div>
 <?php } ?>
 <?php } ?>
@@ -307,7 +310,7 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 <?php echo $content_bottom; ?></div></div>
 <?php echo $column_right; ?></div>
 </div>
-<script>	
+<script>
 $(document).ready(function(){
     $('.button_sh').click(function(){
         $(this).toggleClass('active');
@@ -318,6 +321,6 @@ $(document).ready(function(){
             $(this).data('status', false).html('<?php echo $text_show_desc; ?>');
         }
     });
-});	
+});
 </script>
 <?php echo $footer; ?>
