@@ -2,7 +2,7 @@
 
     <div class="linetoppr">
         <?php if ($review_status) { ?>
-            <div class="rating">
+            <!--<div class="rating">
                 <p>
                     <?php for ($i = 1; $i <= 5; $i++) { ?>
                         <?php if ($rating < $i) { ?>
@@ -21,50 +21,50 @@
 		</span>
                     <?php } ?>
                 </p>
-            </div>
+            </div>-->
         <?php } ?>
-    </div>
-    <ul class="list-unstyled">
-        <?php if ($manufacturer) { ?>
-            <?php if ($modern_product_man_img !=1) { ?>
-                <li><a href="<?php echo $manufacturers; ?>">
-                        <?php if( isset($manufacturer_img) ) { ?>
-                            <img  class="pull-right" src="<?php echo $manufacturer_img ; ?>" alt="<?php echo $manufacturer; ?>" title="<?php echo $manufacturer; ?>">
-                        <?php } ?>
-                    </a></li>
+        <ul class="list-unstyled">
+            <?php if ($manufacturer) { ?>
+                <?php if ($modern_product_man_img !=1) { ?>
+                    <li><a href="<?php echo $manufacturers; ?>">
+                            <?php if( isset($manufacturer_img) ) { ?>
+                                <img  class="pull-right brand_img" src="<?php echo $manufacturer_img ; ?>" alt="<?php echo $manufacturer; ?>" title="<?php echo $manufacturer; ?>">
+                            <?php } ?>
+                        </a></li>
+                <?php } ?>
+                <li><span><?php echo $text_manufacturer; ?></span>&nbsp;&nbsp;<a itemprop="manufacturer" href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
             <?php } ?>
-            <li><span><?php echo $text_manufacturer; ?></span>&nbsp;&nbsp;<a itemprop="manufacturer" href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
-        <?php } ?>
-        <li><?php echo $text_stock; ?>&nbsp;&nbsp;<?php echo ($quantity > 0) ? '<span class = "rewardin">'. $stock .'</span>' : '<span class = "rewardoff">'. $stock .'</span>'; ?></li>
-        <?php if ($modern_product_kod_tovara !=1) { ?>
-            <li><span><?php echo $text_model; ?></span>&nbsp;&nbsp;<span itemprop="model"><?php echo $model; ?></span></li>
-        <?php } ?>
-        <?php if ($reward) { ?>
-            <li><span><?php echo $text_reward; ?></span>&nbsp;&nbsp;<?php echo $reward; ?></li>
-        <?php } ?>
-        <?php if ($length && $width && $height && $modern_product_size !=1 ) { ?>
-            <li><?php if ($length > 0) { ?><?php echo $text_lengthp; ?> <?php echo $length; ?> <?php if (($length > 0 && $width > 0)||($length > 0 && $height > 0)) { ?>x<?php } ?> <?php } ?><?php if ($width > 0) { ?><?php echo $text_widthp; ?> <?php echo $width; ?> <?php if ($width > 0 && $height > 0) { ?>x<?php } ?> <?php } ?><?php if ($height > 0) { ?><?php echo $text_heightp; ?> <?php echo $height; ?><?php } ?></li>
-        <?php } ?>
-        <?php if ($weight > 0 && $modern_product_weight !=1 ) { ?>
-            <li><?php echo $text_weightp; ?> <?php echo $weight; ?></li>
-        <?php } ?>
-        <?php if ($modern_product_show_sku !=1) { ?>
-            <li><?php if ($sku) { echo $modern_product_sku[$language_id]; } ?> <?php echo $sku; ?></li>
-        <?php } ?>
-        <?php if ($modern_product_show_upc !=1) { ?>
-            <li><?php if ($upc) { echo $modern_product_upc[$language_id]; } ?> <?php echo $upc; ?></li>
-        <?php } ?>
-        <?php if ($modern_product_show_ean !=1) { ?>
-            <li><?php if ($ean) { echo $modern_product_ean[$language_id]; } ?> <?php echo $ean; ?></li>
-        <?php } ?>
-        <?php if ($modern_product_show_jan !=1) { ?>
-            <li><?php if ($jan) { echo $modern_product_jan[$language_id]; } ?> <?php echo $jan; ?></li>
-        <?php } ?>
-        <?php if ($aridius_popupsize_status && $popupsize == 1) { ?>
-            <li> <i class="fa fa-calendar"></i>&nbsp;<a class="popup-modal" href="#popup-modal"><?php echo $aridius_popupsize_name[$language_id]; ?></a> </li>
-        <?php } ?>
-    </ul>
-    <hr>
+            <!--<li><?php echo $text_stock; ?>&nbsp;&nbsp;<?php echo ($quantity > 0) ? '<span class = "rewardin">'. $stock .'</span>' : '<span class = "rewardoff">'. $stock .'</span>'; ?></li> -->
+            <?php if ($modern_product_kod_tovara !=1) { ?>
+                <li><span><?php echo $text_model; ?></span>&nbsp;&nbsp;<span itemprop="model"><?php echo $model; ?></span></li>
+            <?php } ?>
+            <?php if ($reward) { ?>
+                <li><span><?php echo $text_reward; ?></span>&nbsp;&nbsp;<?php echo $reward; ?></li>
+            <?php } ?>
+            <?php if ($length && $width && $height && $modern_product_size !=1 ) { ?>
+                <li><?php if ($length > 0) { ?><?php echo $text_lengthp; ?> <?php echo $length; ?> <?php if (($length > 0 && $width > 0)||($length > 0 && $height > 0)) { ?>x<?php } ?> <?php } ?><?php if ($width > 0) { ?><?php echo $text_widthp; ?> <?php echo $width; ?> <?php if ($width > 0 && $height > 0) { ?>x<?php } ?> <?php } ?><?php if ($height > 0) { ?><?php echo $text_heightp; ?> <?php echo $height; ?><?php } ?></li>
+            <?php } ?>
+            <?php if ($weight > 0 && $modern_product_weight !=1 ) { ?>
+                <li><?php echo $text_weightp; ?> <?php echo $weight; ?></li>
+            <?php } ?>
+            <?php if ($modern_product_show_sku !=1) { ?>
+                <li><?php if ($sku) { echo $modern_product_sku[$language_id]; } ?> <?php echo $sku; ?></li>
+            <?php } ?>
+            <?php if ($modern_product_show_upc !=1) { ?>
+                <li><?php if ($upc) { echo $modern_product_upc[$language_id]; } ?> <?php echo $upc; ?></li>
+            <?php } ?>
+            <?php if ($modern_product_show_ean !=1) { ?>
+                <li><?php if ($ean) { echo $modern_product_ean[$language_id]; } ?> <?php echo $ean; ?></li>
+            <?php } ?>
+            <?php if ($modern_product_show_jan !=1) { ?>
+                <li><?php if ($jan) { echo $modern_product_jan[$language_id]; } ?> <?php echo $jan; ?></li>
+            <?php } ?>
+            <?php if ($aridius_popupsize_status && $popupsize == 1) { ?>
+                <li> <i class="fa fa-calendar"></i>&nbsp;<a class="popup-modal" href="#popup-modal"><?php echo $aridius_popupsize_name[$language_id]; ?></a> </li>
+            <?php } ?>
+        </ul>
+    </div>
+
     <?php if ($price) { ?>
         <span itemprop="offers" itemscope itemtype = "http://schema.org/Offer">
 	<meta itemprop="price" content="<?php echo rtrim(preg_replace("/[^0-9\.]/", "", ($special ? $special : $price)), '.'); ?>" />
@@ -247,14 +247,13 @@
             <div class="custom pull-left">
                 <button type="button" id="plus" class="items-count" ><i class="fa fa-angle-up">&nbsp;</i></button>
                 <button type="button" id="minus" class="items-count"><i class="fa fa-angle-down">&nbsp;</i></button>
-            </div>&nbsp;&nbsp;&nbsp;
+            </div>
             <?php if ($modern_wishlist_cat !=1) { ?>
                 <button type="button" data-toggle="tooltip" class="btn-wishlist" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
             <?php } ?>
             <?php if ($modern_compare_cat !=1) { ?>
                 <button type="button" data-toggle="tooltip" class="btn-compare" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
             <?php } ?>
-            <div class="clearfix"></div><br />
             <div class="cart pull-left" >
                 <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?>
                     <button type="button" class="btn-instock" onclick="instock.add('<?php echo $product_id; ?>');" data-product-id="<?php echo $product_id; ?>"><?php echo $button_instock; ?></button>
@@ -266,10 +265,10 @@
                 <?php } ?>
             </div>
         </div>
-        <div class="clearfix"></div>
+       <!-- <div class="clearfix"></div>
         <?php if ($minimum > 1) { ?>
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_minimum; ?></div>
-        <?php } ?>
+        <?php } ?> -->
     </div>
     <?php if ($modern_product_show_share !=1) { ?>
         <div class="rating">

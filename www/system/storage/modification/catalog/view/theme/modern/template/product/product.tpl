@@ -28,9 +28,9 @@
 <?php if ($attribute_groups) { ?>
 	<li class="col-xs-12 tab_padding"><a data-toggle="tab" href="#attribute_tab"><?php echo $tab_attribute; ?> <i class="fa fa-caret-down hidden"></i></a></li>
 	<?php } ?>
-<?php if ($review_status) { ?>
+<!--<?php if ($review_status) { ?>
 	<li class="col-xs-12 tab_padding"><a data-toggle="tab" href="#review_tab"><?php echo $tab_review; ?> <i class="fa fa-caret-down hidden"></i></a></li>
-	<?php } ?>
+	<?php } ?>-->
 <?php if ($products) { ?>
 	<li class="col-xs-12 tab_padding"><a data-toggle="tab" href="#accessories_tab"><?php echo $text_related; ?> <i class="fa fa-caret-down hidden"></i></a></li>
 	<?php } ?>
@@ -39,9 +39,9 @@
 <?php foreach ($custom_tabs as $key => $custom_tab) { ?>
 <?php if ($custom_tab['title']) { ?><li class="col-xs-12 tab_padding"><a href="#custom_tabs-<?php echo $key?>" data-toggle="tab"><?php echo $custom_tab['title']; ?></a></li><?php } ?>
 <?php } ?>
-<?php } ?>	
+<?php } ?>
 <!-- custom_tabs -->
-<?php 
+<?php
 
 if ($modern_top_links7 ) { ?>
 <?php foreach ($modern_top_links7 as $key => $modern_top_link7) { ?>
@@ -122,7 +122,7 @@ $days = ceil(($endDate2 / 86400)) - ceil(($startDate1 / 86400));
 		<?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12'; ?>
 	<?php } ?>
 	<div class="<?php echo $class; ?>">
-<? 
+<?
 if ($type_products == 0) {
 	include_once 'product_info_prod.tpl';
 }elseif ($type_products == 1) {
@@ -159,9 +159,10 @@ if ($type_products == 0) {
 	?>
 </div>
 </div></div></div>
+    <hr>
 <div class="title_center"><?php echo $tab_description; ?></div>
 <div class="description_pr" itemprop="description"><?php echo $description; ?></div>
-<div class="attribute_groups">
+<!--<div class="attribute_groups">
 <?php if ($attribute_groups) { ?>
 	<div class="title_center"><?php echo $tab_attribute; ?></div>
 	<?php foreach ($attribute_groups as $attribute_group) { ?>
@@ -173,7 +174,7 @@ if ($type_products == 0) {
 			<?php } ?>
 		<?php } ?>
 	<?php } ?>
-</div>
+</div>-->
 <?php if($ard_quckview) { ?>
 	<div id="ard_quckview"><?php echo $ard_quckview;?></div>
 <?php } ?>
@@ -403,20 +404,20 @@ if ($type_products == 0) {
 	<?php } ?>
 </div>
 <!-- Аccessories end -->
-<!-- custom_tabs -->	
+<!-- custom_tabs -->
 <?php if ($custom_tabs) { ?>
     <?php foreach ($custom_tabs as $key => $custom_tab) { ?>
     <?php if ($custom_tab['title']) { ?><div class="tab-pane" id="custom_tabs-<?php echo $key?>"><?php echo $custom_tab['description']; ?></div> <?php } ?>
-    <?php } ?>	
-<?php } ?>	
-<!-- custom_tabs -->	
-<!-- custom_tabs -->	
+    <?php } ?>
+<?php } ?>
+<!-- custom_tabs -->
+<!-- custom_tabs -->
 <?php if ($modern_top_links7 ) { ?>
 	<?php foreach ($modern_top_links7 as $key => $modern_top_link7) { ?>
 		<?php if ($modern_top_link7['title'][$language_id]) { ?><div class="tab-pane" id="other_tab-<?php echo $key ?>"><?php echo html_entity_decode($modern_top_link7['description'][$language_id]); ?></div> <?php } ?>
 		<?php } ?>
 <?php } ?>
-<!-- custom_tabs -->	
+<!-- custom_tabs -->
 </div>
 </div>
 </div>
@@ -821,16 +822,16 @@ $(document).ready(function() {
 
 <script type="text/javascript"><!--
 function price_format(price)
-{ 
+{
     c = <?php echo (empty($autocalc_currency['decimals']) ? "0" : $autocalc_currency['decimals'] ); ?>;
     d = '<?php echo $autocalc_currency['decimal_point']; ?>'; // decimal separator
     t = '<?php echo $autocalc_currency['thousand_point']; ?>'; // thousands separator
     s_left = '<?php echo $autocalc_currency['symbol_left']; ?>';
     s_right = '<?php echo $autocalc_currency['symbol_right']; ?>';
     n = price * <?php echo $autocalc_currency['value']; ?>;
-    i = parseInt(n = Math.abs(n).toFixed(c)) + ''; 
-    j = ((j = i.length) > 3) ? j % 3 : 0; 
-    price_text = s_left + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '') + s_right; 
+    i = parseInt(n = Math.abs(n).toFixed(c)) + '';
+    j = ((j = i.length) > 3) ? j % 3 : 0;
+    price_text = s_left + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '') + s_right;
     <?php if (!empty($autocalc_currency2)) { ?>
     c = <?php echo (empty($autocalc_currency2['decimals']) ? "0" : $autocalc_currency2['decimals'] ); ?>;
     d = '<?php echo $autocalc_currency2['decimal_point']; ?>'; // decimal separator
@@ -838,9 +839,9 @@ function price_format(price)
     s_left = '<?php echo $autocalc_currency2['symbol_left']; ?>';
     s_right = '<?php echo $autocalc_currency2['symbol_right']; ?>';
     n = price * <?php echo $autocalc_currency2['value']; ?>;
-    i = parseInt(n = Math.abs(n).toFixed(c)) + ''; 
-    j = ((j = i.length) > 3) ? j % 3 : 0; 
-    price_text += ' (' + s_left + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '') + s_right + ')'; 
+    i = parseInt(n = Math.abs(n).toFixed(c)) + '';
+    j = ((j = i.length) > 3) ? j % 3 : 0;
+    price_text += ' (' + s_left + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '') + s_right + ')';
     <?php } ?>
     return price_text;
 }
@@ -1016,9 +1017,9 @@ $(document).ready(function() {
             recalculateprice();
         }
         setTimeout(arguments.callee, 250);
-    })();    
+    })();
     recalculateprice();
 });
 //--></script>
-      
+
 <?php echo $footer; ?>
