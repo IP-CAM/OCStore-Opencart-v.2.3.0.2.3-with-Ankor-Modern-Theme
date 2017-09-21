@@ -28,6 +28,36 @@
     top: 0;
   }
 }
+/* END top menu*/
+/*catalog, link to brands*/
+#content {
+  .link_brands {
+    font-size: 16px;
+    color: #1bbc9b;
+    padding-top: 7px;
+    a {
+      color: #1bbc9b;
+      float: right;
+    }
+    a:hover {
+      color: #353d44;
+    }
+  }
+}
+/*END catalog, link to brands*/
+/*brands*/
+.content_brands {
+  padding-bottom: 20px;
+}
+#content {
+  .title_brands {
+    display: flex;
+    justify-content: center;
+    color: #353d44;
+  }
+}
+/*END brands*/
+
 
 .footer{
   background-color:  #353d44;
