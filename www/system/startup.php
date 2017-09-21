@@ -114,8 +114,6 @@ define('DIR', $_SERVER['DOCUMENT_ROOT']);
 define('DIR_APP', DIR . '/system/library/app');
 define('DIR_ADD_TPL', DIR . '/admin/view/add_tpl');
 
-define('DEBUG',1);
-
 
 function start($application_config) {
 	require_once(DIR_SYSTEM . 'framework.php');	

@@ -99,6 +99,7 @@
      * @property Language $language
      * @property Registry $registry
      * @property Response $response
+     * @property Config config
 	**/
 abstract class Controller {
 	protected $registry;
