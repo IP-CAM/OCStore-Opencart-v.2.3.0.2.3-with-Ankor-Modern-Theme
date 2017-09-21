@@ -28,9 +28,9 @@
 <?php if ($attribute_groups) { ?>
 	<li class="col-xs-12 tab_padding"><a data-toggle="tab" href="#attribute_tab"><?php echo $tab_attribute; ?> <i class="fa fa-caret-down hidden"></i></a></li>
 	<?php } ?>
-<!--<?php if ($review_status) { ?>
+<?php if ($review_status) { ?>
 	<li class="col-xs-12 tab_padding"><a data-toggle="tab" href="#review_tab"><?php echo $tab_review; ?> <i class="fa fa-caret-down hidden"></i></a></li>
-	<?php } ?>-->
+	<?php } ?>
 <?php if ($products) { ?>
 	<li class="col-xs-12 tab_padding"><a data-toggle="tab" href="#accessories_tab"><?php echo $text_related; ?> <i class="fa fa-caret-down hidden"></i></a></li>
 	<?php } ?>
@@ -162,7 +162,7 @@ if ($type_products == 0) {
     <hr>
 <div class="title_center"><?php echo $tab_description; ?></div>
 <div class="description_pr" itemprop="description"><?php echo $description; ?></div>
-<!--<div class="attribute_groups">
+<div class="attribute_groups">
 <?php if ($attribute_groups) { ?>
 	<div class="title_center"><?php echo $tab_attribute; ?></div>
 	<?php foreach ($attribute_groups as $attribute_group) { ?>
@@ -174,7 +174,7 @@ if ($type_products == 0) {
 			<?php } ?>
 		<?php } ?>
 	<?php } ?>
-</div>-->
+</div>
 <?php if($ard_quckview) { ?>
 	<div id="ard_quckview"><?php echo $ard_quckview;?></div>
 <?php } ?>
