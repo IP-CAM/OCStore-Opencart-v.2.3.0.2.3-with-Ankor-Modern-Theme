@@ -424,11 +424,11 @@
                         if (i == 0) {
                             var htnl_header = '<div class="top-header2"><div class="container"><div class="row"><div id="logo" class="col-lg-1 col-md-1 col-sm-1 col-xs-1">';
                             htnl_header += $('div#logo').html();
-                            htnl_header += '</div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"><div class="top-menu">';
+                            htnl_header += '</div><div class="col-lg-11 col-md-11 col-sm-11 col-xs-11"><div class="top-menu">';
                             htnl_header += $('div.top-menu').html();
-                            htnl_header += '</div></div><div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 cart">';
-                            htnl_header += $('div.cart').html();
-                            htnl_header += '</div></div></div></div>';
+                            htnl_header += '</div></div>';
+                            //htnl_header += $('div.cart').html();
+                            htnl_header += '</div></div>';
                             i = 1;
                         }
                         if ($('*').is('.top-header2')) {

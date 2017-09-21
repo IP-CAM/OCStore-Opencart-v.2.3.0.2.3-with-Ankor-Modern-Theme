@@ -99,8 +99,10 @@
                                         <ul class="nav navbar-nav">
                                             <?php foreach ($categories as $category) { ?>
                                                 <?php if ($category['children']) { ?>
-                                                    <li class="plus"><i class="fa fa-plus"></i><i
-                                                            class="fa fa-minus"></i></li>
+                                                    <li class="plus">
+                                                        <i class="fa fa-plus"></i>
+                                                        <i class="fa fa-minus"></i>
+                                                    </li>
                                                     <li class="item <?php if ($category['category_id'] == $category_id) {
                                                         echo 'activetopmenu';
                                                     } ?> dropdown">
@@ -178,7 +180,7 @@
                                                     <li class="item <?php if ($category['category_id'] == $category_id) {
                                                         echo 'activetopmenu';
                                                     } ?>"><a
-                                                            href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+                                                            class="with-child" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
                                                     </li>
                                                 <?php } ?>
                                             <?php } ?>

@@ -347,7 +347,7 @@ class ControllerCommonHeader extends Controller {
 			$data['class'] = 'common-home';
 		}
 
-        $data['categoryMenu'] = $this->load->view('common/menu/old',$data);
+        $data['categoryMenu'] = $this->load->view('common/menu/main_category',$data);
 		return $this->load->view('common/header', $data);
 	}
 }
