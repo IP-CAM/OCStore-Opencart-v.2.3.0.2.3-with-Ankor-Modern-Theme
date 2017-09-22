@@ -4,10 +4,16 @@
 namespace app\models;
 
 use app\core\App;
+use RedBeanPHP\OODBBean;
 
 abstract class AppModel{
 
     protected static $tableName = '';
+
+    /**
+     * @var OODBBean
+     */
+    protected $bean;
     protected $attributes = [];
     public $id = 0;
 
@@ -24,6 +30,7 @@ abstract class AppModel{
         $bean->import($this->attributes);
         if ($this->id) {
             $bean->id = $this->id;
+            $this->bean = $bean;
         }
         $res = \R::store($bean);
         if (!$res) {
@@ -48,6 +55,7 @@ abstract class AppModel{
             }
 
             $item->id = $bean->id;
+            $item->bean = $bean;
             $result[] = $item;
         }
         return $result;
@@ -84,6 +92,8 @@ abstract class AppModel{
             $item->attributes[$key] = $bean->$key;
         }
         $item->id = $bean->id;
+        $item->bean = $bean;
+
         return $item;
     }
 
