@@ -184,6 +184,14 @@
                   <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
                 </div>
               </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-measure_str"><?php echo $entry_measure_str; ?></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="measure_str" value="<?php echo $measure_str; ?>" placeholder="<?php echo $entry_measure_str; ?>" id="input-measure_str" class="form-control" />
+                    </div>
+                </div>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
                 <div class="col-sm-10">

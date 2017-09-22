@@ -74,7 +74,7 @@
             <?php if (!$special) { ?>
                 <span class="priceproduct-new"><?php echo $price; ?></span>
             <?php } else { ?>
-                <span class="priceproduct-new"><?php echo $special; ?></span>&nbsp;&nbsp;<span class="priceproduct-old"><?php echo $price; ?></span>
+                <span class="priceproduct-new"><?php echo $special; ?></span>&nbsp;&nbsp;<span class="priceproduct-old"><?php echo $price; echo $text_measure_str; ?></span>
             <?php } ?><br />
             <?php if ($aridiusundersell_status) { ?>
                 <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp;<a id="undersell-order"><?php echo $buttonundersell_title; ?></a>
