@@ -113,6 +113,7 @@ require_once(DIR_SYSTEM . 'helper/json.php');
 define('DIR', $_SERVER['DOCUMENT_ROOT']);
 define('DIR_APP', DIR . '/system/library/app');
 define('DIR_ADD_TPL', DIR . '/admin/view/add_tpl');
+define('DIR_FILE_UPLOAD', 'system/storage/upload');
 
 
 function start($application_config) {

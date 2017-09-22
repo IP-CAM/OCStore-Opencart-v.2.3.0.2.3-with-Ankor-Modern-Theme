@@ -228,7 +228,7 @@ class ControllerCatalogDocuments extends Controller {
         $data = $this->getAlerts($data);
 
         $data['breadcrumbs'] = $this->getBreadcrumbs();
-
+        $item->getFiles();
         $data['item'] = $item;
 
 		$data['header'] = $this->load->controller('common/header');

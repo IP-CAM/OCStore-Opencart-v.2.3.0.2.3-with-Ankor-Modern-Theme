@@ -586,7 +586,8 @@ class Upload {
      */
     protected function create_new_filename() {
 
-        $filename = sha1(mt_rand(1, 9999) . $this->destination . uniqid()) . time();
+        //$filename = sha1(mt_rand(1, 9999) . $this->destination . uniqid()) . time();
+        $filename = $this->file['original_filename'];
         $this->set_filename($filename);
 
     }

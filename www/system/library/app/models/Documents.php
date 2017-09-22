@@ -3,6 +3,7 @@
 namespace app\models;
 
 
+use app\core\App;
 use app\libs\Upload;
 use R;
 
@@ -12,6 +13,7 @@ use R;
  * @property string title
  * @property int status
  * @property int sort
+ * @property array files
  */
 class Documents extends AppModel {
     const STATUS_OFF = 0;
@@ -23,6 +25,11 @@ class Documents extends AppModel {
         'status' => self::STATUS_OFF,
         'sort'=> 0
     ];
+
+    /**
+     * @var array
+     */
+    public $files = [];
 
     public static function getListAdmin($data){
         $start = 0;
@@ -38,7 +45,11 @@ class Documents extends AppModel {
             ':start' => $start,
             ':count' => $limit,
         ];
-        return self::find($sql, $params);
+        $results = self::find($sql, $params);
+        foreach ($results as $result) {
+            $result->getFiles();
+        }
+        return $results;
     }
 
     public static function getLabelsStatus(){
@@ -59,9 +70,7 @@ class Documents extends AppModel {
             return false;
         }
         $files = $this->uploadFiles($files);
-        $this->bean->xownArtfilesdocumentsList = array();
         foreach ($files as $file) {
-
             $fileBean = R::dispense('artfilesdocuments');
             $fileBean->name = $file['fileName'];
             $fileBean->originalFilename = $file['original_filename'];
@@ -81,7 +90,7 @@ class Documents extends AppModel {
         $i = 0;
         $nameFile = 'file_' . $i;
         while (isset($files[$nameFile])) {
-            $upload = Upload::factory('system/upload/storage/documents');
+            $upload = Upload::factory(DIR_FILE_UPLOAD . '/documents');
             $upload->file($files[$nameFile]);
             $result = $upload->upload();
             if (empty($upload->get_errors())) {
@@ -91,5 +100,16 @@ class Documents extends AppModel {
             $nameFile = 'file_' . $i;
         }
         return $uploadedFiles;
+    }
+
+    public function getFiles() {
+        $this->files = [];
+        if ($this->id) {
+            $this->bean = R::load(self::$tableName,$this->id);
+        }
+        foreach ($this->bean->xownArtfilesdocumentsList as $bean) {
+            $this->files[] = $bean->export();
+        }
+        return $this->files;
     }
 }

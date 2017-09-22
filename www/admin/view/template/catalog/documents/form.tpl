@@ -67,18 +67,31 @@ echo $header; ?><?php echo $column_left;
 							<div class="tab-pane" id="tab-files">
 
 								<div id="blockFiles">
-									
+									<table class="table table-bordered table-hover">
+										<thead>
+										<tr>
+											<td class="center"></td>
+											<td class="center">Наименование</td>
+											<td class="left">Редактировать</td>
+										</tr>
+										</thead>
+										<tbody>
+										<? foreach ($item->files as $file):?>
+											<tr>
+												<td></td>
+												<td><?=$file['original_filename']?></td>
+												<td>Download,delete</td>
+
+
+											</tr>
+										<? endforeach;?>
+										</tbody>
+									</table>
 								</div>
 								<div class="panel panel-default">
 									<div class="panel-heading">Новый файл</div>
 									<div class="panel-body">
 										<input type="file" name="file_0">
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">Новый файл</div>
-									<div class="panel-body">
-										<input type="file" name="file_1">
 									</div>
 								</div>
 							</div>

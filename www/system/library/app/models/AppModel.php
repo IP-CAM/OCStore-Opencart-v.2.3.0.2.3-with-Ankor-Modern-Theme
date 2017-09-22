@@ -15,6 +15,7 @@ abstract class AppModel{
      */
     protected $bean;
     protected $attributes = [];
+    protected $data = [];
     public $id = 0;
 
     public function load($data){
