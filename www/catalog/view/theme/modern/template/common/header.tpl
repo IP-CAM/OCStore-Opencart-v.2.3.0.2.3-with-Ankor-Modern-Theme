@@ -29,7 +29,6 @@
 <script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" rel="stylesheet">
 	<link href="catalog/view/theme/modern/stylesheet/animate.min.css" rel="stylesheet" type="text/css" />
-	<link href="catalog/view/theme/modern/stylesheet/aridiuscallback.css" rel="stylesheet" type="text/css" />
 
 <meta property="og:site_name" content="<?php echo $name; ?>" />
 <?php foreach ($styles as $style) { ?>
@@ -330,7 +329,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 		<?php } ?>
 	</div>
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 head_search">
-			<button class="button_title input-group" data-callback="on">&nbsp;Заказать обратный звонок</button>
+			<button class="button_title input-group" data-callback="on">Обратный звонок</button>
 		</div>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 head_search">
 	<?php echo $search; ?>

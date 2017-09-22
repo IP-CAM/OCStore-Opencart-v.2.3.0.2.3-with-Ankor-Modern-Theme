@@ -20,7 +20,7 @@ class ControllerCatalogCalculatingOrder extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'], true));
+                $this->response->redirect($this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'], true));
 	
 		}
 
