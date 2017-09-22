@@ -1028,7 +1028,7 @@ class ControllerProductProduct extends Controller {
 	}
 
     protected function getDataTypesFromConfig($data,$productInfo){
-        if (!App::$config->idProductServiceOnMainMenu == $productInfo['product_id']) {
+        if (!(App::$config->idProductServiceOnMainMenu == $productInfo['product_id'])) {
             return $data;
         }
         $data['type_products'] =  1;

@@ -1,5 +1,5 @@
 .button_title{
-  font-size: 14px;
+  font-size: 12px;
   background-color:  #1bbc9b;
   border: none;
   border-radius: 20px;
@@ -22,8 +22,11 @@
   }
 }
 
-.circleout2 .fa{
-  vertical-align: middle;
+.circleout2 {
+  background-color: #1bbc9b;
+  .fa {
+    vertical-align: middle;
+  }
 }
 
 .head_search{
@@ -59,6 +62,14 @@
 
 .fn_header{
   font-size: 24px;
+}
+
+.cart-item{
+  background-color:  #1bbc9b;
+}
+
+.log>a{
+  color:  #1bbc9b !important;
 }
 
 /*
