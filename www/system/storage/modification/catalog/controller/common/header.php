@@ -2,12 +2,13 @@
 use app\core\App;
 
 class ControllerCommonHeader extends Controller {
+    protected $data;
 	public function index() {
 
         $this->document->addStyle('catalog/view/theme/modern/stylesheet/aridiuscallback.css');
         // Analytics
 		$this->load->model('extension/extension');
-
+        $this->data = &$data;
         $data['aridiusfastorder'] = $this->load->controller('module/aridiuscallback');
 
 		$data['analytics'] = array();
@@ -353,7 +354,8 @@ class ControllerCommonHeader extends Controller {
         $data = $this->addServiceToMenu($data);
         $data['categoryMenu'] = $this->load->view('common/menu/main_category',$data);
 
-		return $this->load->view('common/header', $data);
+        $this->setLinkDocuments();
+		return $this->load->view('common/header', $this->data);
 	}
 
 	protected function addServiceToMenu($data) {
@@ -368,5 +370,29 @@ class ControllerCommonHeader extends Controller {
             );
         }
         return $data;
+    }
+
+    protected function setLinkDocuments() {
+        foreach ($this->data['modern_top_links6'] as &$link) {
+            $link['isDocuments'] = $this->isLinkDocuments($link);
+            if (!$link['isDocuments'] ) {
+                continue;
+            }
+            $link['dataDoc']['items'] = $this->getDocuments();
+        }
+    }
+
+    protected function isLinkDocuments($dataLink) {
+        if ($dataLink['link_top'][1] == '#documents') {
+            return true;
+        }
+        return false;
+    }
+
+    protected function getDocuments() {
+        return [
+            ['title' => 'Прайс-листы','link' => $this->url->link('information/brands')],
+            ['title' => 'Инструкции','link' => $this->url->link('information/brands')]
+        ];
     }
 }
