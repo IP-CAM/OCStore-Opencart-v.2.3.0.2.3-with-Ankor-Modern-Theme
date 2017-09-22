@@ -191,7 +191,7 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 		?>
 		</a></h4>
 		<p class="desc_list"><?php echo $product['description']; ?></p>
-		<?php if ($product['price']) { ?>
+		<?php if ($product['price'] && $type_products == 0) { ?>
 			<p class="price">
 			<?php if (!$product['special']) { ?>
 				<?php echo $product['price']; ?>
@@ -203,6 +203,9 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 				<?php } ?>
 			</p>
 			<?php } ?>
+			<? if ($type_products == 1):?>
+				<p class="price servicePrice">Цену уточняйте</p>
+			<? endif;?>
 		<div class="cart">
 			<?php //если это товар
 			if ($type_products == 0):?>
