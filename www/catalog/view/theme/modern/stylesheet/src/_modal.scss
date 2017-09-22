@@ -1,5 +1,11 @@
 .callback{
   max-width: 600px;
+  .btn-cart {
+    background-color: #353d44;
+    &:hover {
+      background-color: #51585e;
+    }
+  }
   .name-popup {
     font-size: 16px;
   }
@@ -22,14 +28,14 @@
   }
   .contacts {
     padding:10px 0;
-    font-size: 12px;
+    font-size: 13px;
     .title {
       text-transform: uppercase;
     }
   }
   &#artCalculationOrder {
     .blockTitleModal p {
-      font-size: 11px;
+      font-size: 12px;
     }
   }
 }

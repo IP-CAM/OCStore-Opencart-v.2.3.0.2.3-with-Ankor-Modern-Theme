@@ -74,7 +74,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <span style="font-size: 11px;">Нажимая на кнопку «Отправить», я даю cогласие на <a href="person_danie" target="_blank">обработку персональных данных.</a></span></div>
+                <span style="font-size: 12px;">Нажимая на кнопку «Отправить», я даю cогласие на <a href="person_danie" target="_blank">обработку персональных данных.</a></span></div>
         </div>
         <br>
         <input type="hidden" name="productId" value="<?=$productId?>">

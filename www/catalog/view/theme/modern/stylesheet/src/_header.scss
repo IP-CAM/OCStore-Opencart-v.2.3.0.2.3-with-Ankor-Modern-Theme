@@ -1,5 +1,5 @@
 .button_title{
-  font-size: 12px;
+  font-size: 14px;
   background-color:  #1bbc9b;
   border: none;
   border-radius: 20px;
@@ -7,8 +7,11 @@
   text-align: center;
   width: 135px;
   height: 35px;
-  line-height: 1;
   margin: auto;
+  &:hover {
+    background-color: #73dec8;
+    color: #404040;
+  }
 }
 
 #search {
