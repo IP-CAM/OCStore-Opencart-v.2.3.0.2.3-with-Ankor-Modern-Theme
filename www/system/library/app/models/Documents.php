@@ -3,7 +3,6 @@
 namespace app\models;
 
 
-use app\core\App;
 use app\libs\Upload;
 use R;
 
@@ -138,7 +137,12 @@ class Documents extends AppModel {
             }
             unset($this->files[$fileId]);
         }
-        $this->bean->xownArtfilesdocumentsList = $this->files;
+        $this->bean->xownArtfilesdocumentsList = [];
+        foreach ($this->files as $file) {
+            $fileBean = R::dispense('artfilesdocuments');
+            $fileBean->import($file);
+            $this->bean->xownArtfilesdocumentsList[] = $fileBean;
+        }
         $this->id = R::store($this->bean);
         return true;
     }
