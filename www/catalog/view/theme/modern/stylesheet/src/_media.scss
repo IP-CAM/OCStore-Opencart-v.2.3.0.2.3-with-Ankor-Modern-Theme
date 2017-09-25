@@ -43,25 +43,25 @@
     font-size: 15px;
   }
   /*END brands*/
+  /*account-account*/
+   .col-aridius {
+     padding: 0 10px;
+   }
+  /*END account-account*/
+
+}
+@media (max-width: 1200px) {
   /*home section advantages and team*/
   #team_wrap {
+    margin: 50px 0;
     .person {
       .driver,
       .brigade {
         float: none;
-        margin-right: 0;
-        margin-left: 0;
+        margin: auto;
       }}
   }
   /*END home section advantages and team*/
-  /*account-account*/
-
-   .col-aridius {
-     padding: 0 10px;
-   }
-
-  /*END account-account*/
-
 }
 
 /* product */
