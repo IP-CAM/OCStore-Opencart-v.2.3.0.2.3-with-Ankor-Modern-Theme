@@ -25,28 +25,13 @@ class ControllerCatalogDocuments extends Controller {
 
 	public function add() {
 		$this->load->language('catalog/documents');
-
 		$this->document->setTitle($this->language->get('heading_title'));
-
-
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-
             $item = new Documents();
             $item->load($this->request->post);
             $item->save();
 			$this->session->data['success'] = $this->language->get('text_success');
-			$url = '';
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-			$this->response->redirect($this->url->link('catalog/documents', 'token=' . $this->session->data['token'] . $url, true));
+			$this->redirectToEdit();
 		}
 
 		$this->getForm();
@@ -63,22 +48,20 @@ class ControllerCatalogDocuments extends Controller {
             $item->saveFiles($this->request->files);
             $item->save();
 			$this->session->data['success'] = $this->language->get('text_success');
-			$url = '';
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-			$this->response->redirect($this->url->link('catalog/documents', 'token=' . $this->session->data['token'] . $url, true));
+            $this->redirectToEdit();
 		}
 
 		$this->getForm();
 	}
-	
+
+    protected function redirectToEdit(){
+        $params = [
+            'token' => $this->session->data['token'],
+            'id' => $this->request->get['id']
+        ];
+        $this->response->redirect($this->url->link('catalog/documents/edit', $params , true));
+	}
+
 	public function delete() {
 		$this->load->language('catalog/documents');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -234,7 +217,9 @@ class ControllerCatalogDocuments extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
+        $data['controller'] = $this;
+
 		$this->response->setOutput($this->load->view('catalog/documents/form', $data));
 
 	}
@@ -417,5 +402,21 @@ class ControllerCatalogDocuments extends Controller {
 	
 		return !$this->error;
 	}
+
+    public function deleteFile(){
+        if (isset($this->request->get['id']) && isset($this->request->get['file_id'])) {
+            $doc = Documents::findOneById($this->request->get['id']);
+            if ($doc->id) {
+                $doc->deleteFile($this->request->get['file_id']);
+            }
+            $paramsUrl = [
+                'token' => $this->session->data['token'],
+                'id' => $this->request->get['id'],
+
+            ];
+            $this->response->redirect($this->url->link('catalog/documents/edit', $paramsUrl, true));
+        }
+
+    }
 }
 ?>

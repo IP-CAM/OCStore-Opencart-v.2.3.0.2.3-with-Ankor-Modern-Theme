@@ -82,6 +82,17 @@ class Documents extends AppModel {
         return true;
     }
 
+    protected function setFileBean($files){
+        foreach ($files as $file) {
+            $fileBean = R::dispense('artfilesdocuments');
+            $fileBean->name = $file['fileName'];
+            $fileBean->originalFilename = $file['original_filename'];
+            $fileBean->extension= $file['extension'];
+            $fileBean->path= $file['path'];
+            $this->bean->xownArtfilesdocumentsList[] = $fileBean;
+        }
+    }
+
     protected function uploadFiles($files){
         if (empty($files)) {
             return false;
@@ -90,11 +101,13 @@ class Documents extends AppModel {
         $i = 0;
         $nameFile = 'file_' . $i;
         while (isset($files[$nameFile])) {
-            $upload = Upload::factory(DIR_FILE_UPLOAD . '/documents');
-            $upload->file($files[$nameFile]);
-            $result = $upload->upload();
-            if (empty($upload->get_errors())) {
-                $uploadedFiles[] = $result;
+            if (!empty($files[$nameFile]['name'])) {
+                $upload = Upload::factory(DIR_FILE_UPLOAD . '/documents/' . $this->id);
+                $upload->file($files[$nameFile]);
+                $result = $upload->upload();
+                if (empty($upload->get_errors())) {
+                    $uploadedFiles[] = $result;
+                }
             }
             $i++;
             $nameFile = 'file_' . $i;
@@ -106,10 +119,28 @@ class Documents extends AppModel {
         $this->files = [];
         if ($this->id) {
             $this->bean = R::load(self::$tableName,$this->id);
-        }
-        foreach ($this->bean->xownArtfilesdocumentsList as $bean) {
-            $this->files[] = $bean->export();
+            foreach ($this->bean->xownArtfilesdocumentsList as $bean) {
+                $this->files[$bean->id] = $bean->export();
+            }
         }
         return $this->files;
     }
+
+    public function deleteFile($fileId){
+        if (empty($fileId) || (!$this->id)) {
+            return false;
+        }
+        $this->getFiles();
+        if (isset($this->files[$fileId])) {
+            $path = DIR . '/' . $this->files[$fileId]['path'];
+            if (is_file($path)) {
+                unlink($path);
+            }
+            unset($this->files[$fileId]);
+        }
+        $this->bean->xownArtfilesdocumentsList = $this->files;
+        $this->id = R::store($this->bean);
+        return true;
+    }
+
 }

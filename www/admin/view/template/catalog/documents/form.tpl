@@ -77,10 +77,26 @@ echo $header; ?><?php echo $column_left;
 										</thead>
 										<tbody>
 										<? foreach ($item->files as $file):?>
+											<?
+												$params = [
+													'token' => $controller->session->data['token'],
+													'id' => $item->id,
+													'file_id' => $file['id'],
+												];
+												$deleteFile = $controller->url->link('catalog/documents/delete-file', $params, true);
+											?>
 											<tr>
 												<td></td>
 												<td><?=$file['original_filename']?></td>
-												<td>Download,delete</td>
+												<td>
+													<a href="<?=$file['path']?>" download="<?=$file['original_filename']?>">Скачать</a>
+													<a href="<?php echo $deleteFile; ?>"
+													   data-toggle="tooltip" title="Удалить"
+													   class="btn btn-danger"
+													>
+														<i class="fa fa-remove"></i>
+													</a>
+												</td>
 
 
 											</tr>
