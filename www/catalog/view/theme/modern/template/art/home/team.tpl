@@ -73,7 +73,7 @@
                     кровли под ключ. Закажите обратный звонок, и менеджер компании Анкор Крым проконсультирует Вас!</p>
             </div>
             <div class="col-md-2">
-                <button class="button_title input-group" data-callback="on">&nbsp;Заказать обратный звонок</button>
+                <button class="button_title input-group" data-callback="on">&nbsp;Обратный звонок</button>
             </div>
         </div>
         <div class="line">&nbsp;</div>
