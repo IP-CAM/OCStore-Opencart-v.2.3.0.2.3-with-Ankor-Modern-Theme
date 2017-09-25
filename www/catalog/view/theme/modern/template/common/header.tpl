@@ -506,7 +506,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 							<?php } ?>
 						<?php } ?>
 					</li>
-					
+
 					<?php } ?>
 				</ul>
 				</li>
@@ -674,7 +674,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 				$('.fn_header').html(htnl_tel);
 				$('.top-header3').css({"top":"0px", "position":"relative"});
 				kk = 1;
-			
+
 		}
 		if (window.innerWidth > 991 && window.innerWidth < 1200) {
 		$('.dropdown-menu2').attr('class', 'dropdown-menu2 column_width2');

@@ -16,13 +16,15 @@ class ControllerCommonHome extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-					$data['content_top1'] =  $this->load->controller('common/content_top1');
-                    $data['content_top2'] =  $this->load->controller('common/content_top2');
-                    $data['content_bot1'] =  $this->load->controller('common/content_bot1');
-                    $data['content_bot2'] =  $this->load->controller('common/content_bot2');
-                    $data['content_bot3'] =  $this->load->controller('common/content_bot3');
-                    $data['content_fluid'] =  $this->load->controller('common/content_fluid');
-                    $data['content_slleft'] =  $this->load->controller('common/content_slleft');
+        $data['content_top1'] =  $this->load->controller('common/content_top1');
+        $data['content_top2'] =  $this->load->controller('common/content_top2');
+        $data['content_bot1'] =  $this->load->controller('common/content_bot1');
+        $data['content_bot2'] =  $this->load->controller('common/content_bot2');
+        $data['content_bot3'] =  $this->load->controller('common/content_bot3');
+        $data['content_fluid'] =  $this->load->controller('common/content_fluid');
+        $data['content_slleft'] =  $this->load->controller('common/content_slleft');
+        $data['team'] = $this->load->view('art/home/team');
+        $data['advantages'] = $this->load->view('art/home/advantages');
       
 
 		$this->response->setOutput($this->load->view('common/home', $data));

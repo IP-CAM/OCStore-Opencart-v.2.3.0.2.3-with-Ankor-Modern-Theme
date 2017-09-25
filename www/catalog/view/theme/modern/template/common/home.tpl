@@ -32,6 +32,16 @@
 </div>
 </div>
 </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <?php echo $advantages; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <?php echo $team; ?>
+        </div>
+    </div>
 <div class="row">
 <div class="col-sm-12">
 <?php echo $content_bottom; ?>
