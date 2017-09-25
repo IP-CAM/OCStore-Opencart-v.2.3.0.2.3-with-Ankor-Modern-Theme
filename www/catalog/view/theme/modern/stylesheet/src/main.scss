@@ -59,6 +59,16 @@
   padding-bottom: 20px;
 }
 /*END brands*/
+/*account, address_form, btn*/
+.btn-info {
+  color: #ffffff;
+  background: $dark-blue;
+  border: none;
+}
+.btn-info:hover, .btn-info:active, .btn-info.active, .btn-info:focus, .btn-info.focus, .btn-info:active:hover, .btn-info:active:focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus {
+  background-color: $btn-hover;
+}
+/*END account, address_form, btn*/
 
 
 
