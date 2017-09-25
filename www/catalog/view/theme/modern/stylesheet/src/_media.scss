@@ -33,16 +33,28 @@
 }
 /*end tom menu*/
 
-/*brands*/
 @media (max-width: 991px) {
+  /*brands*/
   .img_brands {
     display: flex;
     justify-content: center;
   }
+  .link_brands a {
+    font-size: 15px;
+  }
+  /*END brands*/
+  /*home section advantages and team*/
+  #team_wrap {
+    .person {
+      .driver,
+      .brigade {
+        float: none;
+        margin-right: 0;
+        margin-left: 0;
+      }}
+  }
+  /*END home section advantages and team*/
 }
-/*END brands*/
-
-
 
 /* product */
 @media (max-width: 1599px) and (min-width: 1200px) {
@@ -51,3 +63,4 @@
   }
 }
 /* product */
+
