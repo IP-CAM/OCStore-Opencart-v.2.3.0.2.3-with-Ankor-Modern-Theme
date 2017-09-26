@@ -166,6 +166,13 @@ class ControllerCommonColumnLeft extends Controller {
                     'children' => array()
                 );
             }
+            if ($this->user->hasPermission('access', 'catalog/documents')) {
+                $catalog[] = array(
+                    'name'	   => 'Документы',
+                    'href'     => $this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true),
+                    'children' => array()
+                );
+            }
 			
 			if ($catalog) {
 				$data['menus'][] = array(
