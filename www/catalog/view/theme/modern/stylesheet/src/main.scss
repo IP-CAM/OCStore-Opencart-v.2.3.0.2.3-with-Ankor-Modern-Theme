@@ -96,6 +96,17 @@
   }
 }
 /*END footer_contact*/
+/*page Contact*/
+.page_contact {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .control-label {
+    text-align: left;
+  }
+}
+/* END page Contact*/
 
 
 .footer{
