@@ -366,6 +366,7 @@ class ControllerCommonHeader extends Controller {
                 'name'     => $product_info['name'],
                 'children' => [],
                 'column'   => 1,
+                'category_id'   => -1,
                 'href'     => $this->url->link('product/product', ['product_id' => App::$config->idProductServiceOnMainMenu]),
             );
         }

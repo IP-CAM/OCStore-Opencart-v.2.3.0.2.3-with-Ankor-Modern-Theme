@@ -1,5 +1,5 @@
 .button_title{
-  font-size: 12px;
+  font-size: 14px;
   background-color:  #1bbc9b;
   border: none;
   border-radius: 20px;
@@ -157,19 +157,45 @@
     }
   }
 }
-
+/*
+* END Category menu
+*/
 .top-header2 {
   #menu .nav > li > a {
     padding: 15px 10px;
     font-size: 12px;
   }
 }
+/*top menu*/
+#top {
+  height: inherit;
+  .btn-navbar {
+    color: #fff;
+    padding: 5px 18px!important;
+    margin-top: 2px;
+    font-size: 14px;
+  }
+  li {
+    padding-top: 8px;
+  }
+  .navbar {
+    min-height: 38px;
+  }
+  #top-links2 {
+    padding-top: 0;
+  }
+  .list-inline {
+    top: 0;
+  }
+}
+/* END top menu*/
 
 .dropdownDocs {
   display: block;
   padding: 0 0;
   margin-top: 5px;
   transition: all 320ms, opacity 0ms;
+  left: inherit;
   &>ul {
     &>li{
       background-color: #353D44;
@@ -179,6 +205,7 @@
   }
   visibility: hidden;
 }
+
 #top-links2 {
   .dropdown-menu a:hover{
     color: white !important;
