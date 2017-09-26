@@ -94,7 +94,6 @@
 
   }
 }
-
 .information-prides-info {
   .mfp-content {
     top: 1%;
@@ -111,7 +110,6 @@
     }
  }
 }
-
 .prides_main{
   margin: 10px 0;
   .list_block {
@@ -135,7 +133,15 @@
     }
   }
 }
-
 .block-contacts{
   background-color:  #ff9504;
+}
+#content_documents {
+  min-height:400px;
+  .icon_column {
+    img {
+      width: 30px;
+      margin-right: 10px;
+    }
+  }
 }

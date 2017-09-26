@@ -4,11 +4,18 @@
 namespace app\models;
 
 use app\core\App;
+use RedBeanPHP\OODBBean;
 
 abstract class AppModel{
 
     protected static $tableName = '';
+
+    /**
+     * @var OODBBean
+     */
+    protected $bean;
     protected $attributes = [];
+    protected $data = [];
     public $id = 0;
 
     public function load($data){
@@ -24,6 +31,7 @@ abstract class AppModel{
         $bean->import($this->attributes);
         if ($this->id) {
             $bean->id = $this->id;
+            $this->bean = $bean;
         }
         $res = \R::store($bean);
         if (!$res) {
@@ -38,7 +46,7 @@ abstract class AppModel{
      * @param $params
      * @return static[]
      */
-    public static function find($sql, $params) {
+    public static function find($sql, $params = []) {
         $result = [];
         $beans  = \R::find(static::$tableName, $sql, $params);
         foreach ($beans as $bean) {
@@ -48,6 +56,7 @@ abstract class AppModel{
             }
 
             $item->id = $bean->id;
+            $item->bean = $bean;
             $result[] = $item;
         }
         return $result;
@@ -80,10 +89,13 @@ abstract class AppModel{
     public static function findOneById($id) {
         $bean  = \R::findOne(static::$tableName, 'id = :id', [':id' => $id]);
         $item = new static();
-        foreach ($item->attributes as $key => $value) {
-            $item->attributes[$key] = $bean->$key;
+        if ($bean) {
+            foreach ($item->attributes as $key => $value) {
+                $item->attributes[$key] = $bean->$key;
+            }
+            $item->id = $bean->id;
+            $item->bean = $bean;
         }
-        $item->id = $bean->id;
         return $item;
     }
 

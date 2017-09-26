@@ -203,10 +203,35 @@ color: #<?php echo $modern_color_tittle_news ?>;
 			<ul class="nav navbar-nav">
 				<div id="top-links2" class="nav pull-left">
 					<ul class="list-inline top">
+						<?
+						/**
+						 * @var \Template\PHP $this
+						 */
+						?>
 						<?php if ($modern_top_links6 ) { ?>
 						<?php foreach ($modern_top_links6 as $modern_top_link6) { ?>
 						<li>
-                            <a <?php if ($modern_top_link6['link_top'][$language_id]) { ?> href="<?php echo $modern_top_link6['link_top'][$language_id]; ?>"<?php } ?> title="<?php echo $modern_top_link6['title'][$language_id]; ?>"><?php if ($modern_top_link6['faicons_top']) { ?> <i class="<?php echo $modern_top_link6['faicons_top']; ?> hidden-lg hidden-md"></i><?php } ?><?php if ($modern_top_link6['title']) { ?><span class=""> <?php echo $modern_top_link6['title'][$language_id]; ?></span><?php } ?></a>
+
+								<?
+								if(isset($modern_top_link6['isDocuments']) && $modern_top_link6['isDocuments']){
+									$modern_top_link6['language_id'] = $language_id;
+									echo $this->renderTpl('art/topmenu_documents',$modern_top_link6);
+								} else {
+								?>
+									<a
+										<?php if ($modern_top_link6['link_top'][$language_id]) { ?>
+											href="<?php echo $modern_top_link6['link_top'][$language_id]; ?>"
+										<?php } ?>
+										title="<?php echo $modern_top_link6['title'][$language_id]; ?>">
+										<?php if ($modern_top_link6['faicons_top']) { ?>
+											<i class="<?php echo $modern_top_link6['faicons_top']; ?> hidden-lg hidden-md"></i>
+										<?php } ?>
+										<?php if ($modern_top_link6['title']) { ?>
+											<span class=""> <?php echo $modern_top_link6['title'][$language_id]; ?></span>
+										<?php } ?>
+									</a>
+								<? } ?>
+
                         </li>
 						<?php } ?>
 						<?php } ?>

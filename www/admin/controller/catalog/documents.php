@@ -1,17 +1,13 @@
 <?php
 use app\core\App;
-use app\models\CalculatingOrder;
 use app\models\Callback;
+use app\models\Documents;
 
-/**
- * Class ControllerCatalogPrides
- * @property ModelCatalogPrides model_catalog_prides
- */
-class ControllerCatalogCalculatingOrder extends Controller {
+class ControllerCatalogDocuments extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/calculating_order');
+		$this->load->language('catalog/documents');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
 
@@ -20,7 +16,7 @@ class ControllerCatalogCalculatingOrder extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-                $this->response->redirect($this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'], true));
+                $this->response->redirect($this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true));
 	
 		}
 
@@ -28,62 +24,51 @@ class ControllerCatalogCalculatingOrder extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/calculating_order');
-
+		$this->load->language('catalog/documents');
 		$this->document->setTitle($this->language->get('heading_title'));
-
-
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-
-            $item = new CalculatingOrder();
+            $item = new Documents();
             $item->load($this->request->post);
             $item->save();
 			$this->session->data['success'] = $this->language->get('text_success');
-			$url = '';
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-			$this->response->redirect($this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'] . $url, true));
+			$this->redirectToEdit();
 		}
 
 		$this->getForm();
 	}
 
 	public function edit() {
-		$this->load->language('catalog/calculating_order');
+		$this->load->language('catalog/documents');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $item = CalculatingOrder::findOneById($this->request->get['id']);
+            $item = Documents::findOneById($this->request->get['id']);
             $item->load($this->request->post);
+            $item->saveFiles($this->request->files);
             $item->save();
 			$this->session->data['success'] = $this->language->get('text_success');
-			$url = '';
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-			$this->response->redirect($this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'] . $url, true));
+            $this->redirectToEdit();
 		}
 
 		$this->getForm();
 	}
-	
+
+    protected function redirectToEdit(){
+        $params = [
+            'token' => $this->session->data['token'],
+        ];
+        if (isset( $this->request->get['id'])) {
+            $params['id'] = $this->request->get['id'];
+            $this->response->redirect($this->url->link('catalog/documents/edit', $params , true));
+        }else {
+            $this->response->redirect($this->url->link('catalog/documents', $params , true));
+        }
+
+	}
+
 	public function delete() {
-		$this->load->language('catalog/calculating_order');
+		$this->load->language('catalog/documents');
 		$this->document->setTitle($this->language->get('heading_title'));
         $selected = [];
         if (isset($this->request->post['selected'])) {
@@ -94,7 +79,7 @@ class ControllerCatalogCalculatingOrder extends Controller {
 
 		if (!empty($selected) && $this->validateDelete()) {
 			foreach ($selected as $id) {
-				CalculatingOrder::delete($id);
+                Documents::delete($id);
 			}
 			$this->session->data['success'] = $this->language->get('text_success');
 			$url = '';
@@ -107,7 +92,7 @@ class ControllerCatalogCalculatingOrder extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			$this->response->redirect($this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/documents', 'token=' . $this->session->data['token'] . $url, true));
 		}
 		$this->getList();
 	}
@@ -117,29 +102,22 @@ class ControllerCatalogCalculatingOrder extends Controller {
         $data = $this->getAlerts($data);
         $data['controller'] = $this;
         $data['breadcrumbs'] = $this->getBreadcrumbs();
-        $data['items'] = CalculatingOrder::getListAdmin($data);
-        $data['add'] = $this->url->link('catalog/calculating_order/add', 'token=' . $this->session->data['token'], true);
-        $data['delete'] = $this->url->link('catalog/calculating_order/delete', 'token=' . $this->session->data['token'], true);
-        $data['setting'] = $this->url->link('catalog/calculating_order/setting', 'token=' . $this->session->data['token'], true);
+        $data['add'] = $this->url->link('catalog/documents/add', 'token=' . $this->session->data['token'], true);
+        $data['delete'] = $this->url->link('catalog/documents/delete', 'token=' . $this->session->data['token'], true);
+        $data['setting'] = $this->url->link('catalog/documents/setting', 'token=' . $this->session->data['token'], true);
 
-        $data['pagination'] = $this->getPagination(CalculatingOrder::totalCount());
+        $data['pagination'] = $this->getPagination(Documents::totalCount());
+
+        $data['items'] = Documents::getListAdmin($data);
 
         //MAIN DATA
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
-        $this->response->setOutput($this->load->view('catalog/calculating_order/list', $data));
+
+        $this->response->setOutput($this->load->view('catalog/documents/list', $data));
 
 	}
-
-	private function getDataSort() {
-        if (isset($this->request->get['sort'])) {
-            $sort = $this->request->get['sort'];
-        } else {
-            $sort = 'nd.title';
-        }
-        return $sort;
-    }
 
 	private function getPagination($total) {
 	    if (isset($this->request->get['page'])) {
@@ -151,7 +129,8 @@ class ControllerCatalogCalculatingOrder extends Controller {
         $pagination->total = $total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
+        $pagination->limit = 150;
+        $pagination->url = $this->url->link('catalog/documents', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
 
         return $pagination->render();
     }
@@ -183,7 +162,7 @@ class ControllerCatalogCalculatingOrder extends Controller {
         );
 
         $breadcrumbs[] = array(
-            'href'      => $this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'], true),
+            'href'      => $this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true),
             'text'      => $this->language->get('heading_title'),
             'separator' => ' :: '
         );
@@ -191,32 +170,25 @@ class ControllerCatalogCalculatingOrder extends Controller {
 
 	}
 
-	private function setLanguage(&$data, $method = 'getForm') {
-        $data['heading_title'] = $this->language->get('heading_title');
-        $data['token'] = $this->session->data['token'];
-        $methodRun = 'setLang' . lcfirst($method);
-        $this->$methodRun($data);
-    }
-
 	private function getForm() { 
 
-		$this->load->language('catalog/calculating_order');
+		$this->load->language('catalog/documents');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $data = [];
         if ((isset($this->request->get['id'])) ) {
-            $item = CalculatingOrder::findOneById($this->request->get['id']);
+            $item = Documents::findOneById($this->request->get['id']);
         } else {
-            $item = new CalculatingOrder();
+            $item = new Documents();
         }
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             $item->load($this->request->post);
         }
 
         if (!isset($this->request->get['id'])) {
-            $data['action'] = $this->url->link('catalog/calculating_order/add', 'token=' . $this->session->data['token'], true);
+            $data['action'] = $this->url->link('catalog/documents/add', 'token=' . $this->session->data['token'], true);
         } else {
-            $data['action'] = $this->url->link('catalog/calculating_order/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
+            $data['action'] = $this->url->link('catalog/documents/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -234,7 +206,7 @@ class ControllerCatalogCalculatingOrder extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
-        $data['cancel'] = $this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'], true);
+        $data['cancel'] = $this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true);
 
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
@@ -244,27 +216,29 @@ class ControllerCatalogCalculatingOrder extends Controller {
         $data = $this->getAlerts($data);
 
         $data['breadcrumbs'] = $this->getBreadcrumbs();
-
+        $item->getFiles();
         $data['item'] = $item;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
-		$this->response->setOutput($this->load->view('catalog/calculating_order/form', $data));
+
+        $data['controller'] = $this;
+
+		$this->response->setOutput($this->load->view('catalog/documents/form', $data));
 
 	}
 
 	public function setting() {
-		$this->load->language('catalog/calculating_order');
+		$this->load->language('catalog/documents');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('catalog/calculating_order');
+		$this->load->model('catalog/documents');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateSetting()) {
-			$this->model_setting_setting->editSetting('calculating_order_setting', $this->request->post);
+			$this->model_setting_setting->editSetting('documents_setting', $this->request->post);
 				if (isset($this->request->post['news_url'])) {
 					$this->model_catalog_news->setNewsListUrl($this->request->post['news_url']);
 				}	
@@ -398,14 +372,14 @@ class ControllerCatalogCalculatingOrder extends Controller {
 	}
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'catalog/calculating_order')) {
+		if (!$this->user->hasPermission('modify', 'catalog/documents')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		return !$this->error;
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/calculating_order')) {
+		if (!$this->user->hasPermission('modify', 'catalog/documents')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 	
@@ -413,7 +387,7 @@ class ControllerCatalogCalculatingOrder extends Controller {
 	}
 
 	protected function validateSetting() {
-		if (!$this->user->hasPermission('modify', 'catalog/calculating_order')) {
+		if (!$this->user->hasPermission('modify', 'catalog/documents')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
@@ -433,5 +407,21 @@ class ControllerCatalogCalculatingOrder extends Controller {
 	
 		return !$this->error;
 	}
+
+    public function deleteFile(){
+        if (isset($this->request->get['id']) && isset($this->request->get['file_id'])) {
+            $doc = Documents::findOneById($this->request->get['id']);
+            if ($doc->id) {
+                $doc->deleteFile($this->request->get['file_id']);
+            }
+            $paramsUrl = [
+                'token' => $this->session->data['token'],
+                'id' => $this->request->get['id'],
+
+            ];
+            $this->response->redirect($this->url->link('catalog/documents/edit', $paramsUrl, true));
+        }
+
+    }
 }
 ?>
