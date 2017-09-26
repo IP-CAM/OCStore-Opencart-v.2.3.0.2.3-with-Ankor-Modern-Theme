@@ -461,6 +461,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_model'] = $this->language->get('entry_model');
 		$data['entry_price'] = $this->language->get('entry_price');
+        $data['entry_measure_str'] = $this->language->get('entry_measure_str');
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_image'] = $this->language->get('entry_image');
@@ -658,6 +659,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$data['entry_price'] = $this->language->get('entry_price');
+        $data['entry_measure_str'] = $this->language->get('entry_measure_str');
 		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$data['entry_points'] = $this->language->get('entry_points');
 		$data['entry_option_points'] = $this->language->get('entry_option_points');
@@ -973,6 +975,13 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['price'] = '';
 		}
+
+        if (isset($this->request->post['measure_str'])) {
+		    $data['measure_str'] = $this->request->post['measure_str'];
+		} else if (isset($product_info)) {
+		    $data['measure_str'] = $product_info['measure_str'];
+		} else {
+		    $data['measure_str'] = '';    	}
 
 		$this->load->model('catalog/recurring');
 

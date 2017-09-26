@@ -269,6 +269,8 @@ class ControllerProductProduct extends Controller {
 			$data['text_select'] = $this->language->get('text_select');
 			$data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$data['text_model'] = $this->language->get('text_model');
+            $data['text_measure_str'] = $this->language->get('text_measure_str');
+
 			$data['text_reward'] = $this->language->get('text_reward');
 			$data['text_points'] = $this->language->get('text_points');
 			$data['text_stock'] = $this->language->get('text_stock');
@@ -327,6 +329,8 @@ class ControllerProductProduct extends Controller {
 			
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
+
+            $data['measure_str'] = $product_info['measure_str'];
 
                     $data['length'] = number_format($product_info['length'], 0 ,"","").' '.$this->length->getUnit($product_info['length_class_id']);
                     $data['width']  = number_format($product_info['width'], 0 ,"","").' '.$this->length->getUnit($product_info['length_class_id']);

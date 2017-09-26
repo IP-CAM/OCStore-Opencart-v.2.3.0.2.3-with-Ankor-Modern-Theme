@@ -30,6 +30,7 @@ $_['text_week']                               = 'неделя';
 $_['text_semi_month']                         = 'полмесяца';
 $_['text_month']                              = 'месяц';
 $_['text_year']                               = 'год';
+$_['text_mesure_str']                         = 'Единица измерения:';
 
 // Entry
 $_['entry_qty']                               = 'Кол-во';
