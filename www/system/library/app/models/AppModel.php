@@ -18,6 +18,14 @@ abstract class AppModel{
     protected $data = [];
     public $id = 0;
 
+    public function __construct($bean = null){
+        if ($bean) {
+            $this->bean = $bean;
+        }else {
+            $this->bean = \R::dispense(static::$tableName);
+        }
+    }
+
     public function load($data){
         foreach ($this->attributes as $key => $value) {
             if (isset($data[$key])) {
@@ -27,13 +35,12 @@ abstract class AppModel{
     }
 
     public function save(){
-        $bean = \R::dispense(static::$tableName);
-        $bean->import($this->attributes);
+
+        $this->bean->import($this->attributes);
         if ($this->id) {
-            $bean->id = $this->id;
-            $this->bean = $bean;
+            $this->bean->id = $this->id;
         }
-        $res = \R::store($bean);
+        $res = \R::store($this->bean);
         if (!$res) {
             return false;
         }
@@ -54,7 +61,6 @@ abstract class AppModel{
             foreach ($item->attributes as $key => $value) {
                 $item->attributes[$key] = $bean->$key;
             }
-
             $item->id = $bean->id;
             $item->bean = $bean;
             $result[] = $item;

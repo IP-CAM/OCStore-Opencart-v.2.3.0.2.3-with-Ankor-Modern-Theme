@@ -18,17 +18,15 @@ class Certificate extends AppModel {
     const STATUS_OFF = 0;
     const STATUS_ON = 1;
 
-    protected static $tableName = 'artсertificates';
+    protected static $tableName = 'artcerts';
     protected $attributes = [
         'title' => '',
+        'metaTitle' => '',
+        'metaDescription' => '',
         'status' => self::STATUS_OFF,
         'sort'=> 0
     ];
-
-    /**
-     * @var array
-     */
-    public $files = [];
+    public $images = [];
 
     public static function getListAdmin($data){
         $start = 0;
@@ -48,6 +46,38 @@ class Certificate extends AppModel {
         return $results;
     }
 
+    public function load($data) {
+        parent::load($data);
+        if (isset($data['moreImage'])) {
+            foreach ($data['moreImage'] as $imgSrc) {
+                if (empty($imgSrc)) {
+                    continue;
+                }
+                $this->images[] = $imgSrc;
+            }
+        }
+    }
+
+    public function save() {
+        parent::save();
+        if ($this->id) {
+            $this->bean->xownArtcertmoreimageList = [];
+            foreach ($this->images as $image) {
+                $imageBean = R::dispense('artcertmoreimage');
+                $imageBean->src = $image;
+                $this->bean->xownArtcertmoreimageList[] = $imageBean;
+            }
+        }
+        R::store($this->bean);
+    }
+
+    public function getImages() {
+        $this->images = [];
+        foreach ($this->bean->xownArtcertmoreimageList as $item) {
+            $this->images[] = $item->export();
+        }
+    }
+
     public static function getLabelsStatus(){
         $res = [
             self::STATUS_OFF => 'Выключить',
@@ -59,100 +89,6 @@ class Certificate extends AppModel {
     public function getLabelStatus(){
         $statuses  = self::getLabelsStatus();
         return $statuses[$this->status];
-    }
-
-    public function saveFiles($files) {
-        if (!$this->id) {
-            return false;
-        }
-        $files = $this->uploadFiles($files);
-        foreach ($files as $file) {
-            $fileBean = R::dispense('artfilesdocuments');
-            $fileBean->name = $file['fileName'];
-            $fileBean->originalFilename = $file['original_filename'];
-            $fileBean->extension= $file['extension'];
-            $fileBean->path= $file['path'];
-            $fileBean->created_at = new \DateTime();
-            $this->bean->xownArtfilesdocumentsList[] = $fileBean;
-        }
-        $this->id = R::store($this->bean);
-        return true;
-    }
-
-    protected function setFileBean($files){
-        foreach ($files as $file) {
-            $fileBean = R::dispense('artfilesdocuments');
-            $fileBean->name = $file['fileName'];
-            $fileBean->originalFilename = $file['original_filename'];
-            $fileBean->extension= $file['extension'];
-            $fileBean->path= $file['path'];
-            $this->bean->xownArtfilesdocumentsList[] = $fileBean;
-        }
-    }
-
-    protected function uploadFiles($files){
-        if (empty($files)) {
-            return false;
-        }
-        $uploadedFiles = [];
-        $i = 0;
-        $nameFile = 'file_' . $i;
-        while (isset($files[$nameFile])) {
-            if (!empty($files[$nameFile]['name'])) {
-                $upload = Upload::factory(DIR_FILE_UPLOAD . '/documents/' . $this->id);
-                $upload->file($files[$nameFile]);
-                $result = $upload->upload();
-                if (empty($upload->get_errors())) {
-                    $uploadedFiles[] = $result;
-                }
-            }
-            $i++;
-            $nameFile = 'file_' . $i;
-        }
-        return $uploadedFiles;
-    }
-
-    public function getFiles() {
-        $this->files = [];
-        if ($this->id) {
-            $this->bean = R::load(self::$tableName,$this->id);
-            foreach ($this->bean->xownArtfilesdocumentsList as $bean) {
-                $this->files[$bean->id] = $bean->export();
-            }
-        }
-        return $this->files;
-    }
-
-    public function deleteFile($fileId){
-        if (empty($fileId) || (!$this->id)) {
-            return false;
-        }
-        $this->getFiles();
-        if (isset($this->files[$fileId])) {
-            $path = DIR . '/' . $this->files[$fileId]['path'];
-            if (is_file($path)) {
-                unlink($path);
-            }
-            unset($this->files[$fileId]);
-        }
-        $this->bean->xownArtfilesdocumentsList = [];
-        foreach ($this->files as $file) {
-            $fileBean = R::dispense('artfilesdocuments');
-            $fileBean->import($file);
-            $this->bean->xownArtfilesdocumentsList[] = $fileBean;
-        }
-        $this->id = R::store($this->bean);
-        return true;
-    }
-
-    public function getIconExtension($file) {
-        if (isset($file['extension'])) {
-            $fileExtension =  '/image/extensions/' . $file['extension'] . '.png';
-            if (is_file(DIR . $fileExtension)) {
-                return $fileExtension;
-            }
-        }
-        return '/image/extensions/no_image.png';
     }
 
     /**

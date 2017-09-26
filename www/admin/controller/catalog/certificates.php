@@ -1,13 +1,13 @@
 <?php
 use app\core\App;
 use app\models\Callback;
-use app\models\Documents;
+use app\models\Certificate;
 
-class ControllerCatalogDocuments extends Controller {
+class ControllerCatalogCertificates extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/documents');
+		$this->load->language('catalog/certificates');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
 
@@ -16,18 +16,17 @@ class ControllerCatalogDocuments extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-                $this->response->redirect($this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true));
+                $this->response->redirect($this->url->link('catalog/certificates', 'token=' . $this->session->data['token'], true));
 	
 		}
-
 		$this->getList();
 	}
 
 	public function add() {
-		$this->load->language('catalog/documents');
+		$this->load->language('catalog/certificates');
 		$this->document->setTitle($this->language->get('heading_title'));
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $item = new Documents();
+            $item = new Certificate();
             $item->load($this->request->post);
             $item->save();
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -38,14 +37,13 @@ class ControllerCatalogDocuments extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/documents');
+		$this->load->language('catalog/certificates');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $item = Documents::findOneById($this->request->get['id']);
+            $item = Certificate::findOneById($this->request->get['id']);
             $item->load($this->request->post);
-            $item->saveFiles($this->request->files);
             $item->save();
 			$this->session->data['success'] = $this->language->get('text_success');
             $this->redirectToEdit();
@@ -60,15 +58,15 @@ class ControllerCatalogDocuments extends Controller {
         ];
         if (isset( $this->request->get['id'])) {
             $params['id'] = $this->request->get['id'];
-            $this->response->redirect($this->url->link('catalog/documents/edit', $params , true));
+            $this->response->redirect($this->url->link('catalog/certificates/edit', $params , true));
         }else {
-            $this->response->redirect($this->url->link('catalog/documents', $params , true));
+            $this->response->redirect($this->url->link('catalog/certificates', $params , true));
         }
 
 	}
 
 	public function delete() {
-		$this->load->language('catalog/documents');
+		$this->load->language('catalog/certificates');
 		$this->document->setTitle($this->language->get('heading_title'));
         $selected = [];
         if (isset($this->request->post['selected'])) {
@@ -79,7 +77,7 @@ class ControllerCatalogDocuments extends Controller {
 
 		if (!empty($selected) && $this->validateDelete()) {
 			foreach ($selected as $id) {
-                Documents::delete($id);
+                Certificate::delete($id);
 			}
 			$this->session->data['success'] = $this->language->get('text_success');
 			$url = '';
@@ -92,7 +90,7 @@ class ControllerCatalogDocuments extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			$this->response->redirect($this->url->link('catalog/documents', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/certificates', 'token=' . $this->session->data['token'] . $url, true));
 		}
 		$this->getList();
 	}
@@ -102,20 +100,20 @@ class ControllerCatalogDocuments extends Controller {
         $data = $this->getAlerts($data);
         $data['controller'] = $this;
         $data['breadcrumbs'] = $this->getBreadcrumbs();
-        $data['add'] = $this->url->link('catalog/documents/add', 'token=' . $this->session->data['token'], true);
-        $data['delete'] = $this->url->link('catalog/documents/delete', 'token=' . $this->session->data['token'], true);
-        $data['setting'] = $this->url->link('catalog/documents/setting', 'token=' . $this->session->data['token'], true);
+        $data['add'] = $this->url->link('catalog/certificates/add', 'token=' . $this->session->data['token'], true);
+        $data['delete'] = $this->url->link('catalog/certificates/delete', 'token=' . $this->session->data['token'], true);
+        $data['setting'] = $this->url->link('catalog/certificates/setting', 'token=' . $this->session->data['token'], true);
 
-        $data['pagination'] = $this->getPagination(Documents::totalCount());
+        $data['items'] = Certificate::getListAdmin($data);
 
-        $data['items'] = Documents::getListAdmin($data);
+        $data['pagination'] = $this->getPagination(count($data['items']));
 
         //MAIN DATA
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('catalog/documents/list', $data));
+        $this->response->setOutput($this->load->view('catalog/certificates/list', $data));
 
 	}
 
@@ -130,7 +128,7 @@ class ControllerCatalogDocuments extends Controller {
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
         $pagination->limit = 150;
-        $pagination->url = $this->url->link('catalog/documents', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
+        $pagination->url = $this->url->link('catalog/certificates', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
 
         return $pagination->render();
     }
@@ -162,7 +160,7 @@ class ControllerCatalogDocuments extends Controller {
         );
 
         $breadcrumbs[] = array(
-            'href'      => $this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true),
+            'href'      => $this->url->link('catalog/certificates', 'token=' . $this->session->data['token'], true),
             'text'      => $this->language->get('heading_title'),
             'separator' => ' :: '
         );
@@ -172,23 +170,23 @@ class ControllerCatalogDocuments extends Controller {
 
 	private function getForm() { 
 
-		$this->load->language('catalog/documents');
+		$this->load->language('catalog/certificates');
 
         $this->document->setTitle($this->language->get('heading_title'));
         $data = [];
         if ((isset($this->request->get['id'])) ) {
-            $item = Documents::findOneById($this->request->get['id']);
+            $item = Certificate::findOneById($this->request->get['id']);
         } else {
-            $item = new Documents();
+            $item = new Certificate();
         }
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             $item->load($this->request->post);
         }
 
         if (!isset($this->request->get['id'])) {
-            $data['action'] = $this->url->link('catalog/documents/add', 'token=' . $this->session->data['token'], true);
+            $data['action'] = $this->url->link('catalog/certificates/add', 'token=' . $this->session->data['token'], true);
         } else {
-            $data['action'] = $this->url->link('catalog/documents/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
+            $data['action'] = $this->url->link('catalog/certificates/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -206,7 +204,7 @@ class ControllerCatalogDocuments extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
-        $data['cancel'] = $this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true);
+        $data['cancel'] = $this->url->link('catalog/certificates', 'token=' . $this->session->data['token'], true);
 
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
@@ -216,29 +214,33 @@ class ControllerCatalogDocuments extends Controller {
         $data = $this->getAlerts($data);
 
         $data['breadcrumbs'] = $this->getBreadcrumbs();
-        $item->getFiles();
-        $data['item'] = $item;
 
-		$data['header'] = $this->load->controller('common/header');
+        $data['item'] = $item;
+        $item->getImages();
+
+        $this->load->model('tool/image');
+        $data['noImage'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
+        $data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
         $data['controller'] = $this;
 
-		$this->response->setOutput($this->load->view('catalog/documents/form', $data));
+		$this->response->setOutput($this->load->view('catalog/certificates/form', $data));
 
 	}
 
 	public function setting() {
-		$this->load->language('catalog/documents');
+		$this->load->language('catalog/certificates');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('catalog/documents');
+//		$this->load->model('catalog/certificates');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateSetting()) {
-			$this->model_setting_setting->editSetting('documents_setting', $this->request->post);
+			$this->model_setting_setting->editSetting('certificates_setting', $this->request->post);
 				if (isset($this->request->post['news_url'])) {
 					$this->model_catalog_news->setNewsListUrl($this->request->post['news_url']);
 				}	
@@ -246,7 +248,7 @@ class ControllerCatalogDocuments extends Controller {
 
 			$this->cache->delete('news_setting');
 
-			$this->response->redirect($this->url->link('catalog/news', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('catalog/certificates', 'token=' . $this->session->data['token'], true));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -289,8 +291,8 @@ class ControllerCatalogDocuments extends Controller {
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 
-		$data['action'] = $this->url->link('catalog/news/setting', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('catalog/news', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('catalog/certificates/setting', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('catalog/certificates', 'token=' . $this->session->data['token'], true);
 	
 		$data['breadcrumbs'] = array();
 	
@@ -301,13 +303,13 @@ class ControllerCatalogDocuments extends Controller {
 		);
 	
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('catalog/news', 'token=' . $this->session->data['token'], true),
+			'href'      => $this->url->link('catalog/certificates', 'token=' . $this->session->data['token'], true),
 			'text'      => $this->language->get('heading_title'),
 			'separator' => ' :: '
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('catalog/news/setting', 'token=' . $this->session->data['token'], true),
+			'href'      => $this->url->link('catalog/certificates/setting', 'token=' . $this->session->data['token'], true),
 			'text'      => $this->language->get('text_news_setting'),
 			'separator' => ' :: '
 		);	
@@ -372,14 +374,14 @@ class ControllerCatalogDocuments extends Controller {
 	}
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'catalog/documents')) {
+		if (!$this->user->hasPermission('modify', 'catalog/certificates')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		return !$this->error;
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/documents')) {
+		if (!$this->user->hasPermission('modify', 'catalog/certificates')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 	
@@ -387,7 +389,7 @@ class ControllerCatalogDocuments extends Controller {
 	}
 
 	protected function validateSetting() {
-		if (!$this->user->hasPermission('modify', 'catalog/documents')) {
+		if (!$this->user->hasPermission('modify', 'catalog/certificates')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
@@ -407,21 +409,5 @@ class ControllerCatalogDocuments extends Controller {
 	
 		return !$this->error;
 	}
-
-    public function deleteFile(){
-        if (isset($this->request->get['id']) && isset($this->request->get['file_id'])) {
-            $doc = Documents::findOneById($this->request->get['id']);
-            if ($doc->id) {
-                $doc->deleteFile($this->request->get['file_id']);
-            }
-            $paramsUrl = [
-                'token' => $this->session->data['token'],
-                'id' => $this->request->get['id'],
-
-            ];
-            $this->response->redirect($this->url->link('catalog/documents/edit', $paramsUrl, true));
-        }
-
-    }
 }
 ?>
