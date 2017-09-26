@@ -69,7 +69,33 @@
   background-color: $btn-hover;
 }
 /*END account, address_form, btn*/
-
+/*footer_contact*/
+#map123 {
+  .mapc_footer {
+    height: 350px;
+  }
+  .footer_cont {
+    .block-contacts {
+      height: 350px;
+      max-width: 320px;
+      .footer_contacts {
+        color: $dark-blue;
+        margin-bottom: 25px;
+        padding-left: 35px;
+      }
+      .br-tel {
+        line-height: 26px;
+      }
+      li:hover {
+        color: #f2f2f2;
+        a:hover {
+          color: $dark-blue;
+        }
+      }
+    }
+  }
+}
+/*END footer_contact*/
 
 
 .footer{

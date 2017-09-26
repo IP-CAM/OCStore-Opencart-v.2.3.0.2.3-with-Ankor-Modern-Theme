@@ -42,13 +42,13 @@
 		</div>
 		<ul class="fa-ul">
 		<?php if (!empty($modern_telephone_footer[$language_id])) { ?>
-			<li><i class="fa-li fa fa-phone"></i><a href="tel:<?php echo $modern_telephone_footer[$language_id]; ?>"><?php echo $modern_telephone_footer[$language_id]; ?></a></li>
+			<li><i class="fa-li fa fa-phone"></i><?php echo $modern_telephone_footer[$language_id]; ?></li>
 			<?php } ?>
 		<?php if (!empty($modern_telephone1_footer[$language_id])) { ?>
-			<li><i class="fa-li fa fa-phone"></i><a href="tel:<?php echo $modern_telephone1_footer[$language_id]; ?>"><?php echo $modern_telephone1_footer[$language_id]; ?></a></li>
+			<li><?php echo $modern_telephone1_footer[$language_id]; ?></li>
 			<?php } ?>
 		<?php if (!empty($modern_telephone2_footer[$language_id])) { ?>
-			<li><i class="fa-li fa fa-phone"></i><a href="tel:<?php echo $modern_telephone2_footer[$language_id]; ?>"><?php echo $modern_telephone2_footer[$language_id]; ?></a></li>
+			<li><?php echo html_entity_decode($modern_telephone2_footer[$language_id]); ?></li>
 			<?php } ?>
 		<?php if (!empty($modern_skype_footer[$language_id])) { ?>
 			<li><i class="fa-li fa fa-skype"></i><a href="callto:<?php echo $modern_skype_footer[$language_id]; ?>"><?php echo $modern_skype_footer[$language_id]; ?></a></li>
@@ -60,7 +60,7 @@
 			<li class="li_top"><i class="fa-li fa fa-home launch-show"></i><?php echo $modern_addres_footer[$language_id];?></li>
 			<?php } ?>
 		<?php if (!empty($modern_time_footer[$language_id])) { ?>
-			<li><i class="fa-li fa fa-check-circle-o "></i><?php echo $modern_time_footer[$language_id]; ?></li>
+			<li><i class="fa-li fa fa-check-circle-o "></i><?php echo html_entity_decode($modern_time_footer[$language_id]); ?></li>
 			<?php } ?>
 		</ul>
 		</div>
@@ -209,7 +209,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <script>
 var speed=1000,
 originalHeight=50,
-hoverHeight=320;
+hoverHeight=350;
 function map_slide() {
 if ($(window).width() < 750) {
 $('#map123').css({height:hoverHeight});
