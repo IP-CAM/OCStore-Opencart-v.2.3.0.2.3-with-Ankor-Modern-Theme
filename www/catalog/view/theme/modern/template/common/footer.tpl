@@ -1,3 +1,4 @@
+</section>
 <?php echo $content_mail; ?>
 <?php if ($modern_show_logo_footer !=1 || $modern_show_itext_footer !=1) { ?>
 	<div class="footer">
