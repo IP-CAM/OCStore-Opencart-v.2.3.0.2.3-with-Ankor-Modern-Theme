@@ -7,30 +7,6 @@
 @import "header";
 @import "media";
 
-/*top menu*/
-
-#top {
-  height: inherit;
-  .btn-navbar {
-    color: #fff;
-    padding: 5px 18px!important;
-    margin-top: 2px;
-    font-size: 14px;
-  }
-  li {
-    padding-top: 8px;
-  }
-  .navbar {
-    min-height: 38px;
-  }
-  #top-links2 {
-    padding-top: 0;
-  }
-  .list-inline {
-    top: 0;
-  }
-}
-/* END top menu*/
 /*catalog, link to brands*/
 #content {
   .link_brands {
@@ -60,8 +36,16 @@
   padding-bottom: 20px;
 }
 /*END brands*/
-
-
+/*account, address_form, btn*/
+.btn-info {
+  color: #ffffff;
+  background: $dark-blue;
+  border: none;
+}
+.btn-info:hover, .btn-info:active, .btn-info.active, .btn-info:focus, .btn-info.focus, .btn-info:active:hover, .btn-info:active:focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus {
+  background-color: $btn-hover;
+}
+/*END account, address_form, btn*/
 
 .footer{
   background-color:  #353d44;
@@ -102,7 +86,6 @@
     }
  }
 }
-
 .prides_main{
   margin: 10px 0;
   .list_block {
@@ -129,4 +112,14 @@
 
 .block-contacts{
   background-color:  #ff9504;
+}
+
+#content_documents {
+  min-height:400px;
+  .icon_column {
+    img {
+      width: 30px;
+      margin-right: 10px;
+    }
+  }
 }
