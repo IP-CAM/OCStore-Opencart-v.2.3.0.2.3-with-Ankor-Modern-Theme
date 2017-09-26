@@ -2,7 +2,6 @@
 @import "home";
 @import "buttons";
 @import "product";
-@import "content";
 @import "modal";
 @import "header";
 @import "media";
@@ -122,4 +121,8 @@
       margin-right: 10px;
     }
   }
+}
+
+#content_all{
+  min-height: 100vh;
 }
