@@ -7,26 +7,22 @@ use app\libs\Upload;
 use R;
 
 /**
- * Class Documents
+ * Class Certificate
  * @package app\models
  * @property string title
- * @property string metaTitle
- * @property string metaDescription
  * @property int status
  * @property int sort
  * @property array files
  */
-class Documents extends AppModel {
+class Certificate extends AppModel {
     const STATUS_OFF = 0;
     const STATUS_ON = 1;
 
-    protected static $tableName = 'documents';
+    protected static $tableName = 'artсertificates';
     protected $attributes = [
         'title' => '',
         'status' => self::STATUS_OFF,
-        'sort'=> 0,
-        'metaTitle' => '',
-        'metaDescription' => ''
+        'sort'=> 0
     ];
 
     /**
@@ -49,9 +45,6 @@ class Documents extends AppModel {
             ':count' => $limit,
         ];
         $results = self::find($sql, $params);
-        foreach ($results as $result) {
-            $result->getFiles();
-        }
         return $results;
     }
 
