@@ -57,7 +57,6 @@ class ControllerCatalogDocuments extends Controller {
     protected function redirectToEdit(){
         $params = [
             'token' => $this->session->data['token'],
-            'id' => $this->request->get['id']
         ];
         if (isset( $this->request->get['id'])) {
             $params['id'] = $this->request->get['id'];

@@ -23,12 +23,12 @@
 
                                 ?>
                                 <td class="icon_column">
-                                    <img src="<?=$document->getIconExtension($file);?>" alt="Лого файла">
+                                    <img src="<?=$document->getIconExtension($file);?>" alt="Логотип файла">
                                     <?=$file['name']?>
                                 </td>
                                 <td>от <?=$date->format('d.m.Y')?></td>
                                 <td>
-                                    <a href="" download="">Скачать файл</a>
+                                    <a href="<?=$file['path']?>" download="<?=$file['original_filename']?>">Скачать файл</a>
                                 </td>
                             </tr>
                         <?endforeach;?>

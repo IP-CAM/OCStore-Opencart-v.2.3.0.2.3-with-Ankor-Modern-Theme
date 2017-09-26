@@ -11,9 +11,16 @@ class ControllerInformationDocuments extends \app\core\Controller {
         $document = new Documents();
         if (isset($this->request->get['id'])) {
             $document = Documents::findOneById($this->request->get['id']);
+            if (!$document->id) {
+                $this->setOutput404();
+                return;
+            }
             $document->getFiles();
             $this->document->setTitle($document->title);
 
+        } else {
+            $this->setOutput404();
+            return;
         }
         $this->setBreadcrumbs($document);
         $this->data['document'] = $document;
@@ -41,8 +48,31 @@ class ControllerInformationDocuments extends \app\core\Controller {
                 'text' => $document->title,
         );
         }
-
     }
 
+    protected function setOutput404(){
+        $this->language->load('information/documents');
+        $this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('common/home'),
+            'text' => $this->language->get('text_home')
+        );
+
+        $data['heading_title'] = $this->language->get('heading_title');
+        $data['text_error'] = 'Записей не найдено';
+
+        $data['button_continue'] = $this->language->get('button_continue');
+        $data['continue'] = $this->url->link('common/home');
+
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['column_right'] = $this->load->controller('common/column_right');
+        $data['content_top'] = $this->load->controller('common/content_top');
+        $data['content_bottom'] = $this->load->controller('common/content_bottom');
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+
+        $this->response->setOutput($this->load->view('error/not_found', $data));
+
+    }
 
 }

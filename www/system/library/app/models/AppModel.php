@@ -89,12 +89,13 @@ abstract class AppModel{
     public static function findOneById($id) {
         $bean  = \R::findOne(static::$tableName, 'id = :id', [':id' => $id]);
         $item = new static();
-        foreach ($item->attributes as $key => $value) {
-            $item->attributes[$key] = $bean->$key;
+        if ($bean) {
+            foreach ($item->attributes as $key => $value) {
+                $item->attributes[$key] = $bean->$key;
+            }
+            $item->id = $bean->id;
+            $item->bean = $bean;
         }
-        $item->id = $bean->id;
-        $item->bean = $bean;
-
         return $item;
     }
 
