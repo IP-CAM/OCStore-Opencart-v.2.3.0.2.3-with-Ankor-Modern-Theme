@@ -390,9 +390,14 @@ class ControllerCommonHeader extends Controller {
     }
 
     protected function getDocuments() {
-        return [
-            ['title' => 'Прайс-листы','link' => $this->url->link('information/brands')],
-            ['title' => 'Инструкции','link' => $this->url->link('information/brands')]
-        ];
+        $items = \app\models\Documents::getActiveList();
+        $result = [];
+        foreach ($items as $item) {
+            $result[] = [
+                'title' => $item->title,
+                'link' => $this->url->link('information/documents/info',['id'=>$item->id])
+            ];
+        }
+        return $result;
     }
 }

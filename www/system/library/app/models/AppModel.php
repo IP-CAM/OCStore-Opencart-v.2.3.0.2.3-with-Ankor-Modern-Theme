@@ -46,7 +46,7 @@ abstract class AppModel{
      * @param $params
      * @return static[]
      */
-    public static function find($sql, $params) {
+    public static function find($sql, $params = []) {
         $result = [];
         $beans  = \R::find(static::$tableName, $sql, $params);
         foreach ($beans as $bean) {

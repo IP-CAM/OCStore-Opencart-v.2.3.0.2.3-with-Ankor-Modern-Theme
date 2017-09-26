@@ -59,7 +59,13 @@ class ControllerCatalogDocuments extends Controller {
             'token' => $this->session->data['token'],
             'id' => $this->request->get['id']
         ];
-        $this->response->redirect($this->url->link('catalog/documents/edit', $params , true));
+        if (isset( $this->request->get['id'])) {
+            $params['id'] = $this->request->get['id'];
+            $this->response->redirect($this->url->link('catalog/documents/edit', $params , true));
+        }else {
+            $this->response->redirect($this->url->link('catalog/documents', $params , true));
+        }
+
 	}
 
 	public function delete() {

@@ -75,6 +75,7 @@ class Documents extends AppModel {
             $fileBean->originalFilename = $file['original_filename'];
             $fileBean->extension= $file['extension'];
             $fileBean->path= $file['path'];
+            $fileBean->created_at = new \DateTime();
             $this->bean->xownArtfilesdocumentsList[] = $fileBean;
         }
         $this->id = R::store($this->bean);
@@ -145,6 +146,28 @@ class Documents extends AppModel {
         }
         $this->id = R::store($this->bean);
         return true;
+    }
+
+    public function getIconExtension($file) {
+        if (isset($file['extension'])) {
+            $fileExtension =  '/image/extensions/' . $file['extension'] . '.png';
+            if (is_file(DIR . $fileExtension)) {
+                return $fileExtension;
+            }
+        }
+        return '/image/extensions/no_image.png';
+    }
+
+    /**
+     * @return static[]
+     */
+    public static function getActiveList() {
+        $params = [
+            ':status' => 1,
+        ];
+        $sql = 'status = :status ORDER BY sort DESC,id DESC';
+        $results = self::find($sql,$params);
+        return $results;
     }
 
 }
