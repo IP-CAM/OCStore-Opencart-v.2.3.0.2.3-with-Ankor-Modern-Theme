@@ -64,6 +64,20 @@ echo $header; ?><?php echo $column_left;
 								</div>
 
 								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-description">
+										Описание
+									</label>
+									<div class="col-sm-10">
+										<textarea name="description"
+												  placeholder=""
+												  id="input-description"
+												  class="form-control summernote">
+											<?php echo $item->description; ?>
+										</textarea>
+
+									</div>
+								</div>
+								<div class="form-group">
 									<?=Form::label('Мета заголовок','metaTitle',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
 										<?=Form::text('metaTitle',$item->metaTitle,['class'=>'form-control'])?>

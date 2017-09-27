@@ -11,6 +11,9 @@ use R;
  * @package app\models
  * @property string title
  * @property string image
+ * @property string description
+ * @property string metaTitle
+ * @property string metaDescription
  * @property int status
  * @property int sort
  * @property array files
@@ -24,6 +27,7 @@ class Certificate extends AppModel {
         'title' => '',
         'metaTitle' => '',
         'metaDescription' => '',
+        'description'=> '',
         'status' => self::STATUS_OFF,
         'image' => '',
         'sort'=> 0
@@ -97,10 +101,20 @@ class Certificate extends AppModel {
      * @return static[]
      */
     public static function getActiveList() {
+        $start = 0;
+        $limit = 100;
+        if (isset($data['start']) && $data['start']>0) {
+            $start = $data['start'];
+        }
+        if (isset($data['limit']) && $data['limit'] > 1) {
+            $limit = $data['limit'];
+        }
         $params = [
+            ':start' => $start,
+            ':count' => $limit,
             ':status' => 1,
         ];
-        $sql = 'status = :status ORDER BY sort DESC,id DESC';
+        $sql = 'status = :status ORDER BY sort DESC,id DESC LIMIT :start,:count';
         $results = self::find($sql,$params);
         return $results;
     }
