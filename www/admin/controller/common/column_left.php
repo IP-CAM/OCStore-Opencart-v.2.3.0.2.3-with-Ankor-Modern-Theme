@@ -143,8 +143,10 @@ class ControllerCommonColumnLeft extends Controller {
 				);					
 			}
 
+			$artList = [];
+
             if ($this->user->hasPermission('access', 'catalog/prides')) {
-                $catalog[] = array(
+                $artList[] = array(
                     'name'	   => 'Наша гордость',
                     'href'     => $this->url->link('catalog/prides', 'token=' . $this->session->data['token'], true),
                     'children' => array()
@@ -152,7 +154,7 @@ class ControllerCommonColumnLeft extends Controller {
             }
 
             if ($this->user->hasPermission('access', 'catalog/callback')) {
-                $catalog[] = array(
+                $artList[] = array(
                     'name'	   => 'Обратная связь',
                     'href'     => $this->url->link('catalog/callback', 'token=' . $this->session->data['token'], true),
                     'children' => array()
@@ -160,20 +162,33 @@ class ControllerCommonColumnLeft extends Controller {
             }
 
             if ($this->user->hasPermission('access', 'catalog/calculating_order')) {
-                $catalog[] = array(
+                $artList[] = array(
                     'name'	   => 'Заказы расчета',
                     'href'     => $this->url->link('catalog/calculating_order', 'token=' . $this->session->data['token'], true),
                     'children' => array()
                 );
             }
+
             if ($this->user->hasPermission('access', 'catalog/documents')) {
-                $catalog[] = array(
+                $artList[] = array(
                     'name'	   => 'Документы',
                     'href'     => $this->url->link('catalog/documents', 'token=' . $this->session->data['token'], true),
                     'children' => array()
                 );
             }
-			
+
+            $artList[] = array(
+                'name'	   => 'Сертификаты',
+                'href'     => $this->url->link('catalog/certificates', 'token=' . $this->session->data['token'], true),
+                'children' => array()
+            );
+
+            $catalog[] = array(
+                'name'	   => 'Доработки',
+                'href'     => '',
+                'children' => $artList
+            );
+
 			if ($catalog) {
 				$data['menus'][] = array(
 					'id'       => 'menu-catalog',

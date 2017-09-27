@@ -16,7 +16,7 @@ class ControllerInformationDocuments extends \app\core\Controller {
                 return;
             }
             $document->getFiles();
-            $this->document->setTitle($document->title);
+            $this->setMeta($document);
 
         } else {
             $this->setOutput404();
@@ -25,6 +25,7 @@ class ControllerInformationDocuments extends \app\core\Controller {
         $this->setBreadcrumbs($document);
         $this->data['document'] = $document;
         $this->data['heading_title'] = $document->title;
+
         $this->data['column_left'] = $this->load->controller('common/column_left');
         $this->data['column_right'] = $this->load->controller('common/column_right');
         $this->data['content_top'] = $this->load->controller('common/content_top');
@@ -64,6 +65,8 @@ class ControllerInformationDocuments extends \app\core\Controller {
         $data['button_continue'] = $this->language->get('button_continue');
         $data['continue'] = $this->url->link('common/home');
 
+        $this->document->setTitle('Документы');
+
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['column_right'] = $this->load->controller('common/column_right');
         $data['content_top'] = $this->load->controller('common/content_top');
@@ -73,6 +76,14 @@ class ControllerInformationDocuments extends \app\core\Controller {
 
         $this->response->setOutput($this->load->view('error/not_found', $data));
 
+    }
+
+    protected function setMeta(Documents $document){
+        $this->document->setTitle($document->title);
+        if ($document->metaTitle) {
+            $this->document->setTitle($document->metaTitle);
+        }
+        $this->document->setDescription($document->metaDescription);
     }
 
 }
