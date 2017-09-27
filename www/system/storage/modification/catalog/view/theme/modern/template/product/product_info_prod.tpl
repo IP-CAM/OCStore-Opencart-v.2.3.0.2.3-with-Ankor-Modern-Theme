@@ -32,7 +32,7 @@
                             <?php } ?>
                         </a></li>
                 <?php } ?>
-                <li><span><?php echo $text_manufacturer; ?></span>&nbsp;&nbsp;<a itemprop="manufacturer" href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
+                <li><span><?php echo $text_manufacturer; ?></span>&nbsp;&nbsp;<a itemprop="manufacturer" href="<?php echo $linkBrands; ?>"><?php echo $manufacturer; ?></a></li>
             <?php } ?>
             <!--<li><?php echo $text_stock; ?>&nbsp;&nbsp;<?php echo ($quantity > 0) ? '<span class = "rewardin">'. $stock .'</span>' : '<span class = "rewardoff">'. $stock .'</span>'; ?></li> -->
             <?php if ($modern_product_kod_tovara !=1) { ?>
@@ -240,6 +240,7 @@
             </div>
         <?php } ?>
         <div class="form-group plus_minus">
+            <div class="plus_minus_pull">
             <div class="pull-left">
                 <input type="text" name="quantity" value="<?php echo $minimum; ?>" data-toggle="tooltip" title="<?php echo $entry_qty; ?>" size="2" id="input-quantity" class="form-control" />
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
@@ -259,10 +260,15 @@
                     <button type="button" class="btn-instock" onclick="instock.add('<?php echo $product_id; ?>');" data-product-id="<?php echo $product_id; ?>"><?php echo $button_instock; ?></button>
                 <?php } else { ?>
                     <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
-                    <?php if ($aridiusfastorder_status) { ?>
-                        <button type="button" id="fast-order" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
-                    <?php } ?>
+            </div>
+            </div>
+            <div class="plus_minus_pull">
+            <div class="cart pull-left">
+                <?php if ($aridiusfastorder_status) { ?>
+                    <button type="button" id="fast-order" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
                 <?php } ?>
+                <?php } ?>
+            </div>
             </div>
         </div>
        <!-- <div class="clearfix"></div>

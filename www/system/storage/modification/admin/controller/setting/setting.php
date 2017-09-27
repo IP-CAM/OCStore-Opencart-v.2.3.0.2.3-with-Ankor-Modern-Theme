@@ -1,7 +1,7 @@
 <?php
 class ControllerSettingSetting extends Controller {
 	private $error = array();
-
+    protected $data = [];
 	public function index() {
 		$this->load->language('setting/setting');
 
@@ -39,6 +39,7 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		$this->data = &$data;
 
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
@@ -1389,7 +1390,8 @@ class ControllerSettingSetting extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('setting/setting', $data));
+		$this->addSettings();
+		$this->response->setOutput($this->load->view('setting/setting', $this->data));
 	}
 
 	protected function validate() {
@@ -1503,5 +1505,20 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->response->setOutput($server . 'image/no_image.png');
 		}
-	}	
+	}
+	protected function addSettings() {
+       $this->setAddSetting('config_phone_sale1');
+       $this->setAddSetting('config_phone_sale2');
+       $this->setAddSetting('config_phone_buh');
+       $this->setAddSetting('config_phone_constr');
+        $this->setAddSetting('config_contact_email');
+        $this->setAddSetting('config_contact_skype');
+    }
+    protected function setAddSetting($nameSetting) {
+        if (isset($this->request->post[$nameSetting])) {
+            $this->data[$nameSetting] = $this->request->post[$nameSetting];
+        } else {
+            $this->data[$nameSetting] = $this->config->get($nameSetting);
+        }
+    }
 }

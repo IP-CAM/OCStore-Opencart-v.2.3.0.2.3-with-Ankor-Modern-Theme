@@ -70,5 +70,11 @@
     padding-left: 5px !important;
   }
 }
+@media (max-width: 425px ) {
+  .plus_minus_pull{
+    display: flex;
+    justify-content: center;
+  }
+}
 /* product */
 

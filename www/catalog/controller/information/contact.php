@@ -91,7 +91,12 @@ class ControllerInformationContact extends Controller {
 		$data['address'] = nl2br($this->config->get('config_address'));
 		$data['geocode'] = $this->config->get('config_geocode');
 		$data['geocode_hl'] = $this->config->get('config_language');
-		$data['telephone'] = $this->config->get('config_telephone');
+        $data['phone_sale1'] = $this->config->get('config_phone_sale1');
+        $data['phone_sale2'] = $this->config->get('config_phone_sale2');
+        $data['phone_buh'] = $this->config->get('config_phone_buh');
+        $data['phone_constr'] = $this->config->get('config_phone_constr');
+        $data['contact_email'] = $this->config->get('config_contact_email');
+        $data['contact_skype'] = $this->config->get('config_contact_skype');
 		$data['fax'] = $this->config->get('config_fax');
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
