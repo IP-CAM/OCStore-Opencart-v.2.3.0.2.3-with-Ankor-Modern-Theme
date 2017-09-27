@@ -24,7 +24,7 @@
                             <?php echo $address; ?>
                         </address>
                         <?php if ($geocode) { ?>
-                            <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
+                            <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info btn_info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
                         <?php } ?>
                     </div>
                     <div class="col-sm-3">
