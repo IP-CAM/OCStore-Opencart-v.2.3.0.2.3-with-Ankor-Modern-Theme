@@ -109,11 +109,6 @@
   }
 }
 
-.information-prides-info {
-  .mfp-content {
-    top: 1%;
-  }
-}
 #prides {
   .list_block h4 {
     margin-bottom: 25px;
@@ -124,6 +119,31 @@
       opacity: 0.8;
     }
  }
+}
+
+
+.prides_main{
+  margin: 10px 0;
+  .list_block {
+    min-height: 60px;
+  }
+  .product-layoutcat {
+    margin-bottom: 0;
+  }
+  .caption p {
+    color: #2f2f2f;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .blockTitle {
+    padding: 20px 5px 0;
+  }
+  @media screen and (max-width: 560px) {
+    .list_block {
+      height: 77px;
+      min-height: 77px;
+    }
+  }
 }
 
 .prides_main{

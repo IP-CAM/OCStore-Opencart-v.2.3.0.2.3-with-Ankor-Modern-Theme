@@ -10,6 +10,8 @@ use R;
  * Class Documents
  * @package app\models
  * @property string title
+ * @property string metaTitle
+ * @property string metaDescription
  * @property int status
  * @property int sort
  * @property array files
@@ -22,7 +24,9 @@ class Documents extends AppModel {
     protected $attributes = [
         'title' => '',
         'status' => self::STATUS_OFF,
-        'sort'=> 0
+        'sort'=> 0,
+        'metaTitle' => '',
+        'metaDescription' => ''
     ];
 
     /**
