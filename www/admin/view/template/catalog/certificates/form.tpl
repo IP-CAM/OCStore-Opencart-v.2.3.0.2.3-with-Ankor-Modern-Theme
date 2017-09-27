@@ -105,6 +105,12 @@ echo $header; ?><?php echo $column_left;
 									</div>
 								</div>
 								<div class="form-group">
+									<?=Form::label('Название основного изображение','nameImage',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-10">
+										<?=Form::text('nameImage',$item->nameImage,['class'=>'form-control'])?>
+									</div>
+								</div>
+								<div class="form-group">
 									<label class="col-sm-2 control-label">
 										Дополнительные изображения
 									</label>
@@ -113,16 +119,34 @@ echo $header; ?><?php echo $column_left;
 											<? $counterMorePhoto = 0;?>
 											<? if (isset($moreImages)):?>
 												<? foreach ($moreImages as $more_img):?>
-													<div class="col-sm-2">
+													<div class="col-sm-12">
 														<div class="more_image">
-															<a href="" id="thumb-image_<?=$counterMorePhoto?>" data-toggle="image" class="img-thumbnail">
-																<img src="<?=$more_img['thumb']?>" alt="" title=""
-																	 data-placeholder="<?php echo $placeholder; ?>"
-																/>
-															</a>
-															<input type="hidden" name="moreImage[<?=$counterMorePhoto?>]" value="<?php echo $more_img['src']; ?>" id="input-image_<?=$counterMorePhoto?>" />
+															<div class="row">
+																<div class="col-sm-2">
+																	<a href="" id="thumb-image_<?=$counterMorePhoto?>" data-toggle="image" class="img-thumbnail">
+																		<img src="<?=$more_img['thumb']?>" alt="" title=""
+																			 data-placeholder="<?php echo $placeholder; ?>"
+																		/>
+																	</a>
+																	<input type="hidden"
+																		   name="moreImage[<?=$counterMorePhoto?>]"
+																		   value="<?php echo $more_img['src']; ?>"
+																		   id="input-image_<?=$counterMorePhoto?>"
+																	/>
+																</div>
+																<div class="col-sm-8">
+																	<div class="form-group">
+																		<?=Form::label('Название изображения','nameMoreImage'. $counterMorePhoto,['class'=>'col-sm-2 control-label']);?>
+																		<div class="col-sm-6">
+																			<?=Form::text('nameMoreImage[' . $counterMorePhoto . ']',$more_img['name'],['class'=>'form-control'])?>
+																		</div>
+																	</div>
+																</div>
+															</div>
 														</div>
+														<hr>
 													</div>
+
 													<? $counterMorePhoto += 1;?>
 												<?endforeach;?>
 											<?endif;?>
@@ -151,12 +175,25 @@ echo $header; ?><?php echo $column_left;
 		var $elAddMorePhoto = $('#addMorePhoto');
 		$elAddMorePhoto.on('click',function (e) {
 			morePhotoCounter += 1;
-			var html = '<div class="col-sm-2"><div class="more_image">' +
+			var html = '<div class="col-sm-12"><div class="more_image"> ' +
+				'<div class="row"><div class="col-sm-2">' +
 				'<a href="javascript:void(0)" id="thumb-image_' + morePhotoCounter + '" data-toggle="image" class="img-thumbnail">' +
 				'<img src="' + noImage + '" alt="" title="" data-placeholder=""/>' +
 				'</a>' +
 				'<input type="hidden" name="moreImage['  + morePhotoCounter + ']" value="" id="input-image_' + morePhotoCounter + '" />' +
-				'</div></div>';
+				'</div>' + //col-sm-2
+				'<div class="col-sm-8">' +
+					'<div class="form-group">' +
+						'<label class="col-sm-2 control-label" for="nameMoreImage' + morePhotoCounter + '" id="nameMoreImage'+ morePhotoCounter + '-label">' +
+						'Название изображения</label>' +
+						'<div class="col-sm-6">' +
+							'<input id="nameMoreImage' + morePhotoCounter + '" name="nameMoreImage[' + morePhotoCounter + ']" type="text" value="" class="form-control">' +
+						'</div>' +
+					'</div>' +
+				'</div>' + ////col-sm-8
+				'</div>' + //row
+				'</div>' + //more_image
+				'<hr></div>';//col-sm-12
 			$elAddMorePhoto.before(html);
 		});
 	</script>

@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <div class="container">
 <div class="row">
-<div id="prides" class="col-sm-12">
+<div id="certificates" class="col-sm-12">
 <?php echo $column_left; ?>
 <?php if ($column_left && $column_right) { ?>
 	<?php $class = 'col-sm-6'; ?>
@@ -41,14 +41,13 @@
 	<br />
 	<div class="row">
 	<?php foreach ($items as $item) { ?>
-		<div class="product-layoutcat product-grid col-lg-3 col-md-3 col-sm-4 col-xs-6 cat_news">
+		<div class="product-layoutcat product-grid col-lg-3 col-md-3 col-sm-4 col-xs-6">
 			<div class="product-thumb">
 				<div class="image fixnewsgrid"><a href="<?php echo $item['href']; ?>" title="<?php echo $item['title']; ?>"><img src="<?php echo $item['thumb']; ?>" alt="<?php echo $item['title']; ?>" class="img-responsive" /></a>	</div>
 
 				<div class="list_block">
 					<div class="caption caption-left">
 						<h4 class="news_hr"><a href="<?php echo $item['href']; ?>"><?php echo $item['title']; ?></a></h4>
-						<p><a href="<?php echo $item['href']; ?>"><i class="fa fa-link"></i> <span class ="morecolor"><?php echo $text_more; ?></span></a></p>
 					</div>
 				</div>
 			</div>

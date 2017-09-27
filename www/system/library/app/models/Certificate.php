@@ -14,6 +14,7 @@ use R;
  * @property string description
  * @property string metaTitle
  * @property string metaDescription
+ * @property string nameImage
  * @property int status
  * @property int sort
  * @property array files
@@ -30,6 +31,7 @@ class Certificate extends AppModel {
         'description'=> '',
         'status' => self::STATUS_OFF,
         'image' => '',
+        'nameImage'=> '',
         'sort'=> 0
     ];
     public $images = [];
@@ -54,12 +56,18 @@ class Certificate extends AppModel {
 
     public function load($data) {
         parent::load($data);
+        $this->images = [];
         if (isset($data['moreImage'])) {
-            foreach ($data['moreImage'] as $imgSrc) {
+            foreach ($data['moreImage'] as $key=>$imgSrc) {
                 if (empty($imgSrc)) {
                     continue;
                 }
-                $this->images[] = $imgSrc;
+                $newImg = [];
+                $newImg['src'] = $imgSrc;
+                if (isset($data['nameMoreImage'][$key])) {
+                    $newImg['name'] = $data['nameMoreImage'][$key];
+                }
+                $this->images[] = $newImg;
             }
         }
     }
@@ -70,7 +78,8 @@ class Certificate extends AppModel {
             $this->bean->xownArtcertmoreimageList = [];
             foreach ($this->images as $image) {
                 $imageBean = R::dispense('artcertmoreimage');
-                $imageBean->src = $image;
+                $imageBean->src = $image['src'];
+                $imageBean->name = $image['name'];
                 $this->bean->xownArtcertmoreimageList[] = $imageBean;
             }
         }

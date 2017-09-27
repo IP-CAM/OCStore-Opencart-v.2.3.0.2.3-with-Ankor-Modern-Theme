@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <div class="container">
 <div class="row">
-<div id="prides" class="col-sm-12">
+<div id="certificates" class="list col-sm-12">
 <?php echo $column_left; ?>
 <?php if ($column_left && $column_right) { ?>
 	<?php $class = 'col-sm-6'; ?>
@@ -28,9 +28,17 @@
 	<div class="clearfix"></div>
 	<div class="row">
 		<?foreach ($images as $image):?>
-			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-				<div class="thumbnail"><a href="<?=$image['popup']?>" alt="<?=$item->title?>"><img
-							src="<?=$image['thumb']?>" alt="<?=$item->title?>"></a></div>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+				<div class="thumbnail">
+					<a href="<?=$image['popup']?>" alt="<?=$image['name']?>">
+						<img src="<?=$image['thumb']?>" alt="<?=$image['name']?>">
+						<div class="textImage">
+							<span><?=$image['name']?></span>
+						</div>
+					</a>
+				</div>
+
+
 			</div>
 		<?endforeach;?>
 	</div>
