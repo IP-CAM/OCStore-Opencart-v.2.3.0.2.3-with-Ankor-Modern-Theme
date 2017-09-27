@@ -4,3 +4,12 @@
     background-color: #51585e;
   }
 }
+/*account, address_form, btn*/
+.btn_info {
+  color: #ffffff;
+  background: $dark-blue;
+  border: none;
+}
+.btn_info:hover, .btn_info:active, .btn_info.active, .btn_info:focus, .btn_info.focus, .btn_info:active:hover, .btn_info:active:focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus {
+  background-color: $btn-hover;
+}
