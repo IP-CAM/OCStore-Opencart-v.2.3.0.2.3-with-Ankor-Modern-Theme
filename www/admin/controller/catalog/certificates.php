@@ -4,6 +4,7 @@ use app\models\Callback;
 use app\models\Certificate;
 
 class ControllerCatalogCertificates extends Controller {
+    private $data;
 	private $error = array();
 
 	public function index() {
@@ -174,6 +175,7 @@ class ControllerCatalogCertificates extends Controller {
 
         $this->document->setTitle($this->language->get('heading_title'));
         $data = [];
+        $this->data = &$data;
         if ((isset($this->request->get['id'])) ) {
             $item = Certificate::findOneById($this->request->get['id']);
         } else {
@@ -188,6 +190,8 @@ class ControllerCatalogCertificates extends Controller {
         } else {
             $data['action'] = $this->url->link('catalog/certificates/edit', 'token=' . $this->session->data['token'] . '&id=' . $this->request->get['id'], true);
         }
+
+        $data['item'] = $item;
 
         $data['heading_title'] = $this->language->get('heading_title');
 
@@ -214,21 +218,34 @@ class ControllerCatalogCertificates extends Controller {
         $data = $this->getAlerts($data);
 
         $data['breadcrumbs'] = $this->getBreadcrumbs();
-
-        $data['item'] = $item;
-        $item->getImages();
-
-        $this->load->model('tool/image');
-        $data['noImage'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
+        $this->loadImages();
         $data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
         $data['controller'] = $this;
 
-		$this->response->setOutput($this->load->view('catalog/certificates/form', $data));
+		$this->response->setOutput($this->load->view('catalog/certificates/form', $this->data));
 
+	}
+
+    protected function loadImages(){
+        $this->load->model('tool/image');
+        //IMAGE
+        if ($this->data['item']->image && file_exists(DIR_IMAGE . $this->data['item']->image)) {
+            $this->data['mainImage'] = $this->model_tool_image->resize($this->data['item']->image, 100, 100);
+        } else {
+            $this->data['mainImage'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+        }
+        // MORE IMAGES
+        $this->data['item']->getImages();
+        $this->data['moreImages'] = $this->data['item']->images;
+        foreach ($this->data['moreImages'] as &$moreImage) {
+            $moreImage['thumb'] = $this->model_tool_image->resize($moreImage['src'], 100, 100);
+        }
+        // no image
+        $this->data['noImage'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+        $this->data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 	}
 
 	public function setting() {

@@ -10,6 +10,7 @@ use R;
  * Class Certificate
  * @package app\models
  * @property string title
+ * @property string image
  * @property int status
  * @property int sort
  * @property array files
@@ -24,6 +25,7 @@ class Certificate extends AppModel {
         'metaTitle' => '',
         'metaDescription' => '',
         'status' => self::STATUS_OFF,
+        'image' => '',
         'sort'=> 0
     ];
     public $images = [];

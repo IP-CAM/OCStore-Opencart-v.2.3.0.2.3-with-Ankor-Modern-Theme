@@ -80,14 +80,25 @@ echo $header; ?><?php echo $column_left;
 							</div>
 							<div class="tab-pane" id="tab-files">
 								<div class="form-group">
+									<label class="col-sm-2 control-label">Основное изображение</label>
+									<div class="col-sm-10">
+										<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">
+											<img src="<?php echo $mainImage; ?>" alt="" title=""
+												 data-placeholder="<?php echo $placeholder; ?>"
+											/>
+										</a>
+										<input type="hidden" name="image" value="<?php echo $item->image;?>" id="input-image" />
+									</div>
+								</div>
+								<div class="form-group">
 									<label class="col-sm-2 control-label">
 										Дополнительные изображения
 									</label>
 									<div class="col-sm-10">
 										<div class="row">
 											<? $counterMorePhoto = 0;?>
-											<? if (isset($more_images)):?>
-												<? foreach ($more_images as $more_img):?>
+											<? if (isset($moreImages)):?>
+												<? foreach ($moreImages as $more_img):?>
 													<div class="col-sm-2">
 														<div class="more_image">
 															<a href="" id="thumb-image_<?=$counterMorePhoto?>" data-toggle="image" class="img-thumbnail">
