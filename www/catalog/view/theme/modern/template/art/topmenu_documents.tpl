@@ -13,7 +13,7 @@
     <?php if ($title) { ?>
         <span class=""> <?php echo $title[$language_id]; ?></span>
     <?php } ?>
-
+    <i class="fa fa-angle-down"></i>
 </a>
 <div class="dropdownDocs dropdown-menu">
         <ul class="list-group">

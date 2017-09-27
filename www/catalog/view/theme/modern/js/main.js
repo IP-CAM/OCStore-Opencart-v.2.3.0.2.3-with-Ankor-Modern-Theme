@@ -5,6 +5,8 @@ $(document).ready(function() {
         $.magnificPopup.close();
     });
     var calculationOrder = new CalculationOrder();
+    $('a[href=#documents]').on('click',toggleDocumentBlock)
+
 });
 var Callback = function () {
     var self = this;
@@ -149,4 +151,11 @@ var CalculationOrder = function () {
 
 
     this.constructor();
+};
+
+toggleDocumentBlock = function (e) {
+    e.preventDefault();
+    $(this).css("display", "block");
+    var block = $(this).siblings('.dropdownDocs ');
+   block.toggleClass('mobile');
 };

@@ -2,7 +2,7 @@
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
 
-/*==========  Mobile First Method  ==========*/
+/*==========  Mobile First Method  (ОТ МИНИМАЛЬНОЙ ШИРИНЫ) ==========*/
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
@@ -21,7 +21,39 @@
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
+  .dropdownDocs {
+    display: block;
+    padding: 0 0;
+    margin-top: 5px;
+    transition: all 320ms, opacity 0ms;
+    left: inherit;
+    &>ul {
+      &>li{
+        background-color: #353D44;
+        border:none;
+      }
+      margin-bottom: 0;
+    }
+    visibility: hidden;
+  }
 
+  #top-links2 {
+    .dropdown-menu a:hover{
+      color: white !important;
+    }
+    .list-group a {
+      border:none;
+    }
+    .list-group a.active, .list-group a.active:hover, .list-group a:hover {
+      color: inherit;
+      background: none;
+      border: none;
+      text-shadow: none;
+    }
+    &>ul>li:hover>.dropdownDocs {
+      visibility: visible;
+    }
+  }
 }
 
 /* Large Devices, Wide Screens */
@@ -34,35 +66,60 @@
 
 }
 
-/*==========  Non-Mobile First Method  ==========*/
+/*==========  Non-Mobile First Method (ДО МАКСИМАЛЬНОЙ ШИРИНЫ) ==========*/
 
 /* Для АНКОР */
-@media only screen and (max-width : 1600px) {
+@media only screen and (max-width : 1599px) {
 
 }
 
 /* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
+@media only screen and (max-width : 1199px) {
 
 }
 
 /* Medium Devices, Desktops */
-@media only screen and (max-width : 992px) {
+@media only screen and (max-width : 991px) {
+
+  #top-links2 {
+    ul {
+      display: flex;
+      flex-direction: column;
+      .mobile {
+        top: inherit;
+        box-shadow: none;
+        &, & li {
+          background-color: transparent;
+          border: none;
+        }
+        position: inherit;
+        display: block;
+      }
+    }
+  }
+
+  .navbar-right {
+    display: flex;
+    justify-content: center;
+  }
+  .reg a {
+    color: #ffffff!important;
+  }
 
 }
 
 /* Small Devices, Tablets */
-@media only screen and (max-width : 768px) {
+@media only screen and (max-width : 767px) {
 
 }
 
 /* Extra Small Devices, Phones */
-@media only screen and (max-width : 480px) {
+@media only screen and (max-width : 479px) {
 
 }
 
 /* Custom, iPhone Retina */
-@media only screen and (max-width : 320px) {
+@media only screen and (max-width : 319px) {
 
 }
 
@@ -75,24 +132,6 @@
 }
 
 /* header */
-
-/*top menu*/
-@media (max-width: 991px) {
-  #top-links2 {
-    ul {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-.navbar-right {
-  display: flex;
-  justify-content: center;
-}
-  .reg a {
-    color: #ffffff!important;
-  }
-}
 @media (min-width: 991px) and (max-width: 1200px) {
   #top-links a {
     font-size: 12px;
