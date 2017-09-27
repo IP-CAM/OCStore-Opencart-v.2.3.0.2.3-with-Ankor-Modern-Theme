@@ -58,6 +58,7 @@
   }
 }
 /*END footer_contact*/
+
 /*page Contact*/
 .page_contact {
   .form-group {
@@ -69,8 +70,6 @@
   }
 }
 /* END page Contact*/
-
-
 
 .footer{
   background-color:  #353d44;
@@ -99,14 +98,16 @@
   .list_block h4 {
     margin-bottom: 25px;
   }
-  .thumbnail :hover {
+}
+
+#prides,#certificates {
+  .thumbnail:hover {
     box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.4);
     img  {
       opacity: 0.8;
     }
   }
 }
-
 
 .prides_main{
   margin: 10px 0;
@@ -167,5 +168,13 @@
       width: 30px;
       margin-right: 10px;
     }
+  }
+}
+#certificates {
+  .thumbnail {
+    margin-bottom: 0;
+  }
+  .textImage {
+    text-align: center;
   }
 }

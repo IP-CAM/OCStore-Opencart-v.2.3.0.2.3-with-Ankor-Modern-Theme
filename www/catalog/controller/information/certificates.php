@@ -260,12 +260,17 @@ class ControllerInformationCertificates extends \app\core\Controller {
 
     protected function getDataImage($item){
         $images = [];
-        if ($item->image) {
-            $images[] = $this->getResizeImage($item->image);
-        }
         $item->getImages();
+        $image = [];
+        if ($item->image) {
+            $image = $this->getResizeImage($item->image);
+            $image['name'] = $item->nameImage;
+            $images[] = $image;
+        }
         foreach ($item->images as $more_image) {
-            $images[] = $this->getResizeImage($more_image['src']);
+            $image = $this->getResizeImage($more_image['src']);
+            $image['name'] = $more_image['name'];
+            $images[] = $image;
         }
         return $images;
 	}

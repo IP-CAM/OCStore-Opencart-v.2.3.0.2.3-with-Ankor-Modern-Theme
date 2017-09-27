@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <div class="container">
 <div class="row">
-<div id="prides" class="col-sm-12">
+<div id="certificates" class="col-sm-12">
 <?php echo $column_left; ?>
 <?php if ($column_left && $column_right) { ?>
 	<?php $class = 'col-sm-6'; ?>
@@ -48,7 +48,6 @@
 				<div class="list_block">
 					<div class="caption caption-left">
 						<h4 class="news_hr"><a href="<?php echo $item['href']; ?>"><?php echo $item['title']; ?></a></h4>
-						<p><a href="<?php echo $item['href']; ?>"><i class="fa fa-link"></i> <span class ="morecolor"><?php echo $text_more; ?></span></a></p>
 					</div>
 				</div>
 			</div>
