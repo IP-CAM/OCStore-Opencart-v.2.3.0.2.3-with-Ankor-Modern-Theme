@@ -60,12 +60,12 @@
 }
 /*END brands*/
 /*account, address_form, btn*/
-.btn-info {
+.btn_info {
   color: #ffffff;
   background: $dark-blue;
   border: none;
 }
-.btn-info:hover, .btn-info:active, .btn-info.active, .btn-info:focus, .btn-info.focus, .btn-info:active:hover, .btn-info:active:focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus {
+.btn_info:hover, .btn_info:active, .btn_info.active, .btn_info:focus, .btn_info.focus, .btn_info:active:hover, .btn_info:active:focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus {
   background-color: $btn-hover;
 }
 /*END account, address_form, btn*/
