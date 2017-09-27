@@ -40,6 +40,7 @@
             <li><a href="#tab-mail" data-toggle="tab"><?php echo $tab_mail; ?></a></li>
             <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
             <li><a href="#tab-sms" data-toggle="tab"><?php echo $tab_sms; ?></a></li>
+            <li><a href="#tab-add" data-toggle="tab">Доработки</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -342,7 +343,7 @@
           </div>
         </div>
         <div class="form-group">
-      
+
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_currency_auto; ?>"><?php echo $entry_currency_auto; ?></span></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
@@ -1750,6 +1751,9 @@
                 </div>
             </div>
             </fieldset>
+              <div class="tab-pane" id="tab-add">
+                  <? echo $this->render('setting/settings_add.tpl') ?>
+              </div>
           </div>
           </div>
         </form>

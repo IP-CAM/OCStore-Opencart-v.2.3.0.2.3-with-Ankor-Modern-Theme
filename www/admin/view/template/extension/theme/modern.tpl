@@ -977,7 +977,6 @@ if(empty($modern_color_text_news)) $modern_color_text_news                      
 	<img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" />
 	</span>
 	<input name="modern_time_footer[<?php echo $language['language_id']; ?>]" value="<?php echo $modern_time_footer[$language['language_id']]; ?>" class="form-control" />
-        <input name="modern_time_footer[<?php echo $language['language_id']; ?>]" value="<?php echo $modern_time_footer[$language['language_id']]; ?>" class="form-control" />
 	</div>
 	<?php } ?>
 </div>
