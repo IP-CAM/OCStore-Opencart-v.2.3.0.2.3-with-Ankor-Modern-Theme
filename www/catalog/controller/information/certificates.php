@@ -62,13 +62,13 @@ class ControllerInformationCertificates extends \app\core\Controller {
 			foreach ($items as $result) {
 
 				if($result->image){
-					$image = $this->model_tool_image->resize($result->image, 560, 315);
+					$image = $this->model_tool_image->resize($result->image, 360, 360);
 				}else{
 					$image = false;
 				}
 
 				$data['items'][] = array(
-					'title' => $result->title,
+					'title' => utf8_substr($result->title,0,55) . '...',
 					'thumb' => $image,
 					'description' => utf8_substr(strip_tags(html_entity_decode($result->description, ENT_QUOTES,
 						'UTF-8')), 0, 55),
@@ -264,12 +264,12 @@ class ControllerInformationCertificates extends \app\core\Controller {
         $image = [];
         if ($item->image) {
             $image = $this->getResizeImage($item->image);
-            $image['name'] = $item->nameImage;
+            $image['name'] = utf8_substr($item->nameImage,0,55) . '...';
             $images[] = $image;
         }
         foreach ($item->images as $more_image) {
             $image = $this->getResizeImage($more_image['src']);
-            $image['name'] = $more_image['name'];
+            $image['name'] = utf8_substr($item->nameImage,0,55) . '...';
             $images[] = $image;
         }
         return $images;
