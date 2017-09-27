@@ -24,6 +24,11 @@
 
 .circleout2 {
   background-color: #1bbc9b;
+  top: 5px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .fa {
     vertical-align: middle;
   }
