@@ -44,7 +44,7 @@
 
                             <div class="list_block">
                                 <div class="caption caption-left">
-                                    <p class="text-center"><i class="fa fa-chevron-right" aria-hidden="true"></i>Просмотреть все работы</p>
+                                    <p class="text-center">Просмотреть все работы</p>
                                 </div>
                             </div>
                         </div>

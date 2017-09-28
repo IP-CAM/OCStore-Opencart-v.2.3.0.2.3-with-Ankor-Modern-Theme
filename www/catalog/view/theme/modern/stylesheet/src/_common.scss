@@ -1,5 +1,5 @@
 #content_all{
-  min-height: 100vh;
+  min-height: 53vh;
 }
 /*catalog, link to brands*/
 #content {
@@ -189,5 +189,18 @@ address {
   }
   .textImage {
     text-align: center;
+  }
+}
+
+.pagination {
+  &>li {
+    &>a:hover, &>span:hover{
+      background-color: $dark-blue;
+    }
+    &.active {
+      &>span {
+        background-color: $dark-blue;
+      }
+    }
   }
 }
