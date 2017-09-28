@@ -194,8 +194,10 @@ address {
 
 .pagination {
   &>li {
-    &>a:hover, &>span:hover{
-      background-color: $dark-blue;
+    &, &.active {
+      &>a:hover, &>span:hover{
+        background-color: $dark-blue;
+      }
     }
     &.active {
       &>span {
