@@ -19,10 +19,13 @@
             <div class="row">
                 <?php foreach ($items as $item) { ?>
                     <div class="product-layoutcat product-grid col-md-3 col-sm-6 col-xs-6 ">
-                        <a href="<?php echo $item['href']; ?>" class="linkPride" title="<?php echo $item['title']; ?>">
+                        <a href="<?php echo $item['href']; ?>" class="linkPride" title="<?php echo $item['titleOrigin']; ?>">
                             <div class="product-thumb">
                                 <div class="image fixnewsgrid">
-                                    <img src="<?php echo $item['thumb']; ?>" alt="<?php echo $item['title']; ?>" class="img-responsive" />
+                                    <img src="<?php echo $item['thumb']; ?>"
+                                         alt="<?php echo $item['titleOrigin']; ?>"
+                                         title="<?php echo $item['titleOrigin']; ?>"
+                                         class="img-responsive" />
                                 </div>
                                 <div class="list_block">
                                     <div class="caption caption-left">

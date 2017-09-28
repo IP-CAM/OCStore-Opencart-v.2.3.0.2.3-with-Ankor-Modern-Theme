@@ -30,6 +30,7 @@ class ModelCatalogPrides extends Model {
 		);
 		$results = R::beansToArray($prides);
 		foreach ($results as &$result) {
+			$result['titleOrigin'] = $result['title'];
 			$result['title'] = $this->getDescWithLimit($result['title']);
 		}
 		return $results;
@@ -56,6 +57,7 @@ class ModelCatalogPrides extends Model {
 		);
 		$results = R::beansToArray($prides);
 		foreach ($results as &$result) {
+			$result['titleOrigin'] = $result['title'];
 			$result['title'] = $this->getDescWithLimit($result['title']);
 		}
 		return $results;
