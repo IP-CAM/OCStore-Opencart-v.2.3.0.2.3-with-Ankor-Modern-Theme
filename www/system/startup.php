@@ -109,12 +109,16 @@ require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_SYSTEM . 'helper/json.php');
 
+//ART
+
+
 //defines
 define('DIR', $_SERVER['DOCUMENT_ROOT']);
 define('DIR_APP', DIR . '/system/library/app');
 define('DIR_ADD_TPL', DIR . '/admin/view/add_tpl');
 define('DIR_FILE_UPLOAD', 'system/storage/upload');
 
+require_once(DIR_APP . '/core/functions.php');
 
 function start($application_config) {
 	require_once(DIR_SYSTEM . 'framework.php');	

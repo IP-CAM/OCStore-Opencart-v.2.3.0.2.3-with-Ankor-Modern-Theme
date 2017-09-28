@@ -3,7 +3,7 @@
 use app\models\Certificate;
 
 class ControllerInformationCertificates extends \app\core\Controller {
-
+    protected $limitTitle = 80;
     protected $data = [];
 
 	public function index(){
@@ -68,7 +68,8 @@ class ControllerInformationCertificates extends \app\core\Controller {
 				}
 
 				$data['items'][] = array(
-					'title' => utf8_substr($result->title,0,55) . '...',
+					'title' => getLimitStr($result->title,$this->limitTitle),
+					'originalTitle' => $result->title,
 					'thumb' => $image,
 					'description' => utf8_substr(strip_tags(html_entity_decode($result->description, ENT_QUOTES,
 						'UTF-8')), 0, 55),

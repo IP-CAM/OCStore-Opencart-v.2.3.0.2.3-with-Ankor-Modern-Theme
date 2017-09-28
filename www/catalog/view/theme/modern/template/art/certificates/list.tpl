@@ -43,7 +43,7 @@
 	<?php foreach ($items as $item) { ?>
 		<div class="product-layoutcat product-grid col-lg-3 col-md-3 col-sm-4 col-xs-6">
 			<div class="product-thumb">
-				<div class="image fixnewsgrid"><a href="<?php echo $item['href']; ?>" title="<?php echo $item['title']; ?>"><img src="<?php echo $item['thumb']; ?>" alt="<?php echo $item['title']; ?>" class="img-responsive" /></a>	</div>
+				<div class="image fixnewsgrid"><a href="<?php echo $item['href']; ?>" title="<?php echo $item['originalTitle']; ?>"><img src="<?php echo $item['thumb']; ?>" alt="<?php echo $item['originalTitle']; ?>" class="img-responsive" /></a>	</div>
 
 				<div class="list_block">
 					<div class="caption caption-left">
