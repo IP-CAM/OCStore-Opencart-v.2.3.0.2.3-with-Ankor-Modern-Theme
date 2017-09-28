@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_new_subject']          = '%s - Заказ %s';
-$_['text_new_greeting']         = 'Благодарим вас за интерес к товарам %s. Ваш заказ будет обработан после подтверждения оплаты.';
+$_['text_new_greeting']         = 'Благодарим вас за интерес к товарам %s. Менеджер компании свяжется с Вами в ближайшее время.';
 $_['text_new_received']         = 'Вы получили заказ.';
 $_['text_new_link']             = 'Для просмотра заказа нажмите на ссылку ниже:';
 $_['text_new_order_detail']     = 'Информация о заказе';
@@ -9,8 +9,8 @@ $_['text_new_instruction']      = 'Инструкции';
 $_['text_new_order_id']         = 'Заказ №:';
 $_['text_new_date_added']       = 'Дата добавления:';
 $_['text_new_order_status']     = 'Статус заказа:';
-$_['text_new_payment_method']   = 'Метод оплаты:';
-$_['text_new_shipping_method']  = 'Метод доставки:';
+$_['text_new_payment_method']   = 'Оплата:';
+$_['text_new_shipping_method']  = 'Доставка:';
 $_['text_new_email']  			= 'E-mail:';
 $_['text_new_telephone']  		= 'Телефон:';
 $_['text_new_ip']  				= 'IP адрес:';
