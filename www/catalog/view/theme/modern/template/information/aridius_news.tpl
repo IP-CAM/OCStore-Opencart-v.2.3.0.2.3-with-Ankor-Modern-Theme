@@ -39,7 +39,8 @@
 	<br />
 	<?php if ($aridius_news_status_review !=1) { ?>
 		<!-- Main form -->
-		<hr><h3 class="title_h title_center"><?php echo $text_news_review; ?></h3>
+		<hr>
+        <div class="wrap_title"><span class="title_h title_center"><?php echo $text_news_review; ?></span></div>
 		<form id="store-review" class="form-horizontal review_news-form">
 		<?php if ($review_guest) { ?>
 			<div class="review_shop"></div>
@@ -73,7 +74,8 @@
 		<?php } ?>
 	<div class="clearfix"></div>
 	<?php if ($products) { ?>
-		<hr><h3 class="title_h title_center"><?php echo $text_products_related; ?></h3>
+		<hr>
+        <div class="wrap_title"><span class="title_h title_center"><?php echo $text_products_related; ?></span></div>
 		<div class = "padding-carusel row">
 		<div class = "relatedn owl-carousel">
 		<?php foreach ($products as $key => $product) { ?>
@@ -215,7 +217,8 @@
 		</div>
 		<?php } ?>
 	<?php if ($aridius_news) { ?>
-		<hr><h3 class="title_h title_center"><?php echo $text_aridius_news_related; ?></h3>
+		<hr>
+        <div class="wrap_title"><span class="title_h title_center"><?php echo $text_aridius_news_related; ?></span></div>
 		<div class = "padding-carusel row">
 		<div class = "relatedn owl-carousel">
 		<?php foreach ($aridius_news as $new) { ?>

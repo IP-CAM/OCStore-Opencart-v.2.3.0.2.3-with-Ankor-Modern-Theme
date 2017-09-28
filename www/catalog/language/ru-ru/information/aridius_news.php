@@ -19,7 +19,7 @@ $_['button_continue'] 	            = 'Отправить';
 $_['text_tax']	                    = 'Без налога:';
 $_['text_news_review']	       		= 'Комментарии';
 $_['text_products_related']	        = 'Рекомендуемые товары';
-$_['text_aridius_news_related']    	= 'Похожие новости';
+$_['text_aridius_news_related']    	= 'Похожие публикации';
 $_['button_quickview']              = 'Быстрый просмотр';
 $_['button_instock']                = 'Сообщить когда появится ';
 
