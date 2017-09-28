@@ -265,12 +265,14 @@ class ControllerInformationCertificates extends \app\core\Controller {
         $image = [];
         if ($item->image) {
             $image = $this->getResizeImage($item->image);
-            $image['name'] = utf8_substr($item->nameImage,0,55) . '...';
+            $image['name'] = getLimitStr($item->nameImage,70);
+            $image['nameOriginal'] = $item->nameImage;
             $images[] = $image;
         }
         foreach ($item->images as $more_image) {
             $image = $this->getResizeImage($more_image['src']);
-            $image['name'] = utf8_substr($item->nameImage,0,55) . '...';
+            $image['name'] = getLimitStr($more_image['name'],70);
+            $image['nameOriginal'] = $more_image['name'];
             $images[] = $image;
         }
         return $images;

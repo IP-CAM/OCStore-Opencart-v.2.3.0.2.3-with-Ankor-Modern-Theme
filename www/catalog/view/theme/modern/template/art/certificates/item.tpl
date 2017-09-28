@@ -29,9 +29,12 @@
 	<div class="row">
 		<?foreach ($images as $image):?>
 			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-				<div class="thumbnail">
-					<a href="<?=$image['popup']?>" alt="<?=$image['name']?>">
-						<img src="<?=$image['thumb']?>" alt="<?=$image['name']?>">
+				<div class="thumbnail" title="<?=$image['nameOriginal']?>">
+					<a href="<?=$image['popup']?>" alt="<?=$image['nameOriginal']?>">
+						<img src="<?=$image['thumb']?>"
+							 alt="<?=$image['nameOriginal']?>"
+							 title="<?=$image['nameOriginal']?>"
+						>
 						<div class="textImage">
 							<span><?=$image['name']?></span>
 						</div>
