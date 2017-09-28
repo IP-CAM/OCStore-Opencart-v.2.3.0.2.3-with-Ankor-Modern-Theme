@@ -4,6 +4,7 @@ use app\models\Certificate;
 
 class ControllerInformationCertificates extends \app\core\Controller {
     protected $limitTitle = 80;
+    protected $limitTitleImage = 42;
     protected $data = [];
 
 	public function index(){
@@ -265,13 +266,13 @@ class ControllerInformationCertificates extends \app\core\Controller {
         $image = [];
         if ($item->image) {
             $image = $this->getResizeImage($item->image);
-            $image['name'] = getLimitStr($item->nameImage,70);
+            $image['name'] = getLimitStr($item->nameImage,$this->limitTitleImage);
             $image['nameOriginal'] = $item->nameImage;
             $images[] = $image;
         }
         foreach ($item->images as $more_image) {
             $image = $this->getResizeImage($more_image['src']);
-            $image['name'] = getLimitStr($more_image['name'],70);
+            $image['name'] = getLimitStr($more_image['name'],$this->limitTitleImage);
             $image['nameOriginal'] = $more_image['name'];
             $images[] = $image;
         }
