@@ -78,14 +78,14 @@ echo $header; ?><?php echo $column_left;
 									</div>
 								</div>
 								<div class="form-group">
-									<?=Form::label('Мета заголовок','metaTitle',['class'=>'col-sm-2 control-label']);?>
+									<?=Form::label('Title','metaTitle',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
 										<?=Form::text('metaTitle',$item->metaTitle,['class'=>'form-control'])?>
 									</div>
 								</div>
 
 								<div class="form-group">
-									<?=Form::label('Мета описание','metaDescription',['class'=>'col-sm-2 control-label']);?>
+									<?=Form::label('Description','metaDescription',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
 										<?=Form::text('metaDescription',$item->metaDescription,['class'=>'form-control'])?>
 									</div>

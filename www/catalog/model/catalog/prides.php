@@ -2,7 +2,7 @@
 
 class ModelCatalogPrides extends Model {
 	protected $tableName = 'artprides';
-	protected $limitTitle = 120;
+	protected $limitTitle = 80;
 
 	public function totalCount(){
 		return R::count($this->tableName);
@@ -62,7 +62,11 @@ class ModelCatalogPrides extends Model {
 	}
 
 	protected function getDescWithLimit($str) {
-		return utf8_substr($str,0, $this->limitTitle) . '...';
+		if (utf8_strlen($str) <= ($this->limitTitle - 3)) {
+			return $str;
+		}
+		$res = utf8_substr($str,0, $this->limitTitle) . '...';
+		return $res;
 	}
 }
 ?>
