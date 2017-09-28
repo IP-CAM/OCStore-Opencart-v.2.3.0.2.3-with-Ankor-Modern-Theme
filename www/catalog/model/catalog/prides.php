@@ -2,7 +2,7 @@
 
 class ModelCatalogPrides extends Model {
 	protected $tableName = 'artprides';
-	protected $limitTitle = 80;
+	protected $limitTitle = 75;
 
 	public function totalCount(){
 		return R::count($this->tableName);
