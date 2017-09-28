@@ -60,6 +60,9 @@
 /*END footer_contact*/
 
 /*page Contact*/
+address {
+  margin-bottom: 5px;
+}
 .page_contact {
   .form-group {
     display: flex;
@@ -70,6 +73,16 @@
   }
 }
 /* END page Contact*/
+/*page News*/
+#content_news {
+  span {
+    text-transform: uppercase;
+  }
+  .wrap_title {
+    margin: 20px 0;
+  }
+}
+/*END page News*/
 
 .footer{
   background-color:  #353d44;

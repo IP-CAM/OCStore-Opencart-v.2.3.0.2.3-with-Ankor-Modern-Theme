@@ -39,7 +39,7 @@
                         <?php echo $contact_email; ?><br>
                         <br>
                         <strong>Skype</strong><br>
-                        <?php echo $contact_skype; ?><br>
+                        <?php echo $contact_skype; ?>
                         <?php if ($comment) { ?>
                             <strong><?php echo $text_comment; ?></strong><br />
                             <?php echo $comment; ?>
