@@ -1,4 +1,6 @@
 <?php
+use app\models\MetaProductMaker;
+
 class ControllerCatalogProduct extends Controller {
 	private $error = array();
 
@@ -85,7 +87,12 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+
+            $data = $this->request->post;
+            if (isset($this->request->get['setMeta']) && $this->request->get['setMeta'] == 'Y') {
+                $data = $this->makeMeta($data);
+            }
+			$this->model_catalog_product->editProduct($this->request->get['product_id'], $data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -818,6 +825,8 @@ class ControllerCatalogProduct extends Controller {
 		if (!isset($this->request->get['product_id'])) {
 			$data['action'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
+
+            $data['makeMetaAction'] = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url. '&setMeta=Y', true);
 			$data['action'] = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true);
 
 			$data['product_page'] = HTTP_CATALOG.'index.php?route=product/product&product_id='.$this->request->get['product_id'];
@@ -1625,4 +1634,31 @@ class ControllerCatalogProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    protected function makeMeta($data){
+        $name = $data['product_description']['1']['name'];
+        $price = number_format(round($data['price'], (int)$this->currency->getDecimalPlace($this->config->get('config_currency'))), (int)$this->currency->getDecimalPlace($this->config->get('config_currency')), '.', '');
+        $type = $this->getTypeProduct($data['main_category_id']);
+
+        $maker = MetaProductMaker::faktory($name,$price,$data['measure_str'],$type);
+        $maker->setConfig($this->config);
+        $maker->make();
+
+
+        $data['product_description']['1']['meta_title'] = $maker->metaTitle;
+        $data['product_description']['1']['meta_description'] = $maker->metaDesc;
+        return $data;
+	}
+
+	protected function getTypeProduct($categoryId) {
+        $this->load->model('catalog/category');
+        $cat = $this->model_catalog_category->getCategory($categoryId);
+        $type = MetaProductMaker::TYPE_PRODUCT;
+        if ($cat['type_products'] == 1) {
+            $type = MetaProductMaker::TYPE_SERVICE;
+        }
+        return $type;
+    }
 }
+
+
