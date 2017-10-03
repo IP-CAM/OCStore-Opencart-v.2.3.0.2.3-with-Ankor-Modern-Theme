@@ -39,7 +39,7 @@
           </div>
         </fieldset>
         <div class="buttons clearfix">
-          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
+          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-primary"><?php echo $button_back; ?></a></div>
           <div class="pull-right">
             <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
           </div>

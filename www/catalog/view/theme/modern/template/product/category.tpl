@@ -17,7 +17,7 @@
 	<?php } ?>
 </ul>
     <div class="row">
-        <h1 class="title_style col-xs-7 col-sm-10 col-md-10"><?php echo $heading_title; ?></h1>
+        <h1 class="title_style cat_title_mob col-xs-7 col-sm-10 col-md-10"><?php echo $heading_title; ?></h1>
         <span class="col-xs-5 col-sm-2 col-md-2 link_brands"><a href="<?php echo $linkBrands; ?>">О брендах <i class="fa fa-question-circle"></i></a></span>
     </div>
 <?php if ($modern_description_top_or_bot !=1) { ?>
@@ -47,7 +47,7 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 	<div class="category2lv-center">
 	<div class="row">
 	<?php foreach ($categories as $category) { ?>
-		<div class="cat_clear col-xs-4 col-sm-3 col-md-2 col-lg-2 catpr-all">
+		<div class="cat_clear col-xs-6 col-sm-3 col-md-2 col-lg-2 catpr-all alignment">
 		<?php if ($modern_categories_2lv !=1 && (!empty($category['thumb']))) { ?>
 			<a class="catpr" href="<?php echo $category['href']; ?>"><img src="<?php echo $category['thumb']; ?>" alt="<?php echo $category['name']; ?>" class="img-responsive opacityhv" /></a>
 			<?php } ?>
