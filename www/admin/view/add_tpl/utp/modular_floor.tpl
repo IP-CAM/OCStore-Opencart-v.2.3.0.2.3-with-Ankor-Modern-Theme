@@ -1,46 +1,10 @@
+<?
+/**
+ * @var \Template\PHP $this
+ */
+$data['textTop']="Устойчивость к влажности и перепадам температур";
+$data['textCenter']="Широкие возможности дизайна";
+$data['textBottom']="Простая и быстрая укладка и демонтаж";
 
-<div class="product-info">
-    <div class="">
-        <table class="table">
-            <tbody>
-            <tr>
-                <td style="text-align:center;"><img class="img_tabl" src="/image/utp/Mark_icon_100x100_5.png" alt=""></td>
-                <td>
-                    <div class="text-product-info">
-                        <p style="margin: 10px 0;"><span style="font-size:18px; color: #8f8f8f"><strong>Устойчивость к влажности и перепадам температур</strong></span></p>
-                    </div></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="product-info">
-    <div class="">
-        <table class="table">
-            <tbody>
-            <tr>
-                <td style="text-align:center;"><img class="img_tabl" src="/image/utp/Mark_icon_100x100_5.png" alt=""></td>
-                <td>
-                    <div class="text-product-info">
-                        <p style="margin: 10px 0;"><span style="font-size:18px; color: #8f8f8f"><strong>Широкие возможности дизайна</strong></span></p>
-                    </div></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="product-info">
-    <div class="">
-        <table class="table">
-            <tbody>
-            <tr>
-                <td style="text-align:center;"><img class="img_tabl" src="/image/utp/Mark_icon_100x100_5.png" alt=""></td>
-                <td>
-                    <div class="text-product-info">
-                        <p style="margin: 10px 0;"><span style="font-size:18px; color: #8f8f8f"><strong>Простая и быстрая укладка и демонтаж</strong></span></p>
-                    </div></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+echo $this->renderTpl('art/base_utp',$data);
+?>
