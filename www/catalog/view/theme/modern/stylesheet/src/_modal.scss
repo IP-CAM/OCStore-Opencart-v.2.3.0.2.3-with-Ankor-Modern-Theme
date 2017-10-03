@@ -41,6 +41,14 @@
 }
 .information-prides-info,.information-certificates-info {
   .mfp-content {
-    top: 1%;
+    top: 0;
+  }
+  .mfp-title {
+    padding-top: 10px;
+    padding-left: 5px;
+    font-size: 16px;
+  }
+  .mfp-gallery img.mfp-img {
+    padding-top: 10px !important;
   }
 }
