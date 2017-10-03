@@ -13,7 +13,7 @@
 <?php foreach ($breadcrumbs as $i=> $breadcrumb) { ?>
 	<li><?php if($i+1<count($breadcrumbs)) { ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a><?php } else { ?><?php echo $breadcrumb['text']; ?><?php } ?></li>
 	<?php } ?>
-</ul>	
+</ul>
 <h1><?php echo $heading_title; ?></h1>
 <?php if ($description) { ?>
 	<div class="row">
@@ -69,7 +69,7 @@
           </div>
 		  <?php } ?>
         </div>
-		 </div>	
+		 </div>
 		 </div>
 	</div>
 	<div class="row">
@@ -93,7 +93,7 @@
 			<?php $html .= '<li data-target="#imgCarousel-category' . $key . '" data-slide-to="' . $img_key . '"></li>'; ?>
 			<?php $img_key++ ;?>
 			<?php } ?>
-		<?php if ($img_key > 1) { ?>	
+		<?php if ($img_key > 1) { ?>
 		<ol class="carousel-indicators">
 		<?php echo $html;?>
 		</ol>

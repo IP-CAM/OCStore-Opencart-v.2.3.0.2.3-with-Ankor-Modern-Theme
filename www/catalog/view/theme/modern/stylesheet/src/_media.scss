@@ -98,7 +98,25 @@
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 479px) {
-
+  /*product btn*/
+  .wrap-btn-product {
+    display: flex;
+    flex-direction: column;
+    .cart {
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    .btn-cart {
+      margin: 0;
+    }
+    .plus_minus_pull {
+      margin: 2px 0;
+    }
+    #button-cart {
+      min-width: 156px;
+    }
+  }
+  /*END product btn*/
 }
 
 /* Custom, iPhone Retina */
@@ -122,6 +140,11 @@
   #top-links2 a {
     font-size: 12px;
   }
+  /*product btn*/
+  .cart {
+    padding-left: 5px !important;
+  }
+  /*END product btn*/
 }
 /*end tom menu*/
 
@@ -160,14 +183,6 @@
   }
   /*END catalog*/
 }
-@media (min-width: 991px) and (max-width: 1200px) {
-  #top-links a {
-    font-size: 12px;
-  }
-  #top-links2 a {
-    font-size: 12px;
-  }
-}
 /*end tom menu*/
 
 @media (max-width: 1200px) {
@@ -189,11 +204,8 @@
   .cart {
     padding-left: 5px !important;
   }
-}
-@media (max-width: 425px ) {
-  .plus_minus_pull{
-    display: flex;
-    justify-content: center;
+  .prod-btn-align {
+    padding-right: 0;
   }
 }
 /* product */

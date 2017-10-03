@@ -240,6 +240,7 @@
             </div>
         <?php } ?>
         <div class="form-group plus_minus">
+            <div class="wrap-btn-product">
             <div class="plus_minus_pull">
             <div class="pull-left">
                 <input type="text" name="quantity" value="<?php echo $minimum; ?>" data-toggle="tooltip" title="<?php echo $entry_qty; ?>" size="2" id="input-quantity" class="form-control" />
@@ -255,12 +256,14 @@
             <?php if ($modern_compare_cat !=1) { ?>
                 <button type="button" data-toggle="tooltip" class="btn-compare" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
             <?php } ?>
-            <div class="cart pull-left" >
-                <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?>
-                    <button type="button" class="btn-instock" onclick="instock.add('<?php echo $product_id; ?>');" data-product-id="<?php echo $product_id; ?>"><?php echo $button_instock; ?></button>
-                <?php } else { ?>
-                    <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
             </div>
+            <div class="plus_minus_pull">
+                <div class="cart pull-left" >
+                    <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?>
+                        <button type="button" class="btn-instock" onclick="instock.add('<?php echo $product_id; ?>');" data-product-id="<?php echo $product_id; ?>"><?php echo $button_instock; ?></button>
+                    <?php } else { ?>
+                    <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
+                </div>
             </div>
             <div class="plus_minus_pull">
             <div class="cart pull-left">
@@ -268,6 +271,7 @@
                     <button type="button" id="fast-order" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
                 <?php } ?>
                 <?php } ?>
+            </div>
             </div>
             </div>
         </div>
