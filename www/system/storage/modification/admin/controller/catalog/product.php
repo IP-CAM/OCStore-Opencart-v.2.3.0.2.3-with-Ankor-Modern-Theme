@@ -1,4 +1,6 @@
 <?php
+use app\models\MetaProductMaker;
+
 class ControllerCatalogProduct extends Controller {
 	private $error = array();
 
@@ -85,7 +87,12 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+
+            $data = $this->request->post;
+            if (isset($this->request->get['setMeta']) && $this->request->get['setMeta'] == 'Y') {
+                $data = $this->makeMeta($data);
+            }
+			$this->model_catalog_product->editProduct($this->request->get['product_id'], $data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -373,8 +380,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['add'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, true);
 		$data['copy'] = $this->url->link('catalog/product/copy', 'token=' . $this->session->data['token'] . $url, true);
 		$data['delete'] = $this->url->link('catalog/product/delete', 'token=' . $this->session->data['token'] . $url, true);
+        $data['setMetaAction'] = $this->url->link('catalog/product/set-meta-list', 'token=' . $this->session->data['token'] . $url, true);
 
-		$data['products'] = array();
+        $data['products'] = array();
 
 		$filter_data = array(
 			'filter_name'	  => $filter_name,
@@ -818,6 +826,8 @@ class ControllerCatalogProduct extends Controller {
 		if (!isset($this->request->get['product_id'])) {
 			$data['action'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
+
+            $data['makeMetaAction'] = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url. '&setMeta=Y', true);
 			$data['action'] = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true);
 
 			$data['product_page'] = HTTP_CATALOG.'index.php?route=product/product&product_id='.$this->request->get['product_id'];
@@ -1625,4 +1635,96 @@ class ControllerCatalogProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    protected function makeMeta($data){
+        $name = $data['product_description']['1']['name'];
+        $price = number_format(round($data['price'], (int)$this->currency->getDecimalPlace($this->config->get('config_currency'))), (int)$this->currency->getDecimalPlace($this->config->get('config_currency')), '.', '');
+        $type = $this->getTypeProduct($data['main_category_id']);
+
+        $maker = MetaProductMaker::faktory($name,$price,$data['measure_str'],$type);
+        $maker->setConfig($this->config);
+        $maker->make();
+
+
+        $data['product_description']['1']['meta_title'] = $maker->metaTitle;
+        $data['product_description']['1']['meta_description'] = $maker->metaDesc;
+        return $data;
+	}
+
+	protected function getTypeProduct($categoryId) {
+        $this->load->model('catalog/category');
+        $cat = $this->model_catalog_category->getCategory($categoryId);
+        $type = MetaProductMaker::TYPE_PRODUCT;
+        if ($cat['type_products'] == 1) {
+            $type = MetaProductMaker::TYPE_SERVICE;
+        }
+        return $type;
+    }
+
+    public function setMetaList() {
+        $this->load->language('catalog/product');
+
+        $this->load->language('extension/module/modern');
+
+
+        $this->document->setTitle($this->language->get('heading_title'));
+
+        $this->load->model('catalog/product');
+
+        if (isset($this->request->post['selected']) && $this->validateDelete()) {
+            foreach ($this->request->post['selected'] as $product_id) {
+                $product_info = $this->model_catalog_product->getProduct($product_id);
+                $product_info['product_description'] = $this->model_catalog_product->getProductDescriptions($product_id);
+                $product_info['main_category_id'] = $this->model_catalog_product->getProductMainCategoryId($product_id);
+                $product_info = $this->makeMeta($product_info);
+                $this->model_catalog_product->editProductMeta($product_id,$product_info);
+            }
+
+            $this->session->data['success'] = $this->language->get('text_success');
+
+            $url = '';
+
+            if (isset($this->request->get['filter_name'])) {
+                $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_model'])) {
+                $url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_price'])) {
+                $url .= '&filter_price=' . $this->request->get['filter_price'];
+            }
+
+            if (isset($this->request->get['filter_quantity'])) {
+                $url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+            }
+
+            if (isset($this->request->get['filter_category'])) {
+                $url .= '&filter_category=' . $this->request->get['filter_category'];
+            }
+
+            if (isset($this->request->get['filter_status'])) {
+                $url .= '&filter_status=' . $this->request->get['filter_status'];
+            }
+
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+
+            $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, true));
+        }
+
+        $this->getList();
+    }
 }
+
+

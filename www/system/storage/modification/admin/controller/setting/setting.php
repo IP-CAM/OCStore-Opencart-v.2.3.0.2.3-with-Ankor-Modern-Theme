@@ -1507,18 +1507,39 @@ class ControllerSettingSetting extends Controller {
 		}
 	}
 	protected function addSettings() {
-       $this->setAddSetting('config_phone_sale1');
-       $this->setAddSetting('config_phone_sale2');
-       $this->setAddSetting('config_phone_buh');
-       $this->setAddSetting('config_phone_constr');
+	    //Main
+	    $this->setAddSetting('config_phone_sale1');
+        $this->setAddSetting('config_phone_sale2');
+        $this->setAddSetting('config_phone_buh');
+        $this->setAddSetting('config_phone_constr');
         $this->setAddSetting('config_contact_email');
         $this->setAddSetting('config_contact_skype');
+        //Meta
+        $this->addMetaProdSetting();
     }
-    protected function setAddSetting($nameSetting) {
+
+    protected function addMetaProdSetting() {
+        $this->setAddSetting('config_meta_words_title_prod_count',8);
+        $this->setAddSetting('config_meta_words_title_serv_count',5000);
+        $this->setAddSetting('config_meta_words_desc_prod_count',3);
+        $this->setAddSetting('config_meta_words_desc_serv_count',4);
+        $this->setAddSetting('config_meta_words_exception_count','в,на');
+
+        $this->setAddSetting('config_meta_pattern_title_prod','{%title%}');
+        $this->setAddSetting('config_meta_pattern_title_serv','{%title%} от компании «Анкор Крым»');
+
+        $this->setAddSetting('config_meta_pattern_desc_prod','{%title%} в Крыму и РФ. Купить с доставкой. Цена от {%price%}. Гарантия 10 лет. «Анкор Крым» - на строительном рынке с 1995 года!');
+        $this->setAddSetting('config_meta_pattern_desc_serv','Более 20 лет опыта строительных работ. Проекты любой сложности. {%title%} в Крыму. Под ключ. Только качественные материалы.');
+    }
+
+    protected function setAddSetting($nameSetting, $defaultValue = null) {
         if (isset($this->request->post[$nameSetting])) {
             $this->data[$nameSetting] = $this->request->post[$nameSetting];
         } else {
             $this->data[$nameSetting] = $this->config->get($nameSetting);
+        }
+        if (empty($this->data[$nameSetting]) && $defaultValue !== null) {
+            $this->data[$nameSetting] = $defaultValue;
         }
     }
 }
