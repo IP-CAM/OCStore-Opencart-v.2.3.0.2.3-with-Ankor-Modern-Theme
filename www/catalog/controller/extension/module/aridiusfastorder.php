@@ -79,6 +79,11 @@ class ControllerExtensionModuleAridiusfastorder extends Controller {
 		$formated_price=(float)str_replace(' ','',$formated_price);
 		$data['not_formated_price'] =$formated_price;
 		$data['formated_price'] =$this->request->get['formated_price'];
+        if (!empty($product_info['measure_str'])) {
+            $data['formated_price'] .= '/' . $product_info['measure_str'];
+            $data['formated_special'] .= '/' . $product_info['measure_str'];
+
+        }
 
 		$this->load->model('tool/image');
 
