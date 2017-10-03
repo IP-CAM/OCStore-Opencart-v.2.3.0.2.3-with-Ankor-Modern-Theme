@@ -380,8 +380,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['add'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, true);
 		$data['copy'] = $this->url->link('catalog/product/copy', 'token=' . $this->session->data['token'] . $url, true);
 		$data['delete'] = $this->url->link('catalog/product/delete', 'token=' . $this->session->data['token'] . $url, true);
+        $data['setMetaAction'] = $this->url->link('catalog/product/set-meta-list', 'token=' . $this->session->data['token'] . $url, true);
 
-		$data['products'] = array();
+        $data['products'] = array();
 
 		$filter_data = array(
 			'filter_name'	  => $filter_name,
@@ -1658,6 +1659,71 @@ class ControllerCatalogProduct extends Controller {
             $type = MetaProductMaker::TYPE_SERVICE;
         }
         return $type;
+    }
+
+    public function setMetaList() {
+        $this->load->language('catalog/product');
+
+        $this->load->language('extension/module/modern');
+
+
+        $this->document->setTitle($this->language->get('heading_title'));
+
+        $this->load->model('catalog/product');
+
+        if (isset($this->request->post['selected']) && $this->validateDelete()) {
+            foreach ($this->request->post['selected'] as $product_id) {
+                $product_info = $this->model_catalog_product->getProduct($product_id);
+                $product_info['product_description'] = $this->model_catalog_product->getProductDescriptions($product_id);
+                $product_info['main_category_id'] = $this->model_catalog_product->getProductMainCategoryId($product_id);
+                $product_info = $this->makeMeta($product_info);
+                $this->model_catalog_product->editProductMeta($product_id,$product_info);
+            }
+
+            $this->session->data['success'] = $this->language->get('text_success');
+
+            $url = '';
+
+            if (isset($this->request->get['filter_name'])) {
+                $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_model'])) {
+                $url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_price'])) {
+                $url .= '&filter_price=' . $this->request->get['filter_price'];
+            }
+
+            if (isset($this->request->get['filter_quantity'])) {
+                $url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+            }
+
+            if (isset($this->request->get['filter_category'])) {
+                $url .= '&filter_category=' . $this->request->get['filter_category'];
+            }
+
+            if (isset($this->request->get['filter_status'])) {
+                $url .= '&filter_status=' . $this->request->get['filter_status'];
+            }
+
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+
+            $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, true));
+        }
+
+        $this->getList();
     }
 }
 
