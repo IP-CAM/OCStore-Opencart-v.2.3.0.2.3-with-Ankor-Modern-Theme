@@ -82,7 +82,14 @@
   background-color: #8f8f8f;
   #menu {
     background-color: #8f8f8f;
-
+    .plus {
+      margin-right: 0;
+    }
+    .dropdown-inner {
+      & a {
+        min-width: 0;
+      }
+    }
   }
   #top-menu {
     .nobackground {
