@@ -100,6 +100,7 @@
      * @property Registry $registry
      * @property Response $response
      * @property Config config
+     * @property \Cart\Customer customer
 	**/
 abstract class Controller {
 	protected $registry;

@@ -48,28 +48,6 @@ class ControllerCheckoutRegister extends Controller {
 
 		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 
-		if (isset($this->session->data['shipping_address']['postcode'])) {
-			$data['postcode'] = $this->session->data['shipping_address']['postcode'];
-		} else {
-			$data['postcode'] = '';
-		}
-
-		if (isset($this->session->data['shipping_address']['country_id'])) {
-			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
-		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
-		}
-
-		if (isset($this->session->data['shipping_address']['zone_id'])) {
-			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
-		} else {
-			$data['zone_id'] = '';
-		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
@@ -158,29 +136,7 @@ class ControllerCheckoutRegister extends Controller {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
-				$json['error']['address_1'] = $this->language->get('error_address_1');
-			}
-
-			if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
-				$json['error']['city'] = $this->language->get('error_city');
-			}
-
 			$this->load->model('localisation/country');
-
-			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
-
-			if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
-				$json['error']['postcode'] = $this->language->get('error_postcode');
-			}
-
-			if ($this->request->post['country_id'] == '') {
-				$json['error']['country'] = $this->language->get('error_country');
-			}
-
-			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
-				$json['error']['zone'] = $this->language->get('error_zone');
-			}
 
 			if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
 				$json['error']['password'] = $this->language->get('error_password');
@@ -231,7 +187,9 @@ class ControllerCheckoutRegister extends Controller {
 		}
 
 		if (!$json) {
-			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+		    $dataCustomer = $this->request->post;
+            $dataCustomer = $this->getDataForCustomer($dataCustomer);
+			$customer_id = $this->model_account_customer->addCustomer($dataCustomer);
 
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
@@ -250,9 +208,6 @@ class ControllerCheckoutRegister extends Controller {
 
 				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 
-				if (!empty($this->request->post['shipping_address'])) {
-					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-				}
 			} else {
 				$json['redirect'] = $this->url->link('account/success');
 			}
@@ -278,5 +233,18 @@ class ControllerCheckoutRegister extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+    protected function getDataForCustomer($data){
+        $data['fax'] = '';
+        $data['company'] = '';
+        $data['address_1'] = '';
+        $data['address_2'] = '';
+        $data['city'] = '';
+        $data['postcode'] = '';
+        $data['country_id'] = '';
+        $data['zone_id'] = '';
+        return $data;
+
 	}
 }

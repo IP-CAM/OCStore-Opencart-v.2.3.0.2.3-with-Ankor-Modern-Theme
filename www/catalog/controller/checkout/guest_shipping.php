@@ -20,34 +20,10 @@ class ControllerCheckoutGuestShipping extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_upload'] = $this->language->get('button_upload');
 
-		if (isset($this->session->data['shipping_address']['firstname'])) {
-			$data['firstname'] = $this->session->data['shipping_address']['firstname'];
-		} else {
-			$data['firstname'] = '';
-		}
-
-		if (isset($this->session->data['shipping_address']['lastname'])) {
-			$data['lastname'] = $this->session->data['shipping_address']['lastname'];
-		} else {
-			$data['lastname'] = '';
-		}
-
-		if (isset($this->session->data['shipping_address']['company'])) {
-			$data['company'] = $this->session->data['shipping_address']['company'];
-		} else {
-			$data['company'] = '';
-		}
-
 		if (isset($this->session->data['shipping_address']['address_1'])) {
 			$data['address_1'] = $this->session->data['shipping_address']['address_1'];
 		} else {
 			$data['address_1'] = '';
-		}
-
-		if (isset($this->session->data['shipping_address']['address_2'])) {
-			$data['address_2'] = $this->session->data['shipping_address']['address_2'];
-		} else {
-			$data['address_2'] = '';
 		}
 
 		if (isset($this->session->data['shipping_address']['postcode'])) {
@@ -113,37 +89,6 @@ class ControllerCheckoutGuestShipping extends Controller {
 		}
 
 		if (!$json) {
-			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-				$json['error']['firstname'] = $this->language->get('error_firstname');
-			}
-
-			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
-			}
-
-			if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
-				$json['error']['address_1'] = $this->language->get('error_address_1');
-			}
-
-			if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
-				$json['error']['city'] = $this->language->get('error_city');
-			}
-
-			$this->load->model('localisation/country');
-
-			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
-
-			if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
-				$json['error']['postcode'] = $this->language->get('error_postcode');
-			}
-
-			if ($this->request->post['country_id'] == '') {
-				$json['error']['country'] = $this->language->get('error_country');
-			}
-
-			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
-				$json['error']['zone'] = $this->language->get('error_zone');
-			}
 
 			// Custom field validation
 			$this->load->model('account/custom_field');
@@ -160,11 +105,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['shipping_address']['firstname'] = $this->request->post['firstname'];
-			$this->session->data['shipping_address']['lastname'] = $this->request->post['lastname'];
-			$this->session->data['shipping_address']['company'] = $this->request->post['company'];
 			$this->session->data['shipping_address']['address_1'] = $this->request->post['address_1'];
-			$this->session->data['shipping_address']['address_2'] = $this->request->post['address_2'];
 			$this->session->data['shipping_address']['postcode'] = $this->request->post['postcode'];
 			$this->session->data['shipping_address']['city'] = $this->request->post['city'];
 			$this->session->data['shipping_address']['country_id'] = $this->request->post['country_id'];

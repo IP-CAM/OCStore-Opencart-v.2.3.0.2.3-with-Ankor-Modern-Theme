@@ -5,8 +5,8 @@ $_['heading_title']                  = 'Оформление заказа';
 // Text
 $_['text_cart']                      = 'Корзина покупок';
 $_['text_checkout_option']           = 'Шаг 1: Способ оформления заказа';
-$_['text_checkout_account']          = 'Шаг 2: Профиль & Платежная информация';
-$_['text_checkout_payment_address']  = 'Шаг 2: Платежная информация';
+$_['text_checkout_account']          = 'Шаг 2: Личные данные';
+$_['text_checkout_payment_address']  = 'Шаг 2: Личные данные';
 $_['text_checkout_shipping_address'] = 'Шаг 3: Адрес доставки';
 $_['text_checkout_shipping_method']  = 'Шаг 4: Способ доставки';
 $_['text_checkout_payment_method']   = 'Шаг 5: Способ оплаты';
@@ -44,7 +44,7 @@ $_['text_year']                      = 'год';
 $_['column_name']                    = 'Наименование товара';
 $_['column_model']                   = 'Модель';
 $_['column_quantity']                = 'Кол-во';
-$_['column_price']                   = 'Цена за шт.';
+$_['column_price']                   = 'Цена за единицу товара';
 $_['column_total']                   = 'Всего';
 
 // Entry
