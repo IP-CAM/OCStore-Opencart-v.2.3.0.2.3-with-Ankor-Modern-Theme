@@ -117,9 +117,9 @@ $days = ceil(($endDate2 / 86400)) - ceil(($startDate1 / 86400));
 	<?php } ?>
 </div>
 	<?php if (($column_left || $column_right) && ($modern_top_links9)) { ?>
-		<?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12'; ?>
+		<?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12 prod-btn-align'; ?>
 	<?php } else { ?>
-		<?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12'; ?>
+		<?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12 prod-btn-align'; ?>
 	<?php } ?>
 	<div class="<?php echo $class; ?>">
 <?

@@ -88,7 +88,6 @@ address {
   background-color:  #353d44;
   max-height: 280px;
   font-size: 14px;
-  line-height: 24px;
   .footer_copyright {
     text-align: center;
     .footer_copyright_1 {
@@ -96,15 +95,24 @@ address {
     }
     .footer_copyright_2{
       color:  #8c8f91;
+      font-size: 12px;
     }
-  }
-  .footer_desinger{
-    color:  #8c8f91;
-    font-size: 14px;
-    line-height: 16px;
+  } /*----------------WeDo----------------*/
+  .wedo {
     text-align: right;
-
-  }
+    & a {
+      color:  #8c8f91;
+      font-size: 14px;
+      line-height: 16px;
+      text-decoration: none;
+      &:hover {
+        color: #9da0a2;
+      }
+    }
+    & img {
+      width: 53px;
+    }
+  }/*----------------WeDo----------------*/
 }
 
 #prides {

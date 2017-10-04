@@ -140,7 +140,12 @@
         <div class="footer_copyright_1">© 2017, АНКОР КРЫМ</div>
 	    <div class="footer_copyright_2">Все права защищены </div>
     </div>  <br>
-	<div class="footer_desinger">Сайт разработан и поддерживается "Место для лого WEDO"</div> <br>
+<!--////////////WeDo/////////////-->
+	<div class="wedo">
+        <a href="#">Сайт разработан и поддерживается <img src="image/home/WeDo_Logo.png" alt="WeDo"></a>
+    </div>
+<!--////////////WeDo/////////////-->
+    <br>
 </div>
 </footer>
 <!--
