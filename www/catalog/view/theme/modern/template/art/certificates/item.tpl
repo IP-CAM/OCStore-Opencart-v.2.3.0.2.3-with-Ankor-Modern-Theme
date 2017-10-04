@@ -30,7 +30,7 @@
 		<?foreach ($images as $image):?>
 			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
 				<div class="thumbnail" title="<?=$image['nameOriginal']?>">
-					<a href="<?=$image['popup']?>" alt="<?=$image['nameOriginal']?>">
+					<a href="<?=$image['popup']?>" alt="<?=$image['nameOriginal']?>" title="<?=$image['nameOriginal']?>">
 						<img src="<?=$image['thumb']?>"
 							 alt="<?=$image['nameOriginal']?>"
 							 title="<?=$image['nameOriginal']?>"
@@ -48,11 +48,27 @@
 
 	<script type="text/javascript"><!--
 		$(document).ready(function () {
-			$('.thumbnail').magnificPopup({
+			$('.thumbnail').find('a').magnificPopup({
 				type: 'image',
-				delegate: 'a',
+//				delegate: 'a',
 				gallery:{
 					enabled:true
+				},
+				callbacks: {
+					elementParse: function(item) {
+
+						console.log(item); // Do whatever you want with "item" object
+					}
+				},
+				image: {
+					markup: '<div class="mfp-figure">'+
+					'<div class="mfp-close"></div>'+
+					'<div class="mfp-title"></div>'+
+					'<div class="mfp-img"></div>'+
+					'<div class="mfp-bottom-bar">'+
+					'<div class="mfp-counter"></div>'+
+					'</div>'+
+					'</div>',
 				}
 			});
 		});

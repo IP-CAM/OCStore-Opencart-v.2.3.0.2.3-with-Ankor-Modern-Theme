@@ -375,7 +375,7 @@ $days = ceil(($endDate2 / 86400)) - ceil(($startDate1 / 86400));
 	<?php } else { ?>
 	<button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
 	<?php if ($aridiusfastorder_status) { ?>
-		<button type="button" id="fast-order" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
+		<button type="button" id="fast-order" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
 		<?php } ?>
 	<?php } ?>
 </div>

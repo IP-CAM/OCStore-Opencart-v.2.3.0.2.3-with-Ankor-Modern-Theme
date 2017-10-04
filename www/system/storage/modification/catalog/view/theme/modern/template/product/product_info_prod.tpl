@@ -268,7 +268,7 @@
             <div class="plus_minus_pull">
             <div class="cart pull-left">
                 <?php if ($aridiusfastorder_status) { ?>
-                    <button type="button" id="fast-order" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
+                    <button type="button" id="fast-order" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
                 <?php } ?>
                 <?php } ?>
             </div>
