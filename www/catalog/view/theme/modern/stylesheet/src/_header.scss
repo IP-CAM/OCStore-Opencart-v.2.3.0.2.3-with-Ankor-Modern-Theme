@@ -84,9 +84,22 @@
     background-color: #8f8f8f;
 
   }
-  .navbar {
-    margin-bottom: 0px;
+  #top-menu {
+    .nobackground {
+      .navbar {
+        margin-bottom: 0px;
+        .btn-burger {
+          &:active {
+            background-color: #353D44;
+          }
+          &:focus {
+            background-color: #353D44;
+          }
+        }
+      }
+    }
   }
+
   @media (min-width: 992px) {
     #menu {
       .hidem {
