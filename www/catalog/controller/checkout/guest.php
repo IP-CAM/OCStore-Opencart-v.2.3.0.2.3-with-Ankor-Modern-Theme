@@ -191,6 +191,32 @@ class ControllerCheckoutGuest extends Controller {
 				$this->session->data['guest']['custom_field'] = array();
 			}
 
+			$this->session->data['payment_address']['firstname'] =  $this->request->post['firstname'];
+			$this->session->data['payment_address']['lastname'] = $this->request->post['lastname'];
+			$this->session->data['payment_address']['company'] = '';
+			$this->session->data['payment_address']['address_1'] = '';
+			$this->session->data['payment_address']['address_2'] = '';
+			$this->session->data['payment_address']['postcode'] = '';
+			$this->session->data['payment_address']['city'] = '';
+			$this->session->data['payment_address']['country_id'] = $this->config->get('config_country_id');;
+			$this->session->data['payment_address']['zone_id'] = '';
+
+			$this->load->model('localisation/country');
+
+			$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+			if ($country_info) {
+				$this->session->data['payment_address']['country'] = $country_info['name'];
+				$this->session->data['payment_address']['iso_code_2'] = $country_info['iso_code_2'];
+				$this->session->data['payment_address']['iso_code_3'] = $country_info['iso_code_3'];
+				$this->session->data['payment_address']['address_format'] = $country_info['address_format'];
+			} else {
+				$this->session->data['payment_address']['country'] = '';
+				$this->session->data['payment_address']['iso_code_2'] = '';
+				$this->session->data['payment_address']['iso_code_3'] = '';
+				$this->session->data['payment_address']['address_format'] = '';
+			}
+
 			if (isset($this->request->post['custom_field']['address'])) {
 				$this->session->data['payment_address']['custom_field'] = $this->request->post['custom_field']['address'];
 			} else {
