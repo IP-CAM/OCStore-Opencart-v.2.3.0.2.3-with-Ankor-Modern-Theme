@@ -23,7 +23,9 @@ class ControllerAccountAddress extends Controller {
 			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
 
 			$this->response->redirect($this->url->link('account/login', '', true));
-		}
+		} else {
+            $this->response->redirect($this->url->link('account/account', '', true));
+        }
 
 		$this->load->language('account/address');
 
