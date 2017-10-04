@@ -82,11 +82,31 @@
   background-color: #8f8f8f;
   #menu {
     background-color: #8f8f8f;
+    .plus {
+      margin-right: 0;
+    }
+    .dropdown-inner {
+      & a {
+        min-width: 0;
+      }
+    }
+  }
+  #top-menu {
+    .nobackground {
+      .navbar {
+        margin-bottom: 0px;
+        .btn-burger {
+          &:active {
+            background-color: #353D44;
+          }
+          &:focus {
+            background-color: #353D44;
+          }
+        }
+      }
+    }
+  }
 
-  }
-  .navbar {
-    margin-bottom: 0px;
-  }
   @media (min-width: 992px) {
     #menu {
       .hidem {
