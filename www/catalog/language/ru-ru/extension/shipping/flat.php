@@ -1,4 +1,4 @@
 <?php
 // Text
 $_['text_title']       = 'Единая ставка';
-$_['text_description'] = 'Описание метода доставки';
+$_['text_description'] = 'Единая ставка';
