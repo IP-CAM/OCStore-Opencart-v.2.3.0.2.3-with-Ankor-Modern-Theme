@@ -47,7 +47,7 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 	<div class="category2lv-center">
 	<div class="row">
 	<?php foreach ($categories as $category) { ?>
-		<div class="cat_clear col-xs-6 col-sm-3 col-md-2 col-lg-2 catpr-all alignment">
+		<div class="cat_clear col-xs-6 col-sm-3 col-md-3 col-lg-2 catpr-all alignment">
 		<?php if ($modern_categories_2lv !=1 && (!empty($category['thumb']))) { ?>
 			<a class="catpr" href="<?php echo $category['href']; ?>"><img src="<?php echo $category['thumb']; ?>" alt="<?php echo $category['name']; ?>" class="img-responsive opacityhv" /></a>
 			<?php } ?>
