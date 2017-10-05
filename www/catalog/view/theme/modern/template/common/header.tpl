@@ -137,7 +137,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 </head>
 <body class="<?php echo $class; ?>">
 <?php if ($modern_arrowup !=1) { ?>
-	<span class="visible-md visible-lg"><a href="#" class="scup"><i class="fa fa-angle-up active"></i></a></span>
+	<span class=""><a href="#" class="scup"><i class="fa fa-angle-up active"></i></a></span>
 	<?php } ?>
 <div id="addtocart" class="modal fade">
 <div class="modal-dialog">
