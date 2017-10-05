@@ -32,6 +32,7 @@ $_['column_name']              = 'Наименование товара';
 $_['column_model']             = 'Модель';
 $_['column_quantity']          = 'Кол-во';
 $_['column_price']             = 'Цена за шт.';
+$_['column_price']             = 'Цена за единицу товара';
 $_['column_total']             = 'Всего';
 
 // Error
