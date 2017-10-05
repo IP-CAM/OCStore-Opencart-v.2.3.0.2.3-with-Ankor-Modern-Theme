@@ -25,7 +25,7 @@ class ControllerInformationDocuments extends \app\core\Controller {
         $this->setBreadcrumbs($document);
         $this->data['document'] = $document;
         $this->data['heading_title'] = $document->title;
-
+        $this->data['controller'] = $this;
         $this->data['column_left'] = $this->load->controller('common/column_left');
         $this->data['column_right'] = $this->load->controller('common/column_right');
         $this->data['content_top'] = $this->load->controller('common/content_top');
@@ -84,6 +84,16 @@ class ControllerInformationDocuments extends \app\core\Controller {
             $this->document->setTitle($document->metaTitle);
         }
         $this->document->setDescription($document->metaDescription);
+    }
+
+    public function getFile() {
+        if (isset($this->request->get['id'])) {
+            $file = Documents::getFile($this->request->get['id']);
+            \app\libs\Download::downloadFile($file['path']);
+        } else {
+            $this->response->redirect('/');
+        }
+
     }
 
 }

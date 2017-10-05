@@ -28,7 +28,7 @@
                                 </td>
                                 <td>от <?=$date->format('d.m.Y')?></td>
                                 <td>
-                                    <a href="<?=$file['path']?>" download="<?=$file['original_filename']?>">Скачать файл</a>
+                                    <a href="<?=$controller->url->link('information/documents/get-file',['id'=>$file['id']]);$file['id']?>">Скачать файл</a>
                                 </td>
                             </tr>
                         <?endforeach;?>

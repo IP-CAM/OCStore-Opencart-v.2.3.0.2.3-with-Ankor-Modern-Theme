@@ -130,6 +130,15 @@ class Documents extends AppModel {
         return $this->files;
     }
 
+    public static function getFile($id){
+        $res = [];
+        $bean  = R::findOne('artfilesdocuments', 'id = :id', [':id' => $id]);
+        if ($bean) {
+            $res = $bean->export();
+        }
+        return $res;
+    }
+
     public function deleteFile($fileId){
         if (empty($fileId) || (!$this->id)) {
             return false;
@@ -173,5 +182,7 @@ class Documents extends AppModel {
         $results = self::find($sql,$params);
         return $results;
     }
+
+
 
 }
