@@ -56,6 +56,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 		} else {
 			$data['shipping_methods'] = array();
 		}
+        $data['shipping_methods'] = $this->setTextQuotes($data['shipping_methods']);
 
 		if (isset($this->session->data['shipping_method']['code'])) {
 			$data['code'] = $this->session->data['shipping_method']['code'];
@@ -124,4 +125,31 @@ class ControllerCheckoutShippingMethod extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    protected function setTextQuotes($methods){
+        $arText = $this->getTextForQuotes();
+        foreach ($methods as &$method) {
+            foreach ($method['quote'] as $key=>&$item) {
+                $item['text'] = $arText[$key];
+            }
+        }
+        return $methods;
+	}
+
+	protected function getTextForQuotes() {
+	    return [
+	        'xshipping1' => 'бесплатно',
+	        'xshipping2' => 'стоимость рассчитывается по тарифам транспортной компании',
+	        'xshipping3' => 'стоимость рассчитывается по тарифам транспортной компании',
+	        'xshipping4' => 'стоимость рассчитывается по тарифам транспортной компании',
+	        'xshipping5' => 'только по Крыму,стоимость уточняйте у продавца',
+	        'xshipping6' => '',
+	        'xshipping7' => '',
+	        'xshipping8' => '',
+	        'xshipping9' => '',
+	        'xshipping10' => '',
+	        'xshipping11' => '',
+	        'xshipping12' => '',
+        ];
+    }
 }
