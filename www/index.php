@@ -15,7 +15,6 @@ if (!defined('DIR_APPLICATION')) {
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
-//session_start();
-//$_SESSION = [];
-//session_destroy();
+
 start('catalog');
+
