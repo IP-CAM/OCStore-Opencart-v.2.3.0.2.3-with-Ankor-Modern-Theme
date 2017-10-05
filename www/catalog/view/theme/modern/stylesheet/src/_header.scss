@@ -90,6 +90,14 @@
         min-width: 0;
       }
     }
+    .nav {
+      & li {
+        & a:before {
+          width: 127%;
+          background: $btn-hover;
+        }
+      }
+    }
   }
   #top-menu {
     .nobackground {
@@ -97,10 +105,10 @@
         margin-bottom: 0px;
         .btn-burger {
           &:active {
-            background-color: #353D44;
+            background-color: $light-gray;
           }
           &:focus {
-            background-color: #353D44;
+            background-color: $light-gray;
           }
         }
       }
