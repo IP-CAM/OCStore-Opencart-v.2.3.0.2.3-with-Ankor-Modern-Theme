@@ -76,66 +76,68 @@
 	<?php } ?>
 <footer class="footer">
 <div class="container">
-<!--<div class="row line_foot">
-<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-<h5><?php echo $text_information; ?></h5>
-<ul class="list-unstyled">
-<?php foreach ($informations as $information) { ?>
-	<li><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
-	<?php } ?>
-</ul>
-</div>
-<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-<h5><?php echo $text_service; ?></h5>
-<ul class="list-unstyled">
-<?php if ($modern_sitemap_footer !=1) { ?><li><a href="<?php echo $sitemap; ?>"><?php echo $text_sitemap; ?></a></li><?php } ?>
-<?php if ($modern_return_footer !=1) { ?><li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li><?php } ?>
-<?php if ($modern_contact_footer !=1) { ?><li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li><?php } ?>
-</ul>
-</div>
-<div class="clearfix visible-xs"></div>
-<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-<h5><?php echo $text_account; ?></h5>
-<ul class="list-unstyled">
-<?php if ($modern_account_footer !=1) { ?><li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li><?php } ?>
-<?php if ($modern_order_footer !=1) { ?><li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li><?php } ?>
-<?php if ($modern_wishlist_footer !=1) { ?><li><a href="<?php echo $wishlist; ?>"><?php echo $text_wishlist; ?></a></li><?php } ?>
-<?php if ($modern_newsletter_footer !=1) { ?><li><a href="<?php echo $newsletter; ?>"><?php echo $text_newsletter; ?></a></li><?php } ?>
-</ul>
-</div>
-<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-<h5><?php echo $text_extra; ?></h5>
-<ul class="list-unstyled" >
-<?php if ($modern_manufacturer_footer !=1) { ?><li><a href="<?php echo $manufacturer; ?>"><?php echo $text_manufacturer; ?></a></li><?php } ?>
-<?php if ($modern_voucher_footer !=1) { ?><li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li><?php } ?>
-<?php if ($modern_affiliate_footer !=1) { ?><li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li><?php } ?>
-<?php if ($modern_special_footer !=1) { ?> <li><a href="<?php echo $special; ?>"><?php echo $text_special; ?></a></li><?php } ?>
-</ul>
-</div>
-<div class="clearfix visible-xs"></div>
-<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-<?php if ($modern_top_links2 ) { ?>
-	<div class="footer_add">
-	<div class="footer_socialpay"><?php echo $text_footer_social; ?></div>
-	<div class="setifooter_ico">
-	<?php foreach ($modern_top_links2 as $modern_top_link2) { ?>
-		<a <?php if ($modern_top_link2['link_top']) { ?> href="<?php echo $modern_top_link2['link_top']; ?>" target="_blank" <?php } ?>><div data-toggle="tooltip" title="<?php echo $modern_top_link2['tooltipseti']; ?>" class="setifooter"><i class="diamont_seti <?php echo $modern_top_link2['faicons_top']; ?>"></i></div></a>
-		<?php } ?>
-	</div>
-	</div>
-	<?php } ?>
-<div class="clearfix"></div>
-<?php if (!empty($footer_pay)) { ?>
-	<div class="footer_socialpay"><?php echo $text_footer_pay; ?></div>
-	<img class="img-responsive rigimg" alt="payment" title="payment" src="<?php echo $footer_pay; ?>">
-	<?php } ?>
-</div>
-<div class="clearfix"></div>
-<span class="col-sm-12 counter-footer">
+	<? if (false):?>
+		<div class="row line_foot">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+				<h5><?php echo $text_information; ?></h5>
+				<ul class="list-unstyled">
+					<?php foreach ($informations as $information) { ?>
+						<li><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
+					<?php } ?>
+				</ul>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+				<h5><?php echo $text_service; ?></h5>
+				<ul class="list-unstyled">
+					<?php if ($modern_sitemap_footer !=1) { ?><li><a href="<?php echo $sitemap; ?>"><?php echo $text_sitemap; ?></a></li><?php } ?>
+					<?php if ($modern_return_footer !=1) { ?><li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li><?php } ?>
+					<?php if ($modern_contact_footer !=1) { ?><li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li><?php } ?>
+				</ul>
+			</div>
+			<div class="clearfix visible-xs"></div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+				<h5><?php echo $text_account; ?></h5>
+				<ul class="list-unstyled">
+					<?php if ($modern_account_footer !=1) { ?><li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li><?php } ?>
+					<?php if ($modern_order_footer !=1) { ?><li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li><?php } ?>
+					<?php if ($modern_wishlist_footer !=1) { ?><li><a href="<?php echo $wishlist; ?>"><?php echo $text_wishlist; ?></a></li><?php } ?>
+					<?php if ($modern_newsletter_footer !=1) { ?><li><a href="<?php echo $newsletter; ?>"><?php echo $text_newsletter; ?></a></li><?php } ?>
+				</ul>
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+				<h5><?php echo $text_extra; ?></h5>
+				<ul class="list-unstyled" >
+					<?php if ($modern_manufacturer_footer !=1) { ?><li><a href="<?php echo $manufacturer; ?>"><?php echo $text_manufacturer; ?></a></li><?php } ?>
+					<?php if ($modern_voucher_footer !=1) { ?><li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li><?php } ?>
+					<?php if ($modern_affiliate_footer !=1) { ?><li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li><?php } ?>
+					<?php if ($modern_special_footer !=1) { ?> <li><a href="<?php echo $special; ?>"><?php echo $text_special; ?></a></li><?php } ?>
+				</ul>
+			</div>
+			<div class="clearfix visible-xs"></div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<?php if ($modern_top_links2 ) { ?>
+					<div class="footer_add">
+						<div class="footer_socialpay"><?php echo $text_footer_social; ?></div>
+						<div class="setifooter_ico">
+							<?php foreach ($modern_top_links2 as $modern_top_link2) { ?>
+								<a <?php if ($modern_top_link2['link_top']) { ?> href="<?php echo $modern_top_link2['link_top']; ?>" target="_blank" <?php } ?>><div data-toggle="tooltip" title="<?php echo $modern_top_link2['tooltipseti']; ?>" class="setifooter"><i class="diamont_seti <?php echo $modern_top_link2['faicons_top']; ?>"></i></div></a>
+							<?php } ?>
+						</div>
+					</div>
+				<?php } ?>
+				<div class="clearfix"></div>
+				<?php if (!empty($footer_pay)) { ?>
+					<div class="footer_socialpay"><?php echo $text_footer_pay; ?></div>
+					<img class="img-responsive rigimg" alt="payment" title="payment" src="<?php echo $footer_pay; ?>">
+				<?php } ?>
+			</div>
+			<div class="clearfix"></div>
+			<span class="col-sm-12 counter-footer">
 <?php echo html_entity_decode($modern_counter); ?>
 </span>
-<div class="clearfix"></div>
-</div>-->
+			<div class="clearfix"></div>
+		</div>
+	<?endif;?>
     <div class="footer_copyright"> <br><br>
         <div class="footer_copyright_1">© 2017, АНКОР КРЫМ</div>
 	    <div class="footer_copyright_2">Все права защищены </div>
@@ -148,11 +150,9 @@
     <br>
 </div>
 </footer>
-<!--
-OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
-Please donate via PayPal to donate@opencart.com
-//-->
-<!-- Theme created by Welford Media for OpenCart 2.0 www.welfordmedia.co.uk -->
+
+<?php echo html_entity_decode($modern_counter); ?>
+
 <!--код tooltip-->
 <script type="text/javascript"><!--
 $(document).ready(function(){
