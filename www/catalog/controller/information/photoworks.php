@@ -162,7 +162,7 @@ class ControllerInformationPhotoworks extends \app\core\Controller {
 		} else {
 			$id = 0;
 		}
-
+        $data['hrefList'] = $this->url->link('information/photoworks');
 		$item = Photowork::findOneById($id);
 
 		if ($item) {

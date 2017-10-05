@@ -46,6 +46,10 @@
 		<?endforeach;?>
 	</div>
 
+	<div class="buttons">
+		<a href="<?=$hrefList?>" class="btn-cart pull-right">Назад</a>
+	</div>
+
 	<script type="text/javascript"><!--
 		$(document).ready(function () {
 			$('.thumbnail').find('a').magnificPopup({
