@@ -216,3 +216,17 @@ address {
     }
   }
 }
+
+/*star*/
+.glyphicon-star {
+  color: $orange2;
+}
+#reviewst {
+  .fa-stack-2x {
+    color: $orange2;
+  }
+}
+.glyphicon-star-empty {
+  color: $light-gray !important;
+}
+/*END star*/
