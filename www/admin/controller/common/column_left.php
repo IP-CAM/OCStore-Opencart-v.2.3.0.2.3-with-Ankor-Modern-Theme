@@ -183,6 +183,12 @@ class ControllerCommonColumnLeft extends Controller {
                 'children' => array()
             );
 
+            $artList[] = array(
+                'name'	   => 'Фото работ',
+                'href'     => $this->url->link('catalog/photoworks', 'token=' . $this->session->data['token'], true),
+                'children' => array()
+            );
+
             $catalog[] = array(
                 'name'	   => 'Доработки',
                 'href'     => '',

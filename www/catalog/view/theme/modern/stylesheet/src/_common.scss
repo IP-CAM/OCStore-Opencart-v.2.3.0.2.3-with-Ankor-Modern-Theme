@@ -121,7 +121,7 @@ address {
   }
 }
 
-#prides,#certificates {
+#prides,#certificates,#photoworks {
   .thumbnail:hover {
     box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.4);
     img  {
@@ -192,7 +192,7 @@ address {
   }
 }
 
-#certificates {
+#certificates,#photoworks {
   margin-bottom: 20px;
   .thumbnail {
     margin-bottom: 0;
