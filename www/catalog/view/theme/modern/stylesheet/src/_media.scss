@@ -95,6 +95,19 @@
     color: #ffffff!important;
   }
 
+  /*wedo*/
+  .footer {
+    .wedo {
+      text-align: center;
+      a {
+        font-size: 12px;
+        img {
+          width: 46px;
+        }
+      }
+    }
+  }
+  /*END wedo*/
 }
 
 /* Small Devices, Tablets */
@@ -123,6 +136,11 @@
     }
   }
   /*END product btn*/
+
+  .title_center {
+    font-size: 29px;
+  }
+
 }
 
 /* Custom, iPhone Retina */
@@ -188,6 +206,9 @@
     }
   }
   /*END catalog*/
+  .info_serv {
+    margin-top: 10px;
+  }
 }
 /*end tom menu*/
 

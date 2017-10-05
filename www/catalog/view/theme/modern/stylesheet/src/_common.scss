@@ -230,3 +230,9 @@ address {
   color: $light-gray !important;
 }
 /*END star*/
+
+#addtocart {
+  .btn-cart {
+    min-width: 187px;
+  }
+}

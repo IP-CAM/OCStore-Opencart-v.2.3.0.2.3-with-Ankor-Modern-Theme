@@ -24,7 +24,6 @@
 	</div>
 	<br />
 	</div>
-	<br />
 	<div class="clearfix"></div>
 	<div class="row">
 		<?foreach ($images as $image):?>
