@@ -2,9 +2,9 @@
 /**
  * @var \Template\PHP $this
  */
-$data['textTop']="условjтавки и прочее";
-$data['textCenter']="hчее";
-$data['textBottom']="qweqwe";
+$data['textTop']="";
+$data['textCenter']="";
+$data['textBottom']="";
 
 echo $this->renderTpl('art/base_utp',$data);
 ?>
