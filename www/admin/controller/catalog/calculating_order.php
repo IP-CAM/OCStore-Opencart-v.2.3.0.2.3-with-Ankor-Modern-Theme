@@ -117,6 +117,10 @@ class ControllerCatalogCalculatingOrder extends Controller {
         $data = $this->getAlerts($data);
         $data['controller'] = $this;
         $data['breadcrumbs'] = $this->getBreadcrumbs();
+        if (isset($this->request->get['page'])) {
+            $data['limit'] = (int)$this->config->get('config_limit_admin');
+            $data['start'] = ($this->request->get['page'] - 1) * $data['limit'];
+        }
         $data['items'] = CalculatingOrder::getListAdmin($data);
         $data['add'] = $this->url->link('catalog/calculating_order/add', 'token=' . $this->session->data['token'], true);
         $data['delete'] = $this->url->link('catalog/calculating_order/delete', 'token=' . $this->session->data['token'], true);

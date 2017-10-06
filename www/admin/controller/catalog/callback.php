@@ -117,6 +117,9 @@ class ControllerCatalogCallback extends Controller {
         $data = $this->getAlerts($data);
         $data['controller'] = $this;
         $data['breadcrumbs'] = $this->getBreadcrumbs();
+        if (isset($this->request->get['page'])) {
+            $data['start'] = ($this->request->get['page'] - 1) * 20;
+        }
         $data['callList'] = \app\models\Callback::getListAdmin($data);
 
         $data['add'] = $this->url->link('catalog/callback/add', 'token=' . $this->session->data['token'], true);
@@ -152,7 +155,7 @@ class ControllerCatalogCallback extends Controller {
         $pagination->total = $total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('catalog/pride', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
+        $pagination->url = $this->url->link('catalog/callback', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
 
         return $pagination->render();
     }
