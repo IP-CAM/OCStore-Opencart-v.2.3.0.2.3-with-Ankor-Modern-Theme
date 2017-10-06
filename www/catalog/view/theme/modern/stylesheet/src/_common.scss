@@ -75,6 +75,11 @@ address {
 /* END page Contact*/
 /*page News*/
 #content_news {
+  .news {
+    h2 {
+      word-wrap: break-word;
+    }
+  }
   span {
     text-transform: uppercase;
   }
@@ -203,3 +208,4 @@ address {
     white-space: normal;
   }
 }
+
