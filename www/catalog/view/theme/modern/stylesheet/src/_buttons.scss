@@ -10,6 +10,7 @@
   background: $dark-blue;
   border: none;
 }
-.btn_info:hover, .btn_info:active, .btn_info.active, .btn_info:focus, .btn_info.focus, .btn_info:active:hover, .btn_info:active:focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus {
+.btn_info:hover, .btn_info:active, .btn_info.active, .btn_info:focus, .btn_info.focus, .btn_info:active:hover, .btn_info:active:focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus, .btn-primary.disabled:hover {
   background-color: $btn-hover;
+  border-color: $colorBtnBorderColor;
 }
