@@ -29,7 +29,7 @@
 	</div>
 	<?php } ?>
 <?php if ($modern_show_fluid_map_footer == '0') { ?>
-	<div  id="map123">
+	<div  id="map123" class="hidden-xs">
 	<a class="img_map"><img  class="img-responsive img_map2" alt="marker" title="marker" src="catalog/view/theme/modern/image/shablon/map_icon.png" ><span class="text_map"><?php echo $text_footer_map; ?></span></a>
 	<div id="map-canvas2" >
 	<?php if ($modern_show_contactblock == '0') { ?>

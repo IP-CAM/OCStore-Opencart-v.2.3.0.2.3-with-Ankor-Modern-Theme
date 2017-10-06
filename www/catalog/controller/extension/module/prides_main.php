@@ -17,6 +17,7 @@ class ControllerExtensionModulePridesMain extends Controller {
 
             $data['items'][] = array(
                 'title' => $result['title'],
+                'titleOrigin' => $result['titleOrigin'],
                 'thumb' => $image,
                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES,
                     'UTF-8')), 0, 90),

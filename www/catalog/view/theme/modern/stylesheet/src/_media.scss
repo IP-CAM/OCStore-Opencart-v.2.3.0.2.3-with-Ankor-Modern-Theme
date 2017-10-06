@@ -95,18 +95,17 @@
     color: #ffffff!important;
   }
 
-  /*wedo*/
-  .footer {
-    .wedo {
+  .buttons {
+    .btnLeft,.btnRight{
+      text-align: center;
       a {
-        font-size: 12px;
-        img {
-          width: 46px;
-        }
+        width: 80%;
       }
     }
+    .btnRight {
+      margin-top:10px;
+    }
   }
-  /*END wedo*/
 }
 
 /* Small Devices, Tablets */

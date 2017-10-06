@@ -39,12 +39,11 @@
     }
   }
 }
-.mfp-content {
-  background-color: $dark-blue;
-}
+
 .information-prides-info,.information-certificates-info, .information-photoworks-info {
-  .mfp-content {
+  .mfp-image-holder .mfp-content {
     top: 0;
+    background-color: $dark-blue;
   }
   .mfp-title {
     padding-top: 10px;
