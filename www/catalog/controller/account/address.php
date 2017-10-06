@@ -488,9 +488,6 @@ class ControllerAccountAddress extends Controller {
 	}
 
 	protected function validateForm() {
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
-		}
 
 		$this->load->model('localisation/country');
 
