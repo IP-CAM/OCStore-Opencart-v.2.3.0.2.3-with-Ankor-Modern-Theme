@@ -790,10 +790,31 @@ class ControllerCatalogCategory extends Controller {
         $data['allUtp'][''] = '-';
         foreach ($fileList as $file) {
             $key = $path . $file;
-            $data['allUtp'][$key] = $file;
+            $data['allUtp'][$key] = $this->getTitleUTP($file);
         }
         return $data;
 	}
+
+	protected function getTitleUTP($nameFile) {
+	    $res = $nameFile;
+	    $config = [
+            'product' => 'Продукты',
+            'service'=> 'Услуги',
+            'board' => 'Террасная доска',
+            'constructions' => 'Конструкции',
+            'do_it_yourself' => 'Сделай сам ',
+            'greenhouse' => 'Парники',
+            'modular_floor' => 'Модульный пол',
+            'pavilion' => 'Раздвижные павильоны',
+            'polycarbonate' => 'Поликарбонат',
+            'profiles' => 'Профили',
+            'siding' => 'Сайдинг'
+        ];
+        if (isset($config[$nameFile])) {
+            $res = $config[$nameFile];
+        }
+        return $res;
+    }
 
     protected function getNameUtp($path){
         if (empty($path)) {
