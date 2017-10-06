@@ -30,6 +30,8 @@ class ControllerCheckoutPaymentAddress extends Controller {
         $data['firstname'] = $this->customer->getFirstName();
         $data['lastname'] = $this->customer->getLastName();
 
+        $data['zone_id'] = '';
+
 		$this->load->model('localisation/country');
 
 		// Custom Fields
