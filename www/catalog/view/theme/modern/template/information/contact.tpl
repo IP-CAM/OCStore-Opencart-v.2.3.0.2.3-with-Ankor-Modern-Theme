@@ -19,7 +19,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-3"><strong><?php echo $store; ?></strong><br />
+                    <div class="col-sm-3 contact-addres"><strong><?php echo $store; ?></strong><br />
                         <address>
                             <?php echo $address; ?>
                         </address>
@@ -27,16 +27,16 @@
                             <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info btn_info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
                         <?php } ?>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 contact-phone">
                         <strong><?php echo $text_telephone;?></strong><br>
                             <?php echo $phone_sale1; ?><br>
                             <?php echo $phone_sale2; ?><br>
                             <?php echo $phone_buh; ?><br>
                             <?php echo $phone_constr; ?><br>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 contact-email">
                         <strong>Email</strong><br>
-                        <?php echo $contact_email; ?><br>
+                        <?php echo $contact_email; ?>
                         <br>
                         <strong>Skype</strong><br>
                         <?php echo $contact_skype; ?>
@@ -50,7 +50,7 @@
                             <?php echo $fax; ?>
                         <?php } ?>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 contact-work">
                         <?php if ($open) { ?>
                             <strong><?php echo $text_open; ?></strong><br />
                             <?php echo $open; ?><br />
@@ -140,7 +140,7 @@
           </div>
           <?php echo $captcha; ?>
         </fieldset>
-        <div class="buttons">
+        <div class="buttons contact-btn">
           <div class="pull-right">
             <input class="btn btn-primary" type="submit" value="<?php echo $button_submit; ?>" />
           </div>
