@@ -14,3 +14,12 @@
   background-color: $btn-hover;
   border-color: $colorBtnBorderColor;
 }
+
+.buttons {
+  .btnLeft{
+    text-align: left;
+  }
+  .btnRight{
+    text-align: right;
+  }
+}

@@ -94,6 +94,18 @@
   .reg a {
     color: #ffffff!important;
   }
+
+  .buttons {
+    .btnLeft,.btnRight{
+      text-align: center;
+      a {
+        width: 80%;
+      }
+    }
+    .btnRight {
+      margin-top:10px;
+    }
+  }
 }
 
 /* Small Devices, Tablets */

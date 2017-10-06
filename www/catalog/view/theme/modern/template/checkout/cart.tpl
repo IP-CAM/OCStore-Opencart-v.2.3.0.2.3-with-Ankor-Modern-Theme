@@ -120,8 +120,8 @@
       </div>
       <div class="buttons clearfix">
         <div class="row">
-          <div class="col-md-6 col-sm-6"><a href="<?php echo $continue; ?>" class="btn btn-default"><?php echo $button_shopping; ?></a></div>
-          <div class="col-md-6 col-sm-6 text-right-not-sm"><a href="<?php echo $checkout; ?>" class="btn btn-primary"><?php echo $button_checkout; ?></a></div>
+          <div class="col-md-6 col-sm-6 btnLeft"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_shopping; ?></a></div>
+          <div class="col-md-6 col-sm-6 btnRight"><a href="<?php echo $checkout; ?>" class="btn btn-primary"><?php echo $button_checkout; ?></a></div>
         </div>
       </div>
       <?php echo $content_bottom; ?></div>
