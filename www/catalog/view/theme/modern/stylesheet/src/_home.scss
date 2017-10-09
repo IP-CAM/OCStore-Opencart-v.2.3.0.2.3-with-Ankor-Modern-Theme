@@ -75,8 +75,8 @@
     .person_wrap {
       .person_icon {
         img {
-          width: 70px;
-          height: 70px;
+          width: 66px;
+          height: 64px;
         }
       }
     }
@@ -94,8 +94,8 @@
       margin-right: 10px;
       min-width: 70px;
       img {
-        width: 60px;
-        height: 60px;
+        width: 58px;
+        height: 58px;
       }
     }
     .person_descr {
@@ -114,15 +114,20 @@
     padding-right: 15px;
     .person_icon {
       img {
-        width: 70px;
-        height: 67px;
+        width: 65px;
+        height: 62px;
       }
     }
   }
   .brigade {
-
     float: left;
     margin-left: 15px;
+    .person_icon {
+      img {
+        width: 62px;
+        height: 53px;
+      }
+    }
   }
   .team_call {
     width: 100%;
