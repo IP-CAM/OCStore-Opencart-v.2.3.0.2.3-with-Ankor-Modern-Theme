@@ -58,11 +58,6 @@ class ControllerProductProduct extends Controller {
                     if (file_exists($file)) {
                         $data['file_utp'] = $file;
                     }
-                } else {
-                    $file = DIR_ADD_TPL . '/utp/product.tpl';
-                    if (file_exists($file)) {
-                        $data['file_utp'] = $file;
-                    }
                 }
 
 				if (isset($this->request->get['sort'])) {
