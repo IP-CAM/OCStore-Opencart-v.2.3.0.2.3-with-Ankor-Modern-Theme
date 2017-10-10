@@ -16,6 +16,7 @@ $(document).ready(function() {
 			toolbar: [
 				['style', ['style']],
 				['font', ['bold', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
 				['fontname', ['fontname']],
 				['color', ['color']],
 				['para', ['ul', 'ol', 'paragraph']],
@@ -23,6 +24,8 @@ $(document).ready(function() {
 				['insert', ['link', 'image', 'video']],
 				['view', ['fullscreen', 'codeview', 'help']]
 			],
+			fontNames:['Roboto','Arial','Times New Roman','Helvetica','Open Sans'],
+			fontNamesIgnoreCheck: ['Roboto'],
 			buttons: {
     			image: function() {
 					var ui = $.summernote.ui;
