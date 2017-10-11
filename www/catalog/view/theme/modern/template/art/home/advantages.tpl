@@ -39,7 +39,7 @@
                 <p>От козырька до перекрытия стадиона</p>
                 <br>
                 <ul>
-                    <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Ресчет ветровых и снеговых региональных нагрузок</li>
+                    <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Расчет ветровых и снеговых региональных нагрузок</li>
                     <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Материалы со сроком службы 25 лет</li>
                     <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Монтаж “под ключ” грамотной и ответственной бригадой</li>
                 </ul>

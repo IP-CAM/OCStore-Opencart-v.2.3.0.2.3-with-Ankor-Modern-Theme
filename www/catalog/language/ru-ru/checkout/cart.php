@@ -2,6 +2,8 @@
 // Heading
 $_['heading_title']            = 'Корзина покупок';
 
+$_['button_checkout'] = 'Оформить заказ';
+
 // Text
 $_['text_success']             = '<img class = "infoimg" src="%s"/> <span class = "infotext">Товар <a href="%s">%s</a> добавлен в Вашу <a href="%s">корзину</a>!</span>';
 $_['text_remove']              = 'Корзиа успешно обновлена!';
