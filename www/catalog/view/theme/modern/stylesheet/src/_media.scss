@@ -86,7 +86,6 @@
       }
     }
   }
-
   .navbar-right {
     display: flex;
     justify-content: center;
@@ -94,7 +93,6 @@
   .reg a {
     color: #ffffff!important;
   }
-
   .buttons {
     .btnLeft,.btnRight{
       text-align: center;
@@ -103,7 +101,12 @@
       }
     }
     .btnRight {
-      margin-top:10px;
+      margin-top:5px;
+    }
+  }
+  .caption {
+    a {
+      font-size:12px;
     }
   }
 }

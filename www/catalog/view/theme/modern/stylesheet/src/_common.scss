@@ -209,3 +209,18 @@ address {
   }
 }
 
+/*star*/
+.glyphicon-star {
+  color: $green;
+}
+#reviewst {
+  .fa-stack-2x {
+    color: $green;
+  }
+}
+.glyphicon-star-empty {
+  color: $light-gray !important;
+}
+/*END star*/
+
+
