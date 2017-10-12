@@ -4,10 +4,11 @@
   border: none;
   border-radius: 20px;
   color: #FFFFFF;
-  text-align: center;
   width: 135px;
   height: 35px;
-  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover {
     background-color: #73dec8;
     color: #404040;
