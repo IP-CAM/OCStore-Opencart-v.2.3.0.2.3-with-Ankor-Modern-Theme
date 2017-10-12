@@ -84,7 +84,8 @@ address {
     margin: 20px 0;
   }
   .newsdesc {
-    min-height: 105px;
+    min-height: 100px;
+    margin-bottom: 0;
   }
   .caption {
     h4 {
@@ -190,9 +191,14 @@ address {
   }
   .textImage {
     text-align: center;
+    min-height: 45px;
   }
 }
-
+#photoworks {
+  .list_block {
+    padding-bottom: 15px;
+  }
+}
 .pagination {
   &>li {
     &, &.active {
