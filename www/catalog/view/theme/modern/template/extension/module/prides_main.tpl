@@ -41,7 +41,7 @@
                 <div class="product-layoutcat product-grid col-md-3 col-sm-6 col-xs-6 ">
                     <a href="<?php echo $linkList; ?>" class="linkPride" title="">
                         <div class="product-thumb">
-                            <div class="image">
+                            <div class="image fixnewsgrid">
                                 <img src="<?php echo $imgList; ?>" alt="Все записи" class="img-responsive" />
                             </div>
 
