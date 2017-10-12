@@ -86,6 +86,11 @@ address {
   .newsdesc {
     min-height: 105px;
   }
+  .caption {
+    h4 {
+      height:45px;
+    }
+  }
 }
 /*END page News*/
 
@@ -223,4 +228,19 @@ address {
 }
 /*END star*/
 
+// BEGIN КОСТЫЛИ
+.owl-item {
+  .product-layoutcat {
+    .caption {
+      h4 {
+        height:50px;
+        a {
+          font-size: 12px;
+        }
+      }
+
+    }
+  }
+}
+//END КОСТЫЛИ
 
