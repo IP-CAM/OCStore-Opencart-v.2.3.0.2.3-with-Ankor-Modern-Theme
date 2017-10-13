@@ -242,6 +242,9 @@ class ControllerProductSearch extends Controller {
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
+			    $mainCategoryId = $this->model_catalog_product->getProductMainCategoryId($result['product_id']);
+                $categoryInfo = $this->model_catalog_category->getCategory($mainCategoryId);
+
 				if ($result['image']) {
 					$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_product_width'), $this->config->get($this->config->get('config_theme') . '_image_product_height'));
 				} else {
@@ -293,9 +296,8 @@ class ControllerProductSearch extends Controller {
 					'price_sticker'        => $result['price'],
 					'special_sticker'      => (isset($result['special']) ? $result['special'] : false),	
 					'images' => $img2,
-					'attribute_groups' => $this->model_catalog_product->getProductAttributes($result['product_id']),						
-
-      
+					'attribute_groups' => $this->model_catalog_product->getProductAttributes($result['product_id']),
+                    'typeProduct' => $categoryInfo['type_products'],
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
@@ -538,7 +540,6 @@ class ControllerProductSearch extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-
 		$this->response->setOutput($this->load->view('product/search', $data));
 	}
 }
