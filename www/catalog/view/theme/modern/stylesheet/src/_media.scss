@@ -103,6 +103,17 @@
     .btnRight {
       margin-top:5px;
     }
+    .blockLeft,.blockRight{
+      float: none;
+      display: flex;
+      justify-content: center;
+      .btn {
+        width: 80%;
+      }
+    }
+    .blockRight {
+      margin-top:5px;
+    }
   }
   .caption {
     a {
