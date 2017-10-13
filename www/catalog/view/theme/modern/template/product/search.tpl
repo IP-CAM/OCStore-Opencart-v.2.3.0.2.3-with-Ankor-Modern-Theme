@@ -201,6 +201,8 @@
 		?>
 		</a></h4>
 		<p class="desc_list"><?php echo $product['description']; ?></p>
+			<? if ($product['typeProduct'] == 0):?>
+			<? // товар ?>
 		<?php if ($product['price']) { ?>
 			<p class="price">
 			<?php if (!$product['special']) { ?>
@@ -220,6 +222,17 @@
 			<button type="button" class="btn-cartpr" onclick="cart.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
 			<?php } ?>
 		</div>
+				<? // УСЛУГА ?>
+				<?elseif ($product['typeProduct'] == 1):?>
+				<p class="price">Цену уточняйте</p>
+				<div class="cart">
+					<button type="button" class="btn-cartpr btnProd"
+							data-callculationOrder="on"
+							data-productid="<? echo $product['product_id']; ?>">
+						Заказать расчет
+					</button>
+				</div>
+			<?endif;?>
 		<div class="effect-hover">
 		<?php if ($modern_wishlist_cat !=1) { ?>
 			<a class="wishlist" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-fw fa-heart"></i></a>

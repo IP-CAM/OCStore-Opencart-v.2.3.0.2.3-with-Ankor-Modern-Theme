@@ -20,6 +20,7 @@ class ControllerExtensionModuleAridiusLivesearch extends Controller {
 
 		if (isset($this->request->get['search'])) {
 			$this->load->model('catalog/product');
+            $this->load->model('catalog/category');
             $this->load->model('tool/image');
 			if (isset($this->request->get['search'])) {
 				$filter_name = $this->request->get['search'];
@@ -88,8 +89,12 @@ class ControllerExtensionModuleAridiusLivesearch extends Controller {
 			} else {
 			  $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('aridius_livesearch_width'), $this->config->get('aridius_livesearch_height'));
 			}
-
-			$json[] = array(
+                $mainCategoryId = $this->model_catalog_product->getProductMainCategoryId($result['product_id']);
+                $categoryInfo = $this->model_catalog_category->getCategory($mainCategoryId);
+                if ($categoryInfo['type_products'] == 1) {
+                    $price = 'Цену уточняйте';
+                }
+                $json[] = array(
 					'product_id' => $result['product_id'],
 				    'price'      => $price,
 					'special'    => $special,
