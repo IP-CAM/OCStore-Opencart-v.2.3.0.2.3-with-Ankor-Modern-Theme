@@ -5,6 +5,9 @@
     <div class="callback">
         <a href="javascript:void(0)" data-callback="on">Связаться с менеджером</a>
     </div>
+    <div class="attention">
+        <p><span class="attention__title">Внимание!</span> Расчет и монтаж конструкций осуществляется только по Крыму</p>
+    </div>
     <div class="blockBtn">
         <button class="btn-cart btnProd" data-callculationOrder="on" data-productid="<?=$product_id?>">
             <i class="fa fa-calculator" aria-hidden="true"></i>
