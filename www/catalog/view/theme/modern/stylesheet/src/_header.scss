@@ -6,9 +6,12 @@
   color: #FFFFFF;
   width: 135px;
   height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  //display: flex;
+  //align-items: center;
+  //justify-content: center;
+  margin: 0 auto;
+  padding-top: 2px;
+  padding-left: 3px;
   &:hover {
     background-color: #73dec8;
     color: #404040;
