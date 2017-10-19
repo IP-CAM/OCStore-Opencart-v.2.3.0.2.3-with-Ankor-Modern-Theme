@@ -6,12 +6,20 @@
     }
     .callback {
       font-size: 18px;
-      padding: 35px 0;
+      padding: 25px 0;
       margin: 0;
     }
     .btnProd {
       padding:14px 13px;
       margin-bottom: 15px;
+    }
+  }
+  .attention {
+    padding-bottom: 20px;
+    &__title {
+      font-weight: bold;
+      text-transform: uppercase;
+      color: $orange;
     }
   }
 }
@@ -62,3 +70,4 @@
 .servicePrice {
   font-size: 15px;
 }
+
