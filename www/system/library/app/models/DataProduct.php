@@ -30,6 +30,10 @@ class DataProduct implements \ArrayAccess  {
      * @var \ModelCatalogAttribute
      */
     public static $ocModelAttribute;
+    /**
+     * @var \ModelCatalogOption
+     */
+    public static $ocModelOption;
 
     public $id;
     public $name = '';
@@ -80,7 +84,7 @@ class DataProduct implements \ArrayAccess  {
         $product_store = ['0'];
         $this->product_store = $product_store;
         //идентификатор товара (для поиска разновидностей) в excel
-        $this->idProductFromExcel = $data[26];
+        $this->idProductFromExcel = $data[18];
         $this->nameOptions = explode(',', $data[4]);
 
         $this->saveImagesExcel($data);
@@ -89,6 +93,8 @@ class DataProduct implements \ArrayAccess  {
     }
 
     protected function saveImagesExcel($data) {
+
+        // TODO save all images
         $images = explode(',', $data[15]);
         if (count($images) == 0) {
             return;
@@ -173,16 +179,59 @@ class DataProduct implements \ArrayAccess  {
     }
 
     protected function setOptions($data) {
-        if (empty($this->nameOptions)) {
+        if (count($this->nameOptions) == 0) {
             return;
         }
         $options = [];
-
+        $dataOptions = $this->getDataOptions();
+        foreach ($dataOptions as $dataOption) {
+            foreach ($dataOption['data'] as $item) {
+                foreach ($item as $values) {
+                    $name = $values['name'];
+                    $value = $values['value'];
+                }
+            }
+        }
 //        $this->product_option = $options;
     }
 
     protected function getDataOptions() {
+        $rows = [];
+        foreach (self::$productsExcel as $row) {
+            if (empty($row[3]) && $row[18] == $this->idProductFromExcel) {
+                $rows[] = $row;
+            }
+        }
+        $dataOptions = [];
+        foreach ($rows as $row) {
+            $res = [];
+            $res['image'] = '';
+            //старт колонки атрибутов
+            $startAttr = 34;
+            $allCount = count($row);
+            $i = $startAttr - 1;
+            $arImages = explode(',',$row[15]);
+            if (count($arImages) > 0) {
+                $res['image'] = $arImages[0];
+            }
+            while ($i <= $allCount - 2) {
+                $i++;
+                $data = [];
+                if (in_array($row[$i],$this->nameOptions) ) {
 
+                    $data['name'] = $row[$i];
+                    $i += 2;
+                    $data['value'] = $row[$i];
+                    if (!empty($row[$i - 1])) {
+                        $data['value'] .= ' ' . $row[$i - 1];
+                    }
+                    $res['data'][$data['name']] = $data;
+                }
+            }
+            $dataOptions[] = $res;
+        }
+
+        App::$debug->dDie($dataOptions);
     }
 
 }

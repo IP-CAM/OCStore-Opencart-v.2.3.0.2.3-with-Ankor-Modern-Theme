@@ -28,10 +28,12 @@ class ControllerCatalogLoadFromExcel extends Controller {
         $this->load->model('catalog/product');
         $this->load->model('catalog/manufacturer');
         $this->load->model('catalog/attribute');
+        $this->load->model('catalog/option');
 
         DataProduct::$ocModel = $this->model_catalog_product;
         DataProduct::$ocModelManufacturer = $this->model_catalog_manufacturer;
         DataProduct::$ocModelAttribute = $this->model_catalog_attribute;
+        DataProduct::$ocModelOption = $this->model_catalog_option;
     }
 
     protected function setOutput() {
@@ -102,8 +104,8 @@ class ControllerCatalogLoadFromExcel extends Controller {
             if (isset($savedProducts[$product->name])) {
                 $product->id = $savedProducts[$product->name];
             }
-            $product->save();
-            $savedProducts[$product->name] = $product->id;
+            //$product->save();
+           // $savedProducts[$product->name] = $product->id;
             App::$debug->d($dataProduct);
             break;
         }
