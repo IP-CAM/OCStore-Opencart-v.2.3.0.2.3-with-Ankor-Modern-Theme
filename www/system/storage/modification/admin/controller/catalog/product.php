@@ -1,9 +1,11 @@
 <?php
+use app\core\App;
+use app\models\ImageProductOption;
 use app\models\MetaProductMaker;
 
 class ControllerCatalogProduct extends Controller {
 	private $error = array();
-
+    private $data = [];
 	public function index() {
 		$this->load->language('catalog/product');
 
@@ -28,8 +30,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_product->addProduct($this->request->post);
-
+            $productId = $this->model_catalog_product->addProduct($this->request->post);
+            $this->saveImageOptions($productId,$this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
@@ -89,10 +91,12 @@ class ControllerCatalogProduct extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 
             $data = $this->request->post;
+            $productId = $this->request->get['product_id'];
+            $this->saveImageOptions($productId,$data);
             if (isset($this->request->get['setMeta']) && $this->request->get['setMeta'] == 'Y') {
                 $data = $this->makeMeta($data);
             }
-			$this->model_catalog_product->editProduct($this->request->get['product_id'], $data);
+			$productId = $this->model_catalog_product->editProduct($this->request->get['product_id'], $data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -626,7 +630,9 @@ class ControllerCatalogProduct extends Controller {
         $this->document->addScript('view/javascript/summernote/opencart.js');
         $this->document->addStyle('view/javascript/summernote/summernote.css');
     }
-
+    $this->load->model('tool/image');
+    $data[] = [];
+    $this->data = &$data;
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['product_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
@@ -837,6 +843,7 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['product_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+            $data['product_id'] = $this->request->get['product_id'];
 		}
 
 		$data['token'] = $this->session->data['token'];
@@ -1263,7 +1270,8 @@ class ControllerCatalogProduct extends Controller {
 						'points'                  => $product_option_value['points'],
 						'points_prefix'           => $product_option_value['points_prefix'],
 						'weight'                  => $product_option_value['weight'],
-						'weight_prefix'           => $product_option_value['weight_prefix']
+						'weight_prefix'           => $product_option_value['weight_prefix'],
+                        'images'                  => $this->getImageOptions($product_option['product_option_id'],$product_option_value['option_value_id'])
 					);
 				}
 			}
@@ -1370,6 +1378,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
+        $data['noImage'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
@@ -1499,8 +1508,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('catalog/product_form', $data));
+        App::$ds->token = $this->session->data['token'];
+        $this->response->setOutput($this->load->view('catalog/product_form', $this->data));
 	}
 
 	protected function validateForm() {
@@ -1725,6 +1734,90 @@ class ControllerCatalogProduct extends Controller {
 
         $this->getList();
     }
+
+    public function ajaxBlockOptionImage(){
+        $noImage = $this->request->post['noImage'];
+        $placeholder = $this->request->post['placeholder'];
+        $optionId = $this->request->post['optionId'];
+        $optionValueId = $this->request->post['optionValueId'];
+        $counterMorePhoto = $this->request->post['counterMorePhoto'];
+        echo $this->getHtmlBlockOptionImage($noImage, $placeholder, $optionId, $optionValueId,$counterMorePhoto);
+    }
+
+    protected function saveImageOptions($productId,$data) {
+        ImageProductOption::clearForProduct($productId);
+        if (isset($data['moreImageOption'])) {
+            foreach ($data['moreImageOption'] as $k => $vOptionId) {
+                $optionId = $k;
+                foreach ($vOptionId as $kOptionValueId=>$vOptionValueId) {
+                    $optionValueId = $kOptionValueId;
+                    foreach ($vOptionValueId as $item) {
+                        if (!isset($item['src']) || empty($item['src'])) {
+                            continue;
+                        }
+                        $newImg = new ImageProductOption();
+                        $newImg->option_id = (int)$optionId;
+                        $newImg->product_id = (int)$productId;
+                        $newImg->option_value_id = (int)$optionValueId;
+                        $newImg->src = $item['src'];
+                        $newImg->sort = (int)$item['sort'];
+                        $newImg->save();
+                    }
+                }
+            }
+        }
+    }
+
+    protected function getImageOptions($optionId, $optionValueId) {
+        if (isset($this->data['allImageOptions'])) {
+            $items = $this->data['allImageOptions'];
+        } else {
+            $items = ImageProductOption::findForProduct($this->data['product_id']);
+            $this->data['allImageOptions'] = $items;
+        }
+
+        $results = [];
+        foreach ($items as $item) {
+            if ($item->option_id == $optionId && $item->option_value_id ==  $optionValueId) {
+                $result['src'] = $item->src;
+                $result['thumb'] = $this->model_tool_image->resize($item->src,100,100);
+                $result['sort'] = $item->sort;
+                $results[] = $result;
+            }
+        }
+        return $results;
+    }
+
+    protected function getHtmlBlockOptionImage($noImage, $placeholder, $optionId, $optionValueId, $counterMorePhoto) {
+
+        $htmlBlock = <<<HTML
+ <div class="row">
+    <div class="col-sm-3">
+                <a href="" id="thumb-image_{$optionId}_{$optionValueId}_{$counterMorePhoto}" data-toggle="image" class="img-thumbnail">
+                    <img src="$noImage" alt="" title=""
+                         data-placeholder="$placeholder"
+                    />
+                </a>
+                <input type="hidden"
+                       name="moreImageOption[$optionId][$optionValueId][$counterMorePhoto][src]"
+                       value=""
+                       id="input-image_{$optionId}_{$optionValueId}_$counterMorePhoto"
+                />
+            </div>
+            <div class="col-sm-6">
+                <input type="text"
+                       name="moreImageOption[$optionId][$optionValueId][$counterMorePhoto][sort]"
+                       class="form-control"
+                       value=""
+                       placeholder="Сортировка"
+                />
+            </div>
+</div>
+<hr>
+HTML;
+        return $htmlBlock;
+    }
+
 }
 
 

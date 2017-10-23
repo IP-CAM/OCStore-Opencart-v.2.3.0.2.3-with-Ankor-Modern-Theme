@@ -666,6 +666,7 @@
                               <td class="text-right"><?php echo $entry_price; ?></td>
                               <td class="text-right"><?php echo $entry_option_points; ?></td>
                               <td class="text-right"><?php echo $entry_weight; ?></td>
+                              <td class="text-right"><?php echo $entry_weight; ?></td>
                               <td></td>
                             </tr>
                           </thead>
@@ -733,6 +734,28 @@
                                   <?php } ?>
                                 </select>
                                 <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight]" value="<?php echo $product_option_value['weight']; ?>" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>
+                              <td>
+
+                                <button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#modalImgOption_<?=$product_option['product_option_id']?>_<?=$product_option_value['option_value_id']?>">Картинки</button>
+                                <div id="modalImgOption_<?=$product_option['product_option_id']?>_<?=$product_option_value['option_value_id']?>" class="modal fade">
+                                  <div class="modal-dialog">
+                                    <?
+                                    /**
+                                     * @var \Template\PHP $this
+                                     *
+                                     */
+                                    $data['optionId'] = $product_option['product_option_id'];
+//                                    $data['optionValueId'] = $product_option_value['product_option_value_id'];
+                                    $data['optionValueId'] = $product_option_value['option_value_id'];
+                                    $data['noImage'] = $noImage;
+                                    $data['placeholder'] = $placeholder;
+                                    $data['urlAjaxImgOptions'] = $urlAjaxImgOptions;
+                                    $data['optionImages'] = $product_option_value['images'];
+                                    echo $this->render('catalog/product_option_img.tpl',$data);
+                                    ?>
+                                  </div>
+                                </div>
+                              </td>
                               <td class="text-left"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row<?php echo $option_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                             </tr>
                             <?php $option_value_row++; ?>
@@ -1654,6 +1677,32 @@ $('#option a:first').tab('show');
     var action = $(this).data('actionmeta');
     $('#form-product').attr("action",action)
   })
+</script>
+
+<script>
+    var $elAddMorePhoto = $('.addOptionMorePhoto');
+    $elAddMorePhoto.on('click',function (e) {
+        console.log($(this).data('noimage'));
+        var self = $(this);
+        $.ajax({
+            url: "index.php?route=catalog/product/ajaxBlockOptionImage&token=<?=\app\core\App::$ds->token?>",
+            method: 'POST',
+            data: {
+                noImage:$(this).data('noimage'),
+                placeholder: $(this).data('placeholder'),
+                optionId: $(this).data('optionid'),
+                optionValueId: $(this).data('optionvalueid'),
+                counterMorePhoto: $(this).data('countermorephoto')
+            },
+            success: function (html) {
+                self.before(html);
+                var count = Number(self.data('countermorephoto'));
+                count = count ? count : 0;
+                count++;
+                self.data('countermorephoto', count);
+            }
+        });
+    });
 </script>
 
 <?php echo $footer; ?>
