@@ -746,7 +746,7 @@
                                      */
                                     $data['optionId'] = $product_option['product_option_id'];
 //                                    $data['optionValueId'] = $product_option_value['product_option_value_id'];
-                                    $data['optionValueId'] = $product_option_value['option_value_id'];
+                                    $data['optionValueId'] = $product_option_value['product_option_value_id'];
                                     $data['noImage'] = $noImage;
                                     $data['placeholder'] = $placeholder;
                                     $data['urlAjaxImgOptions'] = $urlAjaxImgOptions;

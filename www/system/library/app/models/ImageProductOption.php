@@ -28,7 +28,13 @@ class ImageProductOption extends AppModel {
         'sort' => 0,
     ];
 
-    public static function findForProduct($productId,$optionId = null,$optionValueId = null) {
+    /**
+     * @param $productId
+     * @param null $optionId
+     * @param null $optionValueId
+     * @return ImageProductOption[]
+     */
+    public static function findForProduct($productId, $optionId = null, $optionValueId = null) {
         $params = [
             ':product_id' => $productId,
         ];

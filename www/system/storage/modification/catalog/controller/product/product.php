@@ -1071,12 +1071,11 @@ class ControllerProductProduct extends Controller {
         $this->data['modern_name_sticker_product_top'] = $this->config->get('modern_name_sticker_product_top');
         $this->data['language_id'] = $this->config->get('config_language_id');
 
-        $imgOption = ImageProductOption::findForProduct($product_id, $optionId, $optionValueId);
-        if (count($imgOption) == 0) {
+        $imgOptions = ImageProductOption::findForProduct($product_id, $optionId, $optionValueId);
+        if (count($imgOptions) == 0) {
             $this->fillImagesProduct($product_info);
         } else {
-            $widthPopup = $this->config->get($this->config->get('config_theme') . '_image_popup_width');
-            $heightPopup = $this->config->get($this->config->get('config_theme') . '_image_popup_height');
+            $this->fillImagesOptions($imgOptions);
         }
 
         echo $this->load->view('product/product_images', $this->data);
@@ -1111,5 +1110,35 @@ class ControllerProductProduct extends Controller {
             );
         }
     }
-	
+
+    /**
+     * @param ImageProductOption[] $imgOptions
+     */
+    protected function fillImagesOptions($imgOptions) {
+        $widthPopup = $this->config->get($this->config->get('config_theme') . '_image_popup_width');
+        $heightPopup = $this->config->get($this->config->get('config_theme') . '_image_popup_height');
+
+        $widthThumb = $this->config->get($this->config->get('config_theme') . '_image_thumb_width');
+        $heightThumb = $this->config->get($this->config->get('config_theme') . '_image_thumb_height');
+
+        $widthAdd = $this->config->get($this->config->get('config_theme') . '_image_additional_width');
+        $heightAdd = $this->config->get($this->config->get('config_theme') . '_image_additional_height');
+
+        //main image
+        $this->data['popup'] = $imgOptions[0]->getResize($widthPopup,$heightPopup);
+        $this->data['thumb'] = $imgOptions[0]->getResize($widthThumb,$heightThumb);
+
+        //additional
+        $this->data['images'] = [];
+        foreach ($imgOptions as $key=>$item){
+            if ($key == 0) {
+                continue;
+            }
+            $this->data['images'][] = [
+                'popup' => $item->getResize($widthPopup,$heightPopup),
+                'thumb2' => $item->getResize($widthThumb,$heightThumb),
+                'thumb' => $item->getResize($widthAdd,$heightAdd)
+            ];
+        }
+    }
 }
