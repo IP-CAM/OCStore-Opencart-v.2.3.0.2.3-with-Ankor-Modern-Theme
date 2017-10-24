@@ -573,6 +573,10 @@ class ControllerProductProduct extends Controller {
 
 			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
 				$product_option_value_data = array();
+                $totalImages = ImageProductOption::totalCount([
+                    'product_id' => $product_id,
+                    'option_id' => $option['product_option_id']
+                ]);
 
 				foreach ($option['product_option_value'] as $option_value) {
 					if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
@@ -590,7 +594,7 @@ class ControllerProductProduct extends Controller {
 							'product_option_value_id' => $option_value['product_option_value_id'],
 							'option_value_id'         => $option_value['option_value_id'],
 							'name'                    => $option_value['name'],
-							
+							'changeImage' => (int)($totalImages > 0),
                      'image'                  => $option_value['image'] ? $this->model_tool_image->resize($option_value['image'], $this->config->get('modern_product_optionimg_width'), $this->config->get('modern_product_optionimg_height')) : '',
       
 
@@ -1070,6 +1074,12 @@ class ControllerProductProduct extends Controller {
         $this->data['rating'] = false;
         $this->data['modern_name_sticker_product_top'] = $this->config->get('modern_name_sticker_product_top');
         $this->data['language_id'] = $this->config->get('config_language_id');
+
+        if ($product_info['meta_h1']) {
+            $this->data['heading_title'] = $product_info['meta_h1'];
+        } else {
+            $this->data['heading_title'] = $product_info['name'];
+        }
 
         $imgOptions = ImageProductOption::findForProduct($product_id, $optionId, $optionValueId);
         if (count($imgOptions) == 0) {

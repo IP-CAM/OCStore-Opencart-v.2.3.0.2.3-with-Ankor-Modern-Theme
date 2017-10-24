@@ -963,9 +963,21 @@ function recalculateprice()
 }
 
 $(document).ready(function() {
+	var lastCheckedOption;
 	var productId = <?=$product_id?>;
-    $('input[type="checkbox"]').bind('change', function() { recalculateprice(); changeOptionProduct(this,productId);});
-    $('input[type="radio"]').bind('change', function() { recalculateprice();  changeOptionProduct(this, productId);});
+    $('input[type="checkbox"]').bind('change', function(e) {
+    	recalculateprice();
+    });
+    $('input[type="radio"]').bind('change', function(e) {
+		if (changeOptionProductInProgress) {
+			this.checked = false;
+			lastCheckedOption.checked = true;
+			lastCheckedOption.checked = true;
+			return false;
+		}
+		lastCheckedOption = this;
+    	recalculateprice();  changeOptionProduct(this, productId);
+    });
     $('select').bind('change', function() { recalculateprice(); });
     $quantity = $('input[name="quantity"]');
     $quantity.data('val', $quantity.val());

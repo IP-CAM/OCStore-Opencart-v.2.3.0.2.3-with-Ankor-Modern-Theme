@@ -78,7 +78,18 @@ abstract class AppModel{
         }
     }
 
-    public static function totalCount(){
+    public static function totalCount($params = []){
+        if (count($params) > 0) {
+            $sql = 'WHERE ';
+            $paramsTotal = [];
+            $paramsSql = [];
+            foreach ($params as $key => $value) {
+                $paramsTotal[':' . $key] = $value;
+                $paramsSql[] = ':' . $key . '=' . $key;
+            }
+            $sql .= implode(' AND ',$paramsSql);
+            return \R::count(static::$tableName,$sql,$paramsTotal);
+        }
         return \R::count(static::$tableName);
     }
 

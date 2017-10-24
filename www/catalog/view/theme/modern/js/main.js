@@ -39,7 +39,6 @@ var Callback = function () {
             dataType: 'json',
             success: function(data) {
                 $("div.loader").remove();
-                console.log(data);
                 if (data['errors']) {
                     self.showErrors(data['errors'])
                 }
@@ -161,9 +160,10 @@ toggleDocumentBlock = function (e) {
 
 var changeOptionProductInProgress = false;
 changeOptionProduct = function (elem, product_id) {
-    console.log('test');
-    console.log($(elem));
     var $elem = $(elem);
+    if ($elem.data('change-image') != '1') {
+        return;
+    }
 
     changeOptionProductInProgress = true;
     $.ajax({
@@ -178,7 +178,7 @@ changeOptionProduct = function (elem, product_id) {
         changeOptionProductInProgress = false;
         $('#blockImages').html(data);
         startImagesProduct();
-        console.log(data);
+
     }).fail(function(jqXHR, textStatus, errorThrown) {
         changeOptionProductInProgress = false;
         if (jqXHR.responseJSON) {
@@ -190,7 +190,6 @@ changeOptionProduct = function (elem, product_id) {
             console.log('failed with unknown data');
         }
     }).always(function(dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
-        changeOptionProductInProgress = false;
-        console.log('always');
+
     });
 };

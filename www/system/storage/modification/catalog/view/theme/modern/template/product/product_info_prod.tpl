@@ -137,6 +137,7 @@
                                             <input type="radio" class="options_none"
                                                    name="option[<?php echo $option['product_option_id']; ?>]"
                                                    data-option-id="<?php echo $option['product_option_id']; ?>"
+                                                   data-change-image="<?php echo $option_value['changeImage']; ?>"
                                                    value="<?php echo $option_value['product_option_value_id']; ?>"
                                                    data-points="<?php echo (isset($option_value['points_value']) ? $option_value['points_value'] : 0); ?>"
                                                    data-prefix="<?php echo $option_value['price_prefix']; ?>"

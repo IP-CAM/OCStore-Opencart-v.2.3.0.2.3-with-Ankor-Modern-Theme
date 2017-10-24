@@ -41,7 +41,11 @@ class ImageProductOption extends AppModel {
         if ($optionId === null && $optionValueId === null) {
             $sql = 'WHERE product_id=:product_id ORDER BY sort';
         }else {
-            $sql = 'WHERE product_id=:product_id AND option_id = :optionId AND option_value_id = :optionValueId ORDER BY sort';
+            $sql = 'WHERE product_id=:product_id AND option_id = :optionId ';
+            if ($optionValueId !== null) {
+                $sql .= 'AND option_value_id = :optionValueId ';
+            }
+            $sql .= 'ORDER BY sort';
             $params[':optionId'] = $optionId;
             $params[':optionValueId'] = $optionValueId;
         }
