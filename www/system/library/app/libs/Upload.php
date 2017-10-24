@@ -1,6 +1,8 @@
 <?php
 
 namespace app\libs;
+use Exception;
+
 /**
  * Simple PHP upload class
  *

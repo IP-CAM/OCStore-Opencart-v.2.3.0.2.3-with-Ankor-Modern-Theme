@@ -39,7 +39,6 @@ var Callback = function () {
             dataType: 'json',
             success: function(data) {
                 $("div.loader").remove();
-                console.log(data);
                 if (data['errors']) {
                     self.showErrors(data['errors'])
                 }
@@ -152,10 +151,45 @@ var CalculationOrder = function () {
 
     this.constructor();
 };
-
 toggleDocumentBlock = function (e) {
     e.preventDefault();
     $(this).css("display", "block");
     var block = $(this).siblings('.dropdownDocs ');
    block.toggleClass('mobile');
+};
+
+var changeOptionProductInProgress = false;
+changeOptionProduct = function (elem, product_id) {
+    var $elem = $(elem);
+    if ($elem.data('change-image') != '1') {
+        return;
+    }
+
+    changeOptionProductInProgress = true;
+    $.ajax({
+        url: 'index.php?route=product/product/ajaxOptionImages',
+        method: 'POST',
+        data: {
+            productId : product_id,
+            optionId : $elem.data('option-id'),
+            optionValueId : $elem.attr('value')
+        }
+    }).done(function(data, textStatus, jqXHR) {
+        changeOptionProductInProgress = false;
+        $('#blockImages').html(data);
+        startImagesProduct();
+
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        changeOptionProductInProgress = false;
+        if (jqXHR.responseJSON) {
+            // jqXHR.reseponseJSON is an object
+            console.log('failed with json data');
+        }
+        else {
+            // jqXHR.responseText is not JSON data
+            console.log('failed with unknown data');
+        }
+    }).always(function(dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+
+    });
 };

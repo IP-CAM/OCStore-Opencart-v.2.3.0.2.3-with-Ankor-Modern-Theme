@@ -101,6 +101,8 @@
      * @property Response $response
      * @property Config config
      * @property \Cart\Customer customer
+     * @property Session session
+     * @property Cache cache
 	**/
 abstract class Controller {
 	protected $registry;
