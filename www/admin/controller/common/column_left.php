@@ -189,6 +189,12 @@ class ControllerCommonColumnLeft extends Controller {
                 'children' => array()
             );
 
+            $artList[] = array(
+                'name'	   => 'Загрузить товары из Excel',
+                'href'     => $this->url->link('catalog/load_from_excel', 'token=' . $this->session->data['token'], true),
+                'children' => array()
+            );
+
             $catalog[] = array(
                 'name'	   => 'Доработки',
                 'href'     => '',
