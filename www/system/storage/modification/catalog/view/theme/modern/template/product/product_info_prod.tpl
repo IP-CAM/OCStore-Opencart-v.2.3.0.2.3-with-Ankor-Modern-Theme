@@ -134,7 +134,13 @@
                                                 <?php echo ($option_value['price_prefix'] == '+' || $option_value['price_prefix'] == '-' ? $option_value['price_prefix'] : '') . $option_value['price']; ?>
                                             <?php } ?>
                                         <?php } else { ?>
-                                            <input type="radio" class="options_none" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" data-points="<?php echo (isset($option_value['points_value']) ? $option_value['points_value'] : 0); ?>" data-prefix="<?php echo $option_value['price_prefix']; ?>" data-price="<?php echo $option_value['price_value']; ?>" />
+                                            <input type="radio" class="options_none"
+                                                   name="option[<?php echo $option['product_option_id']; ?>]"
+                                                   data-option-id="<?php echo $option['product_option_id']; ?>"
+                                                   value="<?php echo $option_value['product_option_value_id']; ?>"
+                                                   data-points="<?php echo (isset($option_value['points_value']) ? $option_value['points_value'] : 0); ?>"
+                                                   data-prefix="<?php echo $option_value['price_prefix']; ?>"
+                                                   data-price="<?php echo $option_value['price_value']; ?>" />
                                             <span class="im_option"><?php echo $option_value['name']; ?></span>
                                             <?php if ($option_value['price']) { ?>
                                                 <?php echo ($option_value['price_prefix'] == '+' || $option_value['price_prefix'] == '-' ? $option_value['price_prefix'] : '') . $option_value['price']; ?>

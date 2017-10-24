@@ -15,6 +15,11 @@ namespace app\models;
 class ImageProductOption extends AppModel {
 
     protected static $tableName = 'artproductoptionimages';
+    /**
+     * @var \ModelToolImage
+     */
+    protected static $modelImageTool;
+    public $thumbs = [];
     protected $attributes = [
         'product_id' => 0,
         'option_id' => 0,
@@ -23,18 +28,18 @@ class ImageProductOption extends AppModel {
         'sort' => 0,
     ];
 
-
-    /**
-     * @param $productId
-     * @return ImageProductOption[]
-     */
-    public static function findForProduct($productId) {
-        $sql = 'WHERE product_id=:product_id ORDER BY sort';
+    public static function findForProduct($productId,$optionId = null,$optionValueId = null) {
         $params = [
             ':product_id' => $productId,
         ];
-        $results = self::find($sql, $params);
-        return $results;
+        if ($optionId === null && $optionValueId === null) {
+            $sql = 'WHERE product_id=:product_id ORDER BY sort';
+        }else {
+            $sql = 'WHERE product_id=:product_id AND option_id = :optionId AND option_value_id = :optionValueId ORDER BY sort';
+            $params[':optionId'] = $optionId;
+            $params[':optionValueId'] = $optionValueId;
+        }
+        return self::find($sql, $params);
     }
 
     /**
@@ -45,6 +50,32 @@ class ImageProductOption extends AppModel {
         foreach ($items as $item) {
             self::delete($item->id);
         }
+    }
+
+    public static function setModelImageTool(\Controller $controller) {
+        if (self::$modelImageTool == null) {
+            $controller->load->model('tool/image');
+            self::$modelImageTool = $controller->model_tool_image;
+        }
+    }
+
+    public function setResize($width, $height) {
+        if (self::$modelImageTool == null) {
+            return;
+        }
+        $this->thumbs[$width . '_' . $height] = self::$modelImageTool->resize($this->src,$width,$height);
+    }
+
+    public function getResize($width, $height) {
+        if (self::$modelImageTool == null) {
+            return null;
+        }
+        $key = $width . '_' . $height;
+        if (isset($this->thumbs[$key])) {
+            return $this->thumbs[$key];
+        }
+        $this->setResize($width, $height);
+        return $this->thumbs[$key];
     }
 
 }

@@ -60,62 +60,12 @@ if ($modern_top_links7 ) { ?>
 	<?php } else { ?>
 	<?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12 thumbnails-fix'; ?>
 	<?php } ?>
-<div class="<?php echo $class; ?>" >
-<?php if ((!empty($column_left) ||$modern_product_show_infoblock ==1) && ($special && $special_date_end > $special_date_start)&&($modern_product_timer !=1)) { ?>
-	<div class="special-timer-all">
-	<div class = "text-time"><?php echo $text_end_stock; ?></div>
-	<div class = "special-timere-zone">
-	<div id = "time_out_pr"></div>
-	</div>
-	</div>
-	<?php } ?>
-<div class="prmain">
-<div class="positionsticker">
-<!-- special -->
-<?php if ($modern_sticker_sale_product_auto !=1 && $special) { ?>
-	<div class="stickers-special"><span class="diamont_st">-<?php echo $saving_product; ?>%</span></div>
-	<?php } ?>
-<!-- special END -->
-<!-- new -->
-<?php
-$startDate1 = strtotime(mb_substr($dateadded, 0, 10));
-$endDate2 = strtotime(date("Y-m-d"));
-$days = ceil(($endDate2 / 86400)) - ceil(($startDate1 / 86400));
-?>
-<?php if($modern_sticker_new_product_auto !=1 && $days < $modern_sticker_product_new_day || $modern_sticker_new_product_auto !=0 && $stickers == 1) { ?>
-	<div class="stickers-new"><span class="diamont_st"><?php echo $modern_name_sticker_product_new[$language_id]; ?></span></div>
-	<?php } ?>
-<!-- new END -->
-<!-- top -->
-<?php if ($modern_sticker_top_product_auto !=1 && $modern_sticker_product_top_ratinr == 1 && $rating == $modern_sticker_product_top_rating || $modern_sticker_top_product_auto !=1 && $modern_sticker_product_top_ratinr == 2 && $viewed >  $modern_sticker_product_top_viewed || $modern_sticker_top_product_auto !=0 && $stickers == 2 ) { ?>
-	<div class="stickers-top"><span class="diamont_st"><?php echo $modern_name_sticker_product_top[$language_id]; ?></span></div>
-	<?php } ?>
-<!-- top END -->
-</div>
-<?php if ($thumb || $images) { ?>
-	<ul class="thumbnails">
-	<?php if ($thumb) { ?>
-		<li><a class="thumbnail imglink" style="position: relative;" itemprop="image" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>">
-		<img id="main-image" style="position: relative;" src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" data-zoom-image="<?php echo $popup; ?>" /></a></li>
-		<?php } ?>
-	</ul>
-	</div>
-	<div class="rowimg">
-	<div id="image-additional2">
-	<?php if ($images) { ?>
-		<div id="additional" class="owl-carousel">
-		<div class="image-additional"><a class="thumbnail" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" data-image="<?php echo $thumb; ?>" data-zoom-image="<?php echo $popup; ?>">
-		<img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" ></a></div>
-		<?php foreach ($images as $image) { ?>
-			<div class="image-additional"><a class="thumbnail imglink" href="<?php echo $image['popup']; ?>" data-image="<?php echo $image['thumb2']; ?>" data-zoom-image="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>" >
-			<img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></div>
-			<?php } ?>
+	<div class="<?php echo $class; ?>" >
+		<div id="blockImages">
+			<?=$imageView?>
 		</div>
-		<?php } ?>
+
 	</div>
-	</div>
-	<?php } ?>
-</div>
 	<?php if (($column_left || $column_right) && ($modern_top_links9)) { ?>
 		<?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12 prod-btn-align'; ?>
 	<?php } else { ?>
@@ -466,21 +416,7 @@ close: function() {
 	});
 	//--></script>
 	<?php } ?>
-<script type="text/javascript"><!--
-$(document).ready(function() {
-$('#additional').owlCarousel({
-items: 4,
-itemsMobile: 	[479,4],
-		itemsTablet :	[768,4],
-itemsDesktopSmall:	[979,4],
-itemsDesktop:	[1199,3],
-autoPlay: 3000, //Set AutoPlay to 3 seconds,
-pagination: false,
-navigation: true,
-navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>']
-	});
-});
-//--></script>
+
 <!-- rating -->
 <link href="catalog/view/theme/modern/js/bootstrap-rating.css" rel="stylesheet" type="text/css" />
 <script src="catalog/view/theme/modern/js/bootstrap-rating.js" type="text/javascript"></script>
@@ -683,55 +619,80 @@ success: function(json) {
 <!-- elevateZoom/pop up img -->
 <script src="catalog/view/theme/modern/js/elevatezoom/jquery.elevatezoom.js" type="text/javascript"></script>
 <script type="text/javascript"><!--
-jQuery(document).ready(function () {
-	$('#image-additional2 a').on('click', function (e) {
-		e.preventDefault();
-		var imagePath = $(this).data('zoomImage');
-		$('#main-image')
-		.data('zoomImage', imagePath)
-	});
-	$("#main-image").bind("click", function(e) {
-		var $this = $(this);
-		var items = [{
-src: $this.data('zoomImage') || this.src
-		}];
-		$('.imglink').each(function () {
-			if (items[0].src != this.href) {
-				items.push({
-src: this.href
-				});
-			}
+	function startImagesProduct() {
+
+		$('#image-additional2 a').on('click', function (e) {
+			e.preventDefault();
+			var imagePath = $(this).data('zoomImage');
+			$('#main-image')
+				.data('zoomImage', imagePath)
 		});
-		$.magnificPopup.open({
-items: items,
-gallery: {
-enabled: true
+		$("#main-image").bind("click", function (e) {
+			var $this = $(this);
+			var items = [{
+				src: $this.data('zoomImage') || this.src
+			}];
+			$('.imglink').each(function () {
+				if (items[0].src != this.href) {
+					items.push({
+						src: this.href
+					});
+				}
+			});
+			$.magnificPopup.open({
+				items: items,
+				gallery: {
+					enabled: true
+				},
+				type: 'image',
+				mainClass: 'mfp-fade'
+			});
+			$(".mfp-content").prepend("<div class='image_title'><?php echo $heading_title; ?></div>");
+			$(".mfp-bottom-bar").prepend("<div class='hidden-xs'><?php if (!$special) { ?><div class='image_price2'><span class='priceproduct-new'><?php echo $price; ?></span></div><?php } else { ?><div class='image_price'><span class='priceproduct-new'><?php echo $special; ?></span>&nbsp;&nbsp;<span class='priceproduct-old'><?php echo $price; ?></span></div><?php } ?> <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?><button type='button' class='btn-instock' onclick=\"instock.add('<?php echo $product_id; ?>');\" data-product-id='<?php echo $product_id; ?>'><?php echo $button_instock; ?></button><?php } else { ?><button type='button' id='button-cart' data-loading-text='<?php echo $text_loading; ?>' class='btn-cart'><i class='fa fa-shopping-cart'></i> <?php echo $button_cart; ?></button><?php } ?></div>");
+			e.preventDefault();
+		});
+		//popup
+		$('.imgpopcat').magnificPopup({
+			type: 'image',
+			gallery: {
+				enabled: false
 			},
-type: 'image',
-mainClass: 'mfp-fade'
 		});
-		$(".mfp-content").prepend("<div class='image_title'><?php echo $heading_title; ?></div>");
-		$(".mfp-bottom-bar").prepend("<div class='hidden-xs'><?php if (!$special) { ?><div class='image_price2'><span class='priceproduct-new'><?php echo $price; ?></span></div><?php } else { ?><div class='image_price'><span class='priceproduct-new'><?php echo $special; ?></span>&nbsp;&nbsp;<span class='priceproduct-old'><?php echo $price; ?></span></div><?php } ?> <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?><button type='button' class='btn-instock' onclick=\"instock.add('<?php echo $product_id; ?>');\" data-product-id='<?php echo $product_id; ?>'><?php echo $button_instock; ?></button><?php } else { ?><button type='button' id='button-cart' data-loading-text='<?php echo $text_loading; ?>' class='btn-cart'><i class='fa fa-shopping-cart'></i> <?php echo $button_cart; ?></button><?php } ?></div>");
-		e.preventDefault();
-	});
+		//zoom
+		<?php if ($modern_elevatezoom == '0') { ?>
+		$("#main-image").elevateZoom({gallery:'image-additional2',  cursor: "crosshair" , galleryActiveClass: 'active' });
+		<?php } elseif ($modern_elevatezoom == '1') { ?>
+		$("#main-image").elevateZoom({gallery:'image-additional2', tint:false, tintColour:'#F90', tintOpacity:0.5, galleryActiveClass: 'active' });
+		<?php } elseif ($modern_elevatezoom == '2') { ?>
+		$("#main-image").elevateZoom({gallery:'image-additional2', zoomType :"inner",  cursor:"crosshair", galleryActiveClass: 'active' });
+		<?php } elseif ($modern_elevatezoom == '3') { ?>
+		$("#main-image").elevateZoom({gallery:'image-additional2', zoomType: "lens", lensShape: "round", lensSize: 200, galleryActiveClass: 'active'});
+		<?php } elseif ($modern_elevatezoom == '4') { ?>
+		$("#main-image").elevateZoom({gallery:'image-additional2', constrainSize:200, zoomType: "lens", containLensZoom: true, cursor: 'pointer', galleryActiveClass: "active"});
+		<?php } ?>
+		$("#main-image").on("click", function(e) {
+			var ez = $('#main-image').data('elevateZoom');
+			return false;
+		});
+		//carusel
+		$('#additional').owlCarousel({
+			items: 4,
+			itemsMobile: 	[479,4],
+			itemsTablet :	[768,4],
+			itemsDesktopSmall:	[979,4],
+			itemsDesktop:	[1199,3],
+			autoPlay: 3000, //Set AutoPlay to 3 seconds,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>']
+		});
+	}
+jQuery(document).ready(function () {
+	startImagesProduct();
 });
 //--></script>
 <script type="text/javascript"><!--
-<?php if ($modern_elevatezoom == '0') { ?>
-	$("#main-image").elevateZoom({gallery:'image-additional2',  cursor: "crosshair" , galleryActiveClass: 'active' });
-	<?php } elseif ($modern_elevatezoom == '1') { ?>
-	$("#main-image").elevateZoom({gallery:'image-additional2', tint:false, tintColour:'#F90', tintOpacity:0.5, galleryActiveClass: 'active' });
-	<?php } elseif ($modern_elevatezoom == '2') { ?>
-	$("#main-image").elevateZoom({gallery:'image-additional2', zoomType :"inner",  cursor:"crosshair", galleryActiveClass: 'active' });
-	<?php } elseif ($modern_elevatezoom == '3') { ?>
-	$("#main-image").elevateZoom({gallery:'image-additional2', zoomType: "lens", lensShape: "round", lensSize: 200, galleryActiveClass: 'active'});
-	<?php } elseif ($modern_elevatezoom == '4') { ?>
-	$("#main-image").elevateZoom({gallery:'image-additional2', constrainSize:200, zoomType: "lens", containLensZoom: true, cursor: 'pointer', galleryActiveClass: "active"});
-	<?php } ?>
-$("#main-image").on("click", function(e) {
-	var ez = $('#main-image').data('elevateZoom');
-	return false;
-});
+
 //--></script>
 <!--review stars -->
 <script type="text/javascript"><!--
@@ -748,12 +709,7 @@ $(".specification_profile").click(function (){
 //--></script>
 <!--pop up options img -->
 <script type="text/javascript"><!--
-$('.imgpopcat').magnificPopup({
-type: 'image',
-gallery: {
-enabled: false
-	},
-});
+
 //--></script>
 <!-- + / - -->
 <script type="text/javascript"><!--
@@ -1005,9 +961,11 @@ function recalculateprice()
       animateSpecialPrice(special);
     <?php } ?>
 }
+
 $(document).ready(function() {
-    $('input[type="checkbox"]').bind('change', function() { recalculateprice(); });
-    $('input[type="radio"]').bind('change', function() { recalculateprice(); });
+	var productId = <?=$product_id?>;
+    $('input[type="checkbox"]').bind('change', function() { recalculateprice(); changeOptionProduct(this,productId);});
+    $('input[type="radio"]').bind('change', function() { recalculateprice();  changeOptionProduct(this, productId);});
     $('select').bind('change', function() { recalculateprice(); });
     $quantity = $('input[name="quantity"]');
     $quantity.data('val', $quantity.val());
@@ -1020,6 +978,7 @@ $(document).ready(function() {
     })();
     recalculateprice();
 });
+
 //--></script>
 
 <?php echo $footer; ?>

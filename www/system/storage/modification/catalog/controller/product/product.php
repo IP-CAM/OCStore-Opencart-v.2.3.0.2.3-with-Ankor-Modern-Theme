@@ -1,8 +1,10 @@
 <?php
 use app\core\App;
+use app\models\ImageProductOption;
 
 class ControllerProductProduct extends Controller {
 	private $error = array();
+    protected $data = [];
 
 	public function index() {
 		$this->load->language('product/product');
@@ -348,7 +350,7 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$data['stock'] = $this->language->get('text_instock');
 			}
-
+            ImageProductOption::setModelImageTool($this);
 			$this->load->model('tool/image');
 
 			$data['language_id'] = $this->config->get('config_language_id');
@@ -744,7 +746,6 @@ class ControllerProductProduct extends Controller {
                 $data['products'] = false;
                 $data['modern_top_links7'] = false;
             }
-
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -787,8 +788,8 @@ class ControllerProductProduct extends Controller {
 					} else {
 						$data['ard_quckview'] = '';
 					}
-					
 
+            $data['imageView'] =  $this->load->view('product/product_images', $data);
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
@@ -1047,4 +1048,68 @@ class ControllerProductProduct extends Controller {
         return $data;
 	}
 
+	public function ajaxOptionImages() {
+
+        $product_id = $this->request->post['productId'];
+        $optionId = (int)$this->request->post['optionId'];
+        $optionValueId = (int)$this->request->post['optionValueId'];
+
+        $this->load->model('catalog/product');
+        ImageProductOption::setModelImageTool($this);
+
+        $product_info = $this->model_catalog_product->getProduct($product_id);
+
+        $this->data['modern_product_show_infoblock'] = $this->config->get('modern_product_show_infoblock');
+        $this->data['modern_sticker_sale_product_auto'] = $this->config->get('modern_sticker_sale_product_auto');
+        $this->data['modern_sticker_new_product_auto'] = $this->config->get('modern_sticker_new_product_auto');
+        $this->data['modern_sticker_product_top_ratinr'] = $this->config->get('modern_sticker_product_top_ratinr');
+        $this->data['dateadded'] = $product_info['date_added'];
+        $this->data['stickers'] = $product_info['stickers'];
+        $this->data['modern_sticker_top_product_auto'] = $this->config->get('modern_sticker_top_product_auto');
+        $this->data['modern_sticker_product_top_rating'] = $this->config->get('modern_sticker_product_top_rating');
+        $this->data['rating'] = false;
+        $this->data['modern_name_sticker_product_top'] = $this->config->get('modern_name_sticker_product_top');
+        $this->data['language_id'] = $this->config->get('config_language_id');
+
+        $imgOption = ImageProductOption::findForProduct($product_id, $optionId, $optionValueId);
+        if (count($imgOption) == 0) {
+            $this->fillImagesProduct($product_info);
+        } else {
+            $widthPopup = $this->config->get($this->config->get('config_theme') . '_image_popup_width');
+            $heightPopup = $this->config->get($this->config->get('config_theme') . '_image_popup_height');
+        }
+
+        echo $this->load->view('product/product_images', $this->data);
+        die();
+    }
+
+    protected function fillImagesProduct($product_info) {
+        if ($product_info['image']) {
+            $this->data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height'));
+        } else {
+            $this->data['popup'] = '';
+        }
+
+        if ($product_info['image']) {
+            $this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
+            $this->document->setOgImage($this->data['thumb']);
+        } else {
+            $this->data['thumb'] = '';
+        }
+
+        $this->data['images'] = array();
+
+        $results = $this->model_catalog_product->getProductImages($product_info['product_id']);
+
+        foreach ($results as $result) {
+            $this->data['images'][] = array(
+                'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
+
+                'thumb2' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height')),
+
+                'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
+            );
+        }
+    }
+	
 }
