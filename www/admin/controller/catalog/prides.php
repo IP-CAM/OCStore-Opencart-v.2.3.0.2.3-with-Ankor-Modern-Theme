@@ -1,5 +1,6 @@
 <?php
 use app\core\App;
+use app\models\SeoUrl;
 
 /**
  * Class ControllerCatalogPrides
@@ -7,6 +8,7 @@ use app\core\App;
  */
 class ControllerCatalogPrides extends Controller {
 	private $error = array();
+    protected $typeSeoUrl = 'our_pride';
 
 	public function index() {
 
@@ -38,7 +40,8 @@ class ControllerCatalogPrides extends Controller {
 		$this->load->model('catalog/prides');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_prides->add($this->request->post);
+			$id = $this->model_catalog_prides->add($this->request->post);
+            $this->artSaveKeywordSeoUrl($id);
 			$this->session->data['success'] = $this->language->get('text_success');
 			$url = '';
 			if (isset($this->request->get['sort'])) {
@@ -404,8 +407,7 @@ class ControllerCatalogPrides extends Controller {
             }
         }
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
-	
+        $data['keyword'] = $this->artGetKeywordSeoUrl();
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

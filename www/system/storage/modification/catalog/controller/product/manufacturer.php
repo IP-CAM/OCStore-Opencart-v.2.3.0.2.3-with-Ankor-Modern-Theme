@@ -75,6 +75,8 @@ class ControllerProductManufacturer extends Controller {
 
 		$data['continue'] = $this->url->link('common/home');
 
+        $this->load->controller('extension/module/art_meta',['route'=>$this->request->get['route']]);
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

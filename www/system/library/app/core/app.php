@@ -14,11 +14,16 @@ class App{
      * @var Config
      */
     public static $config;
+    /**
+     * @var \DB
+     */
+    public static $db;
 
     public static function Init() {
         App::$ds = new DataStore();
         App::$debug = new Debug();
         App::$config = new Config();
     }
+
 
 }

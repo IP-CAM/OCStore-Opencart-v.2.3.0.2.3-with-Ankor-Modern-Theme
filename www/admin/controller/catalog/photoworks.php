@@ -6,6 +6,7 @@ use app\models\Photowork;
 class ControllerCatalogPhotoworks extends Controller {
     private $data;
 	private $error = array();
+    protected $typeSeoUrl = 'photowork';
 
 	public function index() {
 		$this->load->language('catalog/photoworks');
@@ -30,6 +31,7 @@ class ControllerCatalogPhotoworks extends Controller {
             $item = new Photowork();
             $item->load($this->request->post);
             $item->save();
+            $this->artSaveKeywordSeoUrl($item->id);
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->redirectToEdit();
 		}
@@ -46,6 +48,7 @@ class ControllerCatalogPhotoworks extends Controller {
             $item = Photowork::findOneById($this->request->get['id']);
             $item->load($this->request->post);
             $item->save();
+            $this->artSaveKeywordSeoUrl($item->id);
 			$this->session->data['success'] = $this->language->get('text_success');
             $this->redirectToEdit();
 		}
@@ -192,6 +195,7 @@ class ControllerCatalogPhotoworks extends Controller {
         }
 
         $data['item'] = $item;
+        $data['keyword'] = $this->artGetKeywordSeoUrl();
 
         $data['heading_title'] = $this->language->get('heading_title');
 

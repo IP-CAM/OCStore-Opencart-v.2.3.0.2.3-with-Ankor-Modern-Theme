@@ -80,7 +80,12 @@ $collectTumbler = ['0' => 'Отключено','1' => 'Включено'];
 										/>
 									</div>
 								</div>
-
+								<div class="form-group">
+									<?=Form::label('Seo Url','keyword',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-10">
+										<?=Form::text('keyword',$keyword,['class'=>'form-control'])?>
+									</div>
+								</div>
 
 								<div class="form-group required">
 									<label class="col-sm-2 control-label" for="input-description">

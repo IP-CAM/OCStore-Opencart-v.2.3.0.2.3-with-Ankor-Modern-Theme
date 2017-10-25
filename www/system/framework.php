@@ -41,6 +41,7 @@ $registry->set('response', $response);
 // Database
 if ($config->get('db_autostart')) {
 	$registry->set('db', new DB($config->get('db_type'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+    App::$db = $registry->get('db');
     //redbean
     require_once (DIR . '/system/library/app/libs/rb.php');
     R::setup( 'mysql:host=' . $config->get('db_hostname') . ';dbname=' . $config->get('db_database'),

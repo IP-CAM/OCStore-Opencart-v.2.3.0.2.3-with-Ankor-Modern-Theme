@@ -1,6 +1,10 @@
 <?php
 class ControllerStartupSeoPro extends Controller {
 	private $cache_data = null;
+	private $rewritePostfix = null;
+	private $rewriteData = [];
+	private $rewriteOrigData = [];
+	private $rewriteQueries = [];
 
 	public function __construct($registry) {
 		parent::__construct($registry);
@@ -77,6 +81,9 @@ class ControllerStartupSeoPro extends Controller {
 				$this->request->get['route'] = 'error/not_found';
 			}
 
+			if ($this->artUrls()) {
+
+			} else
 
 				   if (isset($this->request->get['aridius_news_id2'])) {			
 				   $this->request->get['route'] = 'information/aridius_news2';
@@ -124,6 +131,7 @@ class ControllerStartupSeoPro extends Controller {
 		$component = parse_url(str_replace('&amp;', '&', $link));
 
 		$data = array();
+		$this->rewriteData = &$data;
 		parse_str($component['query'], $data);
 
 		$route = $data['route'];
@@ -147,7 +155,6 @@ class ControllerStartupSeoPro extends Controller {
 				   $data['aridius_news_id'] = $tmp['aridius_news_id'];
 				   }
                    break;
-      
 			case 'product/product':
 				if (isset($data['product_id'])) {
 					$tmp = $data;
@@ -186,33 +193,47 @@ class ControllerStartupSeoPro extends Controller {
 			case 'information/information/agree':
 				return $link;
 				break;
-
 			default:
 				break;
 		}
+		$this->rewriteOrigData = $this->rewriteData;
+		if ($this->artSwitchRoute($route)){
+			if ($component['scheme'] == 'https') {
+				$link = $this->config->get('config_ssl');
+			} else {
+				$link = $this->config->get('config_url');
+			}
 
-		if ($component['scheme'] == 'https') {
-			$link = $this->config->get('config_ssl');
-		} else {
-			$link = $this->config->get('config_url');
-		}
+			$link .= 'index.php?route=' . $route;
 
-		$link .= 'index.php?route=' . $route;
+			if (count($data)) {
+				$link .= '&amp;' . urldecode(http_build_query($this->rewriteOrigData, '', '&amp;'));
+			}
+		}else {
+			if ($component['scheme'] == 'https') {
+				$link = $this->config->get('config_ssl');
+			} else {
+				$link = $this->config->get('config_url');
+			}
 
-		if (count($data)) {
-			$link .= '&amp;' . urldecode(http_build_query($data, '', '&amp;'));
+			$link .= 'index.php?route=' . $route;
+
+			if (count($data)) {
+				$link .= '&amp;' . urldecode(http_build_query($data, '', '&amp;'));
+			}
 		}
 
 		$queries = array();
+		$this->rewriteQueries = &$queries;
 		if(!in_array($route, array('product/search'))) {
 		foreach ($data as $key => $value) {
+
 				switch ($key) {
 
                    case 'aridius_news_id2':
       
 
                    case 'aridius_news_id':
-      
 					case 'product_id':
 					case 'manufacturer_id':
 					case 'category_id':
@@ -220,7 +241,7 @@ class ControllerStartupSeoPro extends Controller {
 					case 'order_id':
 						$queries[] = $key . '=' . $value;
 						unset($data[$key]);
-						$postfix = 1;
+						$this->rewritePostfix = 1;
 						break;
 
 					case 'path':
@@ -234,6 +255,7 @@ class ControllerStartupSeoPro extends Controller {
 					default:
 						break;
 				}
+				$this->artSwitchParamKey($key, $value);
 			}
 		}
 
@@ -269,7 +291,7 @@ class ControllerStartupSeoPro extends Controller {
 			$seo_url = $this->config->get('config_url') . $seo_url;
 		}
 
-		if (isset($postfix)) {
+		if ($this->rewritePostfix !== null) {
 			$seo_url .= trim($this->config->get('config_seo_url_postfix'));
 		} else {
 			$seo_url .= '/';
@@ -389,6 +411,55 @@ class ControllerStartupSeoPro extends Controller {
 			}
 
 		return urldecode(http_build_query(array_diff_key($this->request->get, array_flip($exclude))));
+	}
+
+	protected function 	artUrls() {
+		$res = false;
+
+		foreach ($this->getParamsSeoUrl() as $key => $item) {
+			if (isset($this->request->get[$key])) {
+				$this->request->get['route'] = $item;
+				$this->request->get['id'] = $this->request->get[$key];
+				unset($this->request->get[$key]);
+				$res = true;
+			}
+		}
+		return $res;
+	}
+
+	protected function artSwitchRoute($route) {
+		$res = false;
+		foreach ($this->getParamsSeoUrl() as $key => $item) {
+			if ($route == $item) {
+				if (isset($this->rewriteData['id'])) {
+					$tmp = $this->rewriteData;
+					$this->rewriteData = array();
+					$this->rewriteData[$key] = $tmp['id'];
+				}
+				$res = true;
+			}
+		}
+		return $res;
+	}
+
+	protected function artSwitchParamKey($key,$value) {
+		foreach ($this->getParamsSeoUrl() as $k => $item) {
+			if ($key == $k) {
+				$this->rewriteQueries[] = $key . '=' . $value;
+				unset($this->rewriteData[$key]);
+				$this->rewritePostfix = 1;
+			}
 		}
 	}
+
+	protected function getParamsSeoUrl() {
+		return [
+			'document_id' => 'information/documents/info',
+			'certificate_id' => 'information/certificates/info',
+			'our_pride_id' => 'information/prides/info',
+			'photowork_id' => 'information/photoworks/info',
+		];
+	}
+
+}
 ?>

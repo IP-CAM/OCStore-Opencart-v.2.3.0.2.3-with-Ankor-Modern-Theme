@@ -270,8 +270,7 @@ class ControllerInformationAridiusNews extends Controller {
 				);
 			}
 
-// RELATED aridius_news	end		
-
+// RELATED aridius_news	end
 			// Template
 			$data['aridius_news_show_date'] = $this->config->get('aridius_news_show_date');
 			$data['template'] = $this->config->get('config_template');
@@ -397,6 +396,8 @@ class ControllerInformationAridiusNews extends Controller {
 
 			$data['button_continue'] = $this->language->get('button_continue');
 			$data['continue'] = $this->url->link('common/home');
+
+                    $this->load->controller('extension/module/art_meta',['route'=>$this->request->get['route']]);
 
 			$data['aridius_news_show_date'] = $this->config->get('aridius_news_show_date');
 			$data['template'] = $this->config->get('config_template');
