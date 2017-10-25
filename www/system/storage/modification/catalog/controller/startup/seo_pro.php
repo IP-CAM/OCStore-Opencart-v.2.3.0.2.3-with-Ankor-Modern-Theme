@@ -1,6 +1,9 @@
 <?php
 class ControllerStartupSeoPro extends Controller {
 	private $cache_data = null;
+	private $rewritePostfix = null;
+	private $rewriteData = [];
+	private $rewriteQueries = [];
 
 	public function __construct($registry) {
 		parent::__construct($registry);
@@ -77,6 +80,9 @@ class ControllerStartupSeoPro extends Controller {
 				$this->request->get['route'] = 'error/not_found';
 			}
 
+			if ($this->artUrls()) {
+
+			} else
 
 				   if (isset($this->request->get['aridius_news_id2'])) {			
 				   $this->request->get['route'] = 'information/aridius_news2';
@@ -124,6 +130,7 @@ class ControllerStartupSeoPro extends Controller {
 		$component = parse_url(str_replace('&amp;', '&', $link));
 
 		$data = array();
+		$this->rewriteData = &$data;
 		parse_str($component['query'], $data);
 
 		$route = $data['route'];
@@ -147,7 +154,6 @@ class ControllerStartupSeoPro extends Controller {
 				   $data['aridius_news_id'] = $tmp['aridius_news_id'];
 				   }
                    break;
-      
 			case 'product/product':
 				if (isset($data['product_id'])) {
 					$tmp = $data;
@@ -191,6 +197,8 @@ class ControllerStartupSeoPro extends Controller {
 				break;
 		}
 
+		$this->artSwitchRoute($route);
+
 		if ($component['scheme'] == 'https') {
 			$link = $this->config->get('config_ssl');
 		} else {
@@ -204,15 +212,16 @@ class ControllerStartupSeoPro extends Controller {
 		}
 
 		$queries = array();
+		$this->rewriteQueries = &$queries;
 		if(!in_array($route, array('product/search'))) {
 		foreach ($data as $key => $value) {
+
 				switch ($key) {
 
                    case 'aridius_news_id2':
       
 
                    case 'aridius_news_id':
-      
 					case 'product_id':
 					case 'manufacturer_id':
 					case 'category_id':
@@ -220,7 +229,7 @@ class ControllerStartupSeoPro extends Controller {
 					case 'order_id':
 						$queries[] = $key . '=' . $value;
 						unset($data[$key]);
-						$postfix = 1;
+						$this->rewritePostfix = 1;
 						break;
 
 					case 'path':
@@ -234,6 +243,7 @@ class ControllerStartupSeoPro extends Controller {
 					default:
 						break;
 				}
+				$this->artSwitchParamKey($key, $value);
 			}
 		}
 
@@ -269,7 +279,7 @@ class ControllerStartupSeoPro extends Controller {
 			$seo_url = $this->config->get('config_url') . $seo_url;
 		}
 
-		if (isset($postfix)) {
+		if ($this->rewritePostfix !== null) {
 			$seo_url .= trim($this->config->get('config_seo_url_postfix'));
 		} else {
 			$seo_url .= '/';
@@ -389,6 +399,40 @@ class ControllerStartupSeoPro extends Controller {
 			}
 
 		return urldecode(http_build_query(array_diff_key($this->request->get, array_flip($exclude))));
+	}
+
+	protected function 	artUrls() {
+		if (isset($this->request->get['certificate_id'])) {
+			$this->request->get['route'] = 'information/certificates/info';
+			$this->request->get['id'] = $this->request->get['certificate_id'];
+			unset($this->request->get['certificate_id']);
+			return true;
+		}
+		return false;
+	}
+
+	protected function artSwitchRoute($route) {
+		switch ($route) {
+			case 'information/certificates/info':
+				if (isset($this->rewriteData['id'])) {
+					$tmp = $this->rewriteData;
+					$this->rewriteData = array();
+					$this->rewriteData['certificate_id'] = $tmp['id'];
+				}
+				break;
 		}
 	}
+
+	protected function artSwitchParamKey($key,$value) {
+		switch ($key) {
+			case 'certificate_id':
+				$this->rewriteQueries[] = $key . '=' . $value;
+				unset($this->rewriteData[$key]);
+				$this->rewritePostfix = 1;
+				break;
+		}
+	}
+
+}
+
 ?>

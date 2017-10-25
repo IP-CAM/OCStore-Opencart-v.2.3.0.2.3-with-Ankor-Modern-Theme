@@ -296,4 +296,5 @@ class ControllerInformationCertificates extends \app\core\Controller {
         }
         return compact('thumb','popup');
     }
+
 }
