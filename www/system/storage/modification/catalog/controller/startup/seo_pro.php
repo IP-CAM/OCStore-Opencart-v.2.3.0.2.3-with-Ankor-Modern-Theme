@@ -3,6 +3,7 @@ class ControllerStartupSeoPro extends Controller {
 	private $cache_data = null;
 	private $rewritePostfix = null;
 	private $rewriteData = [];
+	private $rewriteOrigData = [];
 	private $rewriteQueries = [];
 
 	public function __construct($registry) {
@@ -192,23 +193,34 @@ class ControllerStartupSeoPro extends Controller {
 			case 'information/information/agree':
 				return $link;
 				break;
-
 			default:
 				break;
 		}
+		$this->rewriteOrigData = $this->rewriteData;
+		if ($this->artSwitchRoute($route)){
+			if ($component['scheme'] == 'https') {
+				$link = $this->config->get('config_ssl');
+			} else {
+				$link = $this->config->get('config_url');
+			}
 
-		$this->artSwitchRoute($route);
+			$link .= 'index.php?route=' . $route;
 
-		if ($component['scheme'] == 'https') {
-			$link = $this->config->get('config_ssl');
-		} else {
-			$link = $this->config->get('config_url');
-		}
+			if (count($data)) {
+				$link .= '&amp;' . urldecode(http_build_query($this->rewriteOrigData, '', '&amp;'));
+			}
+		}else {
+			if ($component['scheme'] == 'https') {
+				$link = $this->config->get('config_ssl');
+			} else {
+				$link = $this->config->get('config_url');
+			}
 
-		$link .= 'index.php?route=' . $route;
+			$link .= 'index.php?route=' . $route;
 
-		if (count($data)) {
-			$link .= '&amp;' . urldecode(http_build_query($data, '', '&amp;'));
+			if (count($data)) {
+				$link .= '&amp;' . urldecode(http_build_query($data, '', '&amp;'));
+			}
 		}
 
 		$queries = array();
@@ -412,6 +424,7 @@ class ControllerStartupSeoPro extends Controller {
 	}
 
 	protected function artSwitchRoute($route) {
+		$res = false;
 		switch ($route) {
 			case 'information/certificates/info':
 				if (isset($this->rewriteData['id'])) {
@@ -419,8 +432,10 @@ class ControllerStartupSeoPro extends Controller {
 					$this->rewriteData = array();
 					$this->rewriteData['certificate_id'] = $tmp['id'];
 				}
+				$res = true;
 				break;
 		}
+		return $res;
 	}
 
 	protected function artSwitchParamKey($key,$value) {

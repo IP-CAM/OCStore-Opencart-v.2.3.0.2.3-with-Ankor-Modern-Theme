@@ -2,10 +2,12 @@
 use app\core\App;
 use app\models\Callback;
 use app\models\Certificate;
+use app\models\SeoUrl;
 
 class ControllerCatalogCertificates extends Controller {
     private $data;
 	private $error = array();
+    protected $typeSeoUrl = 'certificate';
 
 	public function index() {
 		$this->load->language('catalog/certificates');
@@ -30,6 +32,8 @@ class ControllerCatalogCertificates extends Controller {
             $item = new Certificate();
             $item->load($this->request->post);
             $item->save();
+            $this->artSaveKeywordSeoUrl($item->id);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->redirectToEdit();
 		}
@@ -46,6 +50,8 @@ class ControllerCatalogCertificates extends Controller {
             $item = Certificate::findOneById($this->request->get['id']);
             $item->load($this->request->post);
             $item->save();
+            $this->artSaveKeywordSeoUrl($item->id);
+
 			$this->session->data['success'] = $this->language->get('text_success');
             $this->redirectToEdit();
 		}
@@ -192,6 +198,7 @@ class ControllerCatalogCertificates extends Controller {
         }
 
         $data['item'] = $item;
+        $this->data['keyword'] = SeoUrl::findKeyword($this->typeSeoUrl,$item->id);
 
         $data['heading_title'] = $this->language->get('heading_title');
 
@@ -424,7 +431,8 @@ class ControllerCatalogCertificates extends Controller {
 			$this->error['description_limit'] = $this->language->get('error_description_limit');
 		}		
 	
-		return !$this->error;
+        return !$this->error;
 	}
+
 }
 ?>

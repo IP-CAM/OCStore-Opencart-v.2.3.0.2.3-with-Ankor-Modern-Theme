@@ -1,5 +1,7 @@
-<?php 
- 	/**
+<?php
+use app\models\SeoUrl;
+
+/**
 	* @property string $id
 	* @property string $template
 	* @property array $children
@@ -106,6 +108,7 @@
 	**/
 abstract class Controller {
 	protected $registry;
+    protected $typeSeoUrl = '';
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -118,4 +121,14 @@ abstract class Controller {
 	public function __set($key, $value) {
 		$this->registry->set($key, $value);
 	}
+
+    protected function artSaveKeywordSeoUrl($id) {
+        if (!isset($this->request->post['keyword'])) {
+            return;
+        }
+        $seo = SeoUrl::Factory($this->typeSeoUrl,$id);
+        $seo->keyword = $this->request->post['keyword'];
+        $seo->save();
+
+    }
 }

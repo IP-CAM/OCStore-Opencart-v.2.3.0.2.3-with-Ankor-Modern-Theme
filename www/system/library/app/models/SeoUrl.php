@@ -17,9 +17,8 @@ class SeoUrl {
     public $seoId = 0;
     public $keyword = '';
 
-    public static function Factory($keyword = '', $type = '',$seoId = 0, $pk = 'id') {
+    public static function Factory($type = '',$seoId = 0, $pk = 'id') {
         $item = new static();
-        $item->keyword = $keyword;
         $item->type = $type;
         $item->pk = $pk;
         $item->seoId = $seoId;
@@ -31,11 +30,10 @@ class SeoUrl {
         if (App::$db == null) {
             return false;
         }
-        if (empty($this->keyword)) {
+        if (!$this->delete()) {
             return false;
         }
-
-        if (!$this->delete()) {
+        if (empty($this->keyword)) {
             return false;
         }
         App::$db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = '" . $this->getQuery(). "', keyword = '" . App::$db->escape($this->keyword) . "'");
@@ -58,7 +56,19 @@ class SeoUrl {
         }
         App::$db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = '" . $query . "'");
         return true;
+    }
 
+    public static function findKeyword($type,$seoId, $pk = 'id') {
+        $type = $type !== '' ? $type . '_' : '';
+        $query = $type . $pk;
+        if ($seoId != 0) {
+            $query .= '=' . (int)$seoId;
+        }
+        $query = App::$db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $query . "'");
+        if (empty($query->row)) {
+            return '';
+        }
+        return $query->row['keyword'];
     }
 
 }

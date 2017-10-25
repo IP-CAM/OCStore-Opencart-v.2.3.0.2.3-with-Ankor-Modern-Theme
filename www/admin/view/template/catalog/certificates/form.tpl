@@ -64,6 +64,13 @@ echo $header; ?><?php echo $column_left;
 								</div>
 
 								<div class="form-group">
+									<?=Form::label('Seo Url','keyword',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-10">
+										<?=Form::text('keyword',$keyword,['class'=>'form-control'])?>
+									</div>
+								</div>
+
+								<div class="form-group">
 									<label class="col-sm-2 control-label" for="input-description">
 										Описание
 									</label>
