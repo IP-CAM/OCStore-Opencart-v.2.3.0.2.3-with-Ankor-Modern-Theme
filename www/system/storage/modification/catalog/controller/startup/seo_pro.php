@@ -414,40 +414,51 @@ class ControllerStartupSeoPro extends Controller {
 	}
 
 	protected function 	artUrls() {
-		if (isset($this->request->get['certificate_id'])) {
-			$this->request->get['route'] = 'information/certificates/info';
-			$this->request->get['id'] = $this->request->get['certificate_id'];
-			unset($this->request->get['certificate_id']);
-			return true;
+		$res = false;
+
+		foreach ($this->getParamsSeoUrl() as $key => $item) {
+			if (isset($this->request->get[$key])) {
+				$this->request->get['route'] = $item;
+				$this->request->get['id'] = $this->request->get[$key];
+				unset($this->request->get[$key]);
+				$res = true;
+			}
 		}
-		return false;
+		return $res;
 	}
 
 	protected function artSwitchRoute($route) {
 		$res = false;
-		switch ($route) {
-			case 'information/certificates/info':
+		foreach ($this->getParamsSeoUrl() as $key => $item) {
+			if ($route == $item) {
 				if (isset($this->rewriteData['id'])) {
 					$tmp = $this->rewriteData;
 					$this->rewriteData = array();
-					$this->rewriteData['certificate_id'] = $tmp['id'];
+					$this->rewriteData[$key] = $tmp['id'];
 				}
 				$res = true;
-				break;
+			}
 		}
 		return $res;
 	}
 
 	protected function artSwitchParamKey($key,$value) {
-		switch ($key) {
-			case 'certificate_id':
+		foreach ($this->getParamsSeoUrl() as $k => $item) {
+			if ($key == $k) {
 				$this->rewriteQueries[] = $key . '=' . $value;
 				unset($this->rewriteData[$key]);
 				$this->rewritePostfix = 1;
-				break;
+			}
 		}
 	}
 
-}
+	protected function getParamsSeoUrl() {
+		return [
+			'document_id' => 'information/documents/info',
+			'certificate_id' => 'information/certificates/info',
+			'our_pride_id' => 'information/prides/info'
+		];
+	}
 
+}
 ?>

@@ -198,7 +198,7 @@ class ControllerCatalogCertificates extends Controller {
         }
 
         $data['item'] = $item;
-        $this->data['keyword'] = SeoUrl::findKeyword($this->typeSeoUrl,$item->id);
+        $data['keyword'] = $this->artGetKeywordSeoUrl();
 
         $data['heading_title'] = $this->language->get('heading_title');
 

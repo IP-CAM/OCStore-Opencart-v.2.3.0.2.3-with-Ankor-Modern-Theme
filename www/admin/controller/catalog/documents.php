@@ -5,6 +5,7 @@ use app\models\Documents;
 
 class ControllerCatalogDocuments extends Controller {
 	private $error = array();
+    protected $typeSeoUrl = 'document';
 
 	public function index() {
 		$this->load->language('catalog/documents');
@@ -30,6 +31,8 @@ class ControllerCatalogDocuments extends Controller {
             $item = new Documents();
             $item->load($this->request->post);
             $item->save();
+            $item->saveFiles($this->request->files);
+            $this->artSaveKeywordSeoUrl($item->id);
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->redirectToEdit();
 		}
@@ -47,6 +50,7 @@ class ControllerCatalogDocuments extends Controller {
             $item->load($this->request->post);
             $item->saveFiles($this->request->files);
             $item->save();
+            $this->artSaveKeywordSeoUrl($item->id);
 			$this->session->data['success'] = $this->language->get('text_success');
             $this->redirectToEdit();
 		}
@@ -218,6 +222,7 @@ class ControllerCatalogDocuments extends Controller {
         $data['breadcrumbs'] = $this->getBreadcrumbs();
         $item->getFiles();
         $data['item'] = $item;
+        $data['keyword'] = $this->artGetKeywordSeoUrl();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

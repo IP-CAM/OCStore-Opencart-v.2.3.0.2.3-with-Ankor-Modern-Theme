@@ -131,4 +131,12 @@ abstract class Controller {
         $seo->save();
 
     }
+
+    protected function artGetKeywordSeoUrl() {
+        $id = -1;
+        if (isset($this->request->get['id'])) {
+            $id = $this->request->get['id'];
+        }
+        return SeoUrl::findKeyword($this->typeSeoUrl, $id);
+    }
 }

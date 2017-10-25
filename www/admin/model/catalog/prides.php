@@ -6,7 +6,7 @@ class ModelCatalogPrides extends Model {
 	public function add($data) {
         $newPride = R::dispense($this->tableName);
         $newPride = $this->setDataPride($newPride, $data);
-		R::store($newPride);
+		return R::store($newPride);
 	}
 
 	public function edit($id,$data) {
