@@ -456,7 +456,8 @@ class ControllerStartupSeoPro extends Controller {
 		return [
 			'document_id' => 'information/documents/info',
 			'certificate_id' => 'information/certificates/info',
-			'our_pride_id' => 'information/prides/info'
+			'our_pride_id' => 'information/prides/info',
+			'photowork_id' => 'information/photoworks/info',
 		];
 	}
 
