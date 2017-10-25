@@ -971,7 +971,6 @@ type: 'image',
 mainClass: 'mfp-fade'
 		});
 		$(".mfp-content").prepend("<div class='image_title'><?php echo $heading_title; ?></div>");
-		$(".mfp-bottom-bar").prepend("<div class='hidden-xs'><?php if (!$special) { ?><div class='image_price2'><span class='priceproduct-new'><?php echo $price; ?></span></div><?php } else { ?><div class='image_price'><span class='priceproduct-new'><?php echo $special; ?></span>&nbsp;&nbsp;<span class='priceproduct-old'><?php echo $price; ?></span></div><?php } ?> <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?><button type='button' class='btn-instock' onclick=\"instock.add('<?php echo $product_id; ?>');\" data-product-id='<?php echo $product_id; ?>'><?php echo $button_instock; ?></button><?php } else { ?><button type='button' id='button-cart' data-loading-text='<?php echo $text_loading; ?>' class='btn-cart'><i class='fa fa-shopping-cart'></i> <?php echo $button_cart; ?></button><?php } ?></div>");
 		e.preventDefault();
 	});
 });
