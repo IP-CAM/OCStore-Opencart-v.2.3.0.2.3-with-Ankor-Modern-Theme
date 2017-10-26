@@ -37,6 +37,7 @@ use app\libs\Form;
                     <div class="form-group text-center">
                         <?=Form::hidden('do_load_from_excel','y')?>
                         <button type="submit" class="btn btn-primary">Загрузить данные</button>
+                        <input type="submit" name="do_image" value="Загрузить только картинки" class="btn btn-danger" >
                     </div>
                 </form>
             </div>

@@ -13,11 +13,17 @@ class ControllerCatalogLoadFromExcel extends Controller {
     public $data = [];
 
 	public function index() {
-
         $this->data['nameFile'] = '1.xlsx';
+
         if (isset($this->request->post['do_load_from_excel']) && $this->request->post['do_load_from_excel'] == 'y') {
+            ini_set('max_execution_time', 0);
+            set_time_limit(0);
             $this->loadModels();
-            $this->session->data['do_load_from_excel']['success'] = $this->loadFromFile(DIR_UPLOAD . '/' . $this->request->post['nameFile']);
+            $onlyImages = false;
+            if (isset($this->request->post['do_image'])) {
+                $onlyImages = true;
+            }
+            $this->session->data['do_load_from_excel']['success'] = $this->loadFromFile(DIR_UPLOAD . '/' . $this->request->post['nameFile'],$onlyImages);
             $this->response->redirect($this->url->link('catalog/load_from_excel', ['token' => $this->session->data['token']]));
         }
         $this->setOutput();
@@ -34,6 +40,7 @@ class ControllerCatalogLoadFromExcel extends Controller {
         DataProduct::$ocModelManufacturer = $this->model_catalog_manufacturer;
         DataProduct::$ocModelAttribute = $this->model_catalog_attribute;
         DataProduct::$ocModelOption = $this->model_catalog_option;
+
     }
 
     protected function setOutput() {
@@ -79,7 +86,7 @@ class ControllerCatalogLoadFromExcel extends Controller {
         return $arrayData;
     }
 
-    protected function loadFromFile($file) {
+    protected function loadFromFile($file, $onlyImages = false) {
         $excel = $this->readFile($file);
         unset($excel['products'][0]);
         $groups = [];
@@ -87,6 +94,10 @@ class ControllerCatalogLoadFromExcel extends Controller {
             $groups[$group[0]] = $group[7];
         }
         DataProduct::$groupsExcel = $groups;
+        if ($onlyImages) {
+            $this->saveImages($excel['products']);
+            return true;
+        }
         $this->saveProducts($excel['products']);
         return true;
     }
@@ -104,8 +115,8 @@ class ControllerCatalogLoadFromExcel extends Controller {
             if (isset($savedProducts[$product->name])) {
                 $product->id = $savedProducts[$product->name];
             }
-            //$product->save();
-           // $savedProducts[$product->name] = $product->id;
+            $product->save();
+            $savedProducts[$product->name] = $product->id;
             App::$debug->d($dataProduct);
             break;
         }
@@ -113,5 +124,27 @@ class ControllerCatalogLoadFromExcel extends Controller {
         die();
     }
 
+    protected function saveImages($dataProducts) {
+        $images = [];
+        foreach ($dataProducts as $dataProduct) {
+            $rowImages = explode(',',$dataProduct[15]);
+            foreach ($rowImages as $rowImage) {
+                $images[] = $rowImage;
+            }
+        }
+        $product = new DataProduct();
+        foreach ($images as $image) {
+            $res = $product->saveImage($image,true);
+            $trying = 1;
+            try {
+                $size = getimagesize($res);
+            } catch (\Exception $e) {
+                $this->saveImage($image);
+            }
+        }
+    }
+    protected function saveImageRecursive(){
+
+    }
 }
 ?>
