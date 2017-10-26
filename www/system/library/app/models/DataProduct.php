@@ -113,24 +113,68 @@ class DataProduct implements \ArrayAccess  {
         $this->image = 'catalog/data/' . basename($images[0]);
     }
 
+
+
     public function saveImage($path, $rewrite = false) {
         $folder =  'catalog/data/download/';
+        $path = trim($path);
+//        $filename = md5(basename($path)) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $filename = basename($path);
         if (!$rewrite) {
             if (file_exists(DIR_IMAGE . $folder . basename($path))) {
-                return $folder . basename($path);
+                return $folder . $filename;
             }
         }
 
         $ch = curl_init($path);
-        $fp = fopen(DIR_IMAGE . $folder . basename($path) , 'wb');
+        $fp = fopen(DIR_IMAGE . $folder . $filename , 'wb');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_exec($ch);
         curl_close($ch);
         fclose($fp);
-        $image = $folder . basename($path);
+        $image = $folder . $filename;
 
         return $image;
+    }
+
+    public function saveImage2($path) {
+        $folder =  'catalog/data/download/';
+//        $filename = md5(basename($path)) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $filename = md5($path) . '.jpg';
+        if (is_file(DIR_IMAGE . $folder . $filename)) {
+            return $folder . $filename;
+        }
+        $img = file_get_contents($path);
+        file_put_contents(DIR_IMAGE . $folder . $filename, $img);
+        return $folder . $filename;
+    }
+
+    public function saveImage3($path) {
+        $folder =  'catalog/data/download/';
+        //copy(urlencode($path), DIR_IMAGE . $folder . basename($path));
+//        file_put_contents(DIR_IMAGE . $folder . basename($path), file_get_contents($path));
+//        $filename = md5(basename($path)) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $filename = basename($path);
+        $this->save_image($path, DIR_IMAGE .  $folder . $filename);
+        return $folder . $filename;
+
+
+    }
+
+    protected function save_image($img,$path){
+        $curl = curl_init($img);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_BINARYTRANSFER,1);
+        $content = curl_exec($curl);
+        curl_close($curl);
+        if (file_exists($path)) :
+            unlink($path);
+        endif;
+        $fp = fopen($path,'x');
+        fwrite($fp, $content);
+        fclose($fp);
     }
 
     public function save() {

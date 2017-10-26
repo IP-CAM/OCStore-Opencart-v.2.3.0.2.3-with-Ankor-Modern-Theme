@@ -17,6 +17,7 @@ class ControllerCatalogLoadFromExcel extends Controller {
 
         if (isset($this->request->post['do_load_from_excel']) && $this->request->post['do_load_from_excel'] == 'y') {
             ini_set('max_execution_time', 0);
+            ini_set('allow_url_fopen', 1);
             set_time_limit(0);
             $this->loadModels();
             $onlyImages = false;
@@ -125,6 +126,8 @@ class ControllerCatalogLoadFromExcel extends Controller {
     }
 
     protected function saveImages($dataProducts) {
+        $this->data['loadImgError'] = [];
+        $this->data['loadImgSucces'] = [];
         $images = [];
         foreach ($dataProducts as $dataProduct) {
             $rowImages = explode(',',$dataProduct[15]);
@@ -133,18 +136,44 @@ class ControllerCatalogLoadFromExcel extends Controller {
             }
         }
         $product = new DataProduct();
+        $i = 0;
         foreach ($images as $image) {
-            $res = $product->saveImage($image,true);
-            $trying = 1;
-            try {
-                $size = getimagesize($res);
-            } catch (\Exception $e) {
-                $this->saveImage($image);
+            $i++;
+            $this->saveImageRecursive($product, $image,$i);
+            if ($i == 5) {
+                break;
+            }
+        }
+        App::$debug->d(count($this->data['loadImgError']));
+        App::$debug->d($this->data['loadImgSucces']);
+        App::$debug->dDie($this->data['loadImgError']);
+    }
+    protected function saveImageRecursive(DataProduct $product,$image,$i,$trying = 0 ){
+        $res = $product->saveImage($image);
+        $trying++;
+        if (!$this->getResultSaveImage($res,$image, $i)) {
+            unlink(DIR_IMAGE . $res);
+            return;
+            $res = $product->saveImage2($image);
+            if (!$this->getResultSaveImage($res,$image, '2.' . $i)) {
+                unlink(DIR_IMAGE . $res);
+                $res = $product->saveImage3($image);
+                if (!$this->getResultSaveImage($res,$image, '3.' . $i)) {
+//                    unlink(DIR_IMAGE . $res);
+                }
             }
         }
     }
-    protected function saveImageRecursive(){
 
+    protected function getResultSaveImage($res,$image, $i) {
+        $size = getimagesize(DIR_IMAGE . $res);
+        if (!$size) {
+            $this->data['loadImgError'][$i] = ['link' => $image, 'load_file' => $res];
+            return false;
+        } else {
+            $this->data['loadImgSucces'][$i] = ['link' => $image, 'load_file' => $res];
+            return true;
+        }
     }
 }
 ?>
