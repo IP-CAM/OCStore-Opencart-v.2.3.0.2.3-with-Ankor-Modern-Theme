@@ -75,7 +75,7 @@ class DataProduct implements \ArrayAccess  {
         $this->product_description = $product_description;
         $this->price = $data[9];
         $this->quantity = 0;
-        if ($data[16] === '+') {
+        if (trim($data[16]) === '+') {
             $this->quantity = 9999999;
         }
         $this->measure_str = $data[11];
