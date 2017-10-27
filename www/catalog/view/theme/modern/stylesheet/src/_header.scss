@@ -184,6 +184,11 @@
     }
   }
 }
+.top-header2 {
+  #logo img {
+    top: 0;
+  }
+}
 @media (max-width: 1199px) and (min-width: 992px) {
   .category_menu{
     #menu .nav > li > a {
