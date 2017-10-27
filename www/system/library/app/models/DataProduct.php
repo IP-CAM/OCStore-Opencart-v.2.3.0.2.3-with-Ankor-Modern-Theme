@@ -102,17 +102,18 @@ class DataProduct implements \ArrayAccess  {
         }
         $this->image = $this->saveImage($images[0]);
         // additional images
-        if (count($images)>1) {
-            $this->product_image = [];
-        }
+        $saveImages = [];
         foreach ($images as $key=>$image) {
             if ($key == 0) {
                 continue;
             }
-            $this->product_image[] = [
+            $saveImages[] = [
                 'image' => $this->saveImage($image),
                 'sort_order' => 0,
             ];
+        }
+        if (!empty($saveImages)) {
+            $this->product_image = $saveImages;
         }
     }
 
