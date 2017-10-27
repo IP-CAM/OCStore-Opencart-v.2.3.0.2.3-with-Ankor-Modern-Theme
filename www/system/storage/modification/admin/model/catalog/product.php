@@ -1,4 +1,5 @@
 <?php
+use app\models\ImageProductOption;
 
 /**
  * Class ModelCatalogProduct
@@ -60,6 +61,9 @@ class ModelCatalogProduct extends Model {
 
 						foreach ($product_option['product_option_value'] as $product_option_value) {
 							$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+                            $product_option_value_id = $this->db->getLastId();
+                            // save images
+                            $this->saveImagesOptionValueForLoadExcel($product_id,$product_option_value,$product_option_id, $product_option_value_id);
 						}
 					}
 				} else {
@@ -153,7 +157,7 @@ class ModelCatalogProduct extends Model {
 
             $this->load->model('catalog/aridiusinstocksend');
             $this->model_catalog_aridiusinstocksend->notifyProduct($product_id, $data);
-			
+        ImageProductOption::clearForProduct($product_id);
 		
                    	  $this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "',`isbn` = '" . (isset($data['popupsize']) ? (int)$data['popupsize'] : 0) . "', `mpn` = '" . (isset($data['stickers']) ? (int)$data['stickers'] : 0) . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', measure_str  = '" . $data['measure_str'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . (int)$data['tax_class_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
       
@@ -217,6 +221,10 @@ class ModelCatalogProduct extends Model {
 
 						foreach ($product_option['product_option_value'] as $product_option_value) {
 							$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "', product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");
+
+                            $product_option_value_id = $this->db->getLastId();
+                            // save images
+                            $this->saveImagesOptionValueForLoadExcel($product_id,$product_option_value,$product_option_id, $product_option_value_id);
 						}
 					}
 				} else {
@@ -568,7 +576,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 
-			public function getProductCustomtabs($product_id) {
+    public function getProductCustomtabs($product_id) {
 			
 			$customtab_data = array();
 			$customtab_description_data = array();
@@ -829,4 +837,22 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+
+	protected function saveImagesOptionValueForLoadExcel($productId,$product_option_value,$product_option_id,$product_option_value_id) {
+
+	    if (!isset($product_option_value['imagesFromExcel'])) {
+	        return;
+        }
+        $optionId = $product_option_id;
+        $optionValueId = $product_option_value_id;
+        foreach ($product_option_value['imagesFromExcel'] as $image) {
+            $newImg = new ImageProductOption();
+            $newImg->option_id = (int)$optionId;
+            $newImg->product_id = (int)$productId;
+            $newImg->option_value_id = (int)$optionValueId;
+            $newImg->src = $image;
+            $newImg->sort = 0;
+            $newImg->save();
+        }
+    }
 }

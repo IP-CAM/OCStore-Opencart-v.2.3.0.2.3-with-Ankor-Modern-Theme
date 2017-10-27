@@ -812,7 +812,9 @@ class ControllerCatalogCategory extends Controller {
             'pavilion' => 'Раздвижные павильоны',
             'polycarbonate' => 'Поликарбонат',
             'profiles' => 'Профили',
-            'siding' => 'Сайдинг'
+            'siding' => 'Сайдинг',
+            'zaglushki_dlya_trub' => 'Заглушки для труб',
+            'shayby_lenty_uplotniteli' => 'Шайбы, ленты, уплотнители'
         ];
         if (isset($config[$nameFile])) {
             $res = $config[$nameFile];
