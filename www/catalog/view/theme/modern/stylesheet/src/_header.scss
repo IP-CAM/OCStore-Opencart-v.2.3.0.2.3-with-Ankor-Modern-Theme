@@ -146,19 +146,19 @@
           &:hover:before {
             top: -2px;
             height: 2px;
-            background: #51473c;
+            background: $dark-blue;
           }
           &.activetopmenu:before {
             top: -2px;
             height: 2px;
-            background: #51473c;
+            background: $dark-blue;
           }
           &>a {
             font-size:12px;
             padding: 5px 5px;
             color: white;
             &:hover {
-              color: black;
+              color: $dark-blue;
             }
             &:before {
               position: static;
