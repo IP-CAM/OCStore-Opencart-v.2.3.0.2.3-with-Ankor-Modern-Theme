@@ -304,7 +304,7 @@ class ControllerStartupSeoPro extends Controller {
 		if (count($data)) {
 			$seo_url .= '?' . urldecode(http_build_query($data, '', '&amp;'));
 		}
-//		$seo_url = str_replace('%2F','/',$seo_url);
+		$seo_url = str_replace('%2F','/',$seo_url);
 		return $seo_url;
 	}
 
