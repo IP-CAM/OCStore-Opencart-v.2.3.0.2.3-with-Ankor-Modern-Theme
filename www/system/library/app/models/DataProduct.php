@@ -96,21 +96,21 @@ class DataProduct implements \ArrayAccess  {
     }
 
     protected function saveImagesExcel($data) {
-
-        // TODO save all images
         $images = explode(',', $data[15]);
         if (count($images) == 0) {
             return;
         }
-        //file_put_contents(DIR_IMAGE . 'catalog/data/' . basename($images[0]), $images[0]);
-        $ch = curl_init($images[0]);
-        $fp = fopen(DIR_IMAGE . 'catalog/data/' . basename($images[0]) , 'wb');
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
-        $this->image = 'catalog/data/' . basename($images[0]);
+        $this->image = $this->saveImage($images[0]);
+        // additional images
+        foreach ($images as $key=>$image) {
+            if ($key == 0) {
+                continue;
+            }
+            $this->product_image[] = [
+                'image' => $this->saveImage($image),
+                'sort_order' => 0,
+            ];
+        }
     }
 
 
@@ -121,7 +121,7 @@ class DataProduct implements \ArrayAccess  {
 //        $filename = md5(basename($path)) . '.' . pathinfo($path, PATHINFO_EXTENSION);
         $filename = basename($path);
         if (!$rewrite) {
-            if (file_exists(DIR_IMAGE . $folder . basename($path))) {
+            if (file_exists(DIR_IMAGE . $folder . $filename)) {
                 return $folder . $filename;
             }
         }

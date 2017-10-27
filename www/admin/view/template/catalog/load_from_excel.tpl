@@ -34,6 +34,18 @@ use app\libs\Form;
                             <?=Form::text('nameFile',$nameFile,['class'=>'form-control'])?>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <?=Form::label("Номер первой строки",'startRow',['class'=>'col-sm-4 control-label']);?>
+                        <div class="col-sm-8">
+                            <?=Form::text('startRow',$startRow,['class'=>'form-control'])?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <?=Form::label("Номер последней строки",'endRow',['class'=>'col-sm-4 control-label']);?>
+                        <div class="col-sm-8">
+                            <?=Form::text('endRow',$endRow,['class'=>'form-control'])?>
+                        </div>
+                    </div>
                     <div class="form-group text-center">
                         <?=Form::hidden('do_load_from_excel','y')?>
                         <button type="submit" class="btn btn-primary">Загрузить данные</button>
