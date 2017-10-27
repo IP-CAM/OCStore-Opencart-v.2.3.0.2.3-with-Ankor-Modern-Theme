@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: korns
- * Date: 19.10.2017
- * Time: 11:55
- */
 
 namespace app\models;
 
@@ -13,6 +7,10 @@ use app\core\App;
 use app\libs\Upload;
 
 
+/**
+ * Class DataProduct
+ * @package app\models
+ */
 class DataProduct implements \ArrayAccess  {
     use TArrayAccess;
     protected static $groupAttributesId = 1;
@@ -34,6 +32,11 @@ class DataProduct implements \ArrayAccess  {
      * @var \ModelCatalogOption
      */
     public static $ocModelOption;
+
+    /**
+     * @var \Controller
+     */
+    public static $ocRegistry;
 
     public $id;
     public $name = '';
@@ -84,7 +87,7 @@ class DataProduct implements \ArrayAccess  {
         $product_store = ['0'];
         $this->product_store = $product_store;
         //идентификатор товара (для поиска разновидностей) в excel
-        $this->idProductFromExcel = $data[18];
+        $this->idProductFromExcel = $data[32];
         $this->nameOptions = explode(',', $data[4]);
 
         $this->saveImagesExcel($data);
@@ -93,21 +96,85 @@ class DataProduct implements \ArrayAccess  {
     }
 
     protected function saveImagesExcel($data) {
-
-        // TODO save all images
         $images = explode(',', $data[15]);
         if (count($images) == 0) {
             return;
         }
-        //file_put_contents(DIR_IMAGE . 'catalog/data/' . basename($images[0]), $images[0]);
-        $ch = curl_init($images[0]);
-        $fp = fopen(DIR_IMAGE . 'catalog/data/' . basename($images[0]) , 'wb');
+        $this->image = $this->saveImage($images[0]);
+        // additional images
+        foreach ($images as $key=>$image) {
+            if ($key == 0) {
+                continue;
+            }
+            $this->product_image[] = [
+                'image' => $this->saveImage($image),
+                'sort_order' => 0,
+            ];
+        }
+    }
+
+
+
+    public function saveImage($path, $rewrite = false) {
+        $folder =  'catalog/data/download/';
+        $path = trim($path);
+//        $filename = md5(basename($path)) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $filename = basename($path);
+        if (!$rewrite) {
+            if (file_exists(DIR_IMAGE . $folder . $filename)) {
+                return $folder . $filename;
+            }
+        }
+
+        $ch = curl_init($path);
+        $fp = fopen(DIR_IMAGE . $folder . $filename , 'wb');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_exec($ch);
         curl_close($ch);
         fclose($fp);
-        $this->image = 'catalog/data/' . basename($images[0]);
+        $image = $folder . $filename;
+
+        return $image;
+    }
+
+    public function saveImage2($path) {
+        $folder =  'catalog/data/download/';
+//        $filename = md5(basename($path)) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $filename = md5($path) . '.jpg';
+        if (is_file(DIR_IMAGE . $folder . $filename)) {
+            return $folder . $filename;
+        }
+        $img = file_get_contents($path);
+        file_put_contents(DIR_IMAGE . $folder . $filename, $img);
+        return $folder . $filename;
+    }
+
+    public function saveImage3($path) {
+        $folder =  'catalog/data/download/';
+        //copy(urlencode($path), DIR_IMAGE . $folder . basename($path));
+//        file_put_contents(DIR_IMAGE . $folder . basename($path), file_get_contents($path));
+//        $filename = md5(basename($path)) . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $filename = basename($path);
+        $this->save_image($path, DIR_IMAGE .  $folder . $filename);
+        return $folder . $filename;
+
+
+    }
+
+    protected function save_image($img,$path){
+        $curl = curl_init($img);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_BINARYTRANSFER,1);
+        $content = curl_exec($curl);
+        curl_close($curl);
+        if (file_exists($path)) :
+            unlink($path);
+        endif;
+        $fp = fopen($path,'x');
+        fwrite($fp, $content);
+        fclose($fp);
     }
 
     public function save() {
@@ -184,54 +251,138 @@ class DataProduct implements \ArrayAccess  {
         }
         $options = [];
         $dataOptions = $this->getDataOptions();
-        foreach ($dataOptions as $dataOption) {
-            foreach ($dataOption['data'] as $item) {
-                foreach ($item as $values) {
-                    $name = $values['name'];
-                    $value = $values['value'];
-                }
+        foreach ($dataOptions as $nameOption=>$dataOption) {
+            $findOption = $this->getOptionByName($nameOption);
+            $option = [
+                'option_id' => $findOption['option_id'],
+                'product_option_id' => '',
+                'type' => $findOption['type'],
+                'sort_order' => $findOption['sort_order'],
+                'language_id' => $this->langId,
+                'name' => $nameOption,
+                'required' => '0',
+                ];
+            foreach ($dataOption as $item) {
+                $option['product_option_value'][] = $this->getDataOptionValue($option, $item);
             }
+            $options[] = $option;
         }
-//        $this->product_option = $options;
+        $this->product_option = $options;
     }
 
     protected function getDataOptions() {
         $rows = [];
         foreach (self::$productsExcel as $row) {
-            if (empty($row[3]) && $row[18] == $this->idProductFromExcel) {
+            if (empty($row[3]) && $row[32] == $this->idProductFromExcel) {
                 $rows[] = $row;
             }
         }
         $dataOptions = [];
+        $res = [];
         foreach ($rows as $row) {
-            $res = [];
-            $res['image'] = '';
+
             //старт колонки атрибутов
             $startAttr = 34;
             $allCount = count($row);
             $i = $startAttr - 1;
             $arImages = explode(',',$row[15]);
-            if (count($arImages) > 0) {
-                $res['image'] = $arImages[0];
-            }
             while ($i <= $allCount - 2) {
                 $i++;
                 $data = [];
                 if (in_array($row[$i],$this->nameOptions) ) {
-
                     $data['name'] = $row[$i];
                     $i += 2;
                     $data['value'] = $row[$i];
                     if (!empty($row[$i - 1])) {
                         $data['value'] .= ' ' . $row[$i - 1];
                     }
-                    $res['data'][$data['name']] = $data;
+                    $itemRes = [
+                        'value' => $data['value'],
+                        'images' => $arImages,
+                    ];
+                    if (array_search($row[$i],$this->nameOptions) === 0) {
+                        $itemRes['price'] = $row[9];
+                    }
+                    $res[$data['name']][] = $itemRes
+                    ;
                 }
             }
-            $dataOptions[] = $res;
         }
+        return $res;
+    }
 
-        App::$debug->dDie($dataOptions);
+    protected function getOptionByName($name) {
+
+        $filter = ['filter_name' => $name];
+        $result = self::$ocModelOption->getOptions($filter);
+        if (empty($result)) {
+            $data =  [
+                'option_id' => '',
+                'type' => 'radio',
+                'sort_order' => 0,
+                'option_description' => [$this->langId => ['name'=> $name]]
+            ];
+            $data['option_id'] =  self::$ocModelOption->addOption($data);
+            return $data;
+        }
+        $result = $result[0];
+        return $result;
+    }
+
+    protected function getDataOptionValue($option, $itemOptValue) {
+        $value = $itemOptValue['value'];
+        $findOptionVal = $this->getOptionValueByName($option['option_id'],$value);
+        $price = 0;
+        if (isset($item['price'])) {
+            $price = $item['price'] - $this->price;
+        }
+        $images = [];
+        foreach ($itemOptValue['images'] as $image) {
+            $images[] = $this->saveImage($image);
+        }
+        $optionVal = [
+            'product_option_value_id' => '',
+            'option_value_id' => $findOptionVal['option_value_id'],
+            'quantity' => '999',
+            'subtract' => '',
+            'price' => $price,
+            'price_prefix' => '+',
+            'points' => '',
+            'points_prefix' => '+',
+            'weight' => '',
+            'weight_prefix' => '+',
+            'imagesFromExcel' => $images,
+        ];
+
+        return $optionVal;
+    }
+
+    protected function getOptionValueByName($optionId,$name) {
+
+        $resultQuery = self::$ocModelOption->getOptionValues($optionId);
+        foreach ($resultQuery as $item) {
+            if ($item['name'] === $name) {
+                return $item;
+            }
+        }
+        $newData = [
+            'image' => '',
+            'sort_order' => 0,
+            'name' => $name,
+        ];
+        $new['option_value_id'] = $this->saveOptionValue($optionId,$newData);
+        return $new;
+    }
+
+    protected function saveOptionValue($option_id, $option_value) {
+
+            App::$db->query("INSERT INTO " . DB_PREFIX . "option_value SET option_id = '" . (int)$option_id . "', image = '" . App::$db->escape(html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8')) . "', sort_order = '" . (int)$option_value['sort_order'] . "'");
+
+            $option_value_id = App::$db->getLastId();
+
+                App::$db->query("INSERT INTO " . DB_PREFIX . "option_value_description SET option_value_id = '" . (int)$option_value_id . "', language_id = '" . (int)$this->langId . "', option_id = '" . (int)$option_id . "', name = '" . App::$db->escape($option_value['name']) . "'");
+
+        return $option_value_id;
     }
 
 }
