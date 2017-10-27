@@ -129,8 +129,8 @@ class ControllerCatalogLoadFromExcel extends Controller {
             }
             $product->save();
             $savedProducts[$product->name] = $product->id;
+            $cache->set('savedProductsFromExcel', $savedProducts);
         }
-        $cache->set('savedProductsFromExcel', $savedProducts);
     }
 
     protected function saveImages($dataProducts) {
