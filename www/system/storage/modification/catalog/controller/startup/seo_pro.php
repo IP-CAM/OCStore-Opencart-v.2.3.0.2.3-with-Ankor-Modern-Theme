@@ -296,7 +296,8 @@ class ControllerStartupSeoPro extends Controller {
 		if ($this->rewritePostfix !== null) {
 			$seo_url .= trim($this->config->get('config_seo_url_postfix'));
 		} else {
-			$seo_url .= '/';
+//			$seo_url .= '/';
+			$seo_url .= '';
 		}
 
 		if(substr($seo_url, -2) == '//') {
