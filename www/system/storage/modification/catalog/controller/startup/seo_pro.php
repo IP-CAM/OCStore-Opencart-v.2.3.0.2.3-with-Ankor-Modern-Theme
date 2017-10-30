@@ -1,4 +1,6 @@
 <?php
+use app\models\AnkorRedirect;
+
 class ControllerStartupSeoPro extends Controller {
 	private $cache_data = null;
 	private $rewritePostfix = null;
@@ -116,7 +118,7 @@ class ControllerStartupSeoPro extends Controller {
 			}
 
 			$this->validate();
-
+			$this->ankorRedirect($route);
 			if (isset($this->request->get['route'])) {
 				return new Action($this->request->get['route']);
 			}
@@ -294,7 +296,8 @@ class ControllerStartupSeoPro extends Controller {
 		if ($this->rewritePostfix !== null) {
 			$seo_url .= trim($this->config->get('config_seo_url_postfix'));
 		} else {
-			$seo_url .= '/';
+//			$seo_url .= '/';
+			$seo_url .= '';
 		}
 
 		if(substr($seo_url, -2) == '//') {
@@ -459,6 +462,14 @@ class ControllerStartupSeoPro extends Controller {
 			'our_pride_id' => 'information/prides/info',
 			'photowork_id' => 'information/photoworks/info',
 		];
+	}
+
+	protected function ankorRedirect($curUrl) {
+		$redirect = AnkorRedirect::getByLink($curUrl);
+		if ($redirect->redirect !== '') {
+			header($this->request->server['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
+			$this->response->redirect($redirect->redirect, 301);
+		}
 	}
 
 }

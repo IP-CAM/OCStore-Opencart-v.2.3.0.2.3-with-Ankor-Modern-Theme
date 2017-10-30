@@ -69,7 +69,10 @@ abstract class AppModel{
     }
 
     public function __get($name){
-        return $this->attributes[$name];
+        if (isset($this->attributes[$name])) {
+            return    $this->attributes[$name];
+        }
+        return null;
     }
 
     public function __set($name, $value){
@@ -105,6 +108,35 @@ abstract class AppModel{
      */
     public static function findOneById($id) {
         $bean  = \R::findOne(static::$tableName, 'id = :id', [':id' => $id]);
+        $item = new static();
+        if ($bean) {
+            foreach ($item->attributes as $key => $value) {
+                $item->attributes[$key] = $bean->$key;
+            }
+            $item->id = $bean->id;
+            $item->bean = $bean;
+        }
+        return $item;
+    }
+
+    /**
+     * @param $sql
+     * @param $params
+     * @return static
+     */
+    public static function findOne($params) {
+        $sql = '';
+        $paramsTotal = [];
+        if (count($params) > 0) {
+            $sql = 'WHERE ';
+            $paramsSql = [];
+            foreach ($params as $key => $value) {
+                $paramsTotal[':' . $key] = $value;
+                $paramsSql[] = ':' . $key . '=' . $key;
+            }
+            $sql .= implode(' AND ',$paramsSql);
+        }
+        $bean  = \R::findOne(static::$tableName, $sql, $paramsTotal);
         $item = new static();
         if ($bean) {
             foreach ($item->attributes as $key => $value) {

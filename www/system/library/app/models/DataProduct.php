@@ -60,7 +60,7 @@ class DataProduct implements \ArrayAccess  {
         $this->_container[$name] = $value;
     }
 
-    public function loadFromExcelData($data) {
+    public function loadFromExcelData($data, $onlyPropertyProduct = false) {
         $product_description[$this->langId] = [
             'name' => $data[3],
             'description' => $data[7],
@@ -90,9 +90,13 @@ class DataProduct implements \ArrayAccess  {
         $this->idProductFromExcel = $data[32];
         $this->nameOptions = explode(',', $data[4]);
 
-        $this->saveImagesExcel($data);
-        $this->setAttributes($data);
-        $this->setOptions($data);
+        if ($onlyPropertyProduct) {
+            $this->offersUrls = $this->getUrls();
+        } else {
+            $this->saveImagesExcel($data);
+            $this->setAttributes($data);
+            $this->setOptions($data);
+        }
     }
 
     protected function saveImagesExcel($data) {
@@ -274,13 +278,18 @@ class DataProduct implements \ArrayAccess  {
         $this->product_option = $options;
     }
 
-    protected function getDataOptions() {
+    protected function getRowsOffers() {
         $rows = [];
         foreach (self::$productsExcel as $row) {
             if (empty($row[3]) && $row[32] == $this->idProductFromExcel) {
                 $rows[] = $row;
             }
         }
+        return $rows;
+    }
+
+    protected function getDataOptions() {
+        $rows = $this->getRowsOffers();
         $dataOptions = [];
         $res = [];
         foreach ($rows as $row) {
@@ -387,6 +396,15 @@ class DataProduct implements \ArrayAccess  {
                 App::$db->query("INSERT INTO " . DB_PREFIX . "option_value_description SET option_value_id = '" . (int)$option_value_id . "', language_id = '" . (int)$this->langId . "', option_id = '" . (int)$option_id . "', name = '" . App::$db->escape($option_value['name']) . "'");
 
         return $option_value_id;
+    }
+
+    protected function getUrls() {
+        $rows = $this->getRowsOffers();
+        $res = [];
+        foreach ($rows as $row) {
+            $res[] = $row[0];
+        }
+        return $res;
     }
 
 }

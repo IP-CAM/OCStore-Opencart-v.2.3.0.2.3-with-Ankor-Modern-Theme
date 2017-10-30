@@ -1,5 +1,6 @@
 <?php
 use app\core\App;
+use app\models\AnkorRedirect;
 use app\models\Callback;
 use app\models\DataProduct;
 
@@ -19,10 +20,14 @@ class ControllerCatalogLoadFromExcel extends Controller {
             set_time_limit(0);
             $this->loadModels();
             $onlyImages = false;
+            $onlyLinks = false;
             if (isset($this->request->post['do_image'])) {
                 $onlyImages = true;
             }
-            $this->session->data['do_load_from_excel']['success'] = $this->loadFromFile(DIR_UPLOAD . '/' . $this->request->post['nameFile'],$onlyImages);
+            if (isset($this->request->post['do_redirects'])) {
+                $onlyLinks = true;
+            }
+            $this->session->data['do_load_from_excel']['success'] = $this->loadFromFile(DIR_UPLOAD . '/' . $this->request->post['nameFile'],$onlyImages,$onlyLinks);
             $this->response->redirect($this->url->link('catalog/load_from_excel', ['token' => $this->session->data['token']]));
         }
         $this->data['nameFile'] = '1.xlsx';
@@ -89,7 +94,7 @@ class ControllerCatalogLoadFromExcel extends Controller {
         return $arrayData;
     }
 
-    protected function loadFromFile($file, $onlyImages = false) {
+    protected function loadFromFile($file, $onlyImages = false,$onlyLinks = false) {
         $excel = $this->readFile($file);
         unset($excel['products'][0]);
         $groups = [];
@@ -99,6 +104,10 @@ class ControllerCatalogLoadFromExcel extends Controller {
         DataProduct::$groupsExcel = $groups;
         if ($onlyImages) {
             $this->saveImages($excel['products']);
+            return true;
+        }
+        if ($onlyLinks) {
+            $this->saveRedirects($excel['products']);
             return true;
         }
         $this->saveProducts($excel['products']);
@@ -148,6 +157,33 @@ class ControllerCatalogLoadFromExcel extends Controller {
         foreach ($images as $image) {
             $i++;
             $this->saveImageRecursive($product, $image,$i);
+        }
+    }
+
+    protected function saveRedirects($dataProducts) {
+        DataProduct::$productsExcel = $dataProducts;
+        $i = 1;
+        foreach ($dataProducts as $dataProduct) {
+            $i++;
+            if ($this->request->post['startRow'] > $i) {
+                continue;
+            }
+            if ($this->request->post['endRow'] <= $i) {
+                break;
+            }
+            if (empty($dataProduct[3])) {
+                continue;
+            }
+
+            $product = new DataProduct();
+            $product->loadFromExcelData($dataProduct,true);
+            foreach ($product->offersUrls as $url) {
+                $newRedirect = AnkorRedirect::findOne(['link' => $url]);
+                $newRedirect->link = $url;
+                $newRedirect->redirect = $product->keyword;
+                $newRedirect->save();
+            }
+
         }
     }
 

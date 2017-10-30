@@ -50,6 +50,7 @@ use app\libs\Form;
                         <?=Form::hidden('do_load_from_excel','y')?>
                         <button type="submit" class="btn btn-primary">Загрузить данные</button>
                         <input type="submit" name="do_image" value="Загрузить только картинки" class="btn btn-danger" >
+                        <input type="submit" name="do_redirects" value="Загрузить только редиректы" class="btn btn-danger" >
                     </div>
                 </form>
             </div>
