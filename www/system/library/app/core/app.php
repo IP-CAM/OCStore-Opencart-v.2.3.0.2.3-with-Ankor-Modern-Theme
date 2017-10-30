@@ -18,11 +18,16 @@ class App{
      * @var \DB
      */
     public static $db;
+    /**
+     * @var Cache
+     */
+    public static $cache;
 
     public static function Init() {
         App::$ds = new DataStore();
         App::$debug = new Debug();
         App::$config = new Config();
+        App::$cache = new Cache();
     }
 
 

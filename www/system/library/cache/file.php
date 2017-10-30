@@ -21,7 +21,7 @@ class File {
 		}
 	}
 
-	public function get($key) {
+	public function get($key,$assoc = true) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
@@ -35,7 +35,7 @@ class File {
 
 			fclose($handle);
 
-			return json_decode($data, true);
+			return json_decode($data, $assoc);
 		}
 
 		return false;

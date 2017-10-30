@@ -119,4 +119,33 @@ abstract class AppModel{
         return $item;
     }
 
+    /**
+     * @param $sql
+     * @param $params
+     * @return static
+     */
+    public static function findOne($params) {
+        $sql = '';
+        $paramsTotal = [];
+        if (count($params) > 0) {
+            $sql = 'WHERE ';
+            $paramsSql = [];
+            foreach ($params as $key => $value) {
+                $paramsTotal[':' . $key] = $value;
+                $paramsSql[] = ':' . $key . '=' . $key;
+            }
+            $sql .= implode(' AND ',$paramsSql);
+        }
+        $bean  = \R::findOne(static::$tableName, $sql, $paramsTotal);
+        $item = new static();
+        if ($bean) {
+            foreach ($item->attributes as $key => $value) {
+                $item->attributes[$key] = $bean->$key;
+            }
+            $item->id = $bean->id;
+            $item->bean = $bean;
+        }
+        return $item;
+    }
+
 }

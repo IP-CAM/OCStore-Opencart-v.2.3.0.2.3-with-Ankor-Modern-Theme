@@ -9,6 +9,9 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
+                <a href="<?php echo $hrefRemoveCache; ?>" data-toggle="tooltip" class="btn btn-primary">
+                    Очистить кеш
+                </a>
                 <a href="<?php echo $setting; ?>" data-toggle="tooltip" title="<?php echo $button_setting; ?>" class="btn btn-primary"><i class="fa fa-cog"></i>&nbsp;<?php echo $button_setting; ?></a>
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-news').submit() : false;"><i class="fa fa-trash-o"></i></button>

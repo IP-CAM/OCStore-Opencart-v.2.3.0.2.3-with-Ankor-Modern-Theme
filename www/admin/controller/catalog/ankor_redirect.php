@@ -9,6 +9,10 @@ class ControllerCatalogAnkorRedirect extends Controller {
 	private $error = array();
 
 	public function index() {
+        if (isset($this->request->get['remove_cache'])) {
+            AnkorRedirect::clearCache();
+            $this->response->redirect($this->url->link('catalog/ankor_redirect',['token' => $this->session->data['token']]));
+        }
 		$this->load->language('catalog/ankor_redirect');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
@@ -34,7 +38,6 @@ class ControllerCatalogAnkorRedirect extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->redirectToEdit();
 		}
-
 		$this->getForm();
 	}
 
@@ -94,20 +97,26 @@ class ControllerCatalogAnkorRedirect extends Controller {
 			}
 			$this->response->redirect($this->url->link('catalog/ankor_redirect', 'token=' . $this->session->data['token'] . $url, true));
 		}
+
 		$this->getList();
 	}
 
 	private function getList() {
+	    $data = [];
+	    $this->data = &$data;
         $data = $this->language->all();
         $data = $this->getAlerts($data);
         $data['controller'] = $this;
+        $data['hrefRemoveCache'] = $this->url->link('catalog/ankor_redirect', [
+            'token' => $this->session->data['token'],
+            'remove_cache' => 'y',
+        ], true);
         $data['breadcrumbs'] = $this->getBreadcrumbs();
         $data['add'] = $this->url->link('catalog/ankor_redirect/add', 'token=' . $this->session->data['token'], true);
         $data['delete'] = $this->url->link('catalog/ankor_redirect/delete', 'token=' . $this->session->data['token'], true);
         $data['setting'] = $this->url->link('catalog/ankor_redirect/setting', 'token=' . $this->session->data['token'], true);
-
-        $data['items'] = AnkorRedirect::getList();
-        $data['pagination'] = $this->getPagination(count($data['items']));
+        $data['pagination'] = $this->getPagination(AnkorRedirect::totalCount());
+        $data['items'] = AnkorRedirect::getListAdmin($data);
 
         //MAIN DATA
         $data['header'] = $this->load->controller('common/header');
@@ -128,7 +137,9 @@ class ControllerCatalogAnkorRedirect extends Controller {
         $pagination->total = $total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->limit = 150;
+        $pagination->limit = 50;
+        $this->data['start'] = $pagination->limit * ($page - 1);
+        $this->data['limit'] = $pagination->limit;
         $pagination->url = $this->url->link('catalog/ankor_redirect', 'token=' . $this->session->data['token'] . '' . '&page={page}', true);
 
         return $pagination->render();

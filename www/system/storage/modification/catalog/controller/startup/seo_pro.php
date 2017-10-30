@@ -1,4 +1,6 @@
 <?php
+use app\models\AnkorRedirect;
+
 class ControllerStartupSeoPro extends Controller {
 	private $cache_data = null;
 	private $rewritePostfix = null;
@@ -116,7 +118,7 @@ class ControllerStartupSeoPro extends Controller {
 			}
 
 			$this->validate();
-
+			$this->ankorRedirect($route);
 			if (isset($this->request->get['route'])) {
 				return new Action($this->request->get['route']);
 			}
@@ -461,11 +463,12 @@ class ControllerStartupSeoPro extends Controller {
 		];
 	}
 
-	protected function ankorRedirect() {
-
-		header($this->request->server['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
-
-		$this->response->redirect('', 301);
+	protected function ankorRedirect($curUrl) {
+		$redirect = AnkorRedirect::getByLink($curUrl);
+		if ($redirect->redirect !== '') {
+			header($this->request->server['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
+			$this->response->redirect($redirect->redirect, 301);
+		}
 	}
 
 }

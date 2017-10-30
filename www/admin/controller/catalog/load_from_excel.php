@@ -178,7 +178,7 @@ class ControllerCatalogLoadFromExcel extends Controller {
             $product = new DataProduct();
             $product->loadFromExcelData($dataProduct,true);
             foreach ($product->offersUrls as $url) {
-                $newRedirect = new AnkorRedirect();
+                $newRedirect = AnkorRedirect::findOne(['link' => $url]);
                 $newRedirect->link = $url;
                 $newRedirect->redirect = $product->keyword;
                 $newRedirect->save();
