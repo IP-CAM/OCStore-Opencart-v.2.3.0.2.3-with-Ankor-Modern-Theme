@@ -71,3 +71,18 @@
   font-size: 15px;
 }
 
+.owl-controls {
+  .owl-buttons {
+    .owl-prev, .owl-next {
+      top: calc(50% - 10px);
+    }
+    .owl-prev {
+      left: 10px;
+    }
+    .owl-next {
+      right: 10px;
+    }
+  }
+}
+
+
