@@ -90,7 +90,11 @@ class ModelCatalogProduct extends Model {
 			}
 
 			if (!empty($data['filter_filter'])) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "product_filter pf ON (p2c.product_id = pf.product_id) LEFT JOIN " . DB_PREFIX . "product p ON (pf.product_id = p.product_id)";
+                $sql .= " LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";
+                $grouped_filters = $this->getGroupedFilters($data['filter_filter']);
+                foreach ($grouped_filters as $filter_group_id => $filters) {
+                    $sql .= " LEFT JOIN " . DB_PREFIX . "product_filter pf" . $filter_group_id . " ON (p.product_id = pf" . $filter_group_id . ".product_id)";
+                }
 			} else {
 				$sql .= " LEFT JOIN " . DB_PREFIX . "product p ON (p2c.product_id = p.product_id)";
 			}
@@ -116,7 +120,9 @@ class ModelCatalogProduct extends Model {
 					$implode[] = (int)$filter_id;
 				}
 
-				$sql .= " AND pf.filter_id IN (" . implode(',', $implode) . ")";
+                foreach ($grouped_filters as $filter_group_id => $filters) {
+                    $sql .= " AND pf" . $filter_group_id . ".filter_id IN (" . implode(',', $filters) . ")";
+                }
 			}
 		}
 
@@ -347,8 +353,28 @@ class ModelCatalogProduct extends Model {
 
 		return $product_data;
 
-	}
-      
+    }
+
+    private function getGroupedFilters ($filters) {
+
+        $implode = array();
+
+        $filters = explode(',', $filters);
+
+        foreach ($filters as $filter_id) {
+            $implode[] = (int)$filter_id;
+        }
+
+        $query = $this->db->query("SELECT `filter_id`, `filter_group_id` FROM `" . DB_PREFIX . "filter` WHERE `filter_id` IN (" . implode(',', $implode) . ")");
+
+        $grouped_filters = array();
+        foreach ($query->rows as $row) {
+            $grouped_filters[$row['filter_group_id']][] = $row['filter_id'];
+        }
+
+        return $grouped_filters;
+    }
+
 	public function getProductSpecials($data = array()) {
 		$sql = "SELECT DISTINCT ps.product_id, (SELECT AVG(rating) FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = ps.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) GROUP BY ps.product_id";
 
