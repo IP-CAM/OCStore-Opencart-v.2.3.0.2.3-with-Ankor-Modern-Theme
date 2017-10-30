@@ -10,7 +10,7 @@ $(document).ready(function() {
 		
 		$(element).summernote({
 			disableDragAndDrop: true,
-			height: 300,
+			height: 150,
 			lang: lang,
 			emptyPara: '',
 			toolbar: [
