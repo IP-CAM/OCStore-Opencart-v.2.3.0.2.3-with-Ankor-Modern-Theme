@@ -3205,6 +3205,19 @@ $('#option a:first').tab('show');
 <script type="text/javascript"><!--
 $('.summernote').summernote({
 height: 150,   //set editable area's height
+    toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['fontsize', ['fontsize']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'image', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+    ],
+    fontNames:['Roboto','Arial','Times New Roman','Helvetica','Open Sans'],
+    fontNamesIgnoreCheck: ['Roboto']
 });
 //--></script>
 <?php } ?>
