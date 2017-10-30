@@ -195,6 +195,12 @@ class ControllerCommonColumnLeft extends Controller {
                 'children' => array()
             );
 
+            $artList[] = array(
+                'name'	   => 'Перенаправление ЧПУ',
+                'href'     => $this->url->link('catalog/ankor_redirect', 'token=' . $this->session->data['token'], true),
+                'children' => array()
+            );
+
             $catalog[] = array(
                 'name'	   => 'Доработки',
                 'href'     => '',

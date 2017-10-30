@@ -6,7 +6,7 @@ namespace app\models;
 class AnkorRedirect extends AppModel  {
 
     protected static $tableName = 'ankorredirects';
-    protected $attributes = [
+    public $attributes = [
         'link' => '',
         'redirect' => ''
     ];
@@ -14,5 +14,10 @@ class AnkorRedirect extends AppModel  {
     public function loadFromExcel($data) {
 
     }
+
+    public static function getList() {
+        return self::find('');
+    }
+
 
 }

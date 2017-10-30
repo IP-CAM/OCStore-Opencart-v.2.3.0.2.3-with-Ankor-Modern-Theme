@@ -461,5 +461,12 @@ class ControllerStartupSeoPro extends Controller {
 		];
 	}
 
+	protected function ankorRedirect() {
+
+		header($this->request->server['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
+
+		$this->response->redirect('', 301);
+	}
+
 }
 ?>

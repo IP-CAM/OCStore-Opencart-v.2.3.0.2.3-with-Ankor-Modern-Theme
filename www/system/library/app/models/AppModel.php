@@ -69,7 +69,10 @@ abstract class AppModel{
     }
 
     public function __get($name){
-        return $this->attributes[$name];
+        if (isset($this->attributes[$name])) {
+            return    $this->attributes[$name];
+        }
+        return null;
     }
 
     public function __set($name, $value){
