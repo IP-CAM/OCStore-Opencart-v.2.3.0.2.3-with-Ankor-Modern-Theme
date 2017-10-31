@@ -4,16 +4,17 @@
 //Main class
 use app\core\App;
 
-App::Init();
+
 
 // Registry
 $registry = new Registry();
-
 // Config
 $config = new Config();
 $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
+
+App::Init($registry);
 
 // Event
 $event = new Event($registry);

@@ -8,6 +8,7 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-general-add" data-toggle="tab">Основные</a></li>
         <li class=""><a href="#tab-meta-add" data-toggle="tab">Формирование мета</a></li>
+        <li class=""><a href="#tab-telegram" data-toggle="tab">Настройки оповещений телеграм</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab-general-add">
@@ -50,6 +51,12 @@
         </div>
         <div class="tab-pane" id="tab-meta-add">
             <?php echo $this->render('setting/additional/metaProd.tpl');?>
+        </div>
+        <div class="tab-pane" id="tab-meta-add">
+            <?php echo $this->render('setting/additional/metaProd.tpl');?>
+        </div>
+        <div class="tab-pane" id="tab-telegram">
+            <?php echo $this->render('setting/additional/telegram.tpl');?>
         </div>
     </div>
 </div>

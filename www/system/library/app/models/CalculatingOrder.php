@@ -29,12 +29,12 @@ class CalculatingOrder extends Callback  {
     ];
 
     public function sendAlert(){
-        if (empty(App::$config->telegram['chatCalculationOrder'])) {
+        $chat = App::$config->chatCalculationOrderTg;
+        if (empty($chat)) {
             return;
         }
-        $telegram = new Telegram(App::$config->telegram['chatCalculationOrder']);
+        $telegram = new Telegram($chat);
         $telegram->sendMessage($this->getTextAlert());
-
     }
 
     protected function getTextAlert() {

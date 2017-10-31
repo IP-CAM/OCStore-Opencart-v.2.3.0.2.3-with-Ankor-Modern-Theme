@@ -28,4 +28,7 @@ class Config {
 			exit();
 		}
 	}
+	public function getData() {
+	    return $this->data;
+    }
 }

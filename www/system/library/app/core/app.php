@@ -22,9 +22,14 @@ class App{
      * @var Cache
      */
     public static $cache;
+    /**
+     * @var \Registry
+     */
+    public static $registry;
 
-    public static function Init() {
+    public static function Init($registry) {
         App::$ds = new DataStore();
+        App::$registry = $registry;
         App::$debug = new Debug();
         App::$config = new Config();
         App::$cache = new Cache();

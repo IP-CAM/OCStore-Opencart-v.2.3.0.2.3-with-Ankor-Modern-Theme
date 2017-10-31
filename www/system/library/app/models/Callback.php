@@ -77,10 +77,10 @@ class Callback extends AppModel {
     }
 
     public function sendAlert(){
-        if (empty(App::$config->telegram['chatCallBack'])) {
+        if (empty(App::$config->chatCallBackTg)) {
             return;
         }
-        $telegram = new Telegram(App::$config->telegram['chatCallBack']);
+        $telegram = new Telegram(App::$config->chatCallBackTg);
         $telegram->sendMessage($this->getTextAlert());
 
     }
