@@ -66,7 +66,7 @@ class ControllerCatalogPrides extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_prides->edit($this->request->get['id'], $this->request->post);
-
+            $this->artSaveKeywordSeoUrl($this->request->get['id']);
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
