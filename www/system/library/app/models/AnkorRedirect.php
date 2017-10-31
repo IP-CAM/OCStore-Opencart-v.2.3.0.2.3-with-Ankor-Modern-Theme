@@ -40,7 +40,7 @@ class AnkorRedirect extends AppModel  {
         $cacheRes = App::$cache->get('ankor_redirect');
         if (!$cacheRes) {
             $data = AnkorRedirect::find('');
-            App::$cache->set('ankor_redirect',$data);
+            App::$cache->set('ankor_redirect',$data,7*24*3600);
             return $data;
         }
         return $cacheRes;
