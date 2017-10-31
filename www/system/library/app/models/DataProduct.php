@@ -190,6 +190,7 @@ class DataProduct implements \ArrayAccess  {
             $this->id = self::$ocModel->addProduct($this);
         } else {
             if (self::$ocModel->getProduct($this->id)) {
+                ImageProductOption::clearForProduct($this->id);
                 self::$ocModel->editProduct($this->id, $this);
             } else {
                 $this->id = self::$ocModel->addProduct($this);

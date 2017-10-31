@@ -40,6 +40,7 @@ abstract class AppModel{
         if ($this->id) {
             $this->bean->id = $this->id;
         }
+
         $res = \R::store($this->bean);
         if (!$res) {
             return false;
