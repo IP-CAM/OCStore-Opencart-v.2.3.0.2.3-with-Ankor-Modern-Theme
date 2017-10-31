@@ -71,4 +71,6 @@ class SeoUrl {
         return $query->row['keyword'];
     }
 
+//    "UPDATE `oc_url_alias` SET `query` = REPLACE( `query`, 'р', 'p');"
+
 }

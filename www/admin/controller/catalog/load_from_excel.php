@@ -14,6 +14,13 @@ class ControllerCatalogLoadFromExcel extends Controller {
     public $data = [];
 
 	public function index() {
+	    if (isset($this->request->post['do_repair_url'])) {
+            ini_set('max_execution_time', 0);
+            ini_set('allow_url_fopen', 1);
+            set_time_limit(0);
+            $this->session->data['do_load_from_excel']['success'] = $this->repairUrls();
+            $this->response->redirect($this->url->link('catalog/load_from_excel', ['token' => $this->session->data['token']]));
+        }
         if (isset($this->request->post['do_load_from_excel']) && $this->request->post['do_load_from_excel'] == 'y') {
             ini_set('max_execution_time', 0);
             ini_set('allow_url_fopen', 1);
@@ -179,7 +186,7 @@ class ControllerCatalogLoadFromExcel extends Controller {
             $product->loadFromExcelData($dataProduct,true);
             foreach ($product->offersUrls as $url) {
                 $newRedirect = AnkorRedirect::findOne(['link' => $url]);
-                $newRedirect->link = $url;
+                $newRedirect->link = $url . '.html';
                 $newRedirect->redirect = $product->keyword;
                 $newRedirect->save();
             }
@@ -204,6 +211,11 @@ class ControllerCatalogLoadFromExcel extends Controller {
             $this->data['loadImgSucces'][$i] = ['link' => $image, 'load_file' => $res];
             return true;
         }
+    }
+
+    protected function repairUrls() {
+        App::$db->query("UPDATE `oc_url_alias` SET `keyword` = REPLACE( `keyword`, 'р', 'p')");
+        return true;
     }
 }
 ?>

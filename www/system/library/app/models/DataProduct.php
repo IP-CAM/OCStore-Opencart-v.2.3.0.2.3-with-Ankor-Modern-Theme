@@ -79,7 +79,7 @@ class DataProduct implements \ArrayAccess  {
             $this->quantity = 9999999;
         }
         $this->measure_str = $data[11];
-        $this->keyword = $data[0];
+        $this->keyword = str_replace('р','p',$data[0]);
         $this->shipping = 1;
         $this->status = 1;
         $this->main_category_id = self::$groupsExcel[$data[18]];
@@ -402,7 +402,7 @@ class DataProduct implements \ArrayAccess  {
         $rows = $this->getRowsOffers();
         $res = [];
         foreach ($rows as $row) {
-            $res[] = $row[0];
+            $res[] = str_replace('р','p',$row[0]);
         }
         return $res;
     }
