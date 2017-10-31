@@ -1512,6 +1512,10 @@ class ControllerSettingSetting extends Controller {
         $this->setAddSetting('config_contact_skype');
         //Meta
         $this->addMetaProdSetting();
+        // Дополнительные параметры для доступа к которым можно использовать App::$config
+        $this->setAddSetting('config_art_tokenTelegram');
+        $this->setAddSetting('config_art_chatCallBackTg');
+        $this->setAddSetting('config_art_chatCalculationOrderTg');
     }
 
     protected function addMetaProdSetting() {
