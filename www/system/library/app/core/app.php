@@ -31,7 +31,7 @@ class App{
         App::$ds = new DataStore();
         App::$registry = $registry;
         App::$debug = new Debug();
-        App::$config = new Config(App::$registry->get('config'));
+        App::$config = new Config();
         App::$cache = new Cache();
     }
 

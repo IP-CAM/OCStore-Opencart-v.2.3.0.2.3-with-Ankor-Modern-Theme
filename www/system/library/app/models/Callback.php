@@ -86,7 +86,6 @@ class Callback extends AppModel {
     }
 
     protected function getTextAlert() {
-
         $res = "\xF0\x9F\x93\x9E Новый заказ обратного звонка \n";
         $res .= "<b>Имя:</b>   " . $this->firstName . "\n";
         $res .= "<b>Телефон:</b> " . $this->phone. "\n";

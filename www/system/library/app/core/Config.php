@@ -21,7 +21,7 @@ namespace app\core;
 class Config {
     protected $data = [];
     protected $ocPrefix = 'config_art_';
-    public function __construct($ocConfig){
+    public function __construct(){
         // настройки файла приоритетнее
         $config = require_once DIR_SYSTEM . 'library/app/config/config.php';
         if (empty($config)) {
