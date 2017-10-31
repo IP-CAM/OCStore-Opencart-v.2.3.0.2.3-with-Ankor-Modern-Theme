@@ -737,7 +737,7 @@
                               <td>
 
                                 <button class="btn btn-info btn-lg" type="button" data-toggle="modal" data-target="#modalImgOption_<?=$product_option['product_option_id']?>_<?=$product_option_value['option_value_id']?>">Картинки</button>
-                                <div id="modalImgOption_<?=$product_option['product_option_id']?>_<?=$product_option_value['option_value_id']?>" class="modal fade">
+                                <div id="modalImgOption_<?=$product_option['product_option_id']?>_<?=$product_option_value['option_value_id']?>" class="modal modalImgOption fade">
                                   <div class="modal-dialog">
                                     <?
                                     /**
