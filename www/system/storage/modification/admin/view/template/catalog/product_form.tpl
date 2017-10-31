@@ -749,7 +749,7 @@
                                     $data['optionValueId'] = $product_option_value['product_option_value_id'];
                                     $data['noImage'] = $noImage;
                                     $data['placeholder'] = $placeholder;
-                                    $data['urlAjaxImgOptions'] = $urlAjaxImgOptions;
+                                    //$data['urlAjaxImgOptions'] = $urlAjaxImgOptions;
                                     $data['optionImages'] = $product_option_value['images'];
                                     echo $this->render('catalog/product_option_img.tpl',$data);
                                     ?>
