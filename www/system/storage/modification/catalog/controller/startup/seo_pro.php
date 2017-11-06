@@ -248,9 +248,10 @@ class ControllerStartupSeoPro extends Controller {
 
 					case 'path':
 						$categories = explode('_', $value);
-						foreach ($categories as $category) {
+						$category = array_pop($categories);
+						//foreach ($categories as $category) {
 							$queries[] = 'category_id=' . $category;
-						}
+						//}
 						unset($data[$key]);
 						break;
 
