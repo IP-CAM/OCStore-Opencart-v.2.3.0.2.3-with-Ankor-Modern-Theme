@@ -41,14 +41,12 @@
         </div>
         <div class="col-sm-6">
           <ul>
-            <li><a href="<?php echo $special; ?>"><?php echo $text_special; ?></a></li>
             <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a>
               <ul>
                 <li><a href="<?php echo $edit; ?>"><?php echo $text_edit; ?></a></li>
                 <li><a href="<?php echo $password; ?>"><?php echo $text_password; ?></a></li>
                 <li><a href="<?php echo $address; ?>"><?php echo $text_address; ?></a></li>
                 <li><a href="<?php echo $history; ?>"><?php echo $text_history; ?></a></li>
-                <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
               </ul>
             </li>
             <li><a href="<?php echo $cart; ?>"><?php echo $text_cart; ?></a></li>

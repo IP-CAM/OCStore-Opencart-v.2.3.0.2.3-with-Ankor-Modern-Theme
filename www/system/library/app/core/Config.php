@@ -19,6 +19,7 @@ namespace app\core;
  * @property string chatCallBackTg;
  * @property string lenghtRelatedListNewsTitle;
  * @property string lenghtRelatedListNewsDesc;
+ * @property string cacheTimeSitemap;
  */
 class Config {
     protected $data = [];
