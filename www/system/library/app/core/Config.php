@@ -17,6 +17,8 @@ namespace app\core;
  * @property string chatCalculationOrderTg;
  * @property string tokenTelegram;
  * @property string chatCallBackTg;
+ * @property string lenghtRelatedListNewsTitle;
+ * @property string lenghtRelatedListNewsDesc;
  */
 class Config {
     protected $data = [];

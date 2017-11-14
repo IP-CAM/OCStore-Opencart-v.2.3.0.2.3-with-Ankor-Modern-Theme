@@ -1516,6 +1516,9 @@ class ControllerSettingSetting extends Controller {
         $this->setAddSetting('config_art_tokenTelegram');
         $this->setAddSetting('config_art_chatCallBackTg');
         $this->setAddSetting('config_art_chatCalculationOrderTg');
+
+        $this->setAddSetting('config_art_lenghtRelatedListNewsTitle',60);
+        $this->setAddSetting('config_art_lenghtRelatedListNewsDesc',100);
     }
 
     protected function addMetaProdSetting() {

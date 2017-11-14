@@ -2,6 +2,7 @@
 /**
  * @var \Template\PHP $this
  */
+use app\libs\Form;
 
 ?>
 <div class="tab-content">
@@ -48,6 +49,18 @@
                     <input class="form-control" id="contact_skype" type="text" name="config_contact_skype" value="<?php echo $config_contact_skype; ?>">
                 </div>
             </div>
+            <div class="form-group"><!-- Начало группы для input -->
+                <?=Form::label('Длина заголовка похожих публикаций','config_art_lenghtRelatedListNewsTitle',['class'=>'col-sm-2 control-label']);?>
+                <div class="col-sm-10">
+                    <?=Form::text('config_art_lenghtRelatedListNewsTitle',$config_art_lenghtRelatedListNewsTitle,['class'=>'form-control'])?>
+                </div>
+            </div><!-- Конец группы для input -->
+            <div class="form-group"><!-- Начало группы для input -->
+                <?=Form::label('Длина описания похожих публикаций','config_art_lenghtRelatedListNewsDesc',['class'=>'col-sm-2 control-label']);?>
+                <div class="col-sm-10">
+                    <?=Form::text('config_art_lenghtRelatedListNewsDesc',$config_art_lenghtRelatedListNewsDesc,['class'=>'form-control'])?>
+                </div>
+            </div><!-- Конец группы для input -->
         </div>
         <div class="tab-pane" id="tab-meta-add">
             <?php echo $this->render('setting/additional/metaProd.tpl');?>
