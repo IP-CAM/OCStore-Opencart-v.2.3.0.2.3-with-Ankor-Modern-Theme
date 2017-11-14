@@ -1390,6 +1390,7 @@ class ControllerSettingSetting extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
+        $data['clearCacheSitemapLink'] = HTTP_CATALOG.'index.php?route=extension/feed/google_sitemap&clear_cache=y';
 		$this->addSettings();
 		$this->response->setOutput($this->load->view('setting/setting', $this->data));
 	}
@@ -1519,6 +1520,8 @@ class ControllerSettingSetting extends Controller {
 
         $this->setAddSetting('config_art_lenghtRelatedListNewsTitle',60);
         $this->setAddSetting('config_art_lenghtRelatedListNewsDesc',100);
+
+        $this->setAddSetting('config_art_cacheTimeSitemap',24);
     }
 
     protected function addMetaProdSetting() {

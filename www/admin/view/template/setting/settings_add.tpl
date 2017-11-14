@@ -61,6 +61,15 @@ use app\libs\Form;
                     <?=Form::text('config_art_lenghtRelatedListNewsDesc',$config_art_lenghtRelatedListNewsDesc,['class'=>'form-control'])?>
                 </div>
             </div><!-- Конец группы для input -->
+            <div class="form-group"><!-- Начало группы для input -->
+                <?=Form::label('Срок хранения кеша sitemap.xml (часов)','config_art_lenghtRelatedListNewsDesc',['class'=>'col-sm-2 control-label']);?>
+                <div class="col-sm-2">
+                    <?=Form::text('config_art_cacheTimeSitemap',$config_art_cacheTimeSitemap,['class'=>'form-control'])?>
+                </div>
+                <div class="col-sm-2">
+                    <a href="<?=$clearCacheSitemapLink?>" class="btn btn-primary" target="_blank">Обновить кеш</a>
+                </div>
+            </div><!-- Конец группы для input -->
         </div>
         <div class="tab-pane" id="tab-meta-add">
             <?php echo $this->render('setting/additional/metaProd.tpl');?>
