@@ -51,7 +51,7 @@ class ModelExtensionModuleAridiusStoreReview extends Model {
 			$limit = 20;
 		}
     
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "aridius_review_store where parent=".(int)$parent." AND status = '1' ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "aridius_review_store where parent=".(int)$parent." AND status = '1' ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
         return $query->rows;
     }
 

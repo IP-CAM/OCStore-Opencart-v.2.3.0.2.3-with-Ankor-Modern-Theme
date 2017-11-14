@@ -1,8 +1,10 @@
 <?php
+use app\core\App;
+
 class ControllerInformationAridiusNews extends Controller {
 
 	public function index() {
-		
+
 		$this->language->load('information/aridius_news');
 		$this->load->model('catalog/aridiusnews');
 		
@@ -258,12 +260,13 @@ class ControllerInformationAridiusNews extends Controller {
 				} else {
 					$video = false;
 				}
+				$desc = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
 				$data['aridius_news'][] = array(
 					'aridius_news_id'     => $result['aridius_news_id'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
+					'description' => getLimitStr($desc,App::$config->lenghtRelatedListNewsDesc),
 				    'image'       => $image,
 					'video'       => $video,
-					'title'       => $result['title'],
+					'title'       => getLimitStr($result['title'],App::$config->lenghtRelatedListNewsTitle),
 					'viewed'      => $result['viewed'],
 					'href'  => $this->url->link('information/aridius_news', 'aridius_news_id=' . $result['related_aridius_news_id']),
 					'posted'   	  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
@@ -556,7 +559,7 @@ class ControllerInformationAridiusNews extends Controller {
 				$json['error'] = $this->language->get('error_name');
 			}
 
-		if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
+		if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 3500)) {
 				$json['error'] = $this->language->get('error_text');
 			}
 
