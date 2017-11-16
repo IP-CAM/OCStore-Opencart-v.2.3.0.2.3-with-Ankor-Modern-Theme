@@ -53,17 +53,26 @@
 .line-product {
   padding: 10px 0 5px 0;
 }
-
+.blockButtons {
+  display: flex;
+  margin: 10px -5px;
+}
 .cart {
   padding-left: 5px;
-  >button:hover{
+  button:hover{
       background: #51585e;
     }
-  >button{
+  button{
     background: #353d44;
   }
 }
-
+.measure {
+  padding-top: 10px;
+  padding-left: 5px;
+  span {
+    font-size: 26px;
+  }
+}
 .tab-content{
   min-height: 600px;
 }

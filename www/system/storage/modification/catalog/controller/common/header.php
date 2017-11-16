@@ -403,6 +403,10 @@ class ControllerCommonHeader extends Controller {
             'title' => 'Сертификаты',
             'link' => $this->url->link('information/certificates')
         ];
+        $result[] = [
+            'title' => 'Карточка предприятия',
+            'link' => $this->url->link('information/information',['information_id'=>4])
+        ];
         return $result;
     }
 }

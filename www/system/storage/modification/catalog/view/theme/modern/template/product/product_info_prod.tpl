@@ -72,9 +72,9 @@
 	</span>
         <div class="line-product">
             <?php if (!$special) { ?>
-                <span class="priceproduct-new"><?php echo $price;?>/<?php echo $measure_str; ?></span>
+                <span class="priceproduct-new"><?php echo $price;?></span>
             <?php } else { ?>
-                <span class="priceproduct-new"><?php echo $special;?>/<?php echo $measure_str;?></span>&nbsp;&nbsp;<span class="priceproduct-old"><?php echo $price;?>/<?php echo $measure_str;?></span>
+                <span class="priceproduct-new"><?php echo $special;?>/span>&nbsp;&nbsp;<span class="priceproduct-old"><?php echo $price;?></span>
             <?php } ?><br />
             <?php if ($aridiusundersell_status) { ?>
                 <i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp;<a id="undersell-order"><?php echo $buttonundersell_title; ?></a>
@@ -246,40 +246,49 @@
                 <div class="help-block" id="recurring-description"></div>
             </div>
         <?php } ?>
-        <div class="form-group plus_minus">
-            <div class="wrap-btn-product">
-            <div class="plus_minus_pull">
-            <div class="pull-left">
-                <input type="text" name="quantity" value="<?php echo $minimum; ?>" data-toggle="tooltip" title="<?php echo $entry_qty; ?>" size="2" id="input-quantity" class="form-control" />
-                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-            </div>
-            <div class="custom pull-left">
-                <button type="button" id="plus" class="items-count" ><i class="fa fa-angle-up">&nbsp;</i></button>
-                <button type="button" id="minus" class="items-count"><i class="fa fa-angle-down">&nbsp;</i></button>
-            </div>
-            <?php if ($modern_wishlist_cat !=1) { ?>
-                <button type="button" data-toggle="tooltip" class="btn-wishlist" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
-            <?php } ?>
-            <?php if ($modern_compare_cat !=1) { ?>
-                <button type="button" data-toggle="tooltip" class="btn-compare" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
-            <?php } ?>
-            </div>
-            <div class="plus_minus_pull">
-                <div class="cart pull-left" >
-                    <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?>
-                        <button type="button" class="btn-instock" onclick="instock.add('<?php echo $product_id; ?>');" data-product-id="<?php echo $product_id; ?>"><?php echo $button_instock; ?></button>
-                    <?php } else { ?>
-                    <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group plus_minus">
+                    <div class="wrap-btn-product">
+                        <div class="plus_minus_pull">
+                            <div class="pull-left">
+                                <input type="text" name="quantity" value="<?php echo $minimum; ?>" data-toggle="tooltip" title="<?php echo $entry_qty; ?>" size="2" id="input-quantity" class="form-control" />
+                                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+                            </div>
+                            <div class="custom pull-left">
+                                <button type="button" id="plus" class="items-count" ><i class="fa fa-angle-up">&nbsp;</i></button>
+                                <button type="button" id="minus" class="items-count"><i class="fa fa-angle-down">&nbsp;</i></button>
+                            </div>
+                            <div class="pull-left measure">
+                                <span><?php echo $measure_str;?></span>
+                            </div>
+                            <?php if ($modern_wishlist_cat !=1) { ?>
+                                <button type="button" data-toggle="tooltip" class="btn-wishlist" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
+                            <?php } ?>
+                            <?php if ($modern_compare_cat !=1) { ?>
+                                <button type="button" data-toggle="tooltip" class="btn-compare" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="plus_minus_pull">
-            <div class="cart pull-left">
-                <?php if ($aridiusfastorder_status) { ?>
-                    <button type="button" id="fast-order" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
-                <?php } ?>
-                <?php } ?>
-            </div>
-            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="blockButtons">
+                    <div class="cart" >
+                        <?php if ($quantity <= 0 && $aridiusinstock_status ) { ?>
+                            <button type="button" class="btn-instock" onclick="instock.add('<?php echo $product_id; ?>');" data-product-id="<?php echo $product_id; ?>"><?php echo $button_instock; ?></button>
+                        <?php } else { ?>
+                        <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
+                    </div>
+                    <div class="cart ">
+                        <?php if ($aridiusfastorder_status) { ?>
+                            <button type="button" id="fast-order" data-loading-text="<?php echo $text_loading; ?>" class="btn-cart"><i class="fa fa-clock-o"></i> <?php echo $button_title; ?></button>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                </div>
             </div>
         </div>
        <!-- <div class="clearfix"></div>
