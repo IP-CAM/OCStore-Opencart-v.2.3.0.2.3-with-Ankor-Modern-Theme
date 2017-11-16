@@ -144,7 +144,7 @@
     </div>  <br>
 <!--////////////WeDo/////////////-->
 	<div class="wedo">
-        <a href="#">Сайт разработан и поддерживается <img src="image/home/WeDo_Logo.png" alt="WeDo"></a>
+        <a href="#">Сайт разработан и поддерживается <img src="image/home/wedoLogo.png" alt="WeDo"></a>
     </div>
 <!--////////////WeDo/////////////-->
     <br>
