@@ -10,7 +10,7 @@
                     <div class="title">Наши телефоны</div>
                     <p><span class="phone">+7 (978) 025-44-78</span> - отдел продаж</p>
                     <p><span class="phone">+7 (978) 713-89-35</span> - отдел продаж</p>
-                    <p><span class="phone">+7 (978) 204-76-25</span> - отдел конструкций</p>
+                    <p><span class="phone">+7 (978) 063-41-80</span> - отдел конструкций</p>
                 </div>
             </div>
         </div>
