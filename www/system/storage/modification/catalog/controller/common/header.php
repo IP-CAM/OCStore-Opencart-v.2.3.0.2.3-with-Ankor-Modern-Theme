@@ -405,7 +405,7 @@ class ControllerCommonHeader extends Controller {
         ];
         $result[] = [
             'title' => 'Карточка предприятия',
-            'link' => $this->url->link('information/information',['information_id'=>4])
+            'link' => $this->url->link('information/information',['information_id'=>8])
         ];
         return $result;
     }
