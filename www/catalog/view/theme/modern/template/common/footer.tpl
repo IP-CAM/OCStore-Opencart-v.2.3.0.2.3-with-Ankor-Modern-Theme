@@ -144,7 +144,7 @@
     </div>  <br>
 <!--////////////WeDo/////////////-->
 	<div class="wedo">
-        <a href="#">Сайт разработан и поддерживается <img src="image/home/WeDo_Logo.png" alt="WeDo"></a>
+        <a href="#">Сайт разработан и поддерживается <img src="image/home/wedoLogo.png" alt="WeDo"></a>
     </div>
 <!--////////////WeDo/////////////-->
     <br>
@@ -161,7 +161,7 @@ $(".tooltip-examples button").tooltip();
 });
 //--></script>
 <?php if ($modern_show_fluid_map_footer == '0') { ?>
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $modern_fluid_map_key; ?>" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $modern_fluid_map_key; ?>&language=ru&region=RU" type="text/javascript"></script>
 <script type="text/javascript"><!--
 function initialize() {
 var latlng = new google.maps.LatLng(<?php echo $modern_latitude_fluid_map[$language_id]; ?>, <?php echo $modern_longitude_fluid_map[$language_id]; ?>);
