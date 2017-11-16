@@ -70,6 +70,26 @@
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 991px) {
 
+  /*product btn*/
+  .wrap-btn-product, .blockButtons{
+    display: flex;
+    flex-direction: column;
+    .cart {
+      text-align: left;
+      margin-bottom: 10px;
+      button {
+        min-width: 80%;
+      }
+    }
+    .btn-cart {
+      margin: 0;
+    }
+    .plus_minus_pull {
+      margin: 2px 0;
+    }
+  }
+  /*END product btn*/
+
   #top-links2 {
     ul {
       display: flex;
@@ -129,25 +149,7 @@
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 479px) {
-  /*product btn*/
-  .wrap-btn-product {
-    display: flex;
-    flex-direction: column;
-    .cart {
-      padding-left: 0;
-      margin-bottom: 0;
-    }
-    .btn-cart {
-      margin: 0;
-    }
-    .plus_minus_pull {
-      margin: 2px 0;
-    }
-    #button-cart {
-      min-width: 156px;
-    }
-  }
-  /*END product btn*/
+
   #cart {
     .cartProduct{
       max-width: 140px;;
