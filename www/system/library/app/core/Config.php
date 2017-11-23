@@ -20,6 +20,10 @@ namespace app\core;
  * @property string lenghtRelatedListNewsTitle;
  * @property string lenghtRelatedListNewsDesc;
  * @property string cacheTimeSitemap;
+ * @property string workHost;
+ * @property string workIp;
+ * @property string analyticsCodeYandex;
+ * @property string analyticsCodeGoogle;
  */
 class Config {
     protected $data = [];
@@ -46,5 +50,21 @@ class Config {
             }
         }
         return null;
+    }
+
+    public function isWorkSite() {
+        if ($_SERVER['SERVER_NAME'] == $this->workHost) {
+            return true;
+        }
+        if ($_SERVER['SERVER_ADDR'] == $this->workIp) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getDefaultAnalyticCode() {
+        $yandex = '';
+        $google = '';
+        return compact('google', 'yandex');
     }
 }

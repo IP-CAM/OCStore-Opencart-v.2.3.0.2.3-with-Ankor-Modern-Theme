@@ -42,8 +42,8 @@ class CalculatingOrder extends Callback  {
         $res = "\xF0\x9F\x94\x96 Новый заказ расчета \n";
         $res .= "<b>Имя:</b>   " . $this->firstName . "\n";
         $res .= "<b>Телефон:</b> " . $this->phone. "\n";
-        $res .= "<b>Тип конструкции:</b> " . $this->phone. "\n";
-        $res .= "<b>Размер конструкции:</b> " . $this->phone. "\n";
+        $res .= "<b>Тип конструкции:</b> " . $this->typeConstruction. "\n";
+        $res .= "<b>Размер конструкции:</b> " . $this->sizeConstruction. "\n";
         $res .= "<b>Комментарий:</b> " . $this->comment. "\n";
         $res .= '<a href="' . $href . '">Ссылка</a>' ;
         return $res;

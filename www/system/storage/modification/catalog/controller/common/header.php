@@ -355,6 +355,7 @@ class ControllerCommonHeader extends Controller {
         $data['categoryMenu'] = $this->load->view('common/menu/main_category',$data);
 
         $this->setLinkDocuments();
+        $this->setVariablesAnalytics();
 		return $this->load->view('common/header', $this->data);
 	}
 
@@ -408,5 +409,14 @@ class ControllerCommonHeader extends Controller {
             'link' => $this->url->link('information/information',['information_id'=>8])
         ];
         return $result;
+    }
+
+    protected function setVariablesAnalytics() {
+        $this->data['analyticsCodeGoogle'] = '';
+        $this->data['analyticsCodeYandex'] = '';
+        if (App::$config->isWorkSite()) {
+            $this->data['analyticsCodeGoogle'] = htmlspecialchars_decode(App::$config->analyticsCodeGoogle);
+            $this->data['analyticsCodeYandex'] = htmlspecialchars_decode(App::$config->analyticsCodeYandex);
+        }
     }
 }
