@@ -171,10 +171,11 @@ class ControllerCheckoutPaymentMethod extends Controller {
 	}
 
 	protected function addTitleMethod($method) {
+        $method['fullTitle'] = $method['title'];
         if ($method['code'] == 'cod') {
             $title = " - банковские реквизиты находятся в ";
             $title .= '<a href="' . $this->url->link('information/information',['information_id' => 8]) . '" target="_blank">карточке предприятия</a>';
-            $method['title'] .= $title;
+            $method['fullTitle'] .= $title;
         }
         return $method;
     }
