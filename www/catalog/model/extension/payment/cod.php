@@ -19,8 +19,6 @@ class ModelExtensionPaymentCOD extends Model {
 
 		$method_data = array();
         $title = $this->language->get('text_title');
-        $title .= " - банковские реквизиты находятся в ";
-        $title .= '<a href="' . $this->url->link('information/information',['information_id' => 8]) . '" target="_blank">карточке предприятия</a>';
 		if ($status) {
 			$method_data = array(
 				'code'       => 'cod',
