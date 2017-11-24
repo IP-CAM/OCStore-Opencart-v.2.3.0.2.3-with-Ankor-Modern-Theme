@@ -53,6 +53,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 					$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
 
 					if ($method) {
+                        $method = $this->addTitleMethod($method);
 						if ($recurring) {
 							if (property_exists($this->{'model_extension_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_payment_' . $result['code']}->recurringPayments()) {
 								$method_data[$result['code']] = $method;
@@ -168,4 +169,13 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	protected function addTitleMethod($method) {
+        if ($method['code'] == 'cod') {
+            $title = " - банковские реквизиты находятся в ";
+            $title .= '<a href="' . $this->url->link('information/information',['information_id' => 8]) . '" target="_blank">карточке предприятия</a>';
+            $method['title'] .= $title;
+        }
+        return $method;
+    }
 }

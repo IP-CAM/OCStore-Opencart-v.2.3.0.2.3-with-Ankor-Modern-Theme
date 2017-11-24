@@ -10,6 +10,8 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="yandex-verification" content="fb4ceb7a54c12068"/>
+	<meta name="google-site-verification" content="E2lwYlkM4vpyySOpR2FF798eIVy8cC3XCUbbn8ueAKk"/>
 <title><?php echo $title;  ?></title>
 <base href="<?php echo $base; ?>" />
 <?php if ($description) { ?>
@@ -136,6 +138,10 @@ color: #<?php echo $modern_color_tittle_news ?>;
 	<link href="catalog/view/theme/modern/stylesheet/dist/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="<?php echo $class; ?>">
+<?
+echo $analyticsCodeGoogle;
+echo $analyticsCodeYandex;
+?>
 <?php if ($modern_arrowup !=1) { ?>
 	<span class=""><a href="#" class="scup"><i class="fa fa-angle-up active"></i></a></span>
 	<?php } ?>

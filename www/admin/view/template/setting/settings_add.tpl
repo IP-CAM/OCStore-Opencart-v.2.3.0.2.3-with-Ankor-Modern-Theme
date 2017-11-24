@@ -10,6 +10,7 @@ use app\libs\Form;
         <li class="active"><a href="#tab-general-add" data-toggle="tab">Основные</a></li>
         <li class=""><a href="#tab-meta-add" data-toggle="tab">Формирование мета</a></li>
         <li class=""><a href="#tab-telegram" data-toggle="tab">Настройки оповещений телеграм</a></li>
+        <li class=""><a href="#tab-analytics" data-toggle="tab">Настройки аналитики</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab-general-add">
@@ -70,6 +71,19 @@ use app\libs\Form;
                     <a href="<?=$clearCacheSitemapLink?>" class="btn btn-primary" target="_blank">Обновить кеш</a>
                 </div>
             </div><!-- Конец группы для input -->
+
+            <div class="form-group"><!-- Начало группы для input -->
+                <?=Form::label('Домен рабочего сайта','config_art_workHost',['class'=>'col-sm-2 control-label']);?>
+                <div class="col-sm-6">
+                    <?=Form::text('config_art_workHost',$config_art_workHost,['class'=>'form-control'])?>
+                </div>
+            </div><!-- Конец группы для input -->
+            <div class="form-group"><!-- Начало группы для input -->
+                <?=Form::label('IP рабочего сайта','config_art_workIp',['class'=>'col-sm-2 control-label']);?>
+                <div class="col-sm-6">
+                    <?=Form::text('config_art_workIp',$config_art_workIp,['class'=>'form-control'])?>
+                </div>
+            </div><!-- Конец группы для input -->
         </div>
         <div class="tab-pane" id="tab-meta-add">
             <?php echo $this->render('setting/additional/metaProd.tpl');?>
@@ -79,6 +93,9 @@ use app\libs\Form;
         </div>
         <div class="tab-pane" id="tab-telegram">
             <?php echo $this->render('setting/additional/telegram.tpl');?>
+        </div>
+        <div class="tab-pane" id="tab-analytics">
+            <?php echo $this->render('setting/additional/analytics.tpl');?>
         </div>
     </div>
 </div>
