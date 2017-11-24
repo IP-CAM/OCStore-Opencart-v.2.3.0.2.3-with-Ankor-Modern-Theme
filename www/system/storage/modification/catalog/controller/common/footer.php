@@ -155,9 +155,10 @@ class ControllerCommonFooter extends Controller {
 			$this->model_tool_online->addOnline($ip, $this->customer->getId(), $url, $referer);
 		}
 
+        $data['content_mail'] =  $this->load->controller('common/content_mail');
 
-                     $data['content_mail'] =  $this->load->controller('common/content_mail');
-      
+        $data['codeJivoSite'] = $this->load->view('art/jivoSite', ['isWork' => \app\core\App::$config->isWorkSite()]);
+
 		return $this->load->view('common/footer', $data);
 	}
 }

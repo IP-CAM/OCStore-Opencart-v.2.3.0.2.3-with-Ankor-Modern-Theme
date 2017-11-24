@@ -244,4 +244,5 @@ $("html,body").animate({"scrollTop":height},speed);
 map_slide();
 $(window).resize(map_slide);
 </script>
+<?=$codeJivoSite?>
 </body></html>
