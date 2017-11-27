@@ -25,10 +25,16 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$data['button_upload'] = $this->language->get('button_upload');
 
         $data['addresses'] = false;
-        $data['telephone'] = $this->customer->getTelephone();
-        $data['email'] = $this->customer->getEmail();
-        $data['firstname'] = $this->customer->getFirstName();
-        $data['lastname'] = $this->customer->getLastName();
+        if (empty($this->session->data['artPersonalData'])) {
+            $this->session->data['artPersonalData']['telephone'] = $this->customer->getTelephone();
+            $this->session->data['artPersonalData']['email'] = $this->customer->getEmail();
+            $this->session->data['artPersonalData']['firstname'] = $this->customer->getFirstName();
+            $this->session->data['artPersonalData']['lastname'] = $this->customer->getLastName();
+        }
+        $data['telephone'] = $this->session->data['artPersonalData']['telephone'];
+        $data['email'] = $this->session->data['artPersonalData']['email'];
+        $data['firstname'] = $this->session->data['artPersonalData']['firstname'];
+        $data['lastname'] =$this->session->data['artPersonalData']['lastname'];
 
         $data['zone_id'] = '';
 
@@ -155,7 +161,13 @@ class ControllerCheckoutPaymentAddress extends Controller {
 				}
 			}
 		}
-
+        $this->session->data['artPersonalData'] = [];
+        if (!$json) {
+            $this->session->data['artPersonalData']['firstname'] = $this->request->post['firstname'];
+            $this->session->data['artPersonalData']['telephone'] = $this->request->post['telephone'];
+            $this->session->data['artPersonalData']['email'] = $this->request->post['email'];
+            $this->session->data['artPersonalData']['lastname'] = $this->request->post['lastname'];
+        }
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
