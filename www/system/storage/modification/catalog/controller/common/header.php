@@ -414,9 +414,15 @@ class ControllerCommonHeader extends Controller {
     protected function setVariablesAnalytics() {
         $this->data['analyticsCodeGoogle'] = '';
         $this->data['analyticsCodeYandex'] = '';
+        $this->data['googleTags'] = '';
+        $this->data['googleTagsBody'] = '';
         if (App::$config->isWorkSite()) {
             $this->data['analyticsCodeGoogle'] = htmlspecialchars_decode(App::$config->analyticsCodeGoogle);
             $this->data['analyticsCodeYandex'] = htmlspecialchars_decode(App::$config->analyticsCodeYandex);
+            $this->data['googleTags'] = htmlspecialchars_decode(App::$config->googleTags);
+            $this->data['googleTagsBody'] = htmlspecialchars_decode(App::$config->googleTagsBody);
+
         }
     }
+
 }
