@@ -6,6 +6,7 @@
 <html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
 <!--<![endif]-->
 <head>
+	<?=$googleTags;?>
 <meta charset="UTF-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -139,6 +140,7 @@ color: #<?php echo $modern_color_tittle_news ?>;
 </head>
 <body class="<?php echo $class; ?>">
 <?
+echo $googleTagsBody;
 echo $analyticsCodeGoogle;
 echo $analyticsCodeYandex;
 ?>
