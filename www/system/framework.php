@@ -50,7 +50,7 @@ if ($config->get('db_autostart')) {
         $config->get('db_password')
     );
     if (!App::$config->debug) {
-        R::freeze(false);
+        R::freeze(true);
     }
 
 }
