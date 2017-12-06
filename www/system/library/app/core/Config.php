@@ -24,6 +24,8 @@ namespace app\core;
  * @property string workIp;
  * @property string analyticsCodeYandex;
  * @property string analyticsCodeGoogle;
+ * @property string googleTags;
+ * @property string googleTagsBody;
  */
 class Config {
     protected $data = [];

@@ -1525,9 +1525,13 @@ class ControllerSettingSetting extends Controller {
 
         $this->setAddSetting('config_art_workHost','ankor-crimea.ru');
         $this->setAddSetting('config_art_workIp','178.208.83.11');
+
         $dataAnalytics = \app\core\App::$config->getDefaultAnalyticCode();
         $this->setAddSetting('config_art_analyticsCodeYandex',$dataAnalytics['yandex']);
         $this->setAddSetting('config_art_analyticsCodeGoogle',$dataAnalytics['google']);
+
+        $this->setAddSetting('config_art_googleTags','');
+        $this->setAddSetting('config_art_googleTagsBody','');
     }
 
     protected function addMetaProdSetting() {
