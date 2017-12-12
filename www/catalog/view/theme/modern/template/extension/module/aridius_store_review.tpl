@@ -36,7 +36,8 @@
 </div>
 <!-- rating -->
 <link href="catalog/view/theme/modern/js/bootstrap-rating.css" rel="stylesheet" type="text/css" />
-<script src="catalog/view/theme/modern/js/bootstrap-rating.js" type="text/javascript"></script>
+<!--<script src="catalog/view/theme/modern/js/bootstrap-rating.js" type="text/javascript"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.4.0/bootstrap-rating.min.js"></script>
 <div class="form-group required">
 <div class="col-sm-12">
 <label class="control-label"><?php echo $entry_rating; ?></label>
