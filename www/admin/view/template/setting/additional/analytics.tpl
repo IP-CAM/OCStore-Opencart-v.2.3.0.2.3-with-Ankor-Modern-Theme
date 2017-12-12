@@ -34,6 +34,13 @@ use app\libs\Form;
     </div>
 </div><!-- Конец группы для input -->
 
+<div class="form-group"><!-- Начало группы для input -->
+    <?=Form::label('Код для счетчика mail.ru','config_art_counterMailRu',['class'=>'col-sm-2 control-label']);?>
+    <div class="col-sm-10">
+        <?=Form::textArea('config_art_counterMailRu',htmlspecialchars_decode($config_art_counterMailRu),['class'=>'form-control','rows' => 15])?>
+    </div>
+</div><!-- Конец группы для input -->
+
 
 
 

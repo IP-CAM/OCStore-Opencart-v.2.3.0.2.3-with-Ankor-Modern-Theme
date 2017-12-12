@@ -26,6 +26,7 @@ namespace app\core;
  * @property string analyticsCodeGoogle;
  * @property string googleTags;
  * @property string googleTagsBody;
+ * @property string counterMailRu;
  */
 class Config {
     protected $data = [];
