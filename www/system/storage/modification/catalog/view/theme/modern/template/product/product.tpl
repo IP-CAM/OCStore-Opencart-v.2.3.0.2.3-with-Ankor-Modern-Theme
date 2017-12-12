@@ -419,7 +419,8 @@ close: function() {
 
 <!-- rating -->
 <link href="catalog/view/theme/modern/js/bootstrap-rating.css" rel="stylesheet" type="text/css" />
-<script src="catalog/view/theme/modern/js/bootstrap-rating.js" type="text/javascript"></script>
+<!--<script src="catalog/view/theme/modern/js/bootstrap-rating.js" type="text/javascript"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.4.0/bootstrap-rating.min.js"></script>
 <script type="text/javascript"><!--
 $(function () {
 	$('.rating-tooltip').rating({
