@@ -5,7 +5,7 @@ class ControllerCommonHeader extends Controller {
     protected $data;
 	public function index() {
 
-        $this->document->addStyle('catalog/view/theme/modern/stylesheet/aridiuscallback.css');
+        $this->document->addStyle('catalog/view/theme/modern/stylesheet/aridiuscallback.min.css');
         // Analytics
 		$this->load->model('extension/extension');
         $this->data = &$data;
