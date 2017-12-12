@@ -421,7 +421,6 @@ class ControllerCommonHeader extends Controller {
             $this->data['analyticsCodeYandex'] = htmlspecialchars_decode(App::$config->analyticsCodeYandex);
             $this->data['googleTags'] = htmlspecialchars_decode(App::$config->googleTags);
             $this->data['googleTagsBody'] = htmlspecialchars_decode(App::$config->googleTagsBody);
-
         }
     }
 

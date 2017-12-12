@@ -1,4 +1,6 @@
 <?php
+use app\core\App;
+
 class ControllerCommonFooter extends Controller {
 	public function index() {
 		$this->load->language('common/footer');
@@ -158,6 +160,11 @@ class ControllerCommonFooter extends Controller {
         $data['content_mail'] =  $this->load->controller('common/content_mail');
 
         $data['codeJivoSite'] = $this->load->view('art/jivoSite', ['isWork' => \app\core\App::$config->isWorkSite()]);
+
+        $data['counterMailRu'] = '';
+        if (App::$config->isWorkSite()) {
+            $data['counterMailRu'] = htmlspecialchars_decode(App::$config->counterMailRu);
+        }
 
 		return $this->load->view('common/footer', $data);
 	}

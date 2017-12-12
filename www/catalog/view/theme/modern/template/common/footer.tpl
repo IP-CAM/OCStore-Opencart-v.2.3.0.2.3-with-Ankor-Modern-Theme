@@ -245,4 +245,5 @@ map_slide();
 $(window).resize(map_slide);
 </script>
 <?=$codeJivoSite?>
+<?=$counterMailRu?>
 </body></html>

@@ -1532,6 +1532,8 @@ class ControllerSettingSetting extends Controller {
 
         $this->setAddSetting('config_art_googleTags','');
         $this->setAddSetting('config_art_googleTagsBody','');
+
+        $this->setAddSetting('config_art_counterMailRu','');
     }
 
     protected function addMetaProdSetting() {
