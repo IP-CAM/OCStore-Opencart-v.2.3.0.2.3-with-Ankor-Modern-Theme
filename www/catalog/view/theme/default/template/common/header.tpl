@@ -26,11 +26,7 @@
 <meta property="og:image" content="<?php echo $logo; ?>" />
 <?php } ?>
 <meta property="og:site_name" content="<?php echo $name; ?>" />
-<!--<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>-->
-    <script
-            src="https://code.jquery.com/jquery-2.1.1.min.js"
-            integrity="sha256-h0cGsrExGgcZtSZ/fRz4AwV+Nn6Urh/3v3jFRQ0w9dQ="
-            crossorigin="anonymous"></script>
+<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
