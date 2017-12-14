@@ -142,6 +142,7 @@
         </fieldset>
         <div class="buttons contact-btn">
           <div class="pull-right">
+              <span style="font-size: 11px; padding-right: 10px;">Нажимая на кнопку «Отправить», я даю cогласие на <a href="person_danie" target="_blank">обработку персональных данных.</a></span>
             <input class="btn btn-primary" type="submit" value="<?php echo $button_submit; ?>" />
           </div>
         </div>
