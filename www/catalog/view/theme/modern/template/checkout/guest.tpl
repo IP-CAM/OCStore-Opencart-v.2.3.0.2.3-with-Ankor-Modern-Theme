@@ -154,6 +154,7 @@
 
 <div class="buttons">
   <div class="pull-right">
+      <span style="font-size: 11px; padding-right: 10px;">Нажимая на кнопку «Отправить», я даю cогласие на <a href="person_danie" target="_blank">обработку персональных данных.</a></span>
     <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
 </div>

@@ -46,6 +46,7 @@
 <?php echo $captcha; ?>
 <div class="buttons clearfix">
 <div class="pull-right">
+    <span style="font-size: 11px; padding-right: 10px">Нажимая на кнопку «Отправить», я даю cогласие на <a href="person_danie" target="_blank">обработку персональных данных.</a></span>
 <button type="submit" data-loading-text="<?php echo $text_loading; ?>"  class="btn btn-primary add-review"><?php echo $button_continue; ?></button>
 </div>
 </div>
