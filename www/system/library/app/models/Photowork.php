@@ -80,7 +80,7 @@ class Photowork extends AppModel {
                 $imageBean = R::dispense('artphotoworkimage');
                 $imageBean->src = $image['src'];
                 $imageBean->name = $image['name'];
-                $this->bean->xownArtcertmoreimageList[] = $imageBean;
+                $this->bean->xownArtphotoworkimageList[] = $imageBean;
             }
         }
         R::store($this->bean);
