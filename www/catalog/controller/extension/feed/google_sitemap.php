@@ -136,19 +136,23 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
         $products = $this->model_catalog_product->getProducts();
 
         foreach ($products as $product) {
-            if ($product['image']) {
-                $this->output .= '<url>';
-                $this->output .= '<loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
-                $this->output .= '<changefreq>weekly</changefreq>';
-                $this->output .= '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($product['date_modified'])) . '</lastmod>';
-                $this->output .= '<priority>1.0</priority>';
-                $this->output .= '<image:image>';
-                $this->output .= '<image:loc>' . $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')) . '</image:loc>';
-                $this->output .= '<image:caption>' . $product['name'] . '</image:caption>';
-                $this->output .= '<image:title>' . $product['name'] . '</image:title>';
-                $this->output .= '</image:image>';
-                $this->output .= '</url>';
-            }
+            //$this->setImageProduct($product);
+        }
+    }
+
+    protected function setImageProduct($product){
+        if ($product['image']) {
+            $this->output .= '<url>';
+            $this->output .= '<loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
+            $this->output .= '<changefreq>weekly</changefreq>';
+            $this->output .= '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($product['date_modified'])) . '</lastmod>';
+            $this->output .= '<priority>1.0</priority>';
+            $this->output .= '<image:image>';
+            $this->output .= '<image:loc>' . $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')) . '</image:loc>';
+            $this->output .= '<image:caption>' . $product['name'] . '</image:caption>';
+            $this->output .= '<image:title>' . $product['name'] . '</image:title>';
+            $this->output .= '</image:image>';
+            $this->output .= '</url>';
         }
     }
 
