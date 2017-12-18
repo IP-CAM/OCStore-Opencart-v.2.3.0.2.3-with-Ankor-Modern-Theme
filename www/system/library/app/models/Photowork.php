@@ -114,6 +114,24 @@ class Photowork extends AppModel {
         return $res;
     }
 
+    public function getImagesForOut() {
+        $this->getImages();
+        usort($this->images, array("app\\models\\Photowork", "sortImage"));
+    }
+
+    public static function sortImage($image1, $image2) {
+        if ($image1['sort'] < $image2['sort']) {
+            return 1;
+        }
+        if ($image1['sort'] == $image2['sort']) {
+            if ($image1['id'] == $image2['id']) {
+                return 0;
+            }
+            return ($image1['id'] > $image2['id']) ? -1 : 1;
+        }
+        return -1;
+    }
+
     public function getLabelStatus(){
         $statuses  = self::getLabelsStatus();
         return $statuses[$this->status];
