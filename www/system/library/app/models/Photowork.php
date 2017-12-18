@@ -67,6 +67,9 @@ class Photowork extends AppModel {
                 if (isset($data['nameMoreImage'][$key])) {
                     $newImg['name'] = $data['nameMoreImage'][$key];
                 }
+                if (isset($data['sortMoreImage'][$key])) {
+                    $newImg['sort'] = $data['sortMoreImage'][$key];
+                }
                 $this->images[] = $newImg;
             }
         }
@@ -77,9 +80,15 @@ class Photowork extends AppModel {
         if ($this->id) {
             $this->bean->xownArtphotoworkimageList = [];
             foreach ($this->images as $image) {
+                $sort = 100;
+                if (isset($image['sort']) && !empty($image['sort'])) {
+                    $sort = (int)$image['sort'];
+                }
                 $imageBean = R::dispense('artphotoworkimage');
                 $imageBean->src = $image['src'];
                 $imageBean->name = $image['name'];
+                $imageBean->sort = $sort;
+
                 $this->bean->xownArtphotoworkimageList[] = $imageBean;
             }
         }
@@ -89,7 +98,11 @@ class Photowork extends AppModel {
     public function getImages() {
         $this->images = [];
         foreach ($this->bean->xownArtphotoworkimageList as $item) {
-            $this->images[] = $item->export();
+            $itemImg = $item->export();
+            if (empty($itemImg['sort'])) {
+                $itemImg['sort'] = 100;
+            }
+            $this->images[] = $itemImg;
         }
     }
 
