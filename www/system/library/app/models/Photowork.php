@@ -15,6 +15,7 @@ use R;
  * @property string metaTitle
  * @property string metaDescription
  * @property string nameImage
+ * @property int sortImage
  * @property int status
  * @property int sort
  * @property array files
@@ -31,6 +32,7 @@ class Photowork extends AppModel {
         'description'=> '',
         'status' => self::STATUS_OFF,
         'image' => '',
+        'sortImage' => 100,
         'nameImage'=> '',
         'sort'=> 0
     ];
