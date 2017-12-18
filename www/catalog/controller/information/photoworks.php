@@ -264,7 +264,7 @@ class ControllerInformationPhotoworks extends \app\core\Controller {
 
     protected function getDataImage($item){
         $images = [];
-        $item->getImages();
+        $item->getImagesForOut();
         $image = [];
         if ($item->image) {
             $image = $this->getResizeImage($item->image);
