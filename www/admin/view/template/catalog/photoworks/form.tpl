@@ -109,12 +109,21 @@ echo $header; ?><?php echo $column_left;
 										<input type="hidden" name="image" value="<?php echo $item->image;?>" id="input-image" />
 									</div>
 								</div>
+
 								<div class="form-group">
 									<?=Form::label('Название основного изображение','nameImage',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
 										<?=Form::text('nameImage',$item->nameImage,['class'=>'form-control'])?>
 									</div>
 								</div>
+
+								<div class="form-group">
+									<?=Form::label('Сортировка (если 0, то основная картинка не выводится на странице фото работ)','sortImage',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-10">
+										<?=Form::text('sortImage',$item->sortImage,['class'=>'form-control'] )?>
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label class="col-sm-2 control-label">
 										Дополнительные изображения
