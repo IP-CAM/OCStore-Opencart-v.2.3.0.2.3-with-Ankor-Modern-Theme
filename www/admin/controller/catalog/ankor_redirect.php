@@ -23,7 +23,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
                 $this->response->redirect($this->url->link('catalog/ankor_redirect', 'token=' . $this->session->data['token'], true));
-	
+
 		}
 		$this->getList();
 	}
@@ -40,6 +40,55 @@ class ControllerCatalogAnkorRedirect extends Controller {
 		}
 		$this->getForm();
 	}
+
+	public function addExcelFile(){
+        $targetFile = $this->saveUploadedFile($_POST);
+        if($targetFile != false){
+            $this->saveFromExcelFile($targetFile);
+            $this->session->data['success'] = $this->language->get('Успех: Изменения прошли успешно!');
+        }else{
+            $_SESSION['error'] = 'недопустимый тип файла';
+        }
+        $this->response->redirect($this->url->link('catalog/ankor_redirect','token=' . $this->session->data['token'],true),301);
+    }
+
+    public function saveUploadedFile($POST){
+	    if(isset($POST['fileForm']) && $POST['fileForm']== 'true'){
+            //1- get the file :
+            $targetDir  = DIR_UPLOAD ;
+            $targetFile = $targetDir.basename($_FILES["uploadedFile"]["name"]);
+            $fileType    = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
+            $tmp_name    = $_FILES['uploadedFile']['tmp_name'];
+            if($fileType == 'xlsx'  || $fileType == 'xls' ){
+                // read the file and return an array
+                move_uploaded_file($tmp_name,$targetFile);
+            }else{
+                return false;
+            }
+            return $targetFile;
+        }
+    }
+
+    public function saveFromExcelFile($targetFile){
+        // 2- get an array from the file :
+
+        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+        $objPHPExcel = $objReader->load($targetFile);
+        $excelAssoc = [];
+        $excelArray = [];
+
+        foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+            $excelArray = $worksheet->toArray();
+        }
+        // 3- save the file to the list :
+        foreach ($excelArray as $array){
+            $excelAssoc['link'] = $array[0];
+            $excelAssoc['redirect'] = $array[1];
+            $item = new AnkorRedirect();
+            $item->load($excelAssoc);
+            $item->save();
+        }
+    }
 
 	public function edit() {
 		$this->load->language('catalog/ankor_redirect');
@@ -113,16 +162,14 @@ class ControllerCatalogAnkorRedirect extends Controller {
         ], true);
         $data['breadcrumbs'] = $this->getBreadcrumbs();
         $data['add'] = $this->url->link('catalog/ankor_redirect/add', 'token=' . $this->session->data['token'], true);
+        $data['addExcelFile'] = $this->url->link('catalog/ankor_redirect/addExcelFile', 'token=' . $this->session->data['token'], true);
         $data['delete'] = $this->url->link('catalog/ankor_redirect/delete', 'token=' . $this->session->data['token'], true);
         $data['setting'] = $this->url->link('catalog/ankor_redirect/setting', 'token=' . $this->session->data['token'], true);
         $data['pagination'] = $this->getPagination(AnkorRedirect::totalCount());
         $data['items'] = AnkorRedirect::getListAdmin($data);
-
-        //MAIN DATA
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
-
         $this->response->setOutput($this->load->view('catalog/ankor_redirect/list', $data));
 
 	}
@@ -148,7 +195,10 @@ class ControllerCatalogAnkorRedirect extends Controller {
 	private function getAlerts($data) {
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
-        } else {
+        } elseif ((isset($_SESSION['error']))) {
+                $data['error_warning'] = $_SESSION['error'];
+                unset($_SESSION['error']);
+        }else{
             $data['error_warning'] = '';
         }
 
