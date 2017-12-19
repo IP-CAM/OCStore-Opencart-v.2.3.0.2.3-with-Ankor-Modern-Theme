@@ -17,7 +17,7 @@
                 <form action="<?php echo $addExcelFile;?>" method="post" style="display: inline" enctype="multipart/form-data">
 
                         <label class="btn btn-success" >
-                            <input type="hidden" name="fileForm" value="true" accept=".xlsx|.xls">
+                            <input type="hidden" name="fileForm" value="true" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                             Загрузить из Excel  <span class="fa fa-plus"/><input type="file" name="uploadedFile" id="uploadedFile" onchange="this.form.submit()" style="display:none ;">
                         </label>
                 </form>
