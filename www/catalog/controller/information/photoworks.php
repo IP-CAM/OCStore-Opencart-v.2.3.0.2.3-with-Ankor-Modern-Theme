@@ -266,18 +266,23 @@ class ControllerInformationPhotoworks extends \app\core\Controller {
         $images = [];
         $item->getImages();
         $image = [];
-        if ($item->image) {
+        if ($item->image && $item->sortImage != 0) {
             $image = $this->getResizeImage($item->image);
+            $image['id'] = 99999999999;
+            $image['sort'] = $item->sortImage;
             $image['name'] = getLimitStr($item->nameImage,$this->limitTitleImage);
             $image['nameOriginal'] = $item->nameImage;
             $images[] = $image;
         }
         foreach ($item->images as $more_image) {
             $image = $this->getResizeImage($more_image['src']);
+            $image['id'] = $more_image['id'];
+            $image['sort'] = $more_image['sort'];
             $image['name'] = getLimitStr($more_image['name'],$this->limitTitleImage);
             $image['nameOriginal'] = $more_image['name'];
             $images[] = $image;
         }
+        usort($images, array("app\\models\\Photowork", "sortImage"));
         return $images;
 	}
 
