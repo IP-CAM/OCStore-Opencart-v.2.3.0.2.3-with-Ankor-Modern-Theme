@@ -47,9 +47,9 @@ class ControllerCatalogAnkorRedirect extends Controller {
             $this->saveFromExcelFile($targetFile);
             $this->session->data['success'] = $this->language->get('Успех: Изменения прошли успешно!');
         }else{
-            $_SESSION['error'] = 'недопустимый тип файла';
+            $_SESSION['error'] = 'Недопустимый тип файла';
         }
-        $this->response->redirect($this->url->link('catalog/ankor_redirect','token=' . $this->session->data['token'],true),301);
+        $this->response->redirect($this->url->link('catalog/ankor_redirect','token=' . $this->session->data['token'],true));
     }
 
     public function saveUploadedFile($POST){
