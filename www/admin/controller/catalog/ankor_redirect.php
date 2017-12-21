@@ -75,19 +75,21 @@ class ControllerCatalogAnkorRedirect extends Controller {
         $objReader = PHPExcel_IOFactory::createReader('Excel2007');
         $objPHPExcel = $objReader->load($targetFile);
         $excelAssoc = [];
-        $excelArray = [];
 
         foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
             $excelArray = $worksheet->toArray();
+            foreach ($excelArray as $array){
+                if(isset($array[0])){
+                    $excelAssoc['link'] = $array[0];
+                    $excelAssoc['redirect'] = $array[1];
+                    $item = new AnkorRedirect();
+                    $item->load($excelAssoc);
+                    $item->save();
+                }
+            }
         }
-        // 3- save the file to the list :
-        foreach ($excelArray as $array){
-            $excelAssoc['link'] = $array[0];
-            $excelAssoc['redirect'] = $array[1];
-            $item = new AnkorRedirect();
-            $item->load($excelAssoc);
-            $item->save();
-        }
+
+
     }
 
 	public function edit() {
