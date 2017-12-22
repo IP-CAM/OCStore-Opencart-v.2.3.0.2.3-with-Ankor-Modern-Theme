@@ -41,7 +41,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
 		$this->getForm();
 	}
 
-	public function addExcelFile(){
+    public function addExcelFile(){
         $targetFile = $this->saveUploadedFile($_POST);
         if($targetFile != false){
             $this->saveFromExcelFile($targetFile);
@@ -53,14 +53,13 @@ class ControllerCatalogAnkorRedirect extends Controller {
     }
 
     public function saveUploadedFile($POST){
-	    if(isset($POST['fileForm']) && $POST['fileForm']== 'true'){
-            //1- get the file :
+        if(isset($POST['fileForm']) && $POST['fileForm']== 'true'){
+
             $targetDir  = DIR_UPLOAD ;
             $targetFile = $targetDir.basename($_FILES["uploadedFile"]["name"]);
             $fileType    = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
             $tmp_name    = $_FILES['uploadedFile']['tmp_name'];
             if($fileType == 'xlsx'  || $fileType == 'xls' ){
-                // read the file and return an array
                 move_uploaded_file($tmp_name,$targetFile);
             }else{
                 return false;
@@ -70,25 +69,43 @@ class ControllerCatalogAnkorRedirect extends Controller {
     }
 
     public function saveFromExcelFile($targetFile){
-        // 2- get an array from the file :
 
         $objReader = PHPExcel_IOFactory::createReader('Excel2007');
         $objPHPExcel = $objReader->load($targetFile);
-        $excelAssoc = [];
 
         foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
             $excelArray = $worksheet->toArray();
             foreach ($excelArray as $array){
-                if(isset($array[0])){
-                    $excelAssoc['link'] = $array[0];
-                    $excelAssoc['redirect'] = $array[1];
-                    $item = new AnkorRedirect();
-                    $item->load($excelAssoc);
-                    $item->save();
+                if($this->linkExists($array[0])){
+                    continue;
                 }
+                $this->saveLink($array);
             }
         }
+    }
 
+    public function saveLink($array){
+        if(isset($array[0])){
+            $excelAssoc['link'] = $array[0];
+            $prefix = "";
+            if(trim($array[1]) != '/'){
+                $prefix = "/";
+            }
+
+            $excelAssoc['redirect'] = "{$prefix}".$array[1];
+            $item = new AnkorRedirect();
+            $item->load($excelAssoc);
+            $item->save();
+        }
+    }
+
+    public function linkExists($link){
+        $items = AnkorRedirect::getListAdmin([]);
+        foreach ($items as $item) {
+            if ($item->link == $link) {
+                return true;
+            }
+        }
 
     }
 
