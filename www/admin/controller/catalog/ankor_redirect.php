@@ -44,7 +44,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
 
 
     public function getListOfRedirects(){
-        $this->listRedirects = AnkorRedirect::getList([]);
+        $this->listRedirects = AnkorRedirect::find('');
         return $this->listRedirects;
     }
 
