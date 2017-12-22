@@ -96,6 +96,16 @@ class ControllerCatalogAnkorRedirect extends Controller {
         }
     }
 
+    public function linkExists($link){
+        $items = AnkorRedirect::getListAdmin([]);
+        foreach ($items as $item) {
+            if ($item->link == $link) {
+                return true;
+            }
+        }
+
+    }
+
     public function edit() {
         $this->load->language('catalog/ankor_redirect');
 
@@ -180,15 +190,6 @@ class ControllerCatalogAnkorRedirect extends Controller {
 
     }
 
-    public function linkExists($link){
-        $items = AnkorRedirect::getListAdmin([]);
-        foreach ($items as $item) {
-            if ($item->link == $link) {
-                return true;
-            }
-        }
-
-    }
 
     private function getPagination($total) {
         if (isset($this->request->get['page'])) {
