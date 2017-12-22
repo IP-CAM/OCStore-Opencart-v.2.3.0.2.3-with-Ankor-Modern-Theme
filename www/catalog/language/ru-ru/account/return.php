@@ -19,7 +19,7 @@ $_['text_date_added']    = 'Дата заявки';
 $_['text_comment']       = 'Комментарий';
 $_['text_history']       = 'История возврата';
 $_['text_empty']         = 'У вас не было раньше возвратов товаров!';
-$_['text_agree']         = 'Мною прочитаны и я даю согласие с документом <a href="%s" class="agree"><b>%s</b></a>';
+$_['text_agree']         = '<a href="%s" class="agree"><b>%s</b></a>';
 
 // Column
 $_['column_return_id']   = '№ Возврата:';
