@@ -42,7 +42,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
 	}
 
     public function addExcelFile(){
-        $targetFile = $this->saveUploadedFile($_POST);
+        $targetFile = $this->saveUploadedExcelFile($_POST);
         if($targetFile != false){
             $this->saveFromExcelFile($targetFile);
             $this->session->data['success'] = $this->language->get('Успех: Изменения прошли успешно!');
@@ -52,7 +52,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
         $this->response->redirect($this->url->link('catalog/ankor_redirect','token=' . $this->session->data['token'],true));
     }
 
-    public function saveUploadedFile($POST){
+    public function saveUploadedExcelFile($POST){
         if(isset($POST['fileForm']) && $POST['fileForm']== 'true'){
 
             $targetDir  = DIR_UPLOAD ;
