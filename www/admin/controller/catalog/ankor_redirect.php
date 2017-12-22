@@ -7,6 +7,7 @@ use app\models\Photowork;
 class ControllerCatalogAnkorRedirect extends Controller {
     private $data;
 	private $error = array();
+	private $listRedirects = [];
 
 	public function index() {
         if (isset($this->request->get['remove_cache'])) {
@@ -41,8 +42,15 @@ class ControllerCatalogAnkorRedirect extends Controller {
 		$this->getForm();
 	}
 
-	public function addExcelFile(){
-        $targetFile = $this->saveUploadedFile($_POST);
+
+    public function getListOfRedirects(){
+        $this->listRedirects = AnkorRedirect::getListAdmin([]);
+        return $this->listRedirects;
+    }
+
+    public function addExcelFile(){
+        $this->getListOfRedirects();
+        $targetFile = $this->saveUploadedExcelFile($_POST);
         if($targetFile != false){
             $this->saveFromExcelFile($targetFile);
             $this->session->data['success'] = $this->language->get('Успех: Изменения прошли успешно!');
@@ -52,15 +60,12 @@ class ControllerCatalogAnkorRedirect extends Controller {
         $this->response->redirect($this->url->link('catalog/ankor_redirect','token=' . $this->session->data['token'],true));
     }
 
-    public function saveUploadedFile($POST){
-	    if(isset($POST['fileForm']) && $POST['fileForm']== 'true'){
-            //1- get the file :
-            $targetDir  = DIR_UPLOAD ;
-            $targetFile = $targetDir.basename($_FILES["uploadedFile"]["name"]);
+    public function saveUploadedExcelFile($POST){
+        if(isset($POST['fileForm']) && $POST['fileForm']== 'true'){
+            $targetFile = DIR_UPLOAD.basename($_FILES["uploadedFile"]["name"]);
             $fileType    = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
             $tmp_name    = $_FILES['uploadedFile']['tmp_name'];
             if($fileType == 'xlsx'  || $fileType == 'xls' ){
-                // read the file and return an array
                 move_uploaded_file($tmp_name,$targetFile);
             }else{
                 return false;
@@ -70,27 +75,44 @@ class ControllerCatalogAnkorRedirect extends Controller {
     }
 
     public function saveFromExcelFile($targetFile){
-        // 2- get an array from the file :
 
         $objReader = PHPExcel_IOFactory::createReader('Excel2007');
         $objPHPExcel = $objReader->load($targetFile);
-        $excelAssoc = [];
-
         foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-            $excelArray = $worksheet->toArray();
-            foreach ($excelArray as $array){
-                if(isset($array[0])){
-                    $excelAssoc['link'] = $array[0];
-                    $excelAssoc['redirect'] = $array[1];
-                    $item = new AnkorRedirect();
-                    $item->load($excelAssoc);
-                    $item->save();
+            $worksheetArray = $worksheet->toArray();
+            foreach ($worksheetArray as $row){
+                if( $this->linkExists($row[0])){
+                    continue;
                 }
+                $this->saveLink($row);
+            }
+        }
+    }
+
+    public function saveLink($row){
+        if(isset($row[0])){
+            $excelAssoc['link'] = $row[0];
+            $prefix = "";
+            if(trim($row[1]) != '/'){
+                $prefix = "/";
+            }
+
+            $excelAssoc['redirect'] = "{$prefix}".$row[1];
+            $item = new AnkorRedirect();
+            $item->load($excelAssoc);
+            $item->save();
+        }
+    }
+
+    public function linkExists($link){
+        foreach ($this->listRedirects as $item) {
+            if ($item->link == $link) {
+                return true;
             }
         }
 
-
     }
+
 
 	public function edit() {
 		$this->load->language('catalog/ankor_redirect');
