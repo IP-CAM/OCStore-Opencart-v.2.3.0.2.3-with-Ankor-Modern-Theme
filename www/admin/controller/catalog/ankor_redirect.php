@@ -72,11 +72,11 @@ class ControllerCatalogAnkorRedirect extends Controller {
 
         $objReader = PHPExcel_IOFactory::createReader('Excel2007');
         $objPHPExcel = $objReader->load($targetFile);
-
+        $items       = AnkorRedirect::getListAdmin([]);
         foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
             $excelArray = $worksheet->toArray();
             foreach ($excelArray as $array){
-                if($this->linkExists($array[0])){
+                if( $this->linkExists($array[0],$items)){
                     continue;
                 }
                 $this->saveLink($array);
@@ -99,8 +99,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
         }
     }
 
-    public function linkExists($link){
-        $items = AnkorRedirect::getListAdmin([]);
+    public function linkExists($link,$items){
         foreach ($items as $item) {
             if ($item->link == $link) {
                 return true;
