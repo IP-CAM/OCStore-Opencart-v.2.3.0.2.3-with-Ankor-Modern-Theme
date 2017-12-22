@@ -10,7 +10,7 @@ $_['text_your_details']    = 'Основные данные';
 $_['text_your_address']    = 'Ваш адрес';
 $_['text_newsletter']      = 'Подписка на новости';
 $_['text_your_password']   = 'Ваш пароль';
-$_['text_agree']           = '<a href="%s" class="agree"><b>%s</b></a>';
+$_['text_agree']           = 'Мною прочитано и я даю <a href="%s" class="agree"><b>%s</b></a>';
 
 // Entry
 $_['entry_customer_group'] = 'Группа покупателей';
