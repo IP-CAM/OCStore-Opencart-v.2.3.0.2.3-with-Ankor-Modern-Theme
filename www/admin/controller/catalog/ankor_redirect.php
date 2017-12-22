@@ -19,11 +19,8 @@ class ControllerCatalogAnkorRedirect extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('', $this->request->post);
-
 			$this->session->data['success'] = $this->language->get('text_success');
-
-                $this->response->redirect($this->url->link('catalog/ankor_redirect', 'token=' . $this->session->data['token'], true));
-
+            $this->response->redirect($this->url->link('catalog/ankor_redirect', 'token=' . $this->session->data['token'], true));
 		}
 		$this->getList();
 	}
@@ -42,6 +39,15 @@ class ControllerCatalogAnkorRedirect extends Controller {
 	}
 
 	public function addExcelFile(){
+	    // to delete 49 file in a time :
+//	    $items = $this->getList();
+//	    $i = 0;
+//	    foreach ($items as $item){
+//            AnkorRedirect::delete($item->id);
+//            echo "deleted..".$i;
+//            $i++;
+//        }
+//	    die();
         $targetFile = $this->saveUploadedFile($_POST);
         if($targetFile != false){
             $this->saveFromExcelFile($targetFile);
@@ -70,7 +76,6 @@ class ControllerCatalogAnkorRedirect extends Controller {
     }
 
     public function saveFromExcelFile($targetFile){
-        // 2- get an array from the file :
 
         $objReader = PHPExcel_IOFactory::createReader('Excel2007');
         $objPHPExcel = $objReader->load($targetFile);
@@ -79,17 +84,31 @@ class ControllerCatalogAnkorRedirect extends Controller {
         foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
             $excelArray = $worksheet->toArray();
             foreach ($excelArray as $array){
-                if(isset($array[0])){
-                    $excelAssoc['link'] = $array[0];
-                    $excelAssoc['redirect'] = $array[1];
-                    $item = new AnkorRedirect();
-                    $item->load($excelAssoc);
-                    $item->save();
+
+                if($this->linkExists($array[0])){
+                    continue;
                 }
+                $this->saveLink($array);
+
             }
         }
 
 
+    }
+
+    public function saveLink($array){
+        if(isset($array[0])){
+            $excelAssoc['link'] = $array[0];
+            $prefix = "";
+            if(trim($array[1]) != '/'){
+                $prefix = "/";
+            }
+
+            $excelAssoc['redirect'] = "{$prefix}".$array[1];
+            $item = new AnkorRedirect();
+            $item->load($excelAssoc);
+            $item->save();
+        }
     }
 
 	public function edit() {
@@ -175,6 +194,16 @@ class ControllerCatalogAnkorRedirect extends Controller {
         $this->response->setOutput($this->load->view('catalog/ankor_redirect/list', $data));
 
 	}
+
+	public function linkExists($link){
+        $items = AnkorRedirect::getListAdmin([]);
+        foreach ($items as $item) {
+            if ($item->link == $link) {
+                return true;
+            }
+        }
+
+    }
 
 	private function getPagination($total) {
 	    if (isset($this->request->get['page'])) {
