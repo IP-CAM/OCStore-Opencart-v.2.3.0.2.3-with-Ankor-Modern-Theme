@@ -12,9 +12,21 @@
                 <a href="<?php echo $hrefRemoveCache; ?>" data-toggle="tooltip" class="btn btn-primary">
                     Очистить кеш
                 </a>
+                <a href="<?php echo $addSlashes; ?>" data-toggle="tooltip" class="btn btn-primary">&nbsp;Add slashes</a>
                 <a href="<?php echo $setting; ?>" data-toggle="tooltip" title="<?php echo $button_setting; ?>" class="btn btn-primary"><i class="fa fa-cog"></i>&nbsp;<?php echo $button_setting; ?></a>
+
+                <form action="<?php echo $addExcelFile;?>" method="post" style="display: inline" enctype="multipart/form-data">
+
+                        <label class="btn btn-success" >
+                            <input type="hidden" name="fileForm" value="true" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                            Загрузить из Excel  <span class="fa fa-plus"/><input type="file" name="uploadedFile" id="uploadedFile" onchange="this.form.submit()" style="display:none ;">
+                        </label>
+                </form>
+
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-news').submit() : false;"><i class="fa fa-trash-o"></i></button>
+
             </div>
             <h1><?php echo $heading_title; ?></h1>
             <ul class="breadcrumb">

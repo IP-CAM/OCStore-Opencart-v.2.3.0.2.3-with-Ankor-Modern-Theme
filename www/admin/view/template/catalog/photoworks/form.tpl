@@ -109,12 +109,21 @@ echo $header; ?><?php echo $column_left;
 										<input type="hidden" name="image" value="<?php echo $item->image;?>" id="input-image" />
 									</div>
 								</div>
+
 								<div class="form-group">
 									<?=Form::label('Название основного изображение','nameImage',['class'=>'col-sm-2 control-label']);?>
 									<div class="col-sm-10">
 										<?=Form::text('nameImage',$item->nameImage,['class'=>'form-control'])?>
 									</div>
 								</div>
+
+								<div class="form-group">
+									<?=Form::label('Сортировка (если 0, то основная картинка не выводится на странице фото работ)','sortImage',['class'=>'col-sm-2 control-label']);?>
+									<div class="col-sm-10">
+										<?=Form::text('sortImage',$item->sortImage,['class'=>'form-control'] )?>
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label class="col-sm-2 control-label">
 										Дополнительные изображения
@@ -140,12 +149,28 @@ echo $header; ?><?php echo $column_left;
 																	/>
 																</div>
 																<div class="col-sm-8">
-																	<div class="form-group">
-																		<?=Form::label('Название изображения','nameMoreImage'. $counterMorePhoto,['class'=>'col-sm-2 control-label']);?>
-																		<div class="col-sm-6">
-																			<?=Form::text('nameMoreImage[' . $counterMorePhoto . ']',$more_img['name'],['class'=>'form-control'])?>
+																	<div class="row">
+																		<div class="col-sm-12">
+																			<div class="form-group">
+																				<?=Form::label('Название изображения','nameMoreImage'. $counterMorePhoto,['class'=>'col-sm-2 control-label']);?>
+																				<div class="col-sm-6">
+																					<?=Form::text('nameMoreImage[' . $counterMorePhoto . ']',$more_img['name'],['class'=>'form-control'])?>
+																				</div>
+																			</div>
 																		</div>
 																	</div>
+																	<?//SORT?>
+																	<div class="row">
+																		<div class="col-sm-12">
+																			<div class="form-group">
+																				<?=Form::label('Сортировка','sortMoreImage'. $counterMorePhoto,['class'=>'col-sm-2 control-label']);?>
+																				<div class="col-sm-6">
+																					<?=Form::text('sortMoreImage[' . $counterMorePhoto . ']',$more_img['sort'],['class'=>'form-control'])?>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+
 																</div>
 															</div>
 														</div>
@@ -187,15 +212,34 @@ echo $header; ?><?php echo $column_left;
 				'</a>' +
 				'<input type="hidden" name="moreImage['  + morePhotoCounter + ']" value="" id="input-image_' + morePhotoCounter + '" />' +
 				'</div>' + //col-sm-2
-				'<div class="col-sm-8">' +
-					'<div class="form-group">' +
-						'<label class="col-sm-2 control-label" for="nameMoreImage' + morePhotoCounter + '" id="nameMoreImage'+ morePhotoCounter + '-label">' +
-						'Название изображения</label>' +
-						'<div class="col-sm-6">' +
-							'<input id="nameMoreImage' + morePhotoCounter + '" name="nameMoreImage[' + morePhotoCounter + ']" type="text" value="" class="form-control">' +
+				'<div class="col-sm-10">' +
+
+				'<div class="row">'	+
+					'<div class="col-sm-12">' +
+						'<div class="form-group">' +
+							'<label class="col-sm-2 control-label" for="nameMoreImage' + morePhotoCounter + '" id="nameMoreImage'+ morePhotoCounter + '-label">' +
+							'Название изображения</label>' +
+							'<div class="col-sm-6">' +
+								'<input id="nameMoreImage' + morePhotoCounter + '" name="nameMoreImage[' + morePhotoCounter + ']" type="text" value="" class="form-control">' +
+							'</div>' +
 						'</div>' +
-					'</div>' +
-				'</div>' + ////col-sm-8
+					'</div>' + ////col-sm-8
+				'</div>' +
+
+				'<div class="row">'	+
+					'<div class="col-sm-12">' +
+						'<div class="form-group">' +
+							'<label class="col-sm-2 control-label" for="sortMoreImage' + morePhotoCounter + '" id="sortMoreImage'+ morePhotoCounter + '-label">' +
+							'Сортировка</label>' +
+							'<div class="col-sm-6">' +
+							'<input id="sortMoreImage' + morePhotoCounter + '" name="sortMoreImage[' + morePhotoCounter + ']" type="text" value="100" class="form-control">' +
+							'</div>' +
+						'</div>' +
+					'</div>' + ////col-sm-8
+				'</div>' +
+
+				'</div>' +
+
 				'</div>' + //row
 				'</div>' + //more_image
 				'<hr></div>';//col-sm-12
