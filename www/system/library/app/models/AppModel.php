@@ -112,7 +112,9 @@ abstract class AppModel{
         $item = new static();
         if ($bean) {
             foreach ($item->attributes as $key => $value) {
-                $item->attributes[$key] = $bean->$key;
+                if (isset($bean->$key)) {
+                    $item->attributes[$key] = $bean->$key;
+                }
             }
             $item->id = $bean->id;
             $item->bean = $bean;

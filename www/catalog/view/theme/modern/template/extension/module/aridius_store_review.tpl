@@ -1,5 +1,6 @@
 <?php echo $header; ?>
 <div class="container">
+
 <div class="row">
 <div id="cont" class="col-sm-12">
 <?php echo $column_left; ?>
@@ -18,6 +19,11 @@
 	</li>
 	<?php } ?>
 </ul>
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>Отзывы о магазине</h1>
+		</div>
+	</div>
 <?php if ($aridius_store_review_status ==1) { ?>
 <form id="store-review" class="form-horizontal review-form" style="display: none;">
 <?php if ($review_guest) { ?>

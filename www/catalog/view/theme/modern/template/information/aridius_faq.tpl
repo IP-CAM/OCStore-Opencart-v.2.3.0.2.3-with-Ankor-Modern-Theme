@@ -16,6 +16,11 @@
 	<li><?php if($i+1<count($breadcrumbs)) { ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a><?php } else { ?><?php echo $breadcrumb['text']; ?><?php } ?></li>
 	<?php } ?>
 </ul>
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Доставка и оплата</h1>
+		</div>
+	</div>
 <?php echo $content_top; ?>
 <?php echo html_entity_decode($aridius_faq_description[$language_id]); ?>
 <div class="panel-group" id="accordion_faqm" role="tablist" aria-multiselectable="true">
