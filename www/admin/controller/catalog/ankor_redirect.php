@@ -93,7 +93,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
         if(isset($row[0])){
             $excelAssoc['link'] = $row[0];
             $prefix = "";
-            if(trim($row[1]) != '/'){
+            if(trim($row[1])[0] != '/'){
                 $prefix = "/";
             }
 
@@ -113,6 +113,18 @@ class ControllerCatalogAnkorRedirect extends Controller {
 
     }
 
+    public function addSlashesToRedirects (){
+        // it takes all the item, search for the redirect with out slash, add a slash for it and save it.
+        $this->getListOfRedirects();
+        $items = $this->listRedirects;
+        foreach ($items as $item){
+            if($item->redirect[0] != '/'){
+                $item->redirect = '/'.$item->redirect;
+                $item->save();
+            }
+        }
+        $this->response->redirect($this->url->link('catalog/ankor_redirect','token=' . $this->session->data['token'],true));
+    }
 
 	public function edit() {
 		$this->load->language('catalog/ankor_redirect');
@@ -194,6 +206,7 @@ class ControllerCatalogAnkorRedirect extends Controller {
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
+        $data['addSlashes'] = $this->url->link('catalog/ankor_redirect/addSlashesToRedirects', 'token=' . $this->session->data['token'], true);
         $this->response->setOutput($this->load->view('catalog/ankor_redirect/list', $data));
 
 	}
