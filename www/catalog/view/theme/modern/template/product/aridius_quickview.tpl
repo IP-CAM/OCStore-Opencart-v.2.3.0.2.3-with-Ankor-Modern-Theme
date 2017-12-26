@@ -466,7 +466,8 @@
 <link href="catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
 <!-- rating -->
 <link href="catalog/view/theme/modern/js/bootstrap-rating.css" rel="stylesheet" type="text/css" />
-<script src="catalog/view/theme/modern/js/bootstrap-rating.js" type="text/javascript"></script>
+<!--<script src="catalog/view/theme/modern/js/bootstrap-rating.js" type="text/javascript"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating/1.4.0/bootstrap-rating.min.js"></script>
 <script type="text/javascript"><!--
 $(function () {
 	$('.rating-tooltip').rating({
@@ -747,7 +748,7 @@ $(document).ready(function() {
 	recalculateprice();
 });
 //--></script>
-<script src="catalog/view/theme/modern/js/elevatezoom/jquery.elevatezoom.js" type="text/javascript"></script>
+<script src="catalog/view/theme/modern/js/elevatezoom/jquery.elevateZoom-3.0.8.min.js" type="text/javascript"></script>
 <script type="text/javascript"><!--
 $("#main-image").elevateZoom({gallery:'image-additional2', zoomEnabled: false });
 $("#main-image").bind("click", function(e) { var ez = $('#main-image').data('elevateZoom');

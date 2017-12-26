@@ -5,7 +5,7 @@ class ControllerExtensionModulearidiuscallback extends Controller {
 
 			$this->language->load('extension/module/aridiuscallback');
 			
-			$this->document->addStyle('catalog/view/theme/modern/stylesheet/aridiuscallback.css');	
+			$this->document->addStyle('catalog/view/theme/modern/stylesheet/aridiuscallback.min.css');
 			$this->document->addScript('catalog/view/theme/modern/js/aridius/aridius_callback.js');		
             $this->document->addScript('catalog/view/theme/modern/js/aridius/jquery.maskedinput.js');				
 	     	$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
