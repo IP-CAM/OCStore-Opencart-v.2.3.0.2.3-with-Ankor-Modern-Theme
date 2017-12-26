@@ -21,7 +21,11 @@
 <?php if ($keywords) { ?>
 	<meta name="keywords" content= "<?php echo $keywords; ?>" />
 	<?php } ?>
-<script src="catalog/view/theme/modern/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+<!--<script src="catalog/view/theme/modern/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>-->
+    <script
+            src="https://code.jquery.com/jquery-2.1.1.min.js"
+            integrity="sha256-h0cGsrExGgcZtSZ/fRz4AwV+Nn6Urh/3v3jFRQ0w9dQ="
+            crossorigin="anonymous"></script>
 <link href="catalog/view/theme/modern/js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <script src="catalog/view/theme/modern/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -39,7 +43,7 @@
 	<?php } ?>
 <script src="catalog/view/theme/modern/js/common.js" type="text/javascript"></script>
 <script src="catalog/view/theme/modern/js/main.js" type="text/javascript"></script>
-<script src="catalog/view/theme/modern/js/aridius/aridiusquickview.js" type="text/javascript"></script>
+<script src="catalog/view/theme/modern/js/aridius/aridiusquickview.min.js" type="text/javascript"></script>
 <?php foreach ($links as $link) { ?>
 	<link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 	<?php } ?>
