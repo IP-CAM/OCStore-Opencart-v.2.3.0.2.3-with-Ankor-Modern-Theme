@@ -950,7 +950,7 @@ $(document).ready(function() {
 });
 //--></script>
       
-<script src="catalog/view/theme/modern/js/elevatezoom/jquery.elevatezoom.js" type="text/javascript"></script>
+<script src="catalog/view/theme/modern/js/elevatezoom/jquery.elevateZoom-3.0.8.min.js" type="text/javascript"></script>
 <script type="text/javascript"><!--
 $("#main-image").elevateZoom({gallery:'image-additional2', zoomEnabled: false });
 $("#main-image").bind("click", function(e) { var ez = $('#main-image').data('elevateZoom');
