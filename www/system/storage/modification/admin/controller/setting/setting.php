@@ -1536,10 +1536,10 @@ class ControllerSettingSetting extends Controller {
         $this->setAddSetting('config_art_counterMailRu','');
 
         // Настройкии яндекса
-        $this->setAddSetting('config_yandex_market_name','Ankor krim');
-        $this->setAddSetting('config_yandex_company_name','');
-        $this->setAddSetting('config_yandex_url','');
-        $this->setAddSetting('config_yandex_delivery','');
+        $this->setAddSetting('config_art_ymlMarketName','Ankor krim');
+        $this->setAddSetting('config_art_ymlcompanyName','');
+        $this->setAddSetting('config_art_ymlUrl','');
+        $this->setAddSetting('config_art_delivery','');
 
     }
 

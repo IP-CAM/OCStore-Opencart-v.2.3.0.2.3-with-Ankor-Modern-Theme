@@ -1,6 +1,7 @@
 <?php
 
 use app\libs\ArrayToXML ;
+use app\core\App;
 
 class ControllerExtensionFeedYandexOfferlist extends Controller{
 
@@ -25,12 +26,12 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         $yandexDataCurrencies = $this->getYandexCurrencies();
 
         $yandexData['shop'] = [
-            'name'                => $this->config->get('config_yandex_market_name'),
-            'company'             => $this->config->get('config_yandex_company_name'),
-            'url'                 => $this->config->get('config_yandex_url'),
+            'name'                => App::$config->ymlMarketName,
+            'company'             => App::$config->ymlcompanyName,
+            'url'                 => App::$config->ymlUrl,
             'currencies'          => ['currency'=>$yandexDataCurrencies],
             'categories'          => ['category'=>$yandexDataCatogeries],
-            'local_delivery_cost' => $this->config->get('config_yandex_delivery'),
+            'local_delivery_cost' => App::$config->delivery,
             'offers'              => ['offer'=>$yandexDataOffers],
         ];
 
@@ -63,10 +64,10 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     public function getYandexOffers(){
         $productsData = $this->productsData;
+        $servicesId = $this->getServicesId();
         $i = 0;
         foreach($productsData as $product){
             $categoryId = $this->model_catalog_product->getProductMainCategoryId($product['product_id']);
-            $servicesId = $this->getServicesId();
             if(in_array($categoryId,$servicesId)){ // услоги
                     continue;
             }
