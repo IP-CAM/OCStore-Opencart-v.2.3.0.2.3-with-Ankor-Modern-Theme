@@ -6,33 +6,32 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     private $productsData;
     private $ymlData ;
+    private $categories;
 
     public function index(){
-
         $this->load->model('catalog/product');
         $this->load->model('catalog/category');
         $this->load->model('catalog/manufacturer');
         $this->productsData = $this->model_catalog_product->getProducts();
         $this->updateYandexOffersList();
-
         $this->response->addHeader('Content-Type: application/xml');
         $this->response->setOutput($this->ymlData);// here goes the xml output.
     }
 
     public function updateYandexOffersList(){
         $yandexData           = [];
-        $yandexDataOffers     = $this->getYandexOffers();
         $yandexDataCatogeries = $this->getYandexCategories();
+        $yandexDataOffers     = $this->getYandexOffers();
         $yandexDataCurrencies = $this->getYandexCurrencies();
 
         $yandexData['shop'] = [
-            'name'             =>'Ankor',
-            'company'          =>'Ankor Artorg',
-            'url'              =>'http://www.ankor.artorg.com.ua/',
-            'currencies'       =>['currency'=>$yandexDataCurrencies],
-            'categories'       =>['category'=>$yandexDataCatogeries],
-            'local_delivery_cost' => '300',
-            'offers'           =>['offer'=>$yandexDataOffers],
+            'name'                => $this->config->get('config_yandex_market_name'),
+            'company'             => $this->config->get('config_yandex_company_name'),
+            'url'                 => $this->config->get('config_yandex_url'),
+            'currencies'          => ['currency'=>$yandexDataCurrencies],
+            'categories'          => ['category'=>$yandexDataCatogeries],
+            'local_delivery_cost' => $this->config->get('config_yandex_delivery'),
+            'offers'              => ['offer'=>$yandexDataOffers],
         ];
 
         $this->generateYandexFile($yandexData);
@@ -45,29 +44,41 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
     }
 
     public function getYandexCategories(){
-        $categories = $data['categories'] = $this->model_catalog_category->getCategories();
-        for($i=0; $i<count($categories); $i++){
-            $yandexDataCategories[$i]    = $categories[$i]['name'];
+        $this->categories = $this->model_catalog_category->getCategories();
+        for($i=0; $i<count($this->categories); $i++){
+            $yandexDataCategories[$i]    = $this->categories[$i]['name'];
         }
         return $yandexDataCategories;
+    }
+
+    public function getServicesId(){
+        $servicesId = [];
+        foreach ($this->categories as $category){
+            if($category['type_products'] == '1'){
+                $servicesId [] = $category['category_id'];
+            }
+        }
+        return $servicesId;
     }
 
     public function getYandexOffers(){
         $productsData = $this->productsData;
         $i = 0;
         foreach($productsData as $product){
-            $category = $this->model_catalog_product->getProductCategories($product['product_id']);
-            if($category == '92'  || $product['product_id'] == '83'){
-                continue;
+            $categoryId = $this->model_catalog_product->getProductMainCategoryId($product['product_id']);
+            $servicesId = $this->getServicesId();
+            if(in_array($categoryId,$servicesId)){ // услоги
+                    continue;
             }
-            $vendor   = $this->model_catalog_manufacturer->getManufacturer($product['manufacturer_id']);
-            $yandexDataOffers[$i]['url']         = 'http://ankor.artorg.com.ua/index.php?route=product/product&product_id='.$product['product_id'];
+            $url = $this->url->link('product/product',['product_id' => $product['product_id']]);
+            $yandexDataOffers[$i]['url']         = $url;
             $yandexDataOffers[$i]['price']       = $product['price'];
+            $yandexDataOffers[$i]['picture']     = $product['image'];
             $yandexDataOffers[$i]['description'] = $product['name'];
             $yandexDataOffers[$i]['currencyId']  = 'RUB';
-            $yandexDataOffers[$i]['categoryId']  = $category;
+            $yandexDataOffers[$i]['categoryId']  = $categoryId;
             $yandexDataOffers[$i]['delivery']    = 'true';
-            $yandexDataOffers[$i]['vendor']      = isset($vendor['name']) ? $vendor['name'] : "";
+            $yandexDataOffers[$i]['vendor']      = $product['manufacturer'];
             $yandexDataOffers[$i]['model']       = 'New';
 
             $i++;
@@ -97,7 +108,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         $root->appendChild($date);
 
         // add id attributes to categories :
-        $categories = $categories = $data['categories'] = $this->model_catalog_category->getCategories();
+        $categories = $this->model_catalog_category->getCategories();
         for($i=0; $i<count($categories); $i++ ){
             $id = $dom->createAttribute('id');
             $id->value = $categories[$i]['category_id'];
