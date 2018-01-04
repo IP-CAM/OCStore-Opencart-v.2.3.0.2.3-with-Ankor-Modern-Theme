@@ -52,6 +52,9 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
 
         foreach($this->categories as $category){
+            if(!$this->isProduct($category)){ // услоги
+                continue;
+            }
             $yandexDataCategories[] = $category['name'];
 
         }
@@ -113,6 +116,9 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         // add id attributes to categories :
         $i = 0; // counter for items in 'category' tag.
         foreach($this->categories as $category ){
+            if(!$this->isProduct($category)){ // услоги
+                continue;
+            }
             $id = $dom->createAttribute('id');
             $id->value = $category['category_id'];
             $root->getElementsByTagName('category')->item($i)->appendChild($id);
@@ -127,6 +133,14 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         }
 
         $this->ymlData = $dom->saveXML();
+    }
+
+    public function isProduct($category){
+        $flag = false ;
+        if(isset($category['type_products']) && $category['type_products'] == '0' ){
+            $flag= true;
+        }
+        return $flag;
     }
 
 

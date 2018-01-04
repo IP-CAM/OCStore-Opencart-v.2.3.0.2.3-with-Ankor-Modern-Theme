@@ -29,9 +29,9 @@ use app\libs\Form;
 </div><!-- Конец группы для input -->
 
 <div class="form-group"><!-- Начало группы для input -->
-    <?=Form::label('Стоимость доставки','config_art_delivery',['class'=>'col-sm-2 control-label']);?>
+    <?=Form::label('Стоимость доставки','config_art_ymldelivery',['class'=>'col-sm-2 control-label']);?>
     <div class="col-sm-10">
-        <?=Form::text('config_art_delivery',$config_art_delivery,['class'=>'form-control'])?>
+        <?=Form::text('config_art_ymldelivery',$config_art_delivery,['class'=>'form-control'])?>
     </div>
 </div><!-- Конец группы для input -->
 

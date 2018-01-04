@@ -1539,7 +1539,7 @@ class ControllerSettingSetting extends Controller {
         $this->setAddSetting('config_art_ymlMarketName','Ankor krim');
         $this->setAddSetting('config_art_ymlcompanyName','');
         $this->setAddSetting('config_art_ymlUrl','');
-        $this->setAddSetting('config_art_delivery','');
+        $this->setAddSetting('config_art_ymldelivery','');
 
     }
 
