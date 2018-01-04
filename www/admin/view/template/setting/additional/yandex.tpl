@@ -15,9 +15,9 @@ use app\libs\Form;
 </div><!-- Конец группы для input -->
 
 <div class="form-group"><!-- Начало группы для input -->
-    <?=Form::label('Название компания','config_art_ymlcompanyName',['class'=>'col-sm-2 control-label']);?>
+    <?=Form::label('Название компания','config_art_ymlCompanyName',['class'=>'col-sm-2 control-label']);?>
     <div class="col-sm-10">
-        <?=Form::text('config_art_ymlcompanyName',$config_art_ymlcompanyName,['class'=>'form-control'])?>
+        <?=Form::text('config_art_ymlCompanyName',$config_art_ymlCompanyName,['class'=>'form-control'])?>
     </div>
 </div><!-- Конец группы для input -->
 
@@ -29,9 +29,9 @@ use app\libs\Form;
 </div><!-- Конец группы для input -->
 
 <div class="form-group"><!-- Начало группы для input -->
-    <?=Form::label('Стоимость доставки','config_art_ymldelivery',['class'=>'col-sm-2 control-label']);?>
+    <?=Form::label('Стоимость доставки','config_art_ymlDelivery',['class'=>'col-sm-2 control-label']);?>
     <div class="col-sm-10">
-        <?=Form::text('config_art_ymldelivery',$config_art_ymldelivery,['class'=>'form-control'])?>
+        <?=Form::text('config_art_ymlDelivery',$config_art_ymlDelivery,['class'=>'form-control'])?>
     </div>
 </div><!-- Конец группы для input -->
 

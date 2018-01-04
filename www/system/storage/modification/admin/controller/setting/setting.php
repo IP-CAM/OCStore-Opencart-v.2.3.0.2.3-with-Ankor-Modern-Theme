@@ -1537,9 +1537,9 @@ class ControllerSettingSetting extends Controller {
 
         // Настройкии яндекса
         $this->setAddSetting('config_art_ymlMarketName','Ankor krim');
-        $this->setAddSetting('config_art_ymlcompanyName','');
+        $this->setAddSetting('config_art_ymlCompanyName','');
         $this->setAddSetting('config_art_ymlUrl','');
-        $this->setAddSetting('config_art_ymldelivery','');
+        $this->setAddSetting('config_art_ymlDelivery','');
 
     }
 
