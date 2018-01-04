@@ -7,8 +7,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     private $productsData;
     private $ymlData ;
-    private $categories;
-    private $servicesId;
+    private $categoriesProducts;
 
     public function index(){
         $this->load->model('catalog/product');
@@ -46,18 +45,15 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
     }
 
     public function getYandexCategories(){
-        $categories = $this->model_catalog_category->getCategories();
-        foreach ($categories  as $key => $value){
-            if(!$this->isProduct($value)){ // услоги
-                $this->servicesId[] = $value['category_id'];
-                continue;
+        $categories = $this->model_catalog_category->getAllCategories();
+        foreach ($categories  as $category){
+            foreach ($category as $key => $value){
+                if (!$this->isProduct($value)) { // услоги
+                    continue;
+                }
+                $this->categoriesProducts[$key] = $value;
+                $yandexDataCategories[] = $value['name'];
             }
-            $this->categories[$value['category_id']] = $value;
-        }
-
-        foreach($this->categories as $category){
-            $yandexDataCategories[] = $category['name'];
-
         }
         return $yandexDataCategories;
     }
@@ -67,7 +63,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         $productsData = $this->productsData;
         foreach($productsData as $product){
             $categoryId = $this->model_catalog_product->getProductMainCategoryId($product['product_id']);
-            if(in_array($categoryId, $this->servicesId)){ // услоги
+            if(!isset($this->categoriesProducts[$categoryId])){ // услоги
                     continue;
             }
             $url = $this->url->link('product/product',['product_id' => $product['product_id']]);
@@ -116,7 +112,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
         // add id attributes to categories :
         $i = 0; // counter for items in 'category' tag.
-        foreach($this->categories as $category ){
+        foreach($this->categoriesProducts as $category ){
             $id = $dom->createAttribute('id');
             $id->value = $category['category_id'];
             $root->getElementsByTagName('category')->item($i)->appendChild($id);
@@ -134,14 +130,11 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
     }
 
     public function isProduct($category){
-        $flag = false ;
         if(isset($category['type_products']) && $category['type_products'] == '0' ){
-            $flag= true;
+            return true;
         }
-        return $flag;
+        return false;
     }
-
-
 }
 
 ?>
