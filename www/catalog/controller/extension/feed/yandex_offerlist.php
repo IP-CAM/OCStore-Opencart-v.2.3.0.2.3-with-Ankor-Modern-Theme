@@ -6,24 +6,46 @@ use app\core\App;
 class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     private $productsData;
-    private $ymlData ;
     private $categoriesProducts;
+    private $ymlData ;
 
     public function index(){
         $this->load->model('catalog/product');
         $this->load->model('catalog/category');
-        $this->load->model('catalog/manufacturer');
-        $this->productsData = $this->model_catalog_product->getProducts();
-        $this->updateYandexOffersList();
+
+        $this->getYmlData();
+
         $this->response->addHeader('Content-Type: application/xml');
         $this->response->setOutput($this->ymlData);// here goes the xml output.
     }
 
+// cache :
+    public function getYmlData() {
+        $this->ymlData = $this->cache->get('ymlData');
+
+        if(!$this->ymlData) {
+            $this->updateYandexOffersList();
+            $this->cache->set('ymlData', $this->ymlData);
+        }
+
+    }
+
+    public function deleteYmlCache(){
+        $this->cache->delete('ymlData');
+        $this->response->redirect($this->url->link('extension/feed/yandex_offerlist'));
+    }
+
+
+// generate xml file :
     public function updateYandexOffersList(){
         $yandexData           = [];
-        $yandexDataCatogeries = $this->getYandexCategories();
-        $yandexDataOffers     = $this->getYandexOffers();
-        $yandexDataCurrencies = $this->getYandexCurrencies();
+        $this->getDataProducts();
+        $categories = $this->getDataCategories();
+        $this->getCategoriesProducts($categories);
+
+        $yandexDataCatogeries = $this->formatYandexCategories();
+        $yandexDataOffers     = $this->formatYandexOffers();
+        $yandexDataCurrencies = $this->formatYandexCurrencies();
 
         $yandexData['shop'] = [
             'name'                => App::$config->ymlMarketName,
@@ -42,63 +64,6 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         $xml     = new ArrayToXML();
         $this->ymlData = $xml->buildXML($yandexData,'yml_catalog');
         $this->addAttributes();
-    }
-
-    public function getYandexCategories(){
-        $categories = $this->model_catalog_category->getAllCategories();
-        foreach ($categories  as $category){
-            foreach ($category as $key => $value){
-                if (!$this->isProduct($value)) { // услоги
-                    continue;
-                }
-                $this->categoriesProducts[$key] = $value;
-                $yandexDataCategories[] = $value['name'];
-            }
-        }
-        return $yandexDataCategories;
-    }
-
-
-    public function getYandexOffers(){
-        $productsData = $this->productsData;
-        foreach($productsData as $product){
-            $categoryId = $this->model_catalog_product->getProductMainCategoryId($product['product_id']);
-            if(!isset($this->categoriesProducts[$categoryId])){ // услоги
-                    continue;
-            }
-            $url = $this->url->link('product/product',['product_id' => $product['product_id']]);
-            $newOffer = [
-                'url' => $url,
-                'price'=> $product['price'],
-                'picture'=> $product['image'],
-                'description'=> $product['name'],
-                'currencyId'=> 'RUB',
-                'categoryId'=>$categoryId,
-                'delivery'=>'true',
-                'vendor'=>$product['manufacturer'],
-                'model'=>'New'
-            ];
-            $yandexDataOffers[] = $newOffer ;
-
-        }
-
-        return $yandexDataOffers;
-    }
-
-    public function getYandexCurrencies(){
-        $curr['@id']= 'RUB';
-        $curr['@rate']= 'NBU';
-        $currencies[] = $curr ;
-
-        $curr['@id']= 'UAH';
-        $curr['@rate']= '1';
-        $currencies[] = $curr ;
-
-        $curr['@id']= 'USD';
-        $curr['@rate']= 'NBU';
-        $currencies[] = $curr ;
-
-        return $currencies;
     }
 
     public function addAttributes (){
@@ -129,12 +94,98 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         $this->ymlData = $dom->saveXML();
     }
 
+
+// get products and categories from DB :
+
+    public function getDataProducts(){
+        $this->productsData = $this->model_catalog_product->getProducts();
+
+        foreach ($this->productsData as $product){
+            $categoryId = $this->model_catalog_product->getProductMainCategoryId($product['product_id']);
+            $product['category_id'] = $categoryId;
+            $products[] = $product  ;
+        }
+
+        $this->productsData = $products;
+    }
+
+    public function getDataCategories(){
+        return $this->model_catalog_category->getAllCategories();
+    }
+
+
+// format data for yandex yml file :
+
+    public function formatYandexOffers(){
+        foreach($this->productsData as $product){
+            if(!isset($this->categoriesProducts[$product['category_id']])){ // услоги
+                continue;
+            }
+            $url = $this->url->link('product/product',['product_id' => $product['product_id']]);
+            $newOffer = [
+                'url' => $url,
+                'price'=> $product['price'],
+                'picture'=> $product['image'],
+                'description'=> $product['name'],
+                'currencyId'=> 'RUB',
+                'categoryId'=>$product['category_id'],
+                'delivery'=>'true',
+                'vendor'=>$product['manufacturer'],
+                'model'=>'New'
+            ];
+            $yandexDataOffers[] = $newOffer ;
+        }
+
+        return $yandexDataOffers;
+    }
+
+    public function formatYandexCurrencies(){
+        $curr['@id']= 'RUB';
+        $curr['@rate']= 'NBU';
+        $currencies[] = $curr ;
+
+        $curr['@id']= 'UAH';
+        $curr['@rate']= '1';
+        $currencies[] = $curr ;
+
+        $curr['@id']= 'USD';
+        $curr['@rate']= 'NBU';
+        $currencies[] = $curr ;
+
+        return $currencies;
+    }
+
+    public function getCategoriesProducts($categories){
+            foreach ($categories as $category) {
+                foreach ($category as $key => $value){
+                    if(isset($value['category_id'])){
+                        if (!$this->isProduct($value)) { // услоги
+                            continue;
+                        }
+                            $this->categoriesProducts[$key] = $value;
+                    }else{
+                        $this->getCategoriesProducts($category);
+                    }
+                }
+            }
+    }
+
+    public function formatYandexCategories (){
+        foreach ( $this->categoriesProducts as $key => $value){
+            $yandexDataCategories[] = $value['name'];
+        }
+        return $yandexDataCategories;
+    }
+
+
+// check if product
     public function isProduct($category){
         if(isset($category['type_products']) && $category['type_products'] == '0' ){
             return true;
         }
         return false;
     }
+
 }
 
 ?>
