@@ -7,7 +7,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     private $productsData;
     private $ymlData ;
-    private $categoriesIndexedWithId;
+    private $categories;
 
     public function index(){
         $this->load->model('catalog/product');
@@ -47,11 +47,11 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
     public function getYandexCategories(){
         $categories = $this->model_catalog_category->getCategories();
         foreach ($categories  as $key => $value){
-            $this->categoriesIndexedWithId[$value['category_id']] = $value;
+            $this->categories[$value['category_id']] = $value;
         }
 
 
-        foreach($this->categoriesIndexedWithId as $category){
+        foreach($this->categories as $category){
             $yandexDataCategories[] = $category['name'];
 
         }
@@ -61,36 +61,42 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     public function getYandexOffers(){
         $productsData = $this->productsData;
-        $i = 0;
         foreach($productsData as $product){
             $categoryId = $this->model_catalog_product->getProductMainCategoryId($product['product_id']);
-            if( isset($this->categoriesIndexedWithId[$categoryId]['type_products'])&& $this->categoriesIndexedWithId[$categoryId]['type_products'] == '1'){ // услоги
+            if(isset($this->categories[$categoryId]) && $this->categories[$categoryId]['type_products'] == '1'){ // услоги
                     continue;
             }
             $url = $this->url->link('product/product',['product_id' => $product['product_id']]);
-            $yandexDataOffers[$i]['url']         = $url;
-            $yandexDataOffers[$i]['price']       = $product['price'];
-            $yandexDataOffers[$i]['picture']     = $product['image'];
-            $yandexDataOffers[$i]['description'] = $product['name'];
-            $yandexDataOffers[$i]['currencyId']  = 'RUB';
-            $yandexDataOffers[$i]['categoryId']  = $categoryId;
-            $yandexDataOffers[$i]['delivery']    = 'true';
-            $yandexDataOffers[$i]['vendor']      = $product['manufacturer'];
-            $yandexDataOffers[$i]['model']       = 'New';
+            $newOffer = [
+                'url' => $url,
+                'price'=> $product['price'],
+                'picture'=> $product['image'],
+                'description'=> $product['name'],
+                'currencyId'=> 'RUB',
+                'categoryId'=>$categoryId,
+                'delivery'=>'true',
+                'vendor'=>$product['manufacturer'],
+                'model'=>'New'
+            ];
+            $yandexDataOffers[] = $newOffer ;
 
-            $i++;
         }
 
         return $yandexDataOffers;
     }
 
     public function getYandexCurrencies(){
-        $currencies[0]['@id']   ='UAH';
-        $currencies[0]['@rate'] ='1';
-        $currencies[1]['@id']   ='RUB';
-        $currencies[1]['@rate'] ='NBU';
-        $currencies[2]['@id']   ='USD';
-        $currencies[2]['@rate'] ='NBU';
+        $curr['@id']= 'RUB';
+        $curr['@rate']= 'NBU';
+        $currencies[] = $curr ;
+
+        $curr['@id']= 'UAH';
+        $curr['@rate']= '1';
+        $currencies[] = $curr ;
+
+        $curr['@id']= 'USD';
+        $curr['@rate']= 'NBU';
+        $currencies[] = $curr ;
 
         return $currencies;
     }
@@ -106,7 +112,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
         // add id attributes to categories :
         $i = 0; // counter for items in 'category' tag.
-        foreach($this->categoriesIndexedWithId as $category ){
+        foreach($this->categories as $category ){
             $id = $dom->createAttribute('id');
             $id->value = $category['category_id'];
             $root->getElementsByTagName('category')->item($i)->appendChild($id);
