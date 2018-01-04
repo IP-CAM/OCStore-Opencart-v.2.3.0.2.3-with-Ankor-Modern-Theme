@@ -7,7 +7,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     private $productsData;
     private $ymlData ;
-    private $categories;
+    private $categoriesIndexedWithId;
 
     public function index(){
         $this->load->model('catalog/product');
@@ -45,30 +45,26 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
     }
 
     public function getYandexCategories(){
-        $this->categories = $this->model_catalog_category->getCategories();
-        for($i=0; $i<count($this->categories); $i++){
-            $yandexDataCategories[$i]    = $this->categories[$i]['name'];
+        $categories = $this->model_catalog_category->getCategories();
+        foreach ($categories  as $key => $value){
+            $this->categoriesIndexedWithId[$value['category_id']] = $value;
+        }
+
+
+        foreach($this->categoriesIndexedWithId as $category){
+            $yandexDataCategories[] = $category['name'];
+
         }
         return $yandexDataCategories;
     }
 
-    public function getServicesId(){
-        $servicesId = [];
-        foreach ($this->categories as $category){
-            if($category['type_products'] == '1'){
-                $servicesId [] = $category['category_id'];
-            }
-        }
-        return $servicesId;
-    }
 
     public function getYandexOffers(){
         $productsData = $this->productsData;
-        $servicesId = $this->getServicesId();
         $i = 0;
         foreach($productsData as $product){
             $categoryId = $this->model_catalog_product->getProductMainCategoryId($product['product_id']);
-            if(in_array($categoryId,$servicesId)){ // услоги
+            if( isset($this->categoriesIndexedWithId[$categoryId]['type_products'])&& $this->categoriesIndexedWithId[$categoryId]['type_products'] == '1'){ // услоги
                     continue;
             }
             $url = $this->url->link('product/product',['product_id' => $product['product_id']]);
@@ -109,17 +105,19 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         $root->appendChild($date);
 
         // add id attributes to categories :
-        $categories = $this->model_catalog_category->getCategories();
-        for($i=0; $i<count($categories); $i++ ){
+        $i = 0; // counter for items in 'category' tag.
+        foreach($this->categoriesIndexedWithId as $category ){
             $id = $dom->createAttribute('id');
-            $id->value = $categories[$i]['category_id'];
+            $id->value = $category['category_id'];
             $root->getElementsByTagName('category')->item($i)->appendChild($id);
 
-            if($categories[$i]['parent_id'] != 0){
+            if($category['parent_id'] != 0){
                 $parentId = $dom->createAttribute('parentId');
-                $parentId->value = $categories[$i]['parent_id'];
+                $parentId->value = $category['parent_id'];
                 $root->getElementsByTagName('category')->item($i)->appendChild($parentId);
             }
+
+            $i++;
         }
 
         $this->ymlData = $dom->saveXML();
