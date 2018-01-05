@@ -40,9 +40,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
     public function updateYandexOffersList(){
         $yandexData           = [];
         $this->getDataProducts();
-        $categories = $this->getDataCategories();
-        $this->getCategoriesProducts($categories);
-
+        $this->getCategoriesProducts();
         $yandexDataCatogeries = $this->formatYandexCategories();
         $yandexDataOffers     = $this->formatYandexOffers();
         $yandexDataCurrencies = $this->formatYandexCurrencies();
@@ -155,17 +153,14 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         return $currencies;
     }
 
-    public function getCategoriesProducts($categories){
+    public function getCategoriesProducts(){
+        $categories = $this->getDataCategories();
             foreach ($categories as $category) {
                 foreach ($category as $key => $value){
-                    if(isset($value['category_id'])){
                         if (!$this->isProduct($value)) { // услоги
                             continue;
                         }
                             $this->categoriesProducts[$key] = $value;
-                    }else{
-                        $this->getCategoriesProducts($category);
-                    }
                 }
             }
     }
