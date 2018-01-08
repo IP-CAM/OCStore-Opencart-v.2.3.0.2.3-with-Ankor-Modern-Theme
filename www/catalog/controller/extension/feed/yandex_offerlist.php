@@ -139,15 +139,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     public function formatYandexCurrencies(){
         $curr['@id']= 'RUB';
-        $curr['@rate']= 'NBU';
-        $currencies[] = $curr ;
-
-        $curr['@id']= 'UAH';
-        $curr['@rate']= '1';
-        $currencies[] = $curr ;
-
-        $curr['@id']= 'USD';
-        $curr['@rate']= 'NBU';
+        $curr['@rate']= 'CBRF'; // Центральный банк Российской Федерации
         $currencies[] = $curr ;
 
         return $currencies;
