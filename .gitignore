@@ -52,3 +52,5 @@ www/backup/*
 www/catalog/view/theme/modern/stylesheet/dist/main.css
 www/catalog/view/theme/modern/stylesheet/dist/main.css.map
 
+/www/backuper/
+
