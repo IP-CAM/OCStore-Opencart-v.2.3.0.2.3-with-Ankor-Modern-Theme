@@ -142,14 +142,6 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
         $curr['@rate']= 'NBU';
         $currencies[] = $curr ;
 
-        $curr['@id']= 'UAH';
-        $curr['@rate']= '1';
-        $currencies[] = $curr ;
-
-        $curr['@id']= 'USD';
-        $curr['@rate']= 'NBU';
-        $currencies[] = $curr ;
-
         return $currencies;
     }
 
