@@ -6,6 +6,11 @@ use app\libs\Form;
  */
 
 ?>
+<div class="form-group">
+    <div class="col-sm-4">
+        <a class="btn btn-primary" href='/index.php?route=extension/feed/yandex_offerlist/deleteymlcache'  target="_blank">Обновить кеш</a>
+    </div>
+</div>
 
 <div class="form-group"><!-- Начало группы для input -->
     <?=Form::label('Название магазина','config_art_ymlMarketName',['class'=>'col-sm-2 control-label']);?>
