@@ -11,7 +11,7 @@ use app\libs\Form;
         <li class=""><a href="#tab-meta-add" data-toggle="tab">Формирование мета</a></li>
         <li class=""><a href="#tab-telegram" data-toggle="tab">Настройки оповещений телеграм</a></li>
         <li class=""><a href="#tab-analytics" data-toggle="tab">Настройки аналитики</a></li>
-        <li class=""><a href="#tab-yandex" data-toggle="tab">Настройки яндекса</a></li>
+        <li class=""><a href="#tab-yandex" data-toggle="tab">Настройки Яндекс.Маркет</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab-general-add">
