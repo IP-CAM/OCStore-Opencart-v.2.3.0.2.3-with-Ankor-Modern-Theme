@@ -121,6 +121,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
             }
             $url = $this->url->link('product/product',['product_id' => $product['product_id']]);
             $newOffer = [
+                'name'=>$product['name'],
                 'url' => $url,
                 'price'=> $product['price'],
                 'picture'=> $product['image'],
@@ -139,7 +140,7 @@ class ControllerExtensionFeedYandexOfferlist extends Controller{
 
     public function formatYandexCurrencies(){
         $curr['@id']= 'RUB';
-        $curr['@rate']= 'CBRF'; // Центральный банк Российской Федерации
+        $curr['@rate']= '1'; // Центральный банк Российской Федерации
         $currencies[] = $curr ;
 
         return $currencies;
