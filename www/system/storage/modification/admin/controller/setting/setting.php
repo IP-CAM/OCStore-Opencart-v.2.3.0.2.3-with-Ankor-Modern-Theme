@@ -1534,6 +1534,13 @@ class ControllerSettingSetting extends Controller {
         $this->setAddSetting('config_art_googleTagsBody','');
 
         $this->setAddSetting('config_art_counterMailRu','');
+
+        // Настройкии яндекса
+        $this->setAddSetting('config_art_ymlMarketName','Ankor krim');
+        $this->setAddSetting('config_art_ymlCompanyName','');
+        $this->setAddSetting('config_art_ymlUrl','');
+        $this->setAddSetting('config_art_ymlDelivery','');
+
     }
 
     protected function addMetaProdSetting() {
