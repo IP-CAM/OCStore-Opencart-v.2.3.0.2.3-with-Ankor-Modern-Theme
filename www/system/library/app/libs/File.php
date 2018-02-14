@@ -5,7 +5,7 @@ namespace app\libs;
 
 use app\core\App;
 
-class Download{
+class File{
 
     protected static $filePath;
     /**
@@ -15,14 +15,14 @@ class Download{
      * @param string $realFilePath
      * @return bool
      */
-  public static function downloadFile($realFilePath) {
+  public static function download($realFilePath) {
       self::$filePath = $realFilePath;
         // вначале проверим, что файл существует
         if(!file_exists(self::$filePath)) {
             return false;
         }
         // соберем необходимую информацию о файле
-        $fileInfo = self::getFileInfo();
+        $fileInfo      = self::getFileInfo();
         // Формируем HTTP-заголовки ответа
         $rangePosition = self::setHeader($fileInfo,'download');
         // теперь необходимо встать на позицию $rangePosition и выдать в поток содержимое файла
@@ -32,12 +32,12 @@ class Download{
         return false;
     }
 
-    public  static function openFile($realFilePath){
+    public  static function open($realFilePath){
         self::$filePath = $realFilePath;
         if(!file_exists(self::$filePath)) {
             return false;
         }
-        $fileInfo = self::getFileInfo();
+        $fileInfo      = self::getFileInfo();
         $rangePosition = self::setHeader($fileInfo,'open');
         if(self::outputFile($rangePosition)){
             return true ;
