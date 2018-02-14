@@ -2,6 +2,9 @@
 
 namespace app\libs;
 
+use app\core\App;
+use PHPExcel_IOFactory;
+
 class Download{
 
     /**
@@ -11,11 +14,17 @@ class Download{
      * @param string $realFilePath
      * @return bool
      */
-  public static function downloadFile($realFilePath) {
+  public static function downloadFile($realFilePath,$request) {
         // вначале проверим, что файл существует
         if(!file_exists($realFilePath)) {
             return false;
         }
+
+        $Content_Disposition = 'attachment';
+        if($request == 'open'){
+            $Content_Disposition = 'inline';
+        }
+
         // соберем необходимую информацию о файле
         $CLen = filesize($realFilePath);
         $filename = basename($realFilePath); // запрашиваемое имя
@@ -52,7 +61,7 @@ class Download{
                 header ( 'Accept-Ranges: bytes');
                 header ( 'Content-Range: bytes ' . $rangePosition . '-' . $CLen - 1 . '/' . $CLen);
                 header ( 'Content-Length: ' . $newCLen );
-                header ( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+                header ( 'Content-Disposition: '.$Content_Disposition.'; filename="' . $filename . '"' );
                 header ( 'Content-Description: File Transfer' );
                 header ( 'Content-Type: ' . $fileCType );
                 header ( 'Content-Transfer-Encoding: binary');
@@ -77,7 +86,7 @@ class Download{
             header ( 'Pragma: no-cache' );
             header ( 'Accept-Ranges: bytes');
             header ( 'Content-Length: ' . $CLen );
-            header ( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+            header ( 'Content-Disposition:'.$Content_Disposition.'; filename="' . $filename . '"' );
             header ( 'Content-Description: File Transfer' );
             header ( 'Content-Type: ' . $fileCType );
             header ( 'Content-Transfer-Encoding: binary');
@@ -104,7 +113,8 @@ class Download{
             'zip' => 'application/x-zip-compressed',
             'rar' => 'application/x-rar-compressed',
             'doc' => 'application/msword',
-            'xls' => 'application/vnd.ms-excel',
+            'xls' => 'application/excel',
+            'xlsx'=> 'application/excel',
             'ppt' => 'application/vnd.ms-powerpoint',
             'gif' => 'image/gif',
             'png' => 'image/png',
