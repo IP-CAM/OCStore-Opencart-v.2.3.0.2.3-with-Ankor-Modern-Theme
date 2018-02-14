@@ -12,29 +12,15 @@ class Download{
      * @param string $realFilePath
      * @return bool
      */
-  public static function requestFile($realFilePath,$request) {
+  public static function downloadFile($realFilePath) {
         // вначале проверим, что файл существует
         if(!file_exists($realFilePath)) {
             return false;
         }
 
-        $Content_Disposition = 'attachment';
-        if($request == 'open'){
-            $Content_Disposition = 'inline';
-        }
-
         // соберем необходимую информацию о файле
-        $CLen = filesize($realFilePath);
-        $filename = basename($realFilePath); // запрашиваемое имя
-        $file_extension = strtolower(substr(strrchr($filename, '.'), 1));
-        // Краткий перечень mime-типов
-        $fileCType = 'application/octet-stream';
-        $CTypes = self::getTypes();
-        // Если расширение есть в перечне, присвоим соответствующий mime тип,
-        // иначе остается общий
-        if(isset($CTypes[$file_extension])) {
-            $fileCType = $CTypes[$file_extension];
-        }
+        $fileInfo = self::getFileInfo($realFilePath);
+
         // Формируем HTTP-заголовки ответа
         // $_SERVER['HTTP_RANGE'] — номер байта, c которого надо возобновить передачу содержимого файла.
         // проверим, что заголовок Range: bytes=range- был послан браузером или менеджером закачек
@@ -42,7 +28,7 @@ class Download{
             $matches = array();
             if(preg_match('/bytes=(\d+)-/', $_SERVER['HTTP_RANGE'], $matches)) {
                 $rangePosition = intval($matches[1]);
-                $newCLen = $CLen - $rangePosition;
+                $newCLen = $fileInfo['CLen'] - $rangePosition;
                 header ( 'HTTP/1.1 206 Partial content', true, 200 );
                 header ( 'Status: 206 Partial content' );
                 // Last-Modified - Дата послднего изменения содержимого. Поле актуально только для
@@ -57,11 +43,11 @@ class Download{
                 // HTTP/1.0
                 header ( 'Pragma: no-cache' );
                 header ( 'Accept-Ranges: bytes');
-                header ( 'Content-Range: bytes ' . $rangePosition . '-' . $CLen - 1 . '/' . $CLen);
+                header ( 'Content-Range: bytes ' . $rangePosition . '-' . $fileInfo['CLen'] - 1 . '/' . $fileInfo['CLen']);
                 header ( 'Content-Length: ' . $newCLen );
-                header ( 'Content-Disposition: '.$Content_Disposition.'; filename="' . $filename . '"' );
+                header ( 'Content-Disposition: attachment; filename="' .  $fileInfo['filename']  . '"' );
                 header ( 'Content-Description: File Transfer' );
-                header ( 'Content-Type: ' . $fileCType );
+                header ( 'Content-Type: ' . $fileInfo['fileCType'] );
                 header ( 'Content-Transfer-Encoding: binary');
             }
             else {
@@ -83,13 +69,14 @@ class Download{
             // HTTP/1.0
             header ( 'Pragma: no-cache' );
             header ( 'Accept-Ranges: bytes');
-            header ( 'Content-Length: ' . $CLen );
-            header ( 'Content-Disposition:'.$Content_Disposition.'; filename="' . $filename . '"' );
+            header ( 'Content-Length: ' .  $fileInfo['CLen'] );
+            header ( 'Content-Disposition: attachment ; filename="' .  $fileInfo['filename']  . '"' );
             header ( 'Content-Description: File Transfer' );
-            header ( 'Content-Type: ' . $fileCType );
+            header ( 'Content-Type: ' . $fileInfo['fileCType'] );
             header ( 'Content-Transfer-Encoding: binary');
             $rangePosition = 0;
         }
+
         // теперь необходимо встать на позицию $rangePosition и выдать в поток содержимое файла
         $handle = @fopen($realFilePath, 'rb');
         if ($handle) {
@@ -100,6 +87,12 @@ class Download{
             return true;
         }
         else {
+            return false;
+        }
+    }
+
+    public  static function openFile($realFilePath){
+        if(!file_exists($realFilePath)) {
             return false;
         }
     }
@@ -119,6 +112,21 @@ class Download{
             'jpe' => 'jpeg',
             'jpg' => 'image/jpg'
         );
+    }
+
+    public static function getFileInfo($realFilePath){
+        $fileInfo['CLen'] = filesize($realFilePath);
+        $fileInfo['filename'] = basename($realFilePath); // запрашиваемое имя
+        $fileInfo['file_extension'] = strtolower(substr(strrchr($fileInfo['filename'], '.'), 1));
+        // Краткий перечень mime-типов
+        $fileInfo['fileCType'] = 'application/octet-stream';
+        $CTypes = self::getTypes();
+        // Если расширение есть в перечне, присвоим соответствующий mime тип,
+        // иначе остается общий
+        if(isset($CTypes[$fileInfo['file_extension']])) {
+            $fileInfo['fileCType'] = $CTypes[$fileInfo['file_extension']];
+        }
+        return $fileInfo;
     }
 
 }
