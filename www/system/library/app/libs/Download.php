@@ -22,6 +22,61 @@ class Download{
         $fileInfo = self::getFileInfo($realFilePath);
 
         // Формируем HTTP-заголовки ответа
+        $rangePosition = self::setHeader($fileInfo);
+
+        // теперь необходимо встать на позицию $rangePosition и выдать в поток содержимое файла
+        $handle = @fopen($realFilePath, 'rb');
+        if ($handle) {
+            fseek($handle, $rangePosition);
+            while(!feof($handle) and !connection_status()) {
+                print fread($handle, (1024 * 8));
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public  static function openFile($realFilePath){
+        if(!file_exists($realFilePath)) {
+            return false;
+        }
+    }
+
+    protected static function getTypes() {
+        return array (
+            'pdf' => 'application/pdf',
+            'exe' => 'application/octet-stream',
+            'zip' => 'application/x-zip-compressed',
+            'rar' => 'application/x-rar-compressed',
+            'doc' => 'application/msword',
+            'xls' => 'application/excel',
+            'xlsx'=> 'application/excel',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'gif' => 'image/gif',
+            'png' => 'image/png',
+            'jpe' => 'jpeg',
+            'jpg' => 'image/jpg'
+        );
+    }
+
+    public static function getFileInfo($realFilePath){
+        $fileInfo['CLen'] = filesize($realFilePath);
+        $fileInfo['filename'] = basename($realFilePath); // запрашиваемое имя
+        $fileInfo['file_extension'] = strtolower(substr(strrchr($fileInfo['filename'], '.'), 1));
+        // Краткий перечень mime-типов
+        $fileInfo['fileCType'] = 'application/octet-stream';
+        $CTypes = self::getTypes();
+        // Если расширение есть в перечне, присвоим соответствующий mime тип,
+        // иначе остается общий
+        if(isset($CTypes[$fileInfo['file_extension']])) {
+            $fileInfo['fileCType'] = $CTypes[$fileInfo['file_extension']];
+        }
+        return $fileInfo;
+    }
+
+    public static function setHeader($fileInfo){
         // $_SERVER['HTTP_RANGE'] — номер байта, c которого надо возобновить передачу содержимого файла.
         // проверим, что заголовок Range: bytes=range- был послан браузером или менеджером закачек
         if(isset($_SERVER['HTTP_RANGE'])) {
@@ -77,56 +132,8 @@ class Download{
             $rangePosition = 0;
         }
 
-        // теперь необходимо встать на позицию $rangePosition и выдать в поток содержимое файла
-        $handle = @fopen($realFilePath, 'rb');
-        if ($handle) {
-            fseek($handle, $rangePosition);
-            while(!feof($handle) and !connection_status()) {
-                print fread($handle, (1024 * 8));
-            }
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+        return $rangePosition;
 
-    public  static function openFile($realFilePath){
-        if(!file_exists($realFilePath)) {
-            return false;
-        }
-    }
-
-    protected static function getTypes() {
-        return array (
-            'pdf' => 'application/pdf',
-            'exe' => 'application/octet-stream',
-            'zip' => 'application/x-zip-compressed',
-            'rar' => 'application/x-rar-compressed',
-            'doc' => 'application/msword',
-            'xls' => 'application/excel',
-            'xlsx'=> 'application/excel',
-            'ppt' => 'application/vnd.ms-powerpoint',
-            'gif' => 'image/gif',
-            'png' => 'image/png',
-            'jpe' => 'jpeg',
-            'jpg' => 'image/jpg'
-        );
-    }
-
-    public static function getFileInfo($realFilePath){
-        $fileInfo['CLen'] = filesize($realFilePath);
-        $fileInfo['filename'] = basename($realFilePath); // запрашиваемое имя
-        $fileInfo['file_extension'] = strtolower(substr(strrchr($fileInfo['filename'], '.'), 1));
-        // Краткий перечень mime-типов
-        $fileInfo['fileCType'] = 'application/octet-stream';
-        $CTypes = self::getTypes();
-        // Если расширение есть в перечне, присвоим соответствующий mime тип,
-        // иначе остается общий
-        if(isset($CTypes[$fileInfo['file_extension']])) {
-            $fileInfo['fileCType'] = $CTypes[$fileInfo['file_extension']];
-        }
-        return $fileInfo;
     }
 
 }
