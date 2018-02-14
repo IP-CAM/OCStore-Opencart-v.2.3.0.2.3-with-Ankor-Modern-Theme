@@ -3,8 +3,11 @@
 namespace app\libs;
 
 
+use app\core\App;
+
 class Download{
 
+    protected static $filePath;
     /**
      * Функция для скачивания файла с сервера с возможностью докачки,
      * требует предварительной установки ограничения времени выполнения сценария
@@ -13,35 +16,33 @@ class Download{
      * @return bool
      */
   public static function downloadFile($realFilePath) {
+      self::$filePath = $realFilePath;
         // вначале проверим, что файл существует
-        if(!file_exists($realFilePath)) {
+        if(!file_exists(self::$filePath)) {
             return false;
         }
-
         // соберем необходимую информацию о файле
-        $fileInfo = self::getFileInfo($realFilePath);
-
+        $fileInfo = self::getFileInfo();
         // Формируем HTTP-заголовки ответа
-        $rangePosition = self::setHeader($fileInfo);
-
+        $rangePosition = self::setHeader($fileInfo,'download');
         // теперь необходимо встать на позицию $rangePosition и выдать в поток содержимое файла
-        $handle = @fopen($realFilePath, 'rb');
-        if ($handle) {
-            fseek($handle, $rangePosition);
-            while(!feof($handle) and !connection_status()) {
-                print fread($handle, (1024 * 8));
-            }
-            return true;
+        if(self::outputFile($rangePosition)){
+            return true ;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     public  static function openFile($realFilePath){
-        if(!file_exists($realFilePath)) {
+        self::$filePath = $realFilePath;
+        if(!file_exists(self::$filePath)) {
             return false;
         }
+        $fileInfo = self::getFileInfo();
+        $rangePosition = self::setHeader($fileInfo,'open');
+        if(self::outputFile($rangePosition)){
+            return true ;
+        }
+        return false;
     }
 
     protected static function getTypes() {
@@ -61,9 +62,10 @@ class Download{
         );
     }
 
-    public static function getFileInfo($realFilePath){
-        $fileInfo['CLen'] = filesize($realFilePath);
-        $fileInfo['filename'] = basename($realFilePath); // запрашиваемое имя
+    public static function getFileInfo(){
+
+        $fileInfo['CLen'] = filesize(self::$filePath);
+        $fileInfo['filename'] = basename(self::$filePath); // запрашиваемое имя
         $fileInfo['file_extension'] = strtolower(substr(strrchr($fileInfo['filename'], '.'), 1));
         // Краткий перечень mime-типов
         $fileInfo['fileCType'] = 'application/octet-stream';
@@ -76,7 +78,11 @@ class Download{
         return $fileInfo;
     }
 
-    public static function setHeader($fileInfo){
+    public static function setHeader($fileInfo,$request){
+        $contentDisposition = 'attachment';
+        if($request == 'open'){
+            $contentDisposition = 'inline';
+        }
         // $_SERVER['HTTP_RANGE'] — номер байта, c которого надо возобновить передачу содержимого файла.
         // проверим, что заголовок Range: bytes=range- был послан браузером или менеджером закачек
         if(isset($_SERVER['HTTP_RANGE'])) {
@@ -100,7 +106,7 @@ class Download{
                 header ( 'Accept-Ranges: bytes');
                 header ( 'Content-Range: bytes ' . $rangePosition . '-' . $fileInfo['CLen'] - 1 . '/' . $fileInfo['CLen']);
                 header ( 'Content-Length: ' . $newCLen );
-                header ( 'Content-Disposition: attachment; filename="' .  $fileInfo['filename']  . '"' );
+                header ( 'Content-Disposition: '.$contentDisposition.'; filename="' .  $fileInfo['filename']  . '"' );
                 header ( 'Content-Description: File Transfer' );
                 header ( 'Content-Type: ' . $fileInfo['fileCType'] );
                 header ( 'Content-Transfer-Encoding: binary');
@@ -125,7 +131,7 @@ class Download{
             header ( 'Pragma: no-cache' );
             header ( 'Accept-Ranges: bytes');
             header ( 'Content-Length: ' .  $fileInfo['CLen'] );
-            header ( 'Content-Disposition: attachment ; filename="' .  $fileInfo['filename']  . '"' );
+            header ( 'Content-Disposition:'.$contentDisposition.'; filename="' .  $fileInfo['filename']  . '"' );
             header ( 'Content-Description: File Transfer' );
             header ( 'Content-Type: ' . $fileInfo['fileCType'] );
             header ( 'Content-Transfer-Encoding: binary');
@@ -134,6 +140,19 @@ class Download{
 
         return $rangePosition;
 
+    }
+
+    public static function outputFile($rangePosition){
+        $handle = @fopen(self::$filePath, 'rb');
+        if ($handle) {
+            fseek($handle, $rangePosition);
+            while(!feof($handle) and !connection_status()) {
+                print fread($handle, (1024 * 8));
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
