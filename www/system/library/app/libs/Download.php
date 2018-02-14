@@ -2,8 +2,6 @@
 
 namespace app\libs;
 
-use app\core\App;
-use PHPExcel_IOFactory;
 
 class Download{
 
