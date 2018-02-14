@@ -12,7 +12,7 @@ class Download{
      * @param string $realFilePath
      * @return bool
      */
-  public static function downloadFile($realFilePath,$request) {
+  public static function requestFile($realFilePath,$request) {
         // вначале проверим, что файл существует
         if(!file_exists($realFilePath)) {
             return false;

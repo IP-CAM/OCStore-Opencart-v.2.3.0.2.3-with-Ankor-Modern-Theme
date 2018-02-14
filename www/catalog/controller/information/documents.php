@@ -93,7 +93,7 @@ class ControllerInformationDocuments extends \app\core\Controller {
             if (isset($this->request->get['request'])){
                 $request = $this->request->get['request'];
             }
-            \app\libs\Download::downloadFile($file['path'],$request);
+            \app\libs\Download::requestFile($file['path'],$request);
         } else {
             $this->response->redirect('/');
         }
