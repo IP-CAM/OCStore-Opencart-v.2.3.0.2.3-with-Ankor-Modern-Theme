@@ -20,6 +20,9 @@
         <h1 class="title_style cat_title_mob col-xs-7 col-sm-10 col-md-10"><?php echo $heading_title; ?></h1>
         <span class="col-xs-5 col-sm-2 col-md-2 link_brands"><a href="<?php echo $linkBrands; ?>">О брендах <i class="fa fa-question-circle"></i></a></span>
     </div>
+
+    <div class="hidden-xs">
+
 <?php if ($modern_description_top_or_bot !=1) { ?>
 <?php if ($thumb || $description) { ?>
 <div class="row desc-cat_top">
@@ -41,6 +44,8 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 </div>
 <?php } ?>
 	<?php } ?>
+
+    </div>
 <?php if ($categories) { ?>
 	<div class="col-sm-12">
 	<hr>
@@ -285,7 +290,10 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 	</div>
 	<?php } ?>
 <br />
-<?php if ($modern_description_top_or_bot !=0) { ?>
+        
+        <div class="visible-xs">
+        
+<?php if ($modern_description_top_or_bot !=1) { ?>
 	<div class="row">
 	<div class="col-sm-12">
 <?php if ($thumb || $description) { ?>
@@ -310,6 +318,9 @@ if ($thumb) { ?><div class="col-sm-10"><?php } else { ?><div class="col-sm-12"><
 	</div>
 	</div>
 	<?php } ?>
+
+    </div>
+
 <?php echo $content_bottom; ?></div></div>
 <?php echo $column_right; ?></div>
 </div>
