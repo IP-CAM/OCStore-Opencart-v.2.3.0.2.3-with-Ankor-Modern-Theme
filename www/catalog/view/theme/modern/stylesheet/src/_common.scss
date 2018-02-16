@@ -84,8 +84,11 @@ address {
     margin: 20px 0;
   }
   .newsdesc {
-    min-height: 100px;
+    min-height: 130px;
     margin-bottom: 0;
+    overflow: hidden;
+    max-height: 140px;
+    padding: 11px 0 0 0;
   }
   .caption {
     h4 {
