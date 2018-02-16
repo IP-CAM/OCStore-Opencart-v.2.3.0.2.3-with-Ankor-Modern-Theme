@@ -30,6 +30,9 @@
                                 <td>
                                     <a href="<?=$controller->url->link('information/documents/get-file',['id'=>$file['id']]);$file['id']?>">Скачать файл</a>
                                 </td>
+                                <td>
+                                    <a  target="_blank" href="<?=$controller->url->link('information/documents/get-file',['id'=>$file['id'],'request'=>'open']);$file['id']?>">Открыть файл</a>
+                                </td>
                             </tr>
                         <?endforeach;?>
                         </tbody>
