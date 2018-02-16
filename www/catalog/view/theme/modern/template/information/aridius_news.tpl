@@ -253,7 +253,8 @@
 		</div></div>
 		<?php } ?>
 	<div class="buttons">
-	<div class="pull-right"><a href="<?php echo $aridius_newslist; ?>" class="btn-cart"><?php echo $button_news; ?></a></div><br /><br />
+<!--        <div class="pull-right"><a href="--><?php //echo $aridius_newslist; ?><!--" class="btn-cart">--><?php //echo $button_news; ?><!--</a></div><br /><br />-->
+        <div class="pull-right"><a href="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER']:'';  ?>" class="btn-cart"><?php echo $button_news; ?></a></div><br /><br />
 	</div></div>
 	<?php } elseif (isset($aridius_news_data)) { ?>
 	<h1><?php echo $heading_title; ?></h1>
