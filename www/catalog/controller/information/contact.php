@@ -183,7 +183,7 @@ class ControllerInformationContact extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-        if((utf8_strlen($this->request->post['phone']) < 3) || (utf8_strlen($this->request->post['phone']) > 32)){
+        if((utf8_strlen($this->request->post['phone']) < 5) || (utf8_strlen($this->request->post['phone']) > 13)){
             $this->error['phone'] = $this->language->get('error_phone');
         }
 
