@@ -139,8 +139,9 @@
 		</div>
 	<?endif;?>
     <div class="footer_copyright"> <br><br>
-        <div class="footer_copyright_1">© 2017, АНКОР КРЫМ</div>
+        <div class="footer_copyright_1">© <?=date('Y');?>, АНКОР КРЫМ</div>
 	    <div class="footer_copyright_2">Все права защищены </div>
+		<a href="/person_danie" class="footer_copyright_2">Политика обработки персональных данных</a>
     </div>  <br>
 <!--////////////WeDo/////////////-->
 	<div class="wedo">

@@ -120,7 +120,16 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required">
+           <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-phone"><?php echo $text_telephone; ?></label>
+            <div class="col-sm-12">
+              <input type="tel" name="phone" value="<?php echo $phone; ?>" id="input-phone" class="form-control" />
+              <?php if ($error_phone) { ?>
+              <div class="text-danger"><?php echo $error_phone; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-12">
               <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />

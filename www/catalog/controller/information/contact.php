@@ -65,6 +65,12 @@ class ControllerInformationContact extends Controller {
 			$data['error_name'] = '';
 		}
 
+        if (isset($this->error['phone'])) {
+            $data['error_phone'] = $this->error['phone'];
+        } else {
+            $data['error_phone'] = '';
+        }
+
 		if (isset($this->error['email'])) {
 			$data['error_email'] = $this->error['email'];
 		} else {
@@ -137,6 +143,12 @@ class ControllerInformationContact extends Controller {
 			$data['name'] = $this->customer->getFirstName();
 		}
 
+		if (isset($this->request->post['phone'])) {
+			$data['phone'] = $this->request->post['phone'];
+		} else {
+			$data['phone'] = $this->customer->getTelephone();
+		}
+
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];
 		} else {
@@ -171,9 +183,15 @@ class ControllerInformationContact extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if (!preg_match($this->config->get('config_mail_regexp'), $this->request->post['email'])) {
-			$this->error['email'] = $this->language->get('error_email');
-		}
+        if((utf8_strlen($this->request->post['phone']) < 5) || (utf8_strlen($this->request->post['phone']) > 13)){
+            $this->error['phone'] = $this->language->get('error_phone');
+        }
+
+		if(!empty($this->request->post['email'])){
+            if (!preg_match($this->config->get('config_mail_regexp'), $this->request->post['email'])) {
+                $this->error['email'] = $this->language->get('error_email');
+            }
+        }
 
 		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
 			$this->error['enquiry'] = $this->language->get('error_enquiry');

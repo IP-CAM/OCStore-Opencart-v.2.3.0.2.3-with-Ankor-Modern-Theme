@@ -143,9 +143,6 @@
                                                    data-prefix="<?php echo $option_value['price_prefix']; ?>"
                                                    data-price="<?php echo $option_value['price_value']; ?>" />
                                             <span class="im_option"><?php echo $option_value['name']; ?></span>
-                                            <?php if ($option_value['price']) { ?>
-                                                <?php echo ($option_value['price_prefix'] == '+' || $option_value['price_prefix'] == '-' ? $option_value['price_prefix'] : '') . $option_value['price']; ?>
-                                            <?php } ?><span class = "options-prheight"></span>
                                         <?php } ?>
                                     </label>
                                 </div>
