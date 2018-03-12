@@ -89,11 +89,14 @@ class ControllerInformationDocuments extends \app\core\Controller {
     public function getFile() {
         if (isset($this->request->get['id'])) {
             $file = Documents::getFile($this->request->get['id']);
-            \app\libs\Download::downloadFile($file['path']);
+            if ($this->request->get['request'] == 'open'){
+                \app\libs\File::open($file['path']);
+            }else{
+                \app\libs\File::download($file['path']);
+            }
         } else {
             $this->response->redirect('/');
         }
-
     }
 
 }
