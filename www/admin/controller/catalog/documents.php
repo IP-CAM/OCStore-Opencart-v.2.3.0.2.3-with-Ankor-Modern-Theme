@@ -434,9 +434,9 @@ class ControllerCatalogDocuments extends Controller {
         if (isset($this->request->get['id'])) {
             $file = Documents::getFile($this->request->get['id']);
             if ( isset($this->request->get['request']) && $this->request->get['request'] == 'open'){
-                File::open($file['path']);
+                File::open(DIR.'/'.$file['path']);
             }else{
-                File::download($file['path']);
+                File::download(DIR.'/'.$file['path']);
             }
         }
         $this->response->redirect($this->url->link('catalog/documents',['token' =>$this->session->data['token']]));

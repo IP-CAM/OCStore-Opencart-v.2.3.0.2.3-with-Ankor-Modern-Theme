@@ -103,7 +103,7 @@ echo $header; ?><?php echo $column_left;
 													'file_id' => $file['id'],
 												];
 												$deleteFile   = $controller->url->link('catalog/documents/delete-file', $params, true);
-												$downloadFile = $controller->url->link('catalog/documents/getFile',['id'=>$file['id'],'token'=>$params['token']]);
+												$downloadFile = $controller->url->link('catalog/documents/get-file',['id'=>$file['id'],'token'=>$params['token']],true);
 											?>
 											<tr>
 												<td></td>
