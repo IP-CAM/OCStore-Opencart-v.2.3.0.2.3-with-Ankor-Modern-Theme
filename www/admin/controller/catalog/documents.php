@@ -439,7 +439,6 @@ class ControllerCatalogDocuments extends Controller {
                 File::download(DIR.'/'.$file['path']);
             }
         }
-        $this->response->redirect($this->url->link('catalog/documents',['token' =>$this->session->data['token']]));
-    }
+	}
 }
 ?>
