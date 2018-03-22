@@ -28,7 +28,7 @@
                                 </td>
                                 <td>от <?=$date->format('d.m.Y')?></td>
                                 <td>
-                                    <a href="<?=$controller->url->link('information/documents/get-file',['id'=>$file['id']]);$file['id']?>">Скачать файл</a>
+                                    <a href="<?=$controller->url->link('information/documents/get-file',['id'=>$file['id']])?>">Скачать файл</a>
                                 </td>
                                 <? if($file['extension'] == 'pdf'):?>
                                     <td>
