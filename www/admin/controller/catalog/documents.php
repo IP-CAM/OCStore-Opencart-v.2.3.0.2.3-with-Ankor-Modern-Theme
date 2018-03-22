@@ -1,5 +1,6 @@
 <?php
 use app\core\App;
+use app\libs\File;
 use app\models\Callback;
 use app\models\Documents;
 
@@ -427,6 +428,18 @@ class ControllerCatalogDocuments extends Controller {
             $this->response->redirect($this->url->link('catalog/documents/edit', $paramsUrl, true));
         }
 
+    }
+
+    public function getFile() {
+        if (isset($this->request->get['id'])) {
+            $file = Documents::getFile($this->request->get['id']);
+            if ( isset($this->request->get['request']) && $this->request->get['request'] == 'open'){
+                File::open($file['path']);
+            }else{
+                File::download($file['path']);
+            }
+        }
+        $this->response->redirect($this->url->link('catalog/documents',['token' =>$this->session->data['token']]));
     }
 }
 ?>

@@ -103,12 +103,13 @@ echo $header; ?><?php echo $column_left;
 													'file_id' => $file['id'],
 												];
 												$deleteFile   = $controller->url->link('catalog/documents/delete-file', $params, true);
+												$downloadFile = $controller->url->link('catalog/documents/getFile',['id'=>$file['id'],'token'=>$params['token']]);
 											?>
 											<tr>
 												<td></td>
 												<td><?=$file['original_filename']?></td>
 												<td>
-													<a href="/index.php?route=information/documents/get-file&id=<?=$file['id']?>">Скачать файл</a>
+													<a href="<?=$downloadFile?>">Скачать файл</a>
 													<a href="<?php echo $deleteFile; ?>"
 													   data-toggle="tooltip" title="Удалить"
 													   class="btn btn-danger"
