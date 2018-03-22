@@ -1,5 +1,6 @@
 <?php
 use app\core\App;
+use app\libs\File;
 use app\models\Callback;
 use app\models\Documents;
 
@@ -428,5 +429,16 @@ class ControllerCatalogDocuments extends Controller {
         }
 
     }
+
+    public function getFile() {
+        if (isset($this->request->get['id'])) {
+            $file = Documents::getFile($this->request->get['id']);
+            if ( isset($this->request->get['request']) && $this->request->get['request'] == 'open'){
+                File::open(DIR.'/'.$file['path']);
+            }else{
+                File::download(DIR.'/'.$file['path']);
+            }
+        }
+	}
 }
 ?>
