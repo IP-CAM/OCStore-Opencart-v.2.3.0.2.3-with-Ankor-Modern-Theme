@@ -53,7 +53,7 @@ class File{
             'rar' => 'application/x-rar-compressed',
             'doc' => 'application/msword',
             'xls' => 'application/excel',
-            'xlsx'=> 'application/excel',
+            'xlsx'=> ' application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'ppt' => 'application/vnd.ms-powerpoint',
             'gif' => 'image/gif',
             'png' => 'image/png',
