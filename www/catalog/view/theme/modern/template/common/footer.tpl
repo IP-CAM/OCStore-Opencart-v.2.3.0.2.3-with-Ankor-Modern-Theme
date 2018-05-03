@@ -55,7 +55,7 @@
 			<li><i class="fa-li fa fa-skype"></i><a href="callto:<?php echo $modern_skype_footer[$language_id]; ?>"><?php echo $modern_skype_footer[$language_id]; ?></a></li>
 			<?php } ?>
 		<?php if (!empty($modern_mail_footer[$language_id])) { ?>
-			<li><i class="fa-li fa fa-envelope-o "></i><a onClick="javascript:window.open('mailto:<?php echo $modern_mail_footer[$language_id];?>', 'Mail');event.preventDefault()" href="<?php echo $modern_mail_footer[$language_id];?>"><?php echo $modern_mail_footer[$language_id];?></a></li>
+			<li><i class="fa-li fa fa-envelope-o "></i><?php echo $modern_mail_footer[$language_id]; ?></li>
 			<?php } ?>
 		<?php if (!empty($modern_addres_footer[$language_id])) { ?>
 			<li class="li_top"><i class="fa-li fa fa-home launch-show"></i><?php echo $modern_addres_footer[$language_id];?></li>
