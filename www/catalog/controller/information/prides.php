@@ -59,7 +59,7 @@ class ControllerInformationPrides extends \app\core\Controller {
 			foreach ($items as $result) {
 
 				if($result['image']){
-					$image = $this->model_tool_image->resize($result['image'], 560, 315);
+					$image = $this->model_tool_image->resize($result['image'], 333, 187);
 				}else{
 					$image = false;
 				}
