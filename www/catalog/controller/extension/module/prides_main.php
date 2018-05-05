@@ -6,11 +6,11 @@ class ControllerExtensionModulePridesMain extends Controller {
         $this->load->model('tool/image');
         $items = $this->model_catalog_prides->getListForMain(7);
         $imgList = 'list_main_prides.jpg';
-        $data['imgList'] = $this->model_tool_image->resize($imgList, 500, 500);
+        $data['imgList'] = $this->model_tool_image->resize($imgList, 273, 273);
         foreach ($items as $result) {
 
             if($result['image']){
-                $image = $this->model_tool_image->resize($result['image'], 500, 500);
+                $image = $this->model_tool_image->resize($result['image'], 273, 273);
             }else{
                 $image = false;
             }
