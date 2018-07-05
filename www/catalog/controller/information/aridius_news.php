@@ -325,9 +325,18 @@ class ControllerInformationAridiusNews extends Controller {
 			    $data['results'] = sprintf($this->language->get('text_pagination'), ($total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit), $total, ceil($total / $limit));				
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-			$metaCanonical = new MetaCanonical($this, 'information/aridius_news');
-			$metaCanonical->setCanonicalPageJustCanonical($page, $total, $limit);
-			
+			if ($page == 1) {
+			    $this->document->addLink($this->url->link('information/aridius_news', '', true), 'canonical');
+			} elseif ($page == 2) {
+			    $this->document->addLink($this->url->link('information/aridius_news', '', true), 'prev');
+			} else {
+			    $this->document->addLink($this->url->link('information/aridius_news', $url . '&page='. ($page - 1), true), 'prev');
+			}
+
+			if ($limit && ceil($total / $limit) > $page) {
+			    $this->document->addLink($this->url->link('information/aridius_news', $url . '&page='. ($page + 1), true), 'next');
+			}
+
 			$data['limits'] = array();
 
 			$limits = array_unique(array($this->config->get($this->config->get('config_theme') . '_product_limit'), 25, 50, 75, 100));
