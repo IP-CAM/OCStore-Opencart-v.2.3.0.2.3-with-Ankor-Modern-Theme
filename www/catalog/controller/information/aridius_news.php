@@ -5,7 +5,7 @@ use app\models\MetaCanonical;
 class ControllerInformationAridiusNews extends Controller {
 
 	public function index() {
-		//die('test');
+		
 		$this->language->load('information/aridius_news');
 		$this->load->model('catalog/aridiusnews');
 		

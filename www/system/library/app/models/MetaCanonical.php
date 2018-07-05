@@ -22,7 +22,6 @@ class MetaCanonical
 
     public function setCanonicalPageJustCanonical($curPage, $totalPages, $limitOnPage) 
     {
-        App::$debug->dDie($curPage);
         $this->controller->document->addLink($this->controller->url->link($this->route, '', true), 'canonical');
     }
 
