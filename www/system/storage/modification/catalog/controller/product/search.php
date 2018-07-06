@@ -1,4 +1,6 @@
 <?php
+
+use app\core\App;
 class ControllerProductSearch extends Controller {
 	public function index() {
 		$this->load->language('product/search');
@@ -484,17 +486,22 @@ class ControllerProductSearch extends Controller {
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-			if ($page == 1) {
-			    $this->document->addLink($this->url->link('product/search', '', true), 'canonical');
-			} elseif ($page == 2) {
-			    $this->document->addLink($this->url->link('product/search', '', true), 'prev');
+			if (App::$config->canonicalForYandex) {
+				$this->document->addLink($this->url->link('product/search', '', true), 'canonical');
 			} else {
-			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), true), 'prev');
+				if ($page == 1) {
+					$this->document->addLink($this->url->link('product/search', '', true), 'canonical');
+				} elseif ($page == 2) {
+					$this->document->addLink($this->url->link('product/search', '', true), 'prev');
+				} else {
+					$this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), true), 'prev');
+				}
+	
+				if ($limit && ceil($product_total / $limit) > $page) {
+					$this->document->addLink($this->url->link('product/search', $url . '&page='. ($page + 1), true), 'next');
+				}
 			}
-
-			if ($limit && ceil($product_total / $limit) > $page) {
-			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page + 1), true), 'next');
-			}
+			
 
 			if (isset($this->request->get['search']) && $this->config->get('config_customer_search')) {
 				$this->load->model('account/search');
