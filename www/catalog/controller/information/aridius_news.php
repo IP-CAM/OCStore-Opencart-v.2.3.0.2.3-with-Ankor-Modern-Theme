@@ -1,10 +1,11 @@
 <?php
 use app\core\App;
+use app\models\MetaCanonical;
 
 class ControllerInformationAridiusNews extends Controller {
 
 	public function index() {
-
+		
 		$this->language->load('information/aridius_news');
 		$this->load->model('catalog/aridiusnews');
 		
@@ -243,7 +244,7 @@ class ControllerInformationAridiusNews extends Controller {
 				);
 			}
 
-// RELATED aridius_news
+		// RELATED aridius_news
 	
 		$data['aridius_news'] = array();
 
@@ -273,7 +274,7 @@ class ControllerInformationAridiusNews extends Controller {
 				);
 			}
 
-// RELATED aridius_news	end
+			// RELATED aridius_news	end
 			// Template
 			$data['aridius_news_show_date'] = $this->config->get('aridius_news_show_date');
 			$data['template'] = $this->config->get('config_template');
@@ -288,7 +289,7 @@ class ControllerInformationAridiusNews extends Controller {
 
 	  	} else {
 
-   	$url = '';
+   		$url = '';
 	
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -324,18 +325,23 @@ class ControllerInformationAridiusNews extends Controller {
 			    $data['results'] = sprintf($this->language->get('text_pagination'), ($total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit), $total, ceil($total / $limit));				
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-			if ($page == 1) {
-			    $this->document->addLink($this->url->link('information/aridius_news', '', true), 'canonical');
-			} elseif ($page == 2) {
-			    $this->document->addLink($this->url->link('information/aridius_news', '', true), 'prev');
+			if (App::$config->canonicalForYandex) {
+				$this->document->addLink($this->url->link('information/aridius_news', '', true), 'canonical');
 			} else {
-			    $this->document->addLink($this->url->link('information/aridius_news', $url . '&page='. ($page - 1), true), 'prev');
-			}
-
-			if ($limit && ceil($total / $limit) > $page) {
-			    $this->document->addLink($this->url->link('information/aridius_news', $url . '&page='. ($page + 1), true), 'next');
+				if ($page == 1) {
+					$this->document->addLink($this->url->link('information/aridius_news', '', true), 'canonical');
+				} elseif ($page == 2) {
+					$this->document->addLink($this->url->link('information/aridius_news', '', true), 'prev');
+				} else {
+					$this->document->addLink($this->url->link('information/aridius_news', $url . '&page='. ($page - 1), true), 'prev');
+				}
+	
+				if ($limit && ceil($total / $limit) > $page) {
+					$this->document->addLink($this->url->link('information/aridius_news', $url . '&page='. ($page + 1), true), 'next');
+				}
 			}
 			
+
 			$data['limits'] = array();
 
 			$limits = array_unique(array($this->config->get($this->config->get('config_theme') . '_product_limit'), 25, 50, 75, 100));

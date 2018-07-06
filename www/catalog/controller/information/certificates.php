@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Certificate;
+use app\core\App;
 
 class ControllerInformationCertificates extends \app\core\Controller {
     protected $limitTitle = 80;
@@ -115,17 +116,22 @@ class ControllerInformationCertificates extends \app\core\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit), $total, ceil($total / $limit));
 
 		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-		if ($page == 1) {
+		if (App::$config->canonicalForYandex) {
 			$this->document->addLink($this->url->link('information/certificates', '', true), 'canonical');
-		} elseif ($page == 2) {
-			$this->document->addLink($this->url->link('information/certificates', '', true), 'prev');
 		} else {
-			$this->document->addLink($this->url->link('information/certificates', '&page=' . ($page - 1), true), 'prev');
+			if ($page == 1) {
+				$this->document->addLink($this->url->link('information/certificates', '', true), 'canonical');
+			} elseif ($page == 2) {
+				$this->document->addLink($this->url->link('information/certificates', '', true), 'prev');
+			} else {
+				$this->document->addLink($this->url->link('information/certificates', '&page=' . ($page - 1), true), 'prev');
+			}
+	
+			if ($limit && ceil($total / $limit) > $page) {
+				$this->document->addLink($this->url->link('information/certificates', '&page=' . ($page + 1), true), 'next');
+			}
 		}
-
-		if ($limit && ceil($total / $limit) > $page) {
-			$this->document->addLink($this->url->link('information/certificates', '&page=' . ($page + 1), true), 'next');
-		}
+		
 
 		$data['limit'] = $limit;
 

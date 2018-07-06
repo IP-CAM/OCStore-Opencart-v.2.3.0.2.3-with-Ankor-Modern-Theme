@@ -1,4 +1,6 @@
 <?php
+use app\core\App;
+
 class ControllerProductSpecial extends Controller {
 	public function index() {
 		$this->load->language('product/special');
@@ -305,18 +307,22 @@ class ControllerProductSpecial extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
 		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-		if ($page == 1) {
-		    $this->document->addLink($this->url->link('product/special', '', true), 'canonical');
-		} elseif ($page == 2) {
-		    $this->document->addLink($this->url->link('product/special', '', true), 'prev');
+		if (App::$config->canonicalForYandex) {
+			$this->document->addLink($this->url->link('product/special', '', true), 'canonical');
 		} else {
-		    $this->document->addLink($this->url->link('product/special', 'page='. ($page - 1), true), 'prev');
+			if ($page == 1) {
+				$this->document->addLink($this->url->link('product/special', '', true), 'canonical');
+			} elseif ($page == 2) {
+				$this->document->addLink($this->url->link('product/special', '', true), 'prev');
+			} else {
+				$this->document->addLink($this->url->link('product/special', 'page='. ($page - 1), true), 'prev');
+			}
+	
+			if ($limit && ceil($product_total / $limit) > $page) {
+				$this->document->addLink($this->url->link('product/special', 'page='. ($page + 1), true), 'next');
+			}
 		}
-
-		if ($limit && ceil($product_total / $limit) > $page) {
-		    $this->document->addLink($this->url->link('product/special', 'page='. ($page + 1), true), 'next');
-		}
-
+	
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;
